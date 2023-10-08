@@ -13,12 +13,12 @@
 <meta property="og:site_name" content="Metric Space | 度量空间">
 <meta property="og:description" content="前言这个东西算是数学分析里的常客了，算算到目前为止也出现了3次。但是总感觉这一套听起来有点不是那么自然（相比于 Cauchy 和 d’Alembert 等这些证明过程直接、思路流畅的），这直接导致的后果就是让初见者对它印象不深、容易遗忘等。 但AD审敛法说穿了也就是一种相乘求和式的收敛规则，再怎么讲也没办法转化为多么直观的东西，所以此博客一是为了我自己加深印象，二是希望能让看博客的你有那么一点点新">
 <meta property="og:locale" content="en_US">
-<meta property="og:image" content="https://siriusneo.github.io/blog/2021/02/25/%E4%B8%8D%E6%98%AF%E9%92%99%E5%A5%B6%EF%BC%8C%E6%98%AF%E5%88%A4%E5%88%AB%E6%B3%95-ad%E5%AE%A1%E6%95%9B/1.jpg">
+<meta property="og:image" content="https://siriusneo.github.io/2021/02/25/%E4%B8%8D%E6%98%AF%E9%92%99%E5%A5%B6%EF%BC%8C%E6%98%AF%E5%88%A4%E5%88%AB%E6%B3%95-ad%E5%AE%A1%E6%95%9B/1.jpg">
 <meta property="article:published_time" content="2021-02-25T13:17:06.000Z">
 <meta property="article:modified_time" content="2023-10-08T17:20:00.613Z">
 <meta property="article:author" content="Chaofan">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://siriusneo.github.io/blog/2021/02/25/%E4%B8%8D%E6%98%AF%E9%92%99%E5%A5%B6%EF%BC%8C%E6%98%AF%E5%88%A4%E5%88%AB%E6%B3%95-ad%E5%AE%A1%E6%95%9B/1.jpg">
+<meta name="twitter:image" content="https://siriusneo.github.io/2021/02/25/%E4%B8%8D%E6%98%AF%E9%92%99%E5%A5%B6%EF%BC%8C%E6%98%AF%E5%88%A4%E5%88%AB%E6%B3%95-ad%E5%AE%A1%E6%95%9B/1.jpg">
     
     
       
@@ -201,7 +201,7 @@
 <p>你可能会觉得这样变换反而增加了复杂度，能有什么好处？但事实上，观察后面那一项式子，我们发现出现了 $a_{i+1}-a_i$ 这样的<strong>差分形式</strong>，这种东西在求和时很有希望能<strong>临项相消</strong>掉，有助于我们<strong>去掉求和符号</strong>。</p>
 <p>这个变换其实是个很初等的变换，只是写成了这样的形式不太好看出来。事实上它可以理解成“离散分部积分公式”——只要把求前 n 项和当成积分，差分形式当成微分就好。</p>
 <p>此外还有个很直观的理解，可以看下面这张图。</p>
-<p><img src="/blog/2021/02/25/%E4%B8%8D%E6%98%AF%E9%92%99%E5%A5%B6%EF%BC%8C%E6%98%AF%E5%88%A4%E5%88%AB%E6%B3%95-ad%E5%AE%A1%E6%95%9B/1.jpg"></p>
+<p><img src="/2021/02/25/%E4%B8%8D%E6%98%AF%E9%92%99%E5%A5%B6%EF%BC%8C%E6%98%AF%E5%88%A4%E5%88%AB%E6%B3%95-ad%E5%AE%A1%E6%95%9B/1.jpg"></p>
 <p>然后为了让 $\sum_{i&#x3D;1}^{n-1}(a_{i+1}-a_i)B_i$ 能够临项相消，我们需要想办法去掉 B 。这里我们添加条件：<strong>数列 ${B_i}$ 有界</strong>，使得我们可以直接放掉。</p>
 <p>有界除了有“把数列放缩成常数”这种作用外，还起到限制规模的效果——也就是说界永远是确定的数，这样如果能产生 $M\varepsilon$ 这种式子，我们的目的也达到了（其中 M 是界，也就是我们常说的 $ \varepsilon$ 可以乘上一个倍数这个道理）</p>
 <p>假设 $\exists M &gt; 0,\ \forall n,\ B_n \le M$，那么<br>$$<br>\sum_{i&#x3D;1}^na_ib_i &#x3D; a_nB_n-\sum_{i&#x3D;1}^{n-1}(a_{i+1}-a_i)B_i \le a_nB_n+\sum_{i&#x3D;1}^{n-1}a_{i+1}-a_iB_i \le M(a_n+\sum_{i&#x3D;1}^{n-1}a_{i+1}-a_i)<br>$$</p>

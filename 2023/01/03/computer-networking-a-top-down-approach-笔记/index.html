@@ -13,13 +13,13 @@
 <meta property="og:site_name" content="Metric Space | 度量空间">
 <meta property="og:description" content="Chapter 1: Computer Networks and the Internet1.1 What Is the Internet?在这本书中我们使用 public Internet（一种特定的计算机网络）作为讨论计算机网络、协议的主要途径。但是什么是 Internet？  首先我们可以讨论 nuts and bolts（基本组成部分） of the Internet，即组成 Intern">
 <meta property="og:locale" content="en_US">
-<meta property="og:image" content="https://siriusneo.github.io/blog/figure4-18.png">
-<meta property="og:image" content="https://siriusneo.github.io/blog/figure5-7.png">
+<meta property="og:image" content="https://siriusneo.github.io/figure4-18.png">
+<meta property="og:image" content="https://siriusneo.github.io/figure5-7.png">
 <meta property="article:published_time" content="2023-01-03T07:24:22.000Z">
 <meta property="article:modified_time" content="2023-10-08T17:14:36.493Z">
 <meta property="article:author" content="Chaofan">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://siriusneo.github.io/blog/figure4-18.png">
+<meta name="twitter:image" content="https://siriusneo.github.io/figure4-18.png">
     
     
       
@@ -570,7 +570,7 @@
 <p>在讨论 IP 寻址之前，我们需要说一点关于 hosts 和 routers 怎样连接到互联网的事。一个 host 一般只有一个连接到网络的 link；当 host 上的 IP 想要发送 datagram 时，它通过这个 link 来发送。host 和 physical link 的边界叫做 interface。一个 router 有很多 interfaces（由于它的职能），在它和它的每个 link 之间都有一个。因为每个 host 和 router 都能发送、接受 IP datagrams，IP 要求每个 host 和 router 的 intereface 都有自己的 IP 地址。因此，一个 IP 地址技术上是针对一个 interface 的，而不是包含这个 interface 的 host 或者 router。</p>
 <p>一个 IP 地址有 32 位。这些地址通常用所谓的 dotted-decimal notation 来写。</p>
 <p>每个 host 和 router 上的，在全球因特网中的 interface，需要有一个 globally unique 的 IP 地址。一个 interface IP 地址的一部分被它所连的子网（subnet）决定。</p>
-<p><img src="/blog/figure4-18.png"></p>
+<p><img src="/figure4-18.png"></p>
 <p>如图所示，最左边的三个 hosts 前 24 位都是相同的。这四个 interfaces（加上路由器那边那个）通过一个没有路由器的的网络相互连起来。这个网络可能是通过 Ethernet LAN 相互连接，在这种情况这些 interfaces 可能通过一个 Ethernet switch 或者一个无线 AP（acces point）来连接。</p>
 <p>用 IP 的术语，这四个 interfaces 形成了一个子网（subnet）。IP 地址给这个子网分配了一个地址：223.1.1.0&#x2F;24，这里 &#x2F;24（slash-24）就是子网掩码（subnet mask），表示从左开始 24 个连续的 1，也就是左边 24 位定义了子网的地址。任何在这个子网里的 hosts 被要求地址必须是 223.1.1.xxx 的格式。图中还有两个子网。</p>
 <p>IP 对一个子网的定义不局限于这个 Ethernet 片段连接许多 hosts 到一个 router interface 的情况。事实上，一个子网可以这样定义：</p>
@@ -651,7 +651,7 @@
 <li>For each neighbor v，x 维护 Dv&#x3D;[Dv(y): y in N]</li>
 </ul>
 <h4 id="Distance-Vector-Algorithm-Link-Cost-Changes-and-Link-Failure"><a href="#Distance-Vector-Algorithm-Link-Cost-Changes-and-Link-Failure" class="headerlink" title="Distance-Vector Algorithm: Link-Cost Changes and Link Failure"></a>Distance-Vector Algorithm: Link-Cost Changes and Link Failure</h4><p>现在我们来考虑，如果一个 link 的 cost 上升了会发生什么。</p>
-<p><img src="/blog/figure5-7.png"></p>
+<p><img src="/figure5-7.png"></p>
 <ul>
 <li><p>在 link cost 改变前，Dy(x) &#x3D; 4, Dy(z) &#x3D; 1, Dz(y) &#x3D; 1, Dz(x) &#x3D; 5。在 t0 时刻，y 检测到 link cost 改变（4 到 60）。y 重新计算它到 x 的距离（遍历所有邻居）<br>$$<br>D_y(x) &#x3D; \min {c(y, x) + D_x(x),\ c(y, z) + D_z(x)} &#x3D; 6<br>$$<br>当然，在全局视角，我们可以看出这个通过 z 的新 cost 是<strong>错的</strong>，因为 5 这条路已经不可行了。这就产生了一个 routing loop：为了到达 x，y routes 到 z，但是 z routes 到 y。</p>
 </li>
