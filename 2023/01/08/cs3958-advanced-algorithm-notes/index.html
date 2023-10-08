@@ -1,0 +1,648 @@
+<!DOCTYPE html>
+<html lang=en>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+    <meta name="description" content="CS3958: Advanced Algorithms这是 ACM 班 2022 Fall 高级算法课程的个人整理小笔记. 众所周知, 我都是在期末复习的时候才认真做一遍笔记的. 课程框架：  Basic Probabilistic Tools Concentration Inequalities Martingale   Optimization First-Order Optimization">
+<meta property="og:type" content="article">
+<meta property="og:title" content="CS3958-Advanced Algorithm-Notes">
+<meta property="og:url" content="https://siriusneo.github.io/blog/2023/01/08/cs3958-advanced-algorithm-notes/index.html">
+<meta property="og:site_name" content="Metric Space | 度量空间">
+<meta property="og:description" content="CS3958: Advanced Algorithms这是 ACM 班 2022 Fall 高级算法课程的个人整理小笔记. 众所周知, 我都是在期末复习的时候才认真做一遍笔记的. 课程框架：  Basic Probabilistic Tools Concentration Inequalities Martingale   Optimization First-Order Optimization">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2023-01-08T10:46:43.000Z">
+<meta property="article:modified_time" content="2023-10-08T17:20:17.759Z">
+<meta property="article:author" content="Chaofan">
+<meta name="twitter:card" content="summary">
+    
+    
+      
+        
+          <link rel="shortcut icon" href="/blog/images/favicon.ico">
+        
+      
+      
+        
+          <link rel="icon" type="image/png" href="/blog/images/android-chrome-192x192.png" sizes="192x192">
+        
+      
+      
+        
+          <link rel="apple-touch-icon" sizes="180x180" href="/blog/images/apple-touch-icon.png">
+        
+      
+    
+    <!-- title -->
+    <title>CS3958-Advanced Algorithm-Notes</title>
+    <!-- async scripts -->
+    <!-- Google Analytics -->
+
+
+    <!-- Umami Analytics -->
+
+
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/blog/css/style.css">
+
+    <!-- persian styles -->
+    
+    <!-- rss -->
+    
+    
+	<!-- mathjax -->
+	
+		<script type="text/x-mathjax-config">
+		  MathJax.Hub.Config({
+			tex2jax: {
+			  skipTags: ['script', 'noscript', 'style', 'textarea', 'pre'],
+			  inlineMath: [['$','$']]
+			}
+		  });
+		</script>
+		<script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-MML-AM_CHTML' async></script>
+	
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#" aria-label="Menu"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#" aria-label="Menu"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" aria-label="Top" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fa-solid fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+        <!--
+       --><li><a href="/blog/">Home</a></li><!--
+     --><!--
+       --><li><a href="/blog/about/">About</a></li><!--
+     --><!--
+       --><li><a href="/blog/archives/">Articles</a></li><!--
+     --><!--
+       --><li><a href="/blog/links/">Links</a></li><!--
+     --><!--
+       --><li><a target="_blank" rel="noopener" href="http://chaofanlin.com">Academic Page</a></li><!--
+     -->
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" aria-label="Previous post" href="/blog/2023/05/30/%E9%BA%A6%E4%B9%90%E9%B8%A1%E5%91%B3%E7%9A%84%E8%BF%91%E5%86%B5%E9%9A%8F%E8%AE%B0/"><i class="fa-solid fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" aria-label="Next post" href="/blog/2023/01/08/%E5%85%B3%E4%BA%8E-pip-%E7%9A%84%E7%BD%91%E7%BB%9C%E9%97%AE%E9%A2%98/"><i class="fa-solid fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" aria-label="Back to top" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" aria-label="Share post" href="#"><i class="fa-solid fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://siriusneo.github.io/blog/2023/01/08/cs3958-advanced-algorithm-notes/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://siriusneo.github.io/blog/2023/01/08/cs3958-advanced-algorithm-notes/&text=CS3958-Advanced Algorithm-Notes"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://siriusneo.github.io/blog/2023/01/08/cs3958-advanced-algorithm-notes/&title=CS3958-Advanced Algorithm-Notes"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://siriusneo.github.io/blog/2023/01/08/cs3958-advanced-algorithm-notes/&is_video=false&description=CS3958-Advanced Algorithm-Notes"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=CS3958-Advanced Algorithm-Notes&body=Check out this article: https://siriusneo.github.io/blog/2023/01/08/cs3958-advanced-algorithm-notes/"><i class="fa-solid fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://siriusneo.github.io/blog/2023/01/08/cs3958-advanced-algorithm-notes/&title=CS3958-Advanced Algorithm-Notes"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://siriusneo.github.io/blog/2023/01/08/cs3958-advanced-algorithm-notes/&title=CS3958-Advanced Algorithm-Notes"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://siriusneo.github.io/blog/2023/01/08/cs3958-advanced-algorithm-notes/&title=CS3958-Advanced Algorithm-Notes"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://siriusneo.github.io/blog/2023/01/08/cs3958-advanced-algorithm-notes/&title=CS3958-Advanced Algorithm-Notes"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://siriusneo.github.io/blog/2023/01/08/cs3958-advanced-algorithm-notes/&name=CS3958-Advanced Algorithm-Notes&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://siriusneo.github.io/blog/2023/01/08/cs3958-advanced-algorithm-notes/&t=CS3958-Advanced Algorithm-Notes"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    
+    
+      <div id="toc">
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#CS3958-Advanced-Algorithms"><span class="toc-number">1.</span> <span class="toc-text">CS3958: Advanced Algorithms</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Lec1"><span class="toc-number">2.</span> <span class="toc-text">Lec1</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Concentration-Inequalities"><span class="toc-number">2.1.</span> <span class="toc-text">Concentration Inequalities</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#The-Averaging-Trick"><span class="toc-number">2.2.</span> <span class="toc-text">The Averaging Trick</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Chernoff-Bound"><span class="toc-number">2.3.</span> <span class="toc-text">Chernoff Bound</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#The-Median-Trick"><span class="toc-number">2.4.</span> <span class="toc-text">The Median Trick</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Lec-2"><span class="toc-number">3.</span> <span class="toc-text">Lec 2</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Threshold-Behavior-of-Random-Graphs"><span class="toc-number">3.1.</span> <span class="toc-text">Threshold Behavior of Random Graphs</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Hoeffding%E2%80%99s-Inequality"><span class="toc-number">3.2.</span> <span class="toc-text">Hoeffding’s Inequality</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Concentration-on-Margtinalges"><span class="toc-number">3.3.</span> <span class="toc-text">Concentration on Margtinalges</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Azuma-Hoeffding%E2%80%99s-Inequality"><span class="toc-number">3.4.</span> <span class="toc-text">Azuma-Hoeffding’s Inequality</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Lec-3"><span class="toc-number">4.</span> <span class="toc-text">Lec 3</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Martingale-cont%E2%80%99d"><span class="toc-number">4.1.</span> <span class="toc-text">Martingale (cont’d)</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#McDiarmid%E2%80%99s-Inequality"><span class="toc-number">4.2.</span> <span class="toc-text">McDiarmid’s Inequality</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Stopping-Time"><span class="toc-number">4.3.</span> <span class="toc-text">Stopping Time</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Optional-Stopping-Theorem-OST"><span class="toc-number">4.4.</span> <span class="toc-text">Optional Stopping Theorem (OST)</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Lec-4"><span class="toc-number">5.</span> <span class="toc-text">Lec 4</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Proof-of-OST"><span class="toc-number">5.1.</span> <span class="toc-text">Proof of OST</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Doobs-martingale-inequality"><span class="toc-number">5.2.</span> <span class="toc-text">Doobs martingale inequality</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#1-dim-Random-Walk-with-Two-Absorbing-Barriers"><span class="toc-number">5.3.</span> <span class="toc-text">1-dim Random Walk with Two Absorbing Barriers</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Pattern-Matching"><span class="toc-number">5.4.</span> <span class="toc-text">Pattern Matching</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Wald%E2%80%99s-Equation"><span class="toc-number">5.5.</span> <span class="toc-text">Wald’s Equation</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Lec-5"><span class="toc-number">6.</span> <span class="toc-text">Lec 5</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Multi-Armed-Bandit"><span class="toc-number">6.1.</span> <span class="toc-text">Multi-Armed Bandit</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#The-Explore-then-Commit-ETC-Algorithm"><span class="toc-number">6.2.</span> <span class="toc-text">The Explore-then-Commit (ETC) Algorithm</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#The-Upper-Confidance-Bounds-UCB-Algorithm"><span class="toc-number">6.3.</span> <span class="toc-text">The Upper Confidance Bounds (UCB) Algorithm</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Lec-6"><span class="toc-number">7.</span> <span class="toc-text">Lec 6</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#An-Online-Number-Guessing-Game"><span class="toc-number">7.1.</span> <span class="toc-text">An Online Number Guessing Game</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Stochastic-Setting"><span class="toc-number">7.2.</span> <span class="toc-text">Stochastic Setting</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#The-Adversarial-Setting"><span class="toc-number">7.3.</span> <span class="toc-text">The Adversarial Setting</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#The-Follow-The-Leader-Algorithm"><span class="toc-number">7.4.</span> <span class="toc-text">The Follow-The-Leader Algorithm</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Online-Learning"><span class="toc-number">7.5.</span> <span class="toc-text">Online Learning</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Lec-7"><span class="toc-number">8.</span> <span class="toc-text">Lec 7</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Convex-Optimization"><span class="toc-number">8.1.</span> <span class="toc-text">Convex Optimization</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Gradient-Descent-Algorithm"><span class="toc-number">8.2.</span> <span class="toc-text">Gradient Descent Algorithm</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Online-Gradient-Descent"><span class="toc-number">8.3.</span> <span class="toc-text">Online Gradient Descent</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Strongly-Convex-Function"><span class="toc-number">8.4.</span> <span class="toc-text">Strongly Convex Function</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Lec-8"><span class="toc-number">9.</span> <span class="toc-text">Lec 8</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Learning-with-Expert-Advice"><span class="toc-number">9.1.</span> <span class="toc-text">Learning with Expert Advice</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Online-Stochastic-Gradient-Descent"><span class="toc-number">9.2.</span> <span class="toc-text">Online Stochastic Gradient Descent</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Online-Shortest-Paths"><span class="toc-number">9.3.</span> <span class="toc-text">Online Shortest Paths</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Lec-9"><span class="toc-number">10.</span> <span class="toc-text">Lec 9</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Lec-10"><span class="toc-number">11.</span> <span class="toc-text">Lec 10</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Basics-of-Markov-Chains"><span class="toc-number">11.1.</span> <span class="toc-text">Basics of Markov Chains</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Fundamental-Theorem-of-Markov-Chains"><span class="toc-number">11.2.</span> <span class="toc-text">Fundamental Theorem of Markov Chains</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Coupling"><span class="toc-number">11.3.</span> <span class="toc-text">Coupling</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Lec-11"><span class="toc-number">12.</span> <span class="toc-text">Lec 11</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Proof-of-FTMC"><span class="toc-number">12.1.</span> <span class="toc-text">Proof of FTMC</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Mixing-Time"><span class="toc-number">12.2.</span> <span class="toc-text">Mixing Time</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Lec-12"><span class="toc-number">13.</span> <span class="toc-text">Lec 12</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Reversible-Chains"><span class="toc-number">13.1.</span> <span class="toc-text">Reversible Chains</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Metropolis-Algorithm"><span class="toc-number">13.2.</span> <span class="toc-text">Metropolis Algorithm</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Sample-Proper-Coloring"><span class="toc-number">13.3.</span> <span class="toc-text">Sample Proper Coloring</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Spectrum-of-Reversible-Markov-Chain"><span class="toc-number">13.4.</span> <span class="toc-text">Spectrum of Reversible Markov Chain</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Lec-13"><span class="toc-number">14.</span> <span class="toc-text">Lec 13</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Variational-Characterization-of-Eigenvalues"><span class="toc-number">14.1.</span> <span class="toc-text">Variational Characterization of Eigenvalues</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#FTMC-for-Reversible-Chains"><span class="toc-number">14.2.</span> <span class="toc-text">FTMC for Reversible Chains</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Relaxation-Time"><span class="toc-number">14.3.</span> <span class="toc-text">Relaxation Time</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#From-Coupling-to-Spectral-Gap"><span class="toc-number">14.4.</span> <span class="toc-text">From Coupling to Spectral Gap</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Graph-Expansion"><span class="toc-number">14.5.</span> <span class="toc-text">Graph Expansion</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Lec-14"><span class="toc-number">15.</span> <span class="toc-text">Lec 14</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Graph-Expansion-Cont%E2%80%99"><span class="toc-number">15.1.</span> <span class="toc-text">Graph Expansion (Cont’)</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Cheeger%E2%80%99s-Inequality"><span class="toc-number">15.2.</span> <span class="toc-text">Cheeger’s Inequality</span></a></li></ol></li></ol>
+      </div>
+    
+  </span>
+</div>
+
+    
+    <div class="content index py4 ">
+        
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle p-name" itemprop="name headline">
+        CS3958-Advanced Algorithm-Notes
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author p-author h-card" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span class="p-name" itemprop="name">Chaofan</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2023-01-08T10:46:43.000Z" class="dt-published" itemprop="datePublished">2023-01-08</time>
+        
+      
+    </div>
+
+
+      
+    <div class="article-category">
+        <i class="fa-solid fa-archive"></i>
+        <a class="category-link" href="/blog/categories/%E6%8E%8C%E4%B8%8A%E7%9A%84%E7%BA%AF%E5%85%89/">掌上的纯光</a>
+    </div>
+
+
+      
+
+    </div>
+  </header>
+  
+
+  <div class="content e-content" itemprop="articleBody">
+    <h1 id="CS3958-Advanced-Algorithms"><a href="#CS3958-Advanced-Algorithms" class="headerlink" title="CS3958: Advanced Algorithms"></a>CS3958: Advanced Algorithms</h1><p>这是 ACM 班 2022 Fall 高级算法课程的个人整理小笔记. <del>众所周知, 我都是在期末复习的时候才认真做一遍笔记的.</del> 课程框架：</p>
+<ul>
+<li>Basic Probabilistic Tools<ul>
+<li>Concentration Inequalities</li>
+<li>Martingale</li>
+</ul>
+</li>
+<li>Optimization<ul>
+<li>First-Order Optimization</li>
+<li>Online Optimization</li>
+</ul>
+</li>
+<li>Markov Chain and Sampling<ul>
+<li>An Application of MCMC (Markov Chain Monte Carlo)</li>
+<li>Perspectives for studying MCMC</li>
+<li>Stochastic Process</li>
+<li>Spectrum</li>
+<li>Operator</li>
+</ul>
+</li>
+</ul>
+<h1 id="Lec1"><a href="#Lec1" class="headerlink" title="Lec1"></a>Lec1</h1><h2 id="Concentration-Inequalities"><a href="#Concentration-Inequalities" class="headerlink" title="Concentration Inequalities"></a>Concentration Inequalities</h2><p><strong>Theorem 2</strong> (Markov Inequality) For any non-negative r.v. $X$ and $a &gt; 0$ ,<br>$$<br>\mathbf{Pr}[X \ge a] \le \frac{\mathbf{E}[X]}{a}<br>$$<br><strong>Proof:</strong><br>$$<br>\mathbf{E}[X] \ge \int_{X \ge a} X d \mu \ge a \int_{X \ge a} d \mu &#x3D; a \mathbf{Pr}[X \ge a]<br>$$</p>
+<p><strong>Example 4 (Coupon Collector)</strong>  Let $X$ be the number of draws.<br>$$<br>\mathbf{E}[X] &#x3D; n H_n<br>$$<br><strong>Proof:</strong>  Let $X_i$ be the number of draws with $i$ cards collected.<br>$$<br>\mathbf{E}[X_i] &#x3D; (\frac{n-i}{n}\mathbf{E}[X_{i+1}]+1) + \frac{i}{n} \mathbf{E}[X_i]<br>$$</p>
+<p>$$<br>\mathbf{E}[X_0] &#x3D; n(\frac{1}{n} + \frac{1}{n-1} + \dots + 1) &#x3D; n H_n)<br>$$</p>
+<p>另解: 令 $X_i$ 为有 $i$ 个 coupon 后得到一个新的 coupon 的抽取次数.</p>
+<p><strong>Theorem 3 (Chebyshev’s Inequality)</strong>  For any r.v. $X$ with bounded $\mathbf{E}[X]$ and $a &gt; 0$,<br>$$<br>\mathbf{Pr}[|X-\mathbf{E}[X]| \ge a ] \le \frac{\mathbf{D}[X]}{a^2}<br>$$<br><strong>Proof:</strong><br>$$<br>\mathbf{Pr}[|X-\mathbf{E}[X]|^2 \ge a^2] \le \frac{\mathbf{D}[X]}{a^2}<br>$$<br><strong>Example 3</strong>: (Streaming Model) Input a sequence $a_1$, $a_2$, $\dots$, $a_m$. Compute $m$.</p>
+<p>Brute-Force: maintain a counter $k$ with $O(\log m)$ memory. Best algorithm for the exact answer.</p>
+<p>Morris’ algorithm:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">X &lt;- 0</span><br><span class="line">On each input: X &lt;- X+1 with prob 2^(-X).</span><br><span class="line">return 2^X-1</span><br></pre></td></tr></table></figure>
+
+
+
+<p><strong>Theorem 1:</strong> $\mathbf{E}[\hat{m}] &#x3D; m$. $\hat{m}$ is the output of Morris’ algorithm, $m$ is the true answer.</p>
+<p><strong>Proof:</strong> By induction.<br>$$<br>\begin{split}<br>\mathbf{E}[\hat{m}] &amp;&#x3D; \mathbf{E}[2^{X_m}]-1 \<br>&amp;&#x3D; \mathbf{E}[\frac{2^{X_{m-1}+1}}{2^{X_{m-1}}} +<br>(1-\frac{1}{2^{X_{m-1}}})2^{X_{m-1}}] \<br>&amp;&#x3D; \mathbf{E}[2^{X_{m-1}}] + 1 &#x3D; m<br>\end{split}<br>$$<br>Uses $O(\log \log m)$ bits of memory. We want to<br>$$<br>\mathbf{Pr}[|\hat{m} - m| &gt; \varepsilon] \le \delta<br>$$<br>For fixed $\varepsilon$, smaller $\delta$ is better.</p>
+<p><strong>Lemma 4:</strong><br>$$<br>\mathbf{E}[(2^{X_m})^2] &#x3D; \frac{3}{2}m^2 + \frac{3}{2}m + 1<br>$$<br><strong>Proof:</strong> $m&#x3D;1$, $\mathbf{E}[(2^{X_m})^2]$ &#x3D; 4.<br>$$<br>\begin{split}<br>\mathbf{E}[(2^{X_m})^2] &amp;&#x3D; \mathbf{E}[\frac{(2^{X_{m-1}+1})^2}{2^{X_{m-1}}} +<br>(1-\frac{1}{2^{X_{m-1}}})(2^{X_{m-1}})^2] \<br>&amp;&#x3D; \frac{3}{2}(m-1)^2 + \frac{3}{2}(m-1) + 1 + 3m \<br>&amp;&#x3D; \frac{3}{2}m^2 + \frac{3}{2}m + 1<br>\end{split}<br>$$<br>With Lemma 4,<br>$$<br>\mathbf{D}[\hat{m}] &#x3D; \mathbf{E}[\hat{m}^2] - (\mathbf{E}[\hat{m}])^2<br>&#x3D; E[(2^{X_m}-1)^2] - m^2 \le \frac{m^2}{2}<br>$$<br>With Chebyshev<br>$$<br>\mathbf{Pr}[|\hat{m}-m|\ge \varepsilon m] \le \frac{1}{2\varepsilon^2}<br>$$<br>If $\varepsilon$ is smaller, $\frac{1}{2\varepsilon^2} &gt; 1$, the bound is useless.</p>
+<h2 id="The-Averaging-Trick"><a href="#The-Averaging-Trick" class="headerlink" title="The Averaging Trick"></a>The Averaging Trick</h2><p>We can run Morris’s algorithm $t$ times in parallel and the final output is the average<br>$$<br>\hat{m}^* :&#x3D; \frac{\sum_{i&#x3D;1}^t \hat{m}_i}{t}<br>$$<br>We have<br>$$<br>\mathbf{D}[\hat{m}^*] &#x3D; \frac{\mathbf{D}[\hat{m}]}{t}<br>$$</p>
+<p>$$<br>\mathbf{Pr}[|\hat{m}^* - m| \ge \varepsilon m] \le \frac{1}{t \cdot 2 \varepsilon^2}<br>$$</p>
+<p>For a fixed $\delta$, $t \ge \frac{1}{2\varepsilon^2 \delta}$, $\mathbf{Pr}[|\hat{m}^* - m| \ge \varepsilon m] \le \delta$. New algorithm uses $O(\frac{\log \log n}{\varepsilon^2 \delta})$ bits of memory.</p>
+<h2 id="Chernoff-Bound"><a href="#Chernoff-Bound" class="headerlink" title="Chernoff Bound"></a>Chernoff Bound</h2><p><strong>Theorem 5 (Chernoff Bound)</strong>  Let $X_1, \dots, X_n$ be independent r.v. such that $X_i \sim \text{Ber}(p_i)$. Let $X &#x3D; \sum_{i&#x3D;1}^n X_i$ and $\mu &#x3D; \mathbf{E}[X] &#x3D; \sum_{i&#x3D;1}^n p_i$. Then we have<br>$$<br>\mathbf{Pr}[X \ge (1+\delta) \mu] \le \bigg( \frac{e^\delta}{(1+\delta)^{1+\delta}} \bigg)^\mu<br>$$<br>If $0 &lt; \delta &lt; 1$.<br>$$<br>\mathbf{Pr}[X \le (1-\delta) \mu] \le \bigg( \frac{e^{-\delta}}{(1-\delta)^{1-\delta}} \bigg)^\mu<br>$$<br>**Proof:**  core idea: use $f(X) &#x3D; e^{aX}$ for $a &gt; 0$ and use Markov.</p>
+<p><strong>Corollary 6</strong>  For any $0 &lt; \delta &lt; 1$,<br>$$<br>\mathbf{Pr}[X \ge (1+\delta) \mu] \le \text{exp} \bigg( - \frac{\delta^2}{3} \mu \bigg)<br>$$</p>
+<p>$$<br>\mathbf{Pr}[X \le (1-\delta) \mu] \le \text{exp} \bigg( - \frac{\delta^2}{2} \mu \bigg)<br>$$</p>
+<p>$$<br>\mathbf{Pr}[|X - \mu| \ge \delta \mu] \le  2\text{exp} \bigg( - \frac{\delta^2}{3} \mu \bigg)<br>$$</p>
+<p><strong>Proof:</strong> 略</p>
+<h2 id="The-Median-Trick"><a href="#The-Median-Trick" class="headerlink" title="The Median Trick"></a>The Median Trick</h2><p>Further boost the performance of Morrie’s algorithm using the median trick. Choose $t &#x3D; \frac{3}{2 \varepsilon^2}$ in the averaging trick and run it $s$ times in parallel.<br>$$<br>\mathbf{Pr}[|\hat{m_i}^* - m| \ge \varepsilon m] \le \frac{1}{3}<br>$$<br>At last output the median $\hat{m}^{<em><em>}$ of $\hat{m_1}^</em>, \hat{m_2}^</em>, \dots, \hat{m_s}^*$.</p>
+<p>Let $Y_i$ be the indicator of the (good) event that<br>$$<br>|\hat{m_i}^* - m| &lt; \varepsilon \cdot m<br>$$<br>Then $Y :&#x3D; \sum_{i&#x3D;1}^s Y_i$ satisfies $\mathbf{E}[Y] \ge\frac{2}{3} s$. If the median is bad, then at least half of $\hat{m_i}^*$ is bad which is </p>
+<p>$Y \le \frac{1}{2} s$. By Chernoff,<br>$$<br>\mathbf{Pr}[Y \le \frac{1}{2} s] \le \mathbf{Pr}[|Y - \mathbf{E}[Y]| \ge \frac{1}{6}s] \le 2 \text{exp} \bigg( -\frac{s}{108} \bigg)<br>$$<br>Therefore, for $t &#x3D; O(\frac{1}{\varepsilon^2})$ and $s &#x3D; O(\log \frac{1}{\delta})$, we have $\mathbf{Pr}[|\hat{m}^* - m| \ge \varepsilon m] \le \delta$.</p>
+<p>This new algorithm uses<br>$$<br>O(\frac{1}{\varepsilon^2} \cdot \log \frac{1}{\delta} \cdot \log \log n)<br>$$<br>bits of memory. ($O(\log \frac{1}{\delta}) &lt;&lt; O(\frac{1}{\delta})$).</p>
+<h1 id="Lec-2"><a href="#Lec-2" class="headerlink" title="Lec 2"></a>Lec 2</h1><h2 id="Threshold-Behavior-of-Random-Graphs"><a href="#Threshold-Behavior-of-Random-Graphs" class="headerlink" title="Threshold Behavior of Random Graphs"></a>Threshold Behavior of Random Graphs</h2><p>Threshold Behavior: For a random graph $G(n, p)$, these is a threshold function $r$ such that:</p>
+<ul>
+<li>when $p &lt;&lt; r(n)$, almost no graph satisfies the property.</li>
+<li>when $p &gt;&gt; r(n)$, almost every graph satisfies the property.</li>
+</ul>
+<p>Formally,  <strong>(Threshold function)</strong> Given a graph property $P$, a function $r: \mathbf{N} \rightarrow [0, 1]$ is called a threshold if:</p>
+<ul>
+<li>(a) if $p(n) &lt;&lt; r(n)$, $\mathbf{Pr}[G \text{ satisfies } P] \rightarrow 0$ when $n \rightarrow \infty$;</li>
+<li>(b) if $p(n) &gt;&gt; r(n)$, $\mathbf{Pr}[G \text{ satisfies } P] \rightarrow 1$ when $n \rightarrow \infty$;</li>
+</ul>
+<p><strong>Theorem 2</strong>  The property “G contains a 4-clique” has a threshold function $n^{-\frac{2}{3}}$.</p>
+<p><strong>Proof:</strong> Let<br>$$<br>X_S &#x3D; \begin{cases}<br>1 &amp; \text{ if } G[S] \text{ is a clique } \<br>0 &amp; \text{ otherwise }<br>\end{cases}<br>$$<br>Let $X &#x3D; \sum_{S \in  \binom{[n]}{4}} X_S$, then by the linearity<br>$$<br>\mathbf{E}[X] &#x3D; \sum_{S \in  \binom{[n]}{4}} \mathbf{E}[X_S] &#x3D; \binom{n}{4} p^6 \approx \frac{n^4 p^6}{24}<br>$$<br>If $p &lt;&lt; n^{-\frac{2}{3}}$, $\mathbf{E}[X] &#x3D; o(1)$.<br>$$<br>\mathbf{Pr}[X \ge 1] \le \mathbf{E}[X] \rightarrow 0<br>$$<br>For (b), we can not use Markov because large expectation does not imply large values with high probability. Therefore, we have to consider the variance. (反算 + Chebyshev)<br>$$<br>\mathbf{Pr}[X &#x3D; 0] \le \mathbf{Pr}[|X-\mathbf{E}[X]| \ge \mathbf{E}[X]] \le \frac{\mathbf{D}[X]}{(\mathbf{E}[X])^2}<br>$$<br>Calculate by consider $|S \cap T| &#x3D; 2, 3$ we get (if $p &gt;&gt; n^{-\frac{2}{3}}$)<br>$$<br>\mathbf{D}[X] \le n^6 p^{11} + n^5p^9 + n^4 p^6 &#x3D; o(\mathbf{E}[X]^2)<br>$$</p>
+<h2 id="Hoeffding’s-Inequality"><a href="#Hoeffding’s-Inequality" class="headerlink" title="Hoeffding’s Inequality"></a>Hoeffding’s Inequality</h2><p><strong>Example 1 (Tossing coins)</strong>  How many times should we toss the coin (denote the times as $T$) such that with $99%$ prob, $\hat{p} \in [(1-\varepsilon)p, (1+\varepsilon)p]$ for a given precision $\varepsilon$ ？$p$ is the probability pf “head”.</p>
+<p>Use Chernoff<br>$$<br>\mathbf{Pr}[|\hat{p} - p| \ge \varepsilon p] &#x3D; \mathbf{Pr}[|\hat{p}T - pT| \ge \varepsilon pT] \le 2 \exp{\bigg( - \frac{\varepsilon^2}{3} pT\bigg)} \le 0.01<br>$$</p>
+<p>So $T \ge \frac{3 \log 200}{\varepsilon^2 p} &#x3D; O(\frac{1}{\varepsilon^2})$.</p>
+<p>Chernoff only works for independent Bernoulli r.v. Then we have its generalized version for almost surely bounded r.v. $X_i$.</p>
+<p><strong>Theorem 3 (Hoeffding’s inequality)</strong>  Let $X_1, \dots , X_n$ be independent r.v. where $X_i \in [a_i ,b <em>i]$ almost surely ($a_i \le b_i$). Let $X &#x3D; \sum</em>{i&#x3D;1}^n X_i$ and $\mu :&#x3D; \mathbf{E}[X]$. Then<br>$$<br>\mathbf{Pr}[|X-\mu| \ge t] \le 2 \exp{\bigg( -\frac{2t^2}{\sum_{i&#x3D;1}^n (b_i-a_i)^2} \bigg)}<br>$$<br><strong>Proof:</strong>  The key is to have a nice upper bound on the MGF (moment generating function) like what we did in Chernoff bound. So Firstly we have</p>
+<p><strong>Lemma (Hoeffding’s lemma)</strong> Let $X$ be a r.v. with $\mathbf{E}[X] &#x3D; 0$ and $X \in [a, b]$. Then<br>$$<br>\mathbf{E}[e^{\alpha X}] \le \exp \bigg(\frac{\alpha^2(b-a)^2}{8}\bigg)<br>$$<br>for all $\alpha \in \mathbb{R}$.</p>
+<p>We replace $X_i$ by $X_i - \mathbf{E}[X_i]$ here and by symmetry we only need to prove<br>$$<br>\mathbf{Pr}[X \ge t] \le \exp \bigg( -\frac{2t^2}{\sum_{i&#x3D;1}^n (b_i-a_i)^2} \bigg)<br>$$<br>Then we have<br>$$<br>\mathbf{Pr}[X \ge t] \le \frac{\prod_{i&#x3D;1}^n \mathbf{E}[e^{\alpha X_i}]}{e^{\alpha t}} \le \exp \bigg( -\alpha t + \frac{\alpha^2}{8} \sum_{i&#x3D;1}^n (b_i - a_i)^2 \bigg)<br>$$<br>Optimize $\alpha &#x3D; \frac{4t}{\sum_{i&#x3D;1}^n (b_i - a_i)^2}$ Q.E.D.</p>
+<p><strong>Comparing Chernoff Bound and Hoeffding’s Inequality</strong></p>
+<p>Let $X_1,\ \dots,\ X_n$ be i.i.d. r.v. where $X_i \sim \text{Ber}(p)$. Let $X &#x3D; \sum_{i&#x3D;1}^n X_i$.</p>
+<p>Let $t &#x3D; \delta \mu$. Use Chernoff<br>$$<br>\mathbf{Pr}[|X - \mu| \ge t] \le 2 \exp \bigg( -\frac{1}{3} \delta^2 pn \bigg)<br>$$<br>Use Hoeffding<br>$$<br>\mathbf{Pr}[|X - \mu| \ge t] \le 2 \exp \bigg( - \frac{2\delta^2 \mu^2}{n} \bigg) &#x3D; 2 \exp \bigg( - 2\delta^2 p^2 n \bigg)<br>$$<br>So Chernoff &gt; Hoeffding.</p>
+<p><strong>Example 2  (Meal Delivery)</strong>  Let $X_1,\ \dots,\ X_n$ be i.i.d. r.v. representing the weight of each meal. For any $i$, $\mu &#x3D; \mathbf{E}[X_i] &#x3D; 300$, and $X_i \in [250, 350]$. Then we can give a estimate of the total number $n$ by $\hat{n} &#x3D; \frac{X}{\mu} &#x3D; \frac{\sum_{i&#x3D;1}^n X_i}{\mu}$. $n &gt; 200$.<br>$$<br>\mathbf{Pr}[|\hat{n} - n| \ge \delta n] &#x3D; \mathbf{Pr}[|X - n \mu| \ge \delta n \mu] \le 2 \exp \bigg(- \frac{2}{10000} \delta^2 \mu^2 n\bigg) \le 0.03 %<br>$$</p>
+<h2 id="Concentration-on-Margtinalges"><a href="#Concentration-on-Margtinalges" class="headerlink" title="Concentration on Margtinalges"></a>Concentration on Margtinalges</h2><p><strong>Example 3  (Fair games)</strong>  For each round the gambler wins $X_t$ money. Because it is a fair game, $\mathbf{E}[X_t] &#x3D; 0$. Let $Z_t &#x3D; \sum_{i&#x3D;1}^t X_i$ be the amount of money he won after t-th rounds. Then it is clear<br>$$<br>\mathbf{E}[Z_{t+1}\ \vert\ X_0,\ \dots,\ X_t] &#x3D; Z_t<br>$$<br><strong>Proof:</strong><br>$$<br>\mathbf{E}[Z_{t+1}\ \vert\ \overline{X_{0,t}}] &#x3D; \mathbf{E}[Z_{t} + X_{t+1}\ \vert\ \overline{X_{0,t}}] &#x3D; Z_t + \mathbf{E}[X_{t+1}] &#x3D; Z_t<br>$$<br>($Z_t$ is $\sigma(X_0,\ \dots,\ X_t)$ measureable.)</p>
+<p><strong>Definition 5</strong>  In a probability space $(\Omega, \mathscr{F}, \mathbf{Pr})$, a sequence of finite varabiles ${Z_n}<em>{n \ge 0}$ is a martingale if<br>$$<br>\forall n \ge 1, \mathbf{E}[Z_n\ \vert\ Z_1,\ \dots,\ Z</em>{n-1}] &#x3D; Z_{n-1}<br>$$<br>Sometimes we say ${Z_n}$ is a martingale w.r.t. another sequence ${X_n}$ if<br>$$<br>\forall n \ge 1, \mathbf{E}[Z_n\ \vert\ X_1,\ \dots,\ X_{n-1}] &#x3D; Z_{n-1}<br>$$<br>More formally, for a filtration $\mathscr{F}<em>1 \subseteq \mathscr{F}<em>2 \subseteq \dots \mathscr{F}$, and $Z_i$ is $\mathscr{F}<em>i$-measuable, then we call ${Z_n}$ is a martingale if<br>$$<br>\forall n \ge 1, \mathbf{E}[Z_n\ \vert\ \mathscr{F}</em>{n-1}] &#x3D; Z</em>{n-1}<br>$$<br>Supermartingale:<br>$$<br>\forall n \ge 1, \mathbf{E}[Z_n\ \vert\ \mathscr{F}</em>{n-1}] \le Z_{n-1}<br>$$<br>Submartingale:<br>$$<br>\forall n \ge 1, \mathbf{E}[Z_n\ \vert\ \mathscr{F}<em>{n-1}] \ge Z</em>{n-1}<br>$$<br>If ${Z_n}$ is a martingale then the following property is immediate</p>
+<p><strong>Proposition 6</strong>  For any $n \ge 1$, $\mathbf{E}[Z_n] &#x3D; \mathbf{E}[Z_0]$.</p>
+<p><strong>Example 4  (1-dim random walk)</strong>  $X_t \in {-1, +1}$. $Z_t &#x3D; \sum_{i&#x3D;1}^t X_i$. Then ${Z_n}$ is a martingale w.r.t. ${X_t}$.</p>
+<p><strong>Example 5  (The product of independent random variables)</strong>  $X_1,\ \dots,\ X_n$ are independent r.v. with $\mathbf{E}[X_i] &#x3D; 1$. Let $P_k &#x3D; \prod_{i&#x3D;1}^k X_i$.<br>$$<br>\mathbf{E}[P_k\ \vert\ \overline{X_{k-1}}] &#x3D; \mathbf{E}[P_{k-1} X_k\ \vert\ \overline{X_{k-1}}] &#x3D; P_{k-1} \mathbf{E}[X_k] &#x3D; P_{k-1}<br>$$<br><strong>Example 6  (Polya’s urn)</strong>   一开始罐子里只有一黑一白两个球. 每次摸一个球, 将它复制并将两个都放回.令 $X_n$ 为第 n 轮后罐子里的黑球数量.  Let $Z_n &#x3D; \frac{X_n}{n}$.  Then ${Z_n}<em>{n \ge 2}$ is a martingale w.r.t. ${X_n}</em>{n \ge 2}$. 注意, 我们的轮数从第二轮开始算. 也就是第 n 轮后罐子里有 n 个球.<br>$$<br>\begin{split}<br>\mathbf{E}[Z_{n+1}\ \vert\ \overline{X_{n}}] &amp;&#x3D; \frac{1}{n+1} \mathbf{E}[Z_{n}(X_{n} + 1) + (1-Z_n) X_{n}  \ \vert\ \overline{X_{n}}] \<br>&amp;&#x3D; \frac{1}{n+1} \mathbf{E}[Z_{n} + X_{n}  \ \vert\ \overline{X_{n}}] \<br>&amp;&#x3D; \frac{Z_n + X_n}{n+1} &#x3D; \frac{X_n}{n}<br>\end{split}<br>$$<br><strong>Example 7  (Doob’s martingale)</strong>   Let $X_1,\ \dots,\ X_n$ be a sequence of r.v. (unnecessarily independent). Let $f(\overline{X_n}) &#x3D; f(X_1,\ \dots,\ X_n) \in \mathbb{R}$. For $i \ge 0$, we define<br>$$<br>Z_i &#x3D; \mathbf{E}[f(\overline{X_n})\ \vert\ \overline{X_i}]<br>$$<br>In particular, we have $Z_0 &#x3D; \mathbf{E}[f(\overline{X_n})]$ and $Z_n &#x3D; f(\overline{X_n})$. ${Z_n}$ 可以被看作一个随着信息不断增加，对函数信息估计不断准确的过程。</p>
+<p><strong>Proposition 7</strong>  ${Z_n}$ is a martingale w.r.t. ${X_n}$.</p>
+<p><strong>Proof:</strong><br>$$<br>\mathbf{E}[Z_i\ \vert\ \overline{X_{i-1}}] &#x3D; \mathbf{E}[\mathbf{E}[f(\overline{X_n})\ \vert\ \overline{X_i}]\ \vert\ \overline{X_{i-1}}] &#x3D; \mathbf{E}[f(\overline{X_n})\ \vert\ \overline{X_{i-1}}] &#x3D; Z_{i-1}<br>$$<br>这里用了一下双期望公式:<br>$$<br>\overline{X_i} \supset \overline{X_{i-1}}, \sigma(\overline{X_i}) \subset \sigma(\overline{X_{i-1}})<br>$$<br>如果有两个条件期望，看 sigma 代数比较大的那个.</p>
+<h2 id="Azuma-Hoeffding’s-Inequality"><a href="#Azuma-Hoeffding’s-Inequality" class="headerlink" title="Azuma-Hoeffding’s Inequality"></a>Azuma-Hoeffding’s Inequality</h2><p>Hoeffding 的推广.</p>
+<p>设有一列随机变量 ${X_n}<em>{n \ge 1}$ 满足 $X_i \in [a_i,\ b_i]$. 不失一般性可设 $\mathbf{E}[X_i] &#x3D; 0$ (否则做替换 $X_i - \mathbf{E}[X_i]$) 令 $S_k &#x3D; \sum</em>{i&#x3D;1}^k X_i$. 如果 ${S_n}$ w.r.t. ${X_n}$ 是鞅, 那么<br>$$<br>\mathbf{Pr}[|S_n - S_0| \ge t] \le 2 \exp \bigg(- \frac{2t^2}{\sum_{i&#x3D;1}^n (b_i - a_i)^2} \bigg)<br>$$<br><strong>Proof: 略</strong></p>
+<h1 id="Lec-3"><a href="#Lec-3" class="headerlink" title="Lec 3"></a>Lec 3</h1><h2 id="Martingale-cont’d"><a href="#Martingale-cont’d" class="headerlink" title="Martingale (cont’d)"></a>Martingale (cont’d)</h2><p><strong>Example 1  (Balls-in-a-bag)</strong>  袋子里有 $g$ 个绿球和 $r$ 个红球. 我们想通过抽球来估计球的比例 $\frac{r}{r+g}$. 有两种方法(场景):</p>
+<ul>
+<li><p>Draw with replacement</p>
+<p>Let $X_i :&#x3D; 1[\text{the ball is red}]$. Then $X_i \sim \text{Ber}(\frac{r}{r+g})$.By Hoeffding,<br>$$<br>\mathbf{Pr}[|X - \mathbf{E}[X]| \ge t] \le 2 \exp \bigg( - \frac{2t^2}{n} \bigg)<br>$$<br>$\mathbf{E}[X] &#x3D; n\frac{r}{r+g}$.</p>
+</li>
+<li><p>Draw without replacement</p>
+<p>Also $\mathbf{E}[X] &#x3D; n\frac{r}{r+g}$. 因为不放回抽取可以看作先对抽球序列做一个排列，然后按排列一个个抽. 在所有排列中，第 i 个位置为 red 的排列个数当然是 $\mathbf{E}[X_i] &#x3D; \frac{r}{r+g}$.</p>
+<p>接下来考虑函数 $f(X_1, X_2, \dots, X_n) &#x3D; \sum_{i&#x3D;1}^n X_i$ 以及它的 Doob 序列 $Z_i &#x3D; \mathbf{E}[f(\overline{X_n})\ \vert\ \overline{X_i}] $.</p>
+<p>为了符合 Azuma-Hoeffding 的形式，我们需要做一个差分. 令 $Y_i &#x3D; Z_i - Z_{i-1},\ i \ge 1$. 因此<br>$$<br>Z_n - Z_0 &#x3D; Z_n - \mathbf{E}[f] &#x3D; \sum_{i&#x3D;1}^n Y_i<br>$$<br>注意 Azuma-Hoeffding 需要我们给出一个 $Y_i$ 的上下界. 令 $S_i &#x3D; \sum_{j&#x3D;1}^i X_j$,<br>$$<br>Z_i &#x3D; \mathbf{E}[f(\overline{X_n})\ \vert\ \overline{X_i}] &#x3D; S_i + (n-i) \frac{r-S_i}{r+g-i}<br>$$</p>
+<p>$$<br>\begin{split}<br>Y_i &#x3D; Z_i - Z_{i-1} &amp;&#x3D; [S_i + (n-i) \frac{r-S_i}{r+g-i}] - [S_{i-1} + (n-i+1) \frac{r-S_{i-1}}{r+g-i+1}] \<br>&amp;&#x3D; \frac{g+r-n}{g+r-i} \bigg( X_i + \frac{S_{i-1} - r}{g+r-i+1} \bigg) \in [-1, 1]<br>\end{split}<br>$$</p>
+<p>Therefore<br>$$<br>\mathbf{Pr}[|Z_n - Z_0| \ge t] &#x3D; \mathbf{Pr}[|X-\mathbf{E}[X]| \ge t] \le 2 \exp \bigg(-\frac{t^2}{2n}\bigg)<br>$$</p>
+</li>
+</ul>
+<h2 id="McDiarmid’s-Inequality"><a href="#McDiarmid’s-Inequality" class="headerlink" title="McDiarmid’s Inequality"></a>McDiarmid’s Inequality</h2><p>我们上面使用的这个 Doob 序列非常强大. 因此我们可以采用类似的思想进行推广.</p>
+<p><strong>Definition 1  (c-Lipschitz function)</strong>   A function $f(x_1,\ \dots,\ x_n)$ satisfies c-Lipschitz condition if<br>$$<br>\forall i \in [n],\ \forall x_1, \dots, x_n,\ \forall y_i: |f(x_1, \dots, x_i, \dots, x_n) - f(x_1, \dots, y_i, \dots, x_n)| \le c<br>$$<br><strong>Theorem 2  (McDiarmid’s Inequality)</strong>  若 f 为 c-Lipschitz function 且 $X_1, \dots, X_n$ 为 independ random variables，那么我们有<br>$$<br>\mathbf{Pr}[|f(X_1, \dots, X_n) - \mathbf{E}[f(X_1, \dots, X_n)]| \ge t] \le 2 \exp \bigg( - \frac{2t^2}{nc^2} \bigg)<br>$$<br><strong>Proof:</strong> 略，和上面的证明类似</p>
+<p>下面是两个 McDiarmid’s Inequality 的应用.</p>
+<p><strong>Example 2  (Pattern Matching)</strong>  令 $B \in {0, 1}^k$ 为一个固定字符串. 对于一个随机的字符串 $X \in {0, 1}^n$, $B$ 在 $X$ 中期望出现的次数为？</p>
+<p>记 $X_i$ 为 $X$ 的第 i 位，$Y_i,\ 1 \le i \le n-k+1$ 为 $1[X_i X_{i+1} \dots X_{i+k-1} &#x3D; B]$. 那么所求即为<br>$$<br>Y &#x3D; \sum_{i&#x3D;1}^{n-k+1} Y_i<br>$$</p>
+<p>$$<br>\mathbf{E}[Y] &#x3D; \sum_{i&#x3D;1}^{n-k+1} \mathbf{E}[Y_i] &#x3D; \frac{n-k+1}{2^k}​<br>$$</p>
+<p>记 $f(X_1, \dots X_n) &#x3D; Y$，显然 $f$ 是 k-Lipschitz 的. 那么<br>$$<br>\mathbf{Pr}[|Y-\mathbf{E}[Y]| \ge t] \le 2 \exp \bigg( - \frac{2t^2}{nk^2}\bigg)<br>$$<br> <strong>Example 3  (Chromatic Number of $G(n, p)$)</strong> </p>
+<ul>
+<li><p>The most natural way: introduce a varaible $X_e &#x3D; 1 [\text{the edge exists}]$ for every pair of vertices. Then $\chi(G)$ is 1-Lipschitz.<br>$$<br>\mathbf{Pr}[|f-\mathbf{E}[f]| \ge t] \le 2 \exp \bigg( - \frac{2t^2}{\binom{n}{2}} \bigg)<br>$$<br>这个 bound 并不是很好，因为要让右边为常数，$t &#x3D; \Omega(n)$，没啥用</p>
+</li>
+<li><p>我们考虑改变一个点的染色至多影响其所有相邻的边。因此令所有点为 ${v_1, \dots, v_n}$，然后令 $Y_i,\ 2 \le i \le n$ 为 $v_i$ 与 ${v_1, \dots, v_{i-1}}$ 之间的连边情况（encode 起来）。然后将染色数看作 $f(Y_2, \dots, Y_n)$. 显然 $f$ 也是 1-Lipschitz 的。<br>$$<br>\mathbf{Pr}[|f-\mathbf{E}[f]| \ge t] \le 2 \exp \bigg( - \frac{2t^2}{n-1} \bigg)<br>$$</p>
+</li>
+</ul>
+<h2 id="Stopping-Time"><a href="#Stopping-Time" class="headerlink" title="Stopping Time"></a>Stopping Time</h2><p>  问题：如果下标是一个 random variable $\tau$，是否仍有 $\mathbf{E}[Z_{\tau}] &#x3D; \mathbf{E}[Z_0]$？先定义好什么叫 “下标是随机变量”。</p>
+<p>  <strong>Definition 3  (Stopping Time)</strong>  令 $\tau \in \mathbb{N} \cup {\infty}$ 为一个随机变量. 我们称其为一个 stopping time，如果 $\forall t \ge 0$，事件 “$\tau \le t$” 是 $\mathscr{F}_t$-measurable 的。</p>
+<p>  用人话讲就是，在 $t$ 时刻是否停了，根据前面的信息就可以确定。例如，一个赌徒第一次连赢五场就停手，记这个时间为 $\tau$，它就是停时（赢没赢五场看最近五场就知道）；但是他最后一次连赢五场这个时间就不是停时，因为你只看前面的轮次无法确定是否是 “最后一次”。</p>
+<h2 id="Optional-Stopping-Theorem-OST"><a href="#Optional-Stopping-Theorem-OST" class="headerlink" title="Optional Stopping Theorem (OST)"></a>Optional Stopping Theorem (OST)</h2><p>这个定理给 $\mathbf{E}[Z_\tau] &#x3D; \mathbf{E}[Z_0]$ 成立提供了三个<strong>充分条件</strong>。</p>
+<p><strong>Theorem 4 (Optional Stopping Theorem)</strong>  ${X_t}_{t \ge 0}$ 是一个 martingale 并且 $\tau$ 是一个停时 w.r.t. ${\mathscr{F}<em>t}</em>{t \ge 0}$. 那么 $\mathbf{E}[X_\tau] &#x3D; \mathbf{E}[X_0]$ 如果下面三个条件之一满足：</p>
+<ul>
+<li>$\tau$ a.s. 有界。即 $\exists n \in \mathbb{N}$ s.t. $\mathbf{Pr}[\tau \le n] &#x3D; 1$ ;</li>
+<li>$\mathbf{Pr}[\tau &lt; \infty] &#x3D; 1$ 且存在有限的 M 使得 $\forall t &lt; \tau,\ |X_t| \le M$ ;</li>
+<li>$\mathbf{E}[\tau] &lt; \infty$ 且存在常数 $c$ 使得 $\mathbf{E}[|X_{t+1}-X_t|\ \vert\ \mathscr{F}_t] \le c$ 对于任意 $t &lt; \tau$。</li>
+</ul>
+<p><strong>Example 4  (Boy or Girl)</strong>  下面三种情况的性别比例是否是1：1？</p>
+<ul>
+<li>直到生出男孩，一直生；</li>
+<li>直到男孩数&gt;女孩数，一直生；</li>
+<li>直到男孩数&gt;女孩数或者总孩子数达到10个，一直生.</li>
+</ul>
+<p>我们可以直接用 1-dim random walk 来看这个问题。记 $X_t$ 为 $t$ 步后的坐标（也即男孩数-女孩数）。</p>
+<ul>
+<li>第一种情况：直接满足 OST 条件三。显然期望有限，并且由于每次移动一步，$c&#x3D;1$；</li>
+<li>第二种情况：三个条件都不满足。实际上它肯定不是1：1；</li>
+<li>第三种情况：直接满足条件一。当然也可以满足条件二。</li>
+</ul>
+<p>满足 OST 条件后 $\mathbf{E}[X_\tau] &#x3D; \mathbf{E}[X_0] &#x3D; 0$。即期望为1：1.</p>
+<h1 id="Lec-4"><a href="#Lec-4" class="headerlink" title="Lec 4"></a>Lec 4</h1><h2 id="Proof-of-OST"><a href="#Proof-of-OST" class="headerlink" title="Proof of OST"></a>Proof of OST</h2><p>First we have<br>$$<br>\forall n \in \mathbb{N},\ \mathbf{E}[X_{\min{n, \tau}}] &#x3D; \mathbf{E}[X_0]<br>$$<br>So naturally we can decompose $X_r$ into two terms<br>$$<br>\forall n \in \mathbb{N},\ X_\tau &#x3D; X_{\min{n, \tau}} + 1[\tau &gt; n] \cdot (X_{\tau} - X_n)<br>$$</p>
+<p>$$<br>\mathbf{E}[X_\tau] &#x3D; \mathbf{E}[X_0] + \lim_{n \rightarrow \infty} \mathbf{E}[1[\tau &gt; n] \cdot (X_{\tau} - X_n)]<br>$$</p>
+<p>So we only need to verify that<br>$$<br>\lim_{n \rightarrow \infty} \mathbf{E}[1[\tau &gt; n] \cdot (X_{\tau} - X_n)]<br>$$<br>The first condition: obvisouly $1[\tau &gt; n] &#x3D; 0$.</p>
+<p>The second one:<br>$$<br>\lim_{n \rightarrow \infty} \mathbf{E}[1[\tau &gt; n] \cdot (X_{\tau} - X_n)] \le 2M \lim_{n \rightarrow \infty} \mathbf{E}[1[\tau &gt; n]] &#x3D; 2M \lim_{n \rightarrow \infty} \mathbf{Pr}[\tau &gt; n] &#x3D; 0<br>$$<br>because $\mathbf{Pr}[\tau &lt; \infty] &#x3D; 1$.</p>
+<p>The third one:<br>$$<br>\begin{split}<br>\mathbf{E}[1[\tau &gt; n] \cdot (X_{\tau} - X_n)] &amp;\le \mathbf{E}[\sum_{t&#x3D;n}^\infty |X_{t+1} - X_t| \cdot  1[\tau &gt; t]] \<br>&amp;&#x3D; \mathbf{E} \bigg[ \mathbf{E}[\sum_{t&#x3D;n}^\infty |X_{t+1} - X_t| \cdot  1[\tau &gt; t]]\ \bigg\vert\ \mathscr{F}<em>n \bigg] \<br>&amp;&#x3D; \mathbf{E} \bigg[ \mathbf{E}[|X</em>{n+1}-X_n|\ \vert\ \mathscr{F}<em>n] \cdot 1[\tau &gt; n] + \mathbf{E}\bigg[\sum</em>{t&#x3D;n+1}^\infty |X_{t+1} - X_t| \cdot  1[\tau &gt; t]\ \bigg\vert\ \mathscr{F}<em>n\bigg] \bigg] \<br>&amp;\le c \mathbf{Pr}[\tau &gt; n] + \mathbf{E}\bigg[\sum</em>{t&#x3D;n+1}^\infty |X_{t+1} - X_t| \cdot  1[\tau &gt; t]\bigg] \<br>&amp;\le \cdots \<br>&amp;\le c \sum_{t \ge n} \mathbf{Pr}[\tau &gt; t]<br>\end{split}<br>$$<br>Because $\mathbf{E}[\tau] &#x3D; \sum_{t&#x3D;0}^\infty \mathbf{Pr}[\tau &gt; t] &lt; \infty$. Therefore $\sum_{t \ge n} \mathbf{Pr}[\tau &gt; t] \rightarrow 0$ when $n \rightarrow \infty$.</p>
+<h2 id="Doobs-martingale-inequality"><a href="#Doobs-martingale-inequality" class="headerlink" title="Doobs martingale inequality"></a>Doobs martingale inequality</h2><p>用 OST 可以得出一个序列最大值的 concentration 性质。</p>
+<p><strong>Claim 2</strong>  Let ${X_t}<em>{t \ge 0}$ be a martingale w.r.t. itself where $X_t \ge 0$ for every $t$. Then<br>$$<br>\mathbf{Pr}\bigg[ \max</em>{0 \le t \le n} X_t \ge \alpha \bigg] \le \frac{\mathbf{E}[X_0]}{\alpha}<br>$$<br><strong>Proof:</strong>  Define $\tau$ as the index of the first element greater $\alpha$ occurs.<br>$$<br>\tau :&#x3D; \min(n, \min_{t\le n} {t\ \vert\ X_t \ge \alpha})<br>$$<br>It satisfies OST first condition. Then<br>$$<br>\mathbf{Pr}\bigg[ \max_{0 \le t \le n} X_t \ge \alpha \bigg] \le \mathbf{Pr}[X_\tau \ge \alpha] \le \frac{\mathbf{E}[X_\tau]}{\alpha} &#x3D; \frac{\mathbf{E}[X_0]}{\alpha}<br>$$</p>
+<h2 id="1-dim-Random-Walk-with-Two-Absorbing-Barriers"><a href="#1-dim-Random-Walk-with-Two-Absorbing-Barriers" class="headerlink" title="1-dim Random Walk with Two Absorbing Barriers"></a>1-dim Random Walk with Two Absorbing Barriers</h2><p> 两个吸收壁 $x&#x3D;-a$, $x&#x3D;b$. 记 $\tau$ 为停止时间，求 $\mathbf{E}[\tau]$.</p>
+<p>可以看出无论这个人在哪里，只要他往一个方向走 $a+b$ 步（$2^{-(a+b)}$ 概率）那么一定结束。因此在无穷的时间内 $\mathbf{E}[\tau] &lt; \infty$.  并且 $\mathbf{E}[|X_{t+1}-X_t|\ \vert\ \mathscr{F}_t] \le 1$. 因此 $\mathbf{E}[X_\tau] &#x3D; \mathbf{E}[X_0] &#x3D; 0$. 此外 $\mathbf{E}[X_\tau] &#x3D; P_a(-a) + (1-P_a) b$, 故 $P_a &#x3D; \frac{b}{a+b}$.</p>
+<p>我们需要构造一个和时间 $t$ 有关的新 martingale. 构造 $Y_t &#x3D; X_t^2 - t$. 容易验证它是鞅且满足 OST 第三条件. 故<br>$$<br>\mathbf{E}[\tau] &#x3D; \mathbf{E}[X_\tau^2]&#x3D;a^2 P_a + (1-P_a) b^2 &#x3D;  ab<br>$$</p>
+<h2 id="Pattern-Matching"><a href="#Pattern-Matching" class="headerlink" title="Pattern Matching"></a>Pattern Matching</h2><p>给定一个 pattern $P \in {0, 1}^l$。我们知道在随机串中 $P$ 出现次数的期望</p>
+
+$$
+\mathbf{E}[\text{# of occurrence of } P \text{ in } S] = \frac{n-l+1}{2^l}
+$$
+
+
+<p>那么第一次出现的期望时间是多少？这和 $P$ 本身有关（和它的回文程度有关），因为它影响失配时从哪个状态重新启动。</p>
+<p>令 $P&#x3D;p_1p_2\dots p_l$. 对于任意 $n \ge 0$, 我们假设在第 $n+1$ 次抛硬币前有一个新的赌徒 $G_{n+1}$ 带着 1 单位的钱进场。他赌从他进场开始，接下来 $l$ 次翻面结果和 $P$ match. 每次他赢了，他就有两倍的钱，并且在下回合全部押回去；如果输了，他就失去所有的钱。</p>
+<p>令 $X_t$ 表示 t 轮的翻面结果，$M_i(t)$ 表示 t 轮时赌徒 $G_i$ 拥有的钱数量。令 $Z_t :&#x3D; \sum_{i&#x3D;1}^t (M_i(t) - 1)$ 表示所有的赌徒在 t 轮翻面后钱的总和。那么 $Z_t$ 是个 martingale。令 $\tau$ 为第一次有赌徒全赢（即匹配上了），那么由 OST 的第二个条件 $\mathbf{E}[Z_\tau] &#x3D; \mathbf{E}[Z_0]&#x3D;0$. 故<br>$$<br>\mathbf{E}[\tau] &#x3D; \sum_{i&#x3D;1}^\tau \mathbf{E}[M_i(\tau)]<br>$$<br>可以看出 $\tau-l+1$ 之前的赌徒一定都离场了，而 $\tau-l+1 \sim \tau$ 之间的赌徒取决于串本身头尾匹配多少。因此上式就等于<br>$$<br>\mathbf{E}[\tau] &#x3D; \sum_{i&#x3D;1}^l 2^i \chi_i<br>$$<br>其中 $\chi_i &#x3D; 1[p_1p_2 \dots p_i &#x3D; p_{l-i+1} \dots p_l]$.</p>
+<p>计算样例：模式串 $P&#x3D;HH$，$\mathbf{E}[\tau] &#x3D; 2 + 4 &#x3D; 6$；$P&#x3D;HT$，$\mathbf{E}[\tau] &#x3D; 4$。因为如果 HT 匹配中，第一位匹配成功，第二位匹配成 H，那么我们至少还有一个 H。也就是越不回文越快匹配。最坏的情况就是 HH，因为如果一成为 T 就直接输。</p>
+<h2 id="Wald’s-Equation"><a href="#Wald’s-Equation" class="headerlink" title="Wald’s Equation"></a>Wald’s Equation</h2><p><strong>Theorem 4  (Wald’s Equation)</strong>  若 $X_1, X_2, \dots$ 为非负的 i.i.d. copy of r.v. $X$，并且 $T$ 是这个序列的一个停时。且 $\mathbf{E}[T], \mathbf{E}[X] &lt; \infty$ . 那么<br>$$<br>\mathbf{E}[\sum_{i&#x3D;1}^T X_i] &#x3D; \mathbf{E}[T] \mathbf{E}[X]<br>$$<br><strong>Proof:</strong> 令 $Z_i :&#x3D; \sum_{j&#x3D;1}^i (X_j - \mathbf{E}[X])$.</p>
+<p><strong>An Application: A Routing Problem</strong>:  假设有 n 个发送器，每一轮每个发送器都有 $\frac{1}{n}$ 的概率将消息发往路由器 R。如果同时有两个消息及以上那么所有消息作废。问期望多久时间，路由器能集齐每个发送器的消息？</p>
+<p>考虑除开发送失败，这就是一个 coupon collector。因此我们考虑两次成功发送之间的期望时间。发送成功的概率是<br>$$<br> p &#x3D; n(1-\frac{1}{n})^{n-1}\frac{1}{n} \approx e^{-1}<br>$$<br>令 $X_i$ 表示已经成功收到 $i-1$ 个包裹，成功发送下一个包裹需要多久。那么 $X_1 \sim \text{Geo}(p)$. 因此 $\mathbf{E}[X_1] &#x3D; e$. 故<br>$$<br>\mathbf{E}[\sum_{i&#x3D;1}^T X_i] &#x3D; \mathbf{E}[T] \cdot \mathbf{E}[X_1] &#x3D; e n H_n<br>$$</p>
+<h1 id="Lec-5"><a href="#Lec-5" class="headerlink" title="Lec 5"></a>Lec 5</h1><h2 id="Multi-Armed-Bandit"><a href="#Multi-Armed-Bandit" class="headerlink" title="Multi-Armed Bandit"></a>Multi-Armed Bandit</h2><p>有 $k$ 个 arm，每个 arm 的 reward 服从某种分布 $f_i \in [0, 1]$ 且均值为 $\mu_i$. 不失一般性可设 $\mu_1 \ge \mu_2 \ge \dots \ge \mu_k$. 现在假设我们可以拉 $T$ 轮，目标是最大化期望意义上的 reward。我们不知道每个 arm 的分布情况。</p>
+<p>我们记 $a_t$ 为第 t 轮拉的杆，因此第 t 轮的 reward $X_t \sim f_{a_t}$. 我们的目标等价于最小化 regret（后悔）：<br>$$<br>R(T) :&#x3D; T\mu_1 - \mathbf{E}[\sum_{i&#x3D;1}^T X_t] \ge 0<br>$$<br>我们记 $\Delta_i &#x3D; \mu_1 - \mu_i \ge 0$，$n_i(t) &#x3D; \sum_{s&#x3D;1}^t 1[a_s &#x3D; i]$（也就是到 t 轮位置拉了第 i 个杆多少次），那么</p>
+<p><strong>Proposition 1</strong><br>$$<br>R(T) &#x3D; \sum_{i&#x3D;2}^k \Delta_i \cdot \mathbf{E}[n_i(T)]<br>$$</p>
+<h2 id="The-Explore-then-Commit-ETC-Algorithm"><a href="#The-Explore-then-Commit-ETC-Algorithm" class="headerlink" title="The Explore-then-Commit (ETC) Algorithm"></a>The Explore-then-Commit (ETC) Algorithm</h2><p>先每个杆拉 $L$ 次，也就是总共探索了 $kL$ 次。然后选择最好的杆一直拉。我们记 $\hat{\mu}<em>i$ 为探索后得到的均值，<br>$$<br>R(T) &#x3D; L \sum</em>{i&#x3D;1}^k \Delta_i + (T-kL) \sum_{i&#x3D;2}^k \Delta_i \cdot \mathbf{Pr} [\hat{\mu_i} &gt; \max_{j \neq i} \hat{\mu_j}]<br>$$<br>后面那个式子的意思是 “第 i 根杆是 explore 后最好的”。</p>
+<p>由于第 1 根杆事实上是最好的，所以<br>$$<br>\mathbf{Pr} [\hat{\mu_i} &gt; \max_{j \neq i} \hat{\mu_j}] \le \mathbf{Pr} [\hat{\mu_i} &gt; \hat{\mu_1}]<br>$$<br>令 $X_j$ 表示第 $j$ 轮 $f_i$ 回馈的 reward，$Y_j$ 表示 $f_1$ 回馈的 reward，$Z_j &#x3D; X_j - Y_j \in [-1, 1]$. 那么 $\mathbf{E}[Z] &#x3D; \mathbf{E}[\sum_{j&#x3D;1}^L Z_i] &#x3D; -L \Delta_i$.<br>$$<br>\mathbf{Pr} [\hat{\mu_i} &gt; \hat{\mu_1}] &#x3D; \mathbf{Pr} [Z &gt; 0] &#x3D; \mathbf{Pr} [Z - \mathbf{E}[Z] &gt; L \Delta_i]<br>\le \exp \bigg( -\frac{2(L\Delta_i)^2}{4L} \bigg) &#x3D; \exp \bigg( -\frac{L\Delta_i^2}{2} \bigg)<br>$$<br>因此<br>$$<br>\begin{split}<br>R(T) &amp;\le L \sum_{i&#x3D;1}^k \Delta_i + (T-kL) \sum_{i&#x3D;2}^k \Delta_i \cdot \exp \bigg( -\frac{L\Delta_i^2}{2} \bigg) \<br>&amp;\le \sum_{i&#x3D;1}^k \bigg( L + T \Delta_i \exp \bigg( -\frac{L\Delta_i^2}{2} \bigg) \bigg)<br>\end{split}<br>$$<br>这里做了一些放缩。 $-kL$ 这一项肯定是不关键的，因为 explore 部分一定比 commit 部分短很多，这部分损失可以略掉。</p>
+<p>现在这里要确定参量 $L$。我们先考虑最坏情况的 $\Delta_i$, 求导可得 $\Delta_i &#x3D; \sqrt{\frac{1}{L}}$ 时取得最大值，故<br>$$<br>RHS \le \sum_{i&#x3D;1}^k \bigg( L + \frac{T e^{-1&#x2F;2}}{\sqrt{L}} \bigg)<br>$$<br>optimize $L &#x3D; \Theta(T^{\frac{2}{3}})$，有 $R(T) \le \Theta(kT^{\frac{2}{3}})$</p>
+<h2 id="The-Upper-Confidance-Bounds-UCB-Algorithm"><a href="#The-Upper-Confidance-Bounds-UCB-Algorithm" class="headerlink" title="The Upper Confidance Bounds (UCB) Algorithm"></a>The Upper Confidance Bounds (UCB) Algorithm</h2><p>ETC 算法改进之处：这个算法应该在 explore 阶段就 adaptively 使用目前获得的所有信息。</p>
+<p>UCB 算法对于每个 arm i 维护了一个置信区间 $[a_i, b_i]$ ，使得 $\mu_i$ 高概率落在这个区间内。</p>
+<p>对于给定的 $\delta_i(t)$，我们考虑如何选择 $c_i(t)$，其中 $a_i(t) &#x3D; \hat{\mu}_i - c_i(t)$，$b_i(t) &#x3D; \hat{\mu}_i + c_i(t)$，使得（为了简洁下面略掉 $t$）<br>$$<br>\mathbf{Pr}[|\mu_i - \hat{\mu_i}| &gt; c_i] \le 2 \exp (-2n_i c_i^2) \le \delta_i<br>$$<br>因此我们选择 $c_i &#x3D; \sqrt{\frac{\log(2&#x2F;\delta_i)}{2 n_i}}$.</p>
+<p>注意到如果 upper bound $b_i$ 比较大，我们去 explore 它是有好处的，因为这要么说明 $\hat{\mu}_i$ 大，要么说明 $n_i$ 小（即它还没有被充分探索）</p>
+<p>regret bound 这里就略去了，思想就是分类讨论。最后结果是<br>$$<br>R(T) \le T \Delta + \frac{6 k \log T}{\Delta} + k^2 &#x3D; \Theta(\sqrt{k T \log T})<br>$$<br>这个 regret bound 对 $\sqrt{\log T}$ 这个因子来说是 optimal 的。</p>
+<h1 id="Lec-6"><a href="#Lec-6" class="headerlink" title="Lec 6"></a>Lec 6</h1><h2 id="An-Online-Number-Guessing-Game"><a href="#An-Online-Number-Guessing-Game" class="headerlink" title="An Online Number Guessing Game"></a>An Online Number Guessing Game</h2><p>这个游戏有 $T$ rounds. 每个 round $t$，</p>
+<ul>
+<li>adversary 选择一个数 $y_t \in [0, 1]$;</li>
+<li>你选择一个数 $x_t \in [0, 1]$ (without knowing $y_t$)</li>
+<li>$y_t$ 被揭开，你付出 $(x_t - y_t)^2$ 的代价</li>
+</ul>
+<p>目标是最小化 $\sum_{t&#x3D;1}^T (x_t - y_t)^2$.</p>
+<p>这个游戏有两种 settings:</p>
+<ul>
+<li>Stochastic Setting: 每个 $y_t$ 从一个固定的分布 $\mathscr{D}$ 中独立地抽取;</li>
+<li>Adversarial Setting: adversary 可以任意选择 $y_t$, 就好像他知道 player 的策略一样。</li>
+</ul>
+<h2 id="Stochastic-Setting"><a href="#Stochastic-Setting" class="headerlink" title="Stochastic Setting"></a>Stochastic Setting</h2><p>我们需要最小化 $\mathbf{E}[\sum_{t&#x3D;1}^T (x_t - y_t)^2]$. 如果 $Y \sim \mathscr{D}$，我们只需要最小化 $x_t^2 - 2 \mathbf{E}[Y] x_t$. 显然如果我们知道分布，那么最优策略就是每次选期望。那如果我们不知道分布呢？由于我们已经知道最佳策略，我们可以定义 regret<br>$$<br>R(T) &#x3D; \sum_{t&#x3D;1}^T (x_t - y_t)^2 - \sum_{t&#x3D;1}^T (x^* - y_t)^2<br>$$<br>其中 $x^* &#x3D; \mathbf{E}[Y]$.</p>
+<h2 id="The-Adversarial-Setting"><a href="#The-Adversarial-Setting" class="headerlink" title="The Adversarial Setting"></a>The Adversarial Setting</h2><p>注意这时的 regret 是<br>$$<br>R(T) &#x3D; \max_{y_1, y_2, \dots, y_T} \bigg( \sum_{i&#x3D;1}^T (x_t-y_t)^2 - \min_{x \in [0, 1]} \sum_{t&#x3D;1}^T (x - y_t)^2 \bigg)<br>$$<br>这时这个 regret 可能是负的。式子里面减去的那一项相当于是这个问题 “”离线版本” 的最优策略。</p>
+<h2 id="The-Follow-The-Leader-Algorithm"><a href="#The-Follow-The-Leader-Algorithm" class="headerlink" title="The Follow-The-Leader Algorithm"></a>The Follow-The-Leader Algorithm</h2><p>可以算出离线最优解<br>$$<br>x^* &#x3D; \arg\min_{x \in [0, 1]} \sum_{t&#x3D;1}^T (x-y_t)^2 &#x3D; \frac{\sum_{t&#x3D;1}^T y_t}{T}<br>$$<br>那么如果这个问题是在线的，在进行第 t 轮时我们只知道 $1 \sim t-1$ 轮的信息。自然我们可以给出 $t-1$ 轮时的离线最优解 $\frac{1}{t-1} \sum_{s&#x3D;1}^{t-1} y_s$. </p>
+<p>那么我们每次都采用离线最优解，即 $x_t &#x3D; x_{t-1}^*$. 这种算法有<br>$$<br>R(T) \le 2 H_T &#x3D; \Theta(\log T)<br>$$<br>其中 $H_t &#x3D; \sum_{t&#x3D;1}^T \frac{1}{t}$.</p>
+<p><strong>Proof:</strong><br>$$<br>\begin{split}<br>\R(T) &amp;&#x3D; \sum_{t&#x3D;1}^T (x_t - y_t)^2 - \sum_{t&#x3D;1}^T (x_T^* - y_t)^2 \ &amp;\le<br>\sum_{t&#x3D;1}^T (x_t - y_t)^2 - \sum_{t&#x3D;1}^T (x_t^* - y_t)^2 \<br>&amp;&#x3D; \sum_{t&#x3D;1}^T (x_t + x_t^* - y_t) (x_t - x_t^*) \<br>&amp;\le 2 \sum_{t&#x3D;2}^T |x_{t-1}^* - x_t^*| \le 2 H_T<br>\end{split}<br>$$</p>
+<h2 id="Online-Learning"><a href="#Online-Learning" class="headerlink" title="Online Learning"></a>Online Learning</h2><p>我们可以推广上述游戏的 setting，那么这就得到了我们 online learning &#x2F; optimization 的框架。令 $V \subseteq \mathbb{R}^d$. 我们也玩 $T$ rounds，并且每一轮</p>
+<ul>
+<li>你选择一个 $x_t \in V$.</li>
+<li>adversary 选择一个损失函数 $l_t: V \rightarrow \mathbb{R}$ ;</li>
+<li>你付出代价 $l_t(x_t)$</li>
+</ul>
+<p>然后我们需要最小化 regret<br>$$<br>R(T) &#x3D; \sum_{t&#x3D;1}^T l_t(x_t) - \min_{x \in V} l_t(x)<br>$$<br>Follow-the-leader 也可以用于这个推广的问题，也就是我们每轮选择局部最优解<br>$$<br>x_t &#x3D; \arg \min_{x} \sum_{t&#x3D;1}^{T-1} l_t(x)<br>$$<br>敏锐的读者应该能发现 $R(T)$ 依赖于 $l_t(x_{t-1}^*) - l_t(x_t^*)$. 因此我们很容易给出一个例子卡掉 FTL:</p>
+<p><strong>Example 1  (Failure of FTL)</strong>  考虑 $V &#x3D; [-1, 1]$, $l_t(x) &#x3D; a_t x$. 这里 $a_1 &#x3D; -0.5$ 并且对于 $t &gt; 1$:<br>$$<br>a_t &#x3D; \begin{cases}<br>1 &amp; \text{ if } t \text{ is even} \<br>-1 &amp; \text{ if } t \text{ is odd}<br>\end{cases}<br>$$<br>那么一开始第一次乱选，假设选 $x_1^* &#x3D; 0$. 然后第二次肯定选 $x_2^* &#x3D; 1$，第三次选 $x_3^* &#x3D; -1$ … 后面就是偶数选 $1$ 奇数选 $-1$，这样 regret bound 和 $T$ 是线性的，还不如每次选 $0$.</p>
+<p>而且为了能进行 FTL，你需要先解一个离线优化问题，这并不总是容易的。这让我们先把关注点放到离线优化上来。</p>
+<h1 id="Lec-7"><a href="#Lec-7" class="headerlink" title="Lec 7"></a>Lec 7</h1><h2 id="Convex-Optimization"><a href="#Convex-Optimization" class="headerlink" title="Convex Optimization"></a>Convex Optimization</h2><p>凸集的定义：$\forall x, y \in V \subseteq \mathbb{R}^n,\ \lambda \in [0, 1]$，有 $\lambda x + (1- \lambda)y \in V$.</p>
+<p>凸函数定义：$\text{epi}(f) &#x3D; {(x, y) \in \mathbb{R}^{n+1}\ \vert\ y \ge f(x)}$.</p>
+<p>一些有用的性质：</p>
+<ul>
+<li><p>Jensen 不等式</p>
+</li>
+<li><p>泰勒展开</p>
+</li>
+<li><p>一阶优化条件<br>$$<br>x^* &#x3D; \arg \min_{x} f(x) \Longleftrightarrow \nabla f(x^*) &#x3D; 0<br>$$</p>
+<p>$$<br>x^* &#x3D; \arg \min_{x \in V} f(x) \Longleftrightarrow \forall y \in V,\ \nabla f(x^*)^T (y - x^*) \ge 0<br>$$</p>
+</li>
+</ul>
+<h2 id="Gradient-Descent-Algorithm"><a href="#Gradient-Descent-Algorithm" class="headerlink" title="Gradient Descent Algorithm"></a>Gradient Descent Algorithm</h2><p>梯度下降就是如下的更新规则<br>$$<br>x_{t+1} &#x3D; x_t - \eta \nabla f(x_t)<br>$$<br>定量地计算每次梯度下降的下降程度，我们需要引入势能函数 $\phi(x) :&#x3D; \frac{1}{2} \Vert x - x^* \Vert^2$. 那么<br>$$<br>\begin{split}<br>\phi(x_{t+1}) - \phi(x_t) &amp;&#x3D; \frac{1}{2} \bigg(\langle x_{t+1} - x^*, x_{t+1} - x^* \rangle - \langle x_{t} - x^*, x_{t} - x^* \rangle \bigg) \<br>&amp;&#x3D; \frac{1}{2} \bigg(\langle x_{t} - \eta \nabla f(x_t) - x^*, x_{t} - \eta \nabla f(x_t) - x^* \rangle - \langle x_{t} - x^*, x_{t} - x^* \rangle \bigg) \<br>&amp;&#x3D; -\eta \langle \nabla f(x_t), x_t - x^* \rangle + \frac{1}{2} \eta^2 \Vert \nabla f(x_t)^2 \Vert \<br>&amp;\le \eta(f(x^*) - f(x_t)) + \frac{1}{2} \eta^2 \Vert \nabla f(x_t)^2 \Vert<br>\end{split}<br>$$<br>那么求和加调整式子，我们有这个经典的 bound<br>$$<br>\sum_{t&#x3D;0}^{T-1} (f(x_t) - f(x^*)) \le \frac{\phi(x_0) - \phi(x_T)}{\eta} + \frac{\eta}{2} \sum_{t&#x3D;0}^{T-1} \Vert \nabla f(x_t)^2 \Vert^2<br>$$<br>如果 $f$ 是 L-Lipschitz 的，也即有 $\Vert \nabla f \Vert \le L$. 那么<br>$$<br>\sum_{t&#x3D;0}^{T-1} (f(x_t) - f(x^*)) \le \frac{\Vert x_0 - x^* \Vert^2}{2\eta} + \frac{\eta TL^2}{2} \le \Vert x_0 - x^* \Vert L \sqrt{T}<br>$$<br>如果是 constrained 的，我们需要做一个投影<br>$$<br>x_{t+1} &#x3D; \prod_V (x_t - \eta \nabla f(x_t))<br>$$<br>这个算法就变成 PGD (projected gradient descent). 上面的 bound 对 PGD 仍然成立，这是因为我们只要证明<br>$$<br>\phi(\prod_V (x_t - \eta \nabla f(x_t))) \le \phi(x_t - \eta \nabla f(x_t))<br>$$<br>也即投过之后势能更小，那么上面的分析仍然成立。投影之后势能当然会更小，因为 $x^*$ 是在 $V$ 内，如果跑到 $V$ 之外了，那投进来当然是更好的。证明也很简单，设 $y &#x3D; x_t - \eta \nabla f(x_t)$，只要证 $\Vert x_{t+1} - x^* \Vert^2 \le \Vert y - x^* \Vert^2$. 由于<br>$$<br>x_{t+1} &#x3D; \arg\min_{x \in V} \Vert x - y \Vert^2<br>$$<br>因此由一阶优化条件 $\langle x^*-x_{t+1}, y -x_{t+1}  \rangle \le 0$. 故<br>$$<br>\begin{split}<br>\Vert y - x^* \Vert^2 &amp;&#x3D; \Vert y - x_{t+1} + x_{t+1} - x^* \Vert^2 \<br>&amp;&#x3D; \Vert y - x_{t+1} \Vert^2 + \Vert x^* - x_{t+1} \Vert^2 - 2 \langle x^*-x_{t+1}, y -x_{t+1}  \rangle \ &amp;\le \Vert x^* - x_{t+1} \Vert^2<br>\end{split}<br>$$</p>
+<h2 id="Online-Gradient-Descent"><a href="#Online-Gradient-Descent" class="headerlink" title="Online Gradient Descent"></a>Online Gradient Descent</h2><p>回忆我们对 online learning 的假设。那么我们针对这个问题的 online gradient descent &#x2F; online projected gradient descent (OPGD) 算法可以直接得到<br>$$<br>x_{s+1} &#x3D; x_s - \eta_s \nabla l_t(x_s)<br>$$<br>我们可以用和 GD 相似的方法分析出一个相似的 bound。课程这里用分析 “连续版本” 的方法来得到这个 bound。</p>
+<p>大致地讲，其引入如下 settings:</p>
+<ul>
+<li>对于 $s &#x3D; 0, 1, \dots, T$，$\mathscr{T}<em>s &#x3D; \sum</em>{i&#x3D;0}^{s-1} \eta_i$. 也就是说把两轮之间看作有一段 $\eta_i$ 的时间。这样以 1 的速度匀速移动过去就走了 $\eta_i$ 的距离.</li>
+<li>$y_0 &#x3D; x_0$</li>
+<li>$\frac{\text{d} y_t}{\text{d} t} &#x3D; -g_t$，其中 $g_t &#x3D; \nabla l_{s_t}(x_{s_t})$，$s_t$ 是这个时间所属的轮数。</li>
+</ul>
+<p>形象来讲，把一步步 gradient descent 变成了每次在两个点之间做匀速直线运动。这样分析（具体略去）可以得到 regret bound<br>$$<br>\sum_{s&#x3D;0}^{T-1} \frac{\phi(x_s) - \phi(x_{s+1})}{\eta_s} + \frac{\eta_s \Vert \nabla l_s (x_s) \Vert^2}{2}<br>\le diam(V) \cdot L \cdot \sqrt{T}<br>$$<br>假设 $l$ 是 L-Lipschitz. 用在最开始的那个猜数问题，这个界比 FTL 要糟糕很多。</p>
+<h2 id="Strongly-Convex-Function"><a href="#Strongly-Convex-Function" class="headerlink" title="Strongly Convex Function"></a>Strongly Convex Function</h2><p>如果 $l_s$ 满足 $\mu$-strongly convex，这个性质即对于函数 $f$，对任意 $x, y$<br>$$<br>f(y) \ge f(x) + \nabla f(x)^T (y-x) + \frac{\mu}{2} \Vert y -x \Vert^2<br>$$<br>选择合适的 $\mu_s &#x3D; \frac{1}{(s+1) \mu}$ 那么这个 bound 可以进一步优化为<br>$$<br>\sum_{s&#x3D;0}^{T-1} l_s(x_s) - l_s(x^*) \le \frac{L^2}{2 \mu} H_T<br>$$<br>用在猜数上和 FTL 的 bound 一样好。</p>
+<h1 id="Lec-8"><a href="#Lec-8" class="headerlink" title="Lec 8"></a>Lec 8</h1><h2 id="Learning-with-Expert-Advice"><a href="#Learning-with-Expert-Advice" class="headerlink" title="Learning with Expert Advice"></a>Learning with Expert Advice</h2><p>在这个问题中，我们可以将 $[n]$ 中的每个元素当成一个 expert 并且在每一轮，player 需要选择一个 expert 来 follow。然后 adversary 展示每个专家的 loss。因此每一轮：</p>
+<ul>
+<li>The player picks some $x_t \in [n]$ ;</li>
+<li>The adversary picks some $l_t: [n] \rightarrow \mathbb{R}$ ;</li>
+<li>$l_t$ is revealed and the player pays the cost $l_t(x_t)$.</li>
+</ul>
+<p>那么 regret 函数就是 $\sum_{t&#x3D;0}^{T-1} l_t(x_t) - l_t(x^*)$. 显然 $V &#x3D; [n]$ 并不是个凸集，因此不能直接用之前的方法。我们可以用一个随机化的方法：</p>
+<ul>
+<li>The player pciks some distribution $x_t \in \Delta_{n-1}$ where $\Delta_{n-1} &#x3D; { x \in [0, 1]^n: \sum_{i&#x3D;1}^n x_i &#x3D; 1}$. 这个记号以后会经常出现，名字叫 probability simplex.</li>
+<li>The adversary picks some $l_t: [n] \rightarrow \mathbb{R}$ ;</li>
+<li>The player plays $A_t \sim x_t$ ;</li>
+<li>$l_t$ is revealed and the player pays the cost $l_t(A_t)$.</li>
+</ul>
+<p>那么对于一个固定的 expert $j \in [n]$，期望 regret 为<br>$$<br>\mathbf{E}[\sum_{t&#x3D;1}^T l_t(A_t) - l_t(j)] &#x3D; \sum_{t&#x3D;1}^T \langle l_t, x_t - e_j \rangle<br>$$<br>那么这一问题就 reduce 了一个 $\Delta_{n-1}$ 上个在线凸优化问题。我们可以设定初始分布为 $x_1 &#x3D; (\frac{1}{n}, \frac{1}{n}, \dots, \frac{1}{n})$. 然后后面用 OPGD. 这样期望 regret bound 就可以得到<br>$$<br>\frac{diam(\Delta_{n-1})}{2 \eta} + \frac{\eta T n}{2} &#x3D; \Theta(\sqrt{nT})<br>$$</p>
+<h2 id="Online-Stochastic-Gradient-Descent"><a href="#Online-Stochastic-Gradient-Descent" class="headerlink" title="Online Stochastic Gradient Descent"></a>Online Stochastic Gradient Descent</h2><p>比较 learning with expert advice 问题与 multi-armed bandits 问题，主要有两处不同：</p>
+<ul>
+<li>每个 round 结束后，multi-armed bandits 只能看到 $l_t(A_t)$ 而不是整个 $l_t$ 向量。</li>
+<li>adversary 从一个固定的分布中选择每轮的 $l_t$。</li>
+</ul>
+<p>我们放松第二点，允许它像 learning with expert advice 一样任意选 $l_t$. 这称作 adversarial multi-armed bandit problem. </p>
+<p>由于我们只知道一个位置的 $l_t(A_t)$，我们需要用这个信息估计一个 $\hat{l_t}$. 首先我们要满足无偏性，也就是说 $\mathbf{E}[\hat{l_t}] &#x3D; l_t$. 然后将这个估计的 $\hat{l_t}$ 放入 OGD 算法. 一个自然的选择是<br>$$<br>\forall i \in [n],\ \hat{l_t} &#x3D; \frac{1_{A_t &#x3D; i}}{x_t(i)} l_t(i)<br>$$<br>那么显然有 $\mathbf{E}[\hat{l_t}] &#x3D; l_t$. 那么<br>$$<br>\begin{split}<br>\mathbf{E}\bigg[ \sum_{r&#x3D;1}^T \langle l_t, x_t - e_j \rangle \bigg] &amp; \le \frac{1}{2\eta} + \frac{\eta}{2} \sum_{t&#x3D;1}^T \mathbf{E} [\Vert \hat{l_t} \Vert^2]<br>\end{split}<br>$$<br>注意<br>$$<br>\mathbf{E} [\Vert \hat{l_t} \Vert^2] &#x3D; \mathbf{E} [\mathbf{E} [\Vert \hat{l_t} \Vert^2]\ \vert\ \mathscr{F}<em>{t-1}] &#x3D; \mathbf{E} \bigg[\sum</em>{i&#x3D;1}^n x_t(i) (\frac{l_t(i)}{x_i(t)})^2 \bigg] \le \mathbf{E} \bigg[\frac{1}{x_t(i)}\bigg]<br>$$<br>由于 $x_t(i)$ 可能很趋近于 0，因此我们需要一个下界。我们修改算法，每次更新的时候给定一个下界<br>$$<br>\tilde{x_t} &#x3D; (1 - \alpha) x_t + \alpha \cdot \mathbf{u}<br>$$<br>其中 $\mathbf{u} &#x3D; (\frac{1}{n}, \frac{1}{n}, \dots, \frac{1}{n})$. 那么 bound 改进为<br>$$<br>\begin{split}<br>\mathbf{E}\bigg[ \sum_{r&#x3D;1}^T \langle l_t, x_t - e_j \rangle \bigg] &amp; \le \frac{1}{2\eta} + \frac{\eta}{2} \sum_{t&#x3D;1}^T \mathbf{E} [\Vert \hat{l_t} \Vert^2] + \alpha \cdot T \<br>&amp;\le \frac{1}{2 \eta} + \frac{\eta n^2 T}{2 \alpha} + \alpha \cdot T \le 3 \cdot 4^{-1&#x2F;3} \cdot (nT)^{2&#x2F;3}<br>\end{split}<br>$$<br>这个 bound 对 $T$ 是 $T^{\frac{2}{3}}$. 最好的 bound 是 $\sqrt{T}$ (使用 OSMD).</p>
+<h2 id="Online-Shortest-Paths"><a href="#Online-Shortest-Paths" class="headerlink" title="Online Shortest Paths"></a>Online Shortest Paths</h2><p>将每个路径看成一个 expert: path 的数量太多了.</p>
+<p>由于我们的策略是考虑 expert 上的分布，我们也可以考虑 $u$ 到 $v$ 之间的 probability flow（概率流，有点像网络流）</p>
+<p>那么我们只要指定一个初始概率流，根据 OSGD 调整它就可以了。每轮的 loss 是 $\sum_{e \in E} p(e) \cdot w_t(e)$.</p>
+<h1 id="Lec-9"><a href="#Lec-9" class="headerlink" title="Lec 9"></a>Lec 9</h1><p>这一章讲 Mirror Descent. 由于不在考试范围内先不整理. 做作业时候看过了一遍.</p>
+<h1 id="Lec-10"><a href="#Lec-10" class="headerlink" title="Lec 10"></a>Lec 10</h1><h2 id="Basics-of-Markov-Chains"><a href="#Basics-of-Markov-Chains" class="headerlink" title="Basics of Markov Chains"></a>Basics of Markov Chains</h2><p><strong>Definition 1  (Markov Chain)</strong>  一列随机变量 $X_0, X_1, \dots$ 是 Markov Chain，如果对于任意的 $t$ 以及任意的 $a_0, a_1, \dots, a_{t+1}$,<br>$$<br>\mathbf{Pr}[X_{t+1} &#x3D; a_{t+1} \vert X_0 &#x3D; a_0, X_1 &#x3D; a_1, \dots, X_t &#x3D; a_t] &#x3D; \mathbf{Pr}[X_{t+1} &#x3D; a_{t+1} \vert X_t &#x3D; a_t]<br>$$<br> 也就是说 $t+1$ 时的状态只取决于 $t$ 时的状态。</p>
+<p>记 $\Omega$ 为状态集，即 $X_t$ 能取到的所有可能的值。这里我们只考虑 $\Omega &#x3D; [n]$，并且假设转移是 time-homogeneous 的，也就是任何时间的转移矩阵都是一样的。那么我们可以用一个转移矩阵（transition matrix）$P &#x3D; (p_{ij})_{i, j \in [n]}$ 来表示。</p>
+<p>同样一个 Markov chain 还可以看作在图上随机游走。在任意时间 $t \ge 0$，我们用 $\mu_t \in \Delta_{n-1}$ 表示 $X_t$ 的分布，即<br>$$<br>\mu_t(i) :&#x3D; \mathbf{Pr}[X_t &#x3D; i]<br>$$<br>我们有 $\mu_{t+1}^T &#x3D; \mu_{t}^T P$. 那么有下面的结论</p>
+<p><strong>Proposition 2</strong>   $\mu_{t}^T &#x3D; \mu_{0}^T P^t$.</p>
+<p><strong>Definition 3  (Stationary Distribution)</strong>  一个分布 $\pi$ 是 $P$ 的一个 stationary distribution 如果它是转移的不动点<br>$$<br>\pi^T P &#x3D; \pi^T<br>$$<br>我们对以下问题感兴趣：</p>
+<ul>
+<li>每一个 Markov Chain 都有 stationary distrubution 吗？</li>
+<li>是否唯一？</li>
+<li>是否收敛到这个 stationary distrubution？</li>
+<li>收敛速率？</li>
+</ul>
+<h2 id="Fundamental-Theorem-of-Markov-Chains"><a href="#Fundamental-Theorem-of-Markov-Chains" class="headerlink" title="Fundamental Theorem of Markov Chains"></a>Fundamental Theorem of Markov Chains</h2><p><strong>Theorem 4 (Perron-Frobenius Theorem)</strong>  每一个<strong>非负矩阵</strong> A 都有一个非负实特征向量 $x$，对应特征值 $\lambda &#x3D; \rho (A) &#x3D; \max {|\lambda_i|}$.</p>
+<p>证明这里从略。</p>
+<p>那么由于 Markov Chain 的转移矩阵 $P$ 是一个 stochastic matrix，则有<br>$$<br>P \cdot \mathbf{1} &#x3D; \mathbf{1}<br>$$<br>而 $P^T$ 和 $P$ 特征值相同，因此 $\rho(P^T)&#x3D;1$. 根据上面的定理，存在对应非负实特征向量 $\pi$ 使得<br>$$<br>P^T \pi &#x3D; \pi<br>$$<br>因此 $\frac{\pi}{\Vert \pi \Vert}$ 就是所要的 stationary distribution.</p>
+<p>接下来考虑收敛性和惟一性。考虑如下 Markov Chain<br>$$<br>P &#x3D; \left[ \begin{matrix}<br>1-p &amp; p \<br>q &amp; 1-q<br>\end{matrix} \right]<br>$$<br>很简单可以验证<br>$$<br>\pi &#x3D; (\frac{q}{p+q}, \frac{p}{p+q})^T<br>$$<br>接下来我们可以来 check 其是否收敛。<br>$$<br>\begin{split}<br>\Delta_t &amp;:&#x3D; |\mu_t(1) - \pi(1)| &#x3D; |1-p-q| \cdot \Delta_{t-1}<br>\end{split}<br>$$<br>因此可以看出除了 $p&#x3D;q&#x3D;0$ 或 $p&#x3D;q&#x3D;1$，其它情况都是收敛的。</p>
+<p>当  $p&#x3D;q&#x3D;0$ 时，这个图退化成两个点，不连通。因此我们可以引出第一个限制：</p>
+<p><strong>Definition 5  (Irreducibility)</strong>  A finite Markov Chain is irreducible if its transition graph is strongly connected.</p>
+<p>如果 P 的转移图不强连通，我们称 $P$ reducible.</p>
+<p>当 $p&#x3D;q&#x3D;1$ 时，可以看出图是一个二元环，此时其会在这两个点之间左右横跳。因此我们引入第二个限制：</p>
+<p><strong>Definition 6  (Aperiodicity)</strong>  A Markov Chain is aperiodic if for any state $v$，it holds that<br>$$<br>\gcd { |c|\ \vert\ c \in C_v} &#x3D; 1<br>$$<br>也即每个点上的环的长度的最大公约数为 1，这样才能避免 “周期性”。</p>
+<p>结合这两个条件就有</p>
+<p><strong>Theorem 7  (Fundamental theorem of Markov chains)</strong>  If a finite Markov chain $P \in \mathbb{R}^{n \times n}$ is irreducible and aperiodic, then it has a unique stationary distribution $\pi \in \mathbb{R}^n$. Moreover, for any distribution $\mu \in \mathbb{R}^n$,<br>$$<br>\lim_{t \rightarrow \infty} \mu^T P^t &#x3D; \pi^T<br>$$</p>
+<h2 id="Coupling"><a href="#Coupling" class="headerlink" title="Coupling"></a>Coupling</h2><p><strong>Definition 11  (Total Variation Distance)</strong>  The total variation distance between two distribution $\mu$ and $\nu$ on a countable state space $\Omega$ is given by<br>$$<br>D_{TV}(\mu, \nu) &#x3D; \frac{1}{2} \sum_{x \in \Omega}|\mu(x) - \nu(x)|<br>$$<br><strong>Lemma 12</strong><br>$$<br>D_{TV}(\mu, \nu) &#x3D; \max_{A \subseteq \Omega} |\mu(A) - \nu(A)|<br>$$<br>这里 $\mu(A) :&#x3D; \sum_{x \in A} \mu(x) $.</p>
+<p>两个分布的 coupling 只是他们的一个联合分布。</p>
+<p><strong>Definition 13  (Coupling)</strong>  令 $\mu$ 和 $\nu$ 为相同空间 $\Omega$ 上的两个分布。令 $\omega$ 是 $\Omega \times \Omega$ 上的一个分布。如果 $(X, Y) \sim \omega$ 能推出 $X \sim \mu$ 以及 $Y \sim \nu$，那么 $\omega$ 称作 $\mu$ 和 $\nu$ 的一个 coupling。</p>
+<p><strong>Lemma 14  (Coupling Lemma)</strong><br>$$<br>\mathbf{Pr}<em>{(X, Y) \sim \omega} [X \neq Y] \ge D</em>{TV} (\mu, \nu)<br>$$<br>And there exists a coupling $\omega^*$ such that<br>$$<br>\mathbf{Pr}<em>{(X, Y) \sim \omega^*} [X \neq Y] &#x3D; D</em>{TV} (\mu, \nu)<br>$$<br><strong>Proof:</strong> 略</p>
+<p>Coupling 给两个分布的距离提供了一个上界。</p>
+<h1 id="Lec-11"><a href="#Lec-11" class="headerlink" title="Lec 11"></a>Lec 11</h1><h2 id="Proof-of-FTMC"><a href="#Proof-of-FTMC" class="headerlink" title="Proof of FTMC"></a>Proof of FTMC</h2><p><strong>Claim 2</strong>  Let $P \in \mathbb{R}^{n \times n}$ 是一个 irreducible 并且 aperiodic 的 Markov chain. 那么它满足<br>$$<br>\exists t^*: \forall i, j \in [n]: P^{t^*} (i, j) &gt; 0<br>$$<br><strong>Proof:</strong>  ireducibility 蕴含了<br>$$<br>\forall i, j: \exists t: P^t(i, j) &gt; 0<br>$$<br>由于 aperiodic 的性质，对于任意一对 $i, j$，存在 $t_{ij}$ 使得 $\forall t \ge t_{ij}$, $P^t(i, j) &gt; 0$. 因此取这些 $t_{ij}$ 的 max 上面得证。</p>
+<p>下面我们来证明 FTMC。我们只需要证<br>$$<br>\lim_{t \rightarrow \infty} D_{TV} (\mu_t, \pi) &#x3D; 0<br>$$<br>我们构造一个 coupling ${X_t}$ 和 ${Y_t}$，其中 $X_0 \sim \mu_0$，$X_1 \sim \mu_1$，$\dots$，而 $Y_i \sim \pi$。令 $(X_t, Y_t) \sim \omega_t$. 且如果某时刻 $t$ 有 $X_t &#x3D; Y_t$，那么令之后它们都相等，即 $X_{t’} &#x3D; Y_{t’}\ \forall t’ &gt; t$.</p>
+<p>由上面的 claim，存在一个全局 $t^*$，使得 $\forall i, j$, $P^{t^*}(i, j) &#x3D; \alpha \ge 0$. 那么接下来我们来证明<br>$$<br>\mathbf{Pr}[X_{t^*} &#x3D; Y_{t^*}] \ge \alpha^2<br>$$<br>简略说一下，如果 $t^*$ 前它们已经相遇了，这时候它们相等的概率就是 1；如果直到 $t^*-1$ 它们还没相遇，那么 $\mathbf{Pr}[X_{t^*} &#x3D; Y_{t^*} | \overline{B}] \ge \mathbf{Pr}[X_{t^*} &#x3D; 1] \mathbf{Pr}[Y_{t^*} &#x3D; 1] &#x3D; \alpha^2$.</p>
+<p>这样我们就有  $\mathbf{Pr}[X_{t^*} \neq Y_{t^*}] \le (1-\alpha^2)$. 类似地<br>$$<br>\mathbf{Pr}[X_{2t^*} \neq Y_{2t^*}] &#x3D; \mathbf{Pr}[X_{t^*} \neq Y_{t^*}] \mathbf{Pr}[X_{2t^*} \neq Y_{2t^*} \vert X_{t^*} \neq Y_{t^*}] \le (1-\alpha^2)^2.<br>$$<br>这说明 $\mathbf{Pr}[X_t \neq Y_t] \rightarrow 0$ 当 $t \rightarrow \infty$ 时. 证毕.</p>
+<h2 id="Mixing-Time"><a href="#Mixing-Time" class="headerlink" title="Mixing Time"></a>Mixing Time</h2><p>给定一个误差 $\varepsilon$，我们称一个 Markov chain 对于此误差的 mixing time 为任给初始分布，使得其离 stationary distribution 距离小等于误差的所需最少的时间。也即<br>$$<br>\tau_{mix}(\varepsilon) :&#x3D; \arg \min_{t} \max_{\mu_0} D_{TV}(\mu_t, \pi) \le \varepsilon<br>$$<br>通常将 $\tau_{mix}(1&#x2F;4)$ 简记为 $\tau_{mix}$.</p>
+<p>考虑我们的 coupling lemma，我们只要能构造一个 coupling $\omega_t$ 使得<br>$$<br>\mathbf{Pr}<em>{(X_t, Y_t) \sim \omega_t} [X_t \neq Y_t] \le \varepsilon<br>$$<br>那么就有 $\tau</em>{mix}(\varepsilon)\le t$. 在实践上，我们可以假设 $X_t$ 和 $Y_t$ 来自任意的初始分布（也就是任给两个初始分布 $\mu_0 &#x3D; X_0$，$\nu_0 &#x3D; Y_0$。那么当然对 $\pi$ 也是成立的。）.</p>
+<p><strong>Example 1 (Random walk on hypercube)</strong>  每次选一个位置 $i \in [n]$，有一半的概率将这个位翻转。分析这个过程的 mixing time.</p>
+<p>先要验证这个 graph 是 irreducible 且 aperiodic 的。</p>
+<p>我们先把问题等价成每次选一个位置 $i$ ，然后选一个 $b \in {0, 1}$，将这个位设成 $b$. 第一个 coupling 就是让两个人行为完全一样，这样假设每个位都是不同的，但是假设一个位相同了，它们后面就永远相同了。这是一个 coupon collector，因此 mixing time 为<br>$$<br>\tau_{mix}(\varepsilon) \le n \log \frac{n}{\varepsilon}<br>$$<br>观察到其实我们一次能改变两位. 所以我们可以优化我们的 coupling 策略如下：</p>
+<ul>
+<li>如果当前我们操作的位相同，那么表现一样；</li>
+<li>如果当前操作的位不同，选择两个不同的位将它们改到相同；</li>
+<li>剩一个，只要表现相同即可。</li>
+</ul>
+<p>这能减少一半的时间：<br>$$<br>\tau_{mix} \le \frac{1}{2} n \log n + O(n)<br>$$<br><strong>Example 2 (Shuffling Cards)</strong>  有一叠 $n$ 张卡片，考虑如下洗牌规则：随机抽一张将它放到顶上。问 mixing time？</p>
+<p>coupling：两叠卡片每次选<strong>相同的卡</strong>（花色和点数都一样），这样洗好的时间其实也是 $n$ 张牌的 coupon collector. 因此<br>$$<br>\tau_{mix} (\varepsilon) \le n \log \frac{n}{\varepsilon}<br>$$</p>
+<h1 id="Lec-12"><a href="#Lec-12" class="headerlink" title="Lec 12"></a>Lec 12</h1><h2 id="Reversible-Chains"><a href="#Reversible-Chains" class="headerlink" title="Reversible Chains"></a>Reversible Chains</h2><p>一个 Markov chain 是 (time) reversible 的如果存在一个分布 $\pi$ 满足<br>$$<br>\forall i, j \in [n],\ \pi(i) P(i, j) &#x3D; \pi(j) P(j, i)<br>$$<br>这个条件也叫做 <strong>细致平衡条件</strong>（Detailed Balance Condition）. 直观理解：transition graph 是 “无向图”.</p>
+<p><strong>Proposition 1</strong>  如果 P 对分布 $\pi$ reversible，那么 $\pi$ 是 $P$ 的一个 stationary distribution.</p>
+<p><strong>Proof:</strong><br>$$<br>\pi^T P(j) &#x3D; \sum_{i\in [n]} \pi(i) P(i, j) &#x3D; \sum_{i\in [n]} \pi(j) P(j, i) &#x3D; \pi(j)<br>$$<br>reversible chain 这一名字来源于如果 $X_0, X_1, \dots, X_t$ 是 reversible 的，那么分布 $(X_0, X_1, \dots, X_t)$ 和分布 $(X_t, X_{t-1}, \dots, X_1, X_0)$ 是完全相同的分布。</p>
+<p>由于 reversible chain 的矩阵是 symmetric 的（in some sense），这带来了很多好的性质。</p>
+<h2 id="Metropolis-Algorithm"><a href="#Metropolis-Algorithm" class="headerlink" title="Metropolis Algorithm"></a>Metropolis Algorithm</h2><p>给定一个分布 $\pi$，怎样构造一个 Markov chain 收敛到 $\pi$？很容易我们可以令 $P &#x3D; \mathbf{1} \pi^T$. 但如果我们只允许 $P$ 的一个给定的 entries 集合非 0 呢？这一问题等价于在给定的图 $G$ 上赋予转移概率，使得 $\pi$ 是它的 stationary distribution.</p>
+<p>令 $\Delta$ 为图中除了自环以外的最大度数。 对于每个 $i \in [n]$，令邻居集合（不包含自己） ${j_1, j_2, \dots, j_d}$ </p>
+<ul>
+<li>“uniformly” 随机选择一个 $k \in [\Delta + 1]$.</li>
+<li>如果 $1 \le k \le d$，那么有 $\min{\frac{\pi(j_k)}{\pi(i)}, 1}$ 的概率移动到 $j_k$；</li>
+<li>否则如果 $d+1 \le k \le \Delta+1$，do nothing.</li>
+</ul>
+<p>最后产生的 transition matrix 就是<br>$$<br>P(i, j) &#x3D; \begin{cases}<br>0 &amp;  i \not\sim j \<br>\frac{1}{\Delta+1} \min{\frac{\pi(j)}{\pi(i)}, 1} &amp; i \neq j, i \sim j \<br>1 - \sum_{k \neq i} p_{ik} &amp; i &#x3D; j<br>\end{cases}<br>$$<br>这样构造出来的 $P$ 是 reversible 的：<br>$$<br>\pi(i) P(i, j) &#x3D; \pi(i) \frac{1}{\Delta+1} \min{\frac{\pi(j)}{\pi(i)}, 1} &#x3D; \frac{1}{\Delta+1} \min{\pi(i), \pi(j)} &#x3D; P(j, i) \pi(j)<br>$$</p>
+<h2 id="Sample-Proper-Coloring"><a href="#Sample-Proper-Coloring" class="headerlink" title="Sample Proper Coloring"></a>Sample Proper Coloring</h2><p>考虑对于 $q \ge \Delta$，对 $G &#x3D; (V, E)$ 进行 $q$ 染色的方案数计数是 #P-hard 的。我们考虑近似算法。有如下结论：an approximate counting algorithm is equivalent to an uniform sampler (in many cases). 这里只展示一个方向：</p>
+<p>设 $\mathcal{C}$ 为所有染色的集合，给定一个 proper coloring $\sigma$，并且我们有一个可以 uniformly 从 $\mathcal{C}$ 中生成一个 proper coloring 的 oracle. 记 $Z &#x3D; |\mathcal{C}|$. 那么<br>$$<br>\begin{split}<br>\frac{1}{Z} &amp;&#x3D; \mathbf{P}r_{x \sim \mathcal{C}}[x &#x3D; \sigma] \<br>&amp;&#x3D; \mathbf{P}r_{x \sim \mathcal{C}}[x(1) &#x3D; \sigma(1) \land x(2) &#x3D; \sigma(2) \land \dots] \<br>&amp;&#x3D; \prod_{i&#x3D;1}^n \mathbf{Pr} \bigg[ x(i) &#x3D; \sigma(i)\ \bigg\vert\ \bigcap_{j &lt; i} x(j) &#x3D; \sigma(j) \bigg]<br>\end{split}<br>$$<br>计算这个东西只需要多项式个数的 samples.</p>
+<p>接下来我们来使用 MCMC 制作这个 sampler. 假设我们已经有了一个 proper coloring，我们做如下转移：</p>
+<ul>
+<li>Pick $v \in V$ and $c \in [q]$ uniformly at random.</li>
+<li>Recolor $v$ with $c$ if possible.</li>
+</ul>
+<p>这个图是 aperiodic 的因为有自环。对于 $q \ge \Delta+2$，这个图是 irreducible 的。</p>
+<p>mixing time: 略</p>
+<h2 id="Spectrum-of-Reversible-Markov-Chain"><a href="#Spectrum-of-Reversible-Markov-Chain" class="headerlink" title="Spectrum of Reversible Markov Chain"></a>Spectrum of Reversible Markov Chain</h2><p><strong>Theorem 2 (Spectral Decomposition Theorem)</strong>  如果 $P \in \mathbb{R}^{n \times n}$ 是一个 symmetric matrix，那么它有着 $n$ 个实根以及与之相对应的 $n$ 个两两正交的特征向量满足<br>$$<br>P &#x3D; \sum_{i&#x3D;1}^n \lambda_i v_i v_i^T<br>$$<br>如果我们令 $V &#x3D; [v_1, v_2, \dots, v_n]$ 以及 $\Lambda &#x3D; diag(\lambda_1, \lambda_2, \dots, \lambda_n)$. 那么上面式子可以写成这个形式<br>$$<br>P &#x3D; V \Lambda V^T<br>$$<br>下面我们来推导 reversible markov chain 的谱分解定理。令 $\Pi &#x3D; diag(\pi)$. 定义 $Q &#x3D; \Pi^{1&#x2F;2} P \Pi^{-1&#x2F;2}$. 那么 $Q$ 是 symmetric 的<br>$$<br>Q(i, j) &#x3D; \pi(i)^{1&#x2F;2} P(i, j) \pi(j)^{-1&#x2F;2} &#x3D; \pi(j)^{1&#x2F;2} P(j, i) \pi(i)^{-1&#x2F;2} &#x3D; Q(j, i)<br>$$<br>因此我们可以对 $Q$ 进行谱分解<br>$$<br>Q &#x3D; \sum_{i&#x3D;1}^n \lambda_i u_i u_i^T<br>$$<br>如果我们定义 $v_i :&#x3D; \Pi^{-1&#x2F;2} u_i$, 那么<br>$$<br>P &#x3D; \sum_{i&#x3D;1}^n \lambda_i \Pi^{-1&#x2F;2} u_iu_i^T \Pi^{1&#x2F;2}  &#x3D; \lambda_i v_i v_i^T \Pi<br>$$<br>我们声称 $v_1, \dots, v_n$ 是 $P$ 相对于 $\lambda_1, \dots, \lambda_n$ 的特征向量. 这是因为（正交性）<br>$$<br>\begin{split}<br>P v_j &amp;&#x3D; \sum_{i&#x3D;1}^n \lambda_i \Pi^{-1&#x2F;2} u_iu_i^T \Pi^{1&#x2F;2} \Pi^{-1&#x2F;2} u_i  \<br>&amp;&#x3D; \lambda_i v_j<br>\end{split}<br>$$<br>如果我们定义内积 $\langle x, y \rangle_\Pi :&#x3D; x^T \Pi y$, 那么在这个内积下  $v_1, \dots, v_n$ 是正交的。</p>
+<h1 id="Lec-13"><a href="#Lec-13" class="headerlink" title="Lec 13"></a>Lec 13</h1><h2 id="Variational-Characterization-of-Eigenvalues"><a href="#Variational-Characterization-of-Eigenvalues" class="headerlink" title="Variational Characterization of Eigenvalues"></a>Variational Characterization of Eigenvalues</h2><p>在本章，我们假设 $P$ 是一个 reversible chain w.r.t. $\pi$ 并且有特征值  $\lambda_1, \dots, \lambda_n$ 和特征向量  $v_1, \dots, v_n$ . 因此有分解 $P &#x3D; \lambda_i v_i v_i^T \Pi$. 假设 $\lambda_1 \ge \lambda_2 \ge \dots \ge \lambda_n$. 那么下列 proposition 成立</p>
+<p><strong>Proposition 1</strong>  $1 &#x3D; \lambda_1 \ge \lambda_2 \ge \dots \ge \lambda_n \ge -1$</p>
+<p><strong>Proof:</strong> 由于 $P$ 是一个 stochastic matrix，$|\lambda_i| \le 1$. 并且 $1$ 是一个特征值，对应的特征向量为 $\mathbf{1}$.</p>
+<p>定义 Rayleigh quotient<br>$$<br>R_P(\mathbf{x}) &#x3D; \frac{\langle \mathbf{x}, P\mathbf{x} \rangle_\Pi}{\langle \mathbf{x}, \mathbf{x} \rangle_\Pi}<br>$$<br>我们可以将 $\lambda_1$ 写成<br>$$<br>\lambda_1 &#x3D; \max_{\mathbf{x} \neq 0} R_P(\mathbf{x})<br>$$<br>这可以通过 $P$ 的 spectral decomposition 来验证. 假设 $\mathbf{x} &#x3D; \sum_{i&#x3D;1}^n a_i v_i$.<br>$$<br> R_P(\mathbf{x}) &#x3D; \sum_{i&#x3D;1}^n\frac{a_i^2}{\sum_{j&#x3D;1}^n a_j^2} \lambda_i<br>$$<br>这可以看成所有特征值的加权和。因此最大的情况当然是全部放在最大的特征值上。一般地，<br>$$<br>\lambda_k &#x3D; \max_{\mathbf{x} \neq 0, \mathbf{x} \perp span(v_1, \dots, v_{k-1}} R_P(\mathbf{x})<br>$$<br>这也等价于<br>$$<br>\lambda_k &#x3D; \max_{\text{k-dim subspace } V \subseteq \mathbb{R}^n} \min_{\mathbf{x} \in V \setminus {0}} R_P(\mathbf{x})<br>$$</p>
+<h2 id="FTMC-for-Reversible-Chains"><a href="#FTMC-for-Reversible-Chains" class="headerlink" title="FTMC for Reversible Chains"></a>FTMC for Reversible Chains</h2><p>由谱分解<br>$$<br>P^t &#x3D; \sum_{i&#x3D;1}^n \lambda_i^t v_i v_i^T \Pi &#x3D; \mathbf{1} \pi^T + \sum_{i&#x3D;2}^n \lambda_i^t v_i v_i^T \Pi<br>$$<br>由于 $\mu^T \mathbf{1} \pi^T &#x3D; \pi^T$. 因此<br>$$<br>\lim_{t \rightarrow \infty} \mu^T P^t &#x3D; \pi^T + \lim_{t \rightarrow \infty} \mu^T \bigg( \sum_{i&#x3D;2}^n \lambda_i^t v_i v_i^T \Pi \bigg)<br>$$<br>因此只要这部分成立<br>$$<br>\lim_{t \rightarrow \infty} \mu^T \bigg( \sum_{i&#x3D;2}^n \lambda_i^t v_i v_i^T \Pi \bigg) &#x3D; 0<br>$$<br>只有两种情况会使得这个不对：$\lambda_2 &#x3D; 1$ 或者 $\lambda_n &#x3D; -1$. 我们下面将展示这两种情况分别对应reducibility 和 periodicity。回忆 reversible chain 的 irreducible 意味着它 connected，aperiodical 意味着有奇环（not bipartite）</p>
+<p><strong>Proposition 3</strong>  $\lambda_2 &#x3D; 1$ 当且仅当这个图不连通.</p>
+<p><strong>Proof:</strong><br>$$<br>\begin{split}<br>\lambda_2 &amp;&#x3D; \max_{\mathbf{x} \neq 0,\ \mathbf{x} \perp \mathbf{1}} R_P(\mathbf{x}) \<br>&amp;&#x3D; \max_{\mathbf{x} \neq 0,\ \mathbf{x} 1 - \perp \mathbf{1}} 1 - \frac{\sum_{(i, j) \in E} \pi(i) P(i, j) (x(i) - x(j))^2}{ \sum_{i \in V} \pi(i) x(i)^2}<br>\end{split}<br>$$<br>ok. （仔细想想）</p>
+<p><strong>Proposition 4</strong>  $\lambda_n &#x3D; -1$ iff 这个图是二分图。<br>$$<br>\begin{split}<br>\lambda_n &amp;&#x3D; \min_{\mathbf{x} \neq 0} R_P(\mathbf{x}) \<br>&amp;&#x3D; \min_{\mathbf{x} \neq 0} \frac{\sum_{(i, j) \in V^2} \pi(i) P(i, j) (x(i) + x(j))^2 }{2 \sum_{i&#x3D;1}^n \pi(i) x(i)^2} -1<br>\end{split}<br>$$<br>$x(i) &#x3D; -x(j)$ 即图可以被 2-染色.（仔细想想）</p>
+<h2 id="Relaxation-Time"><a href="#Relaxation-Time" class="headerlink" title="Relaxation Time"></a>Relaxation Time</h2><p>上面我们分析了 $\lambda_2$ 和 $\lambda_n$ 对收敛性的影响。事实上，如果 $\lambda_2 &lt; 1$ 且 $\lambda_n &gt; -1$，或者等价的 $P$ 是 aperiodic 且 irreducible，那么<br>$$<br>\lim_{t \rightarrow \infty} \mu^T \bigg( \sum_{i&#x3D;2}^n \lambda_i^t v_i v_i^T \Pi \bigg) &#x3D; 0<br>$$<br>事实上这两个特征值的绝对值还影响收敛速度。我们定义 $\lambda^* &#x3D; \max{|\lambda_2|, |\lambda_n|}$. 定义 relaxation time 为<br>$$<br>\tau_{rel} :&#x3D; \frac{1}{1 - \lambda^*}<br>$$<br>这个 relaxation time 和 mixing time 有一个关系</p>
+<p><strong>Theorem 5</strong><br>$$<br>(\tau_{rel}-1) \log \frac{1}{2\varepsilon} \le \tau_{mix}(\varepsilon) \le \tau_{rel} \log \frac{1}{\varepsilon \pi_{min}}<br>$$</p>
+<h2 id="From-Coupling-to-Spectral-Gap"><a href="#From-Coupling-to-Spectral-Gap" class="headerlink" title="From Coupling to Spectral Gap"></a>From Coupling to Spectral Gap</h2><p><strong>Theorem 6 (Mu-Fa Chen, 1998)</strong>  如果有一个 coupling ${\omega_t}$ 使得<br>$$<br>\mathbf{E}<em>{(X</em>{t+1}, Y_{t+1}) \sim \omega_t} [d(X_{t+1}, Y_{t+1})\ \vert\ (X_t, Y_t)] \le (1 - \alpha) d (X_t, Y_t)<br>$$<br>那么有 $\lambda^* \le 1 - \alpha$.</p>
+<p>Spectral Gap 即最大的特征值和第二大的特征值之间的距离.</p>
+<p><strong>Proof:</strong> 略</p>
+<ul>
+<li>Coupling: 概率</li>
+<li>Spectral Gap: $1 - \lambda^*$ 代数</li>
+<li>Graph Expansion: 几何</li>
+</ul>
+<h2 id="Graph-Expansion"><a href="#Graph-Expansion" class="headerlink" title="Graph Expansion"></a>Graph Expansion</h2><p><strong>Example 1</strong>  考虑图上的随机游走. 由于 $P(i, j) &#x3D; \frac{1}{deg(i)}$，因此 stationary distribution 为 $\pi(i) \sim deg(i)$. 可以看出完全图的 mixing time 要快于其它图.（mixing time 为常数，几乎走一步就行）</p>
+<p>令 $P$ 是一个 $\Omega$ 上的 reversible chain。定义 $i$ 到 $j$ 的概率流 $Q(i, j) :&#x3D; \pi(i) P(i, j)$. 我们想要定义 “瓶颈”: 将图分成两部分，在这两部分之间的流是很少的。先定义 $Q(S, \overline{S}) :&#x3D; \sum_{i \in S, j \in \Omega \setminus S} Q(i, j)$. 我们定义 $S$ 的 expansion 为<br>$$<br>\Phi(S) &#x3D; \frac{Q(S, \overline{S})}{\pi(S)}<br>$$<br>这里 $\pi(S) &#x3D; \sum_{i \in S} \pi(i)$.</p>
+<p>意义：从 $\Omega$ 中抽一个点，condition on 这个点落在 $S$ ，它按照 markov chain 走一步走到 $\overline{S}$ 的概率。</p>
+<p>$P$ 的 expansion 定义为<br>$$<br>\Phi(P) &#x3D; \min_{S \subseteq \Omega: \pi(S) \le \frac{1}{2}} \Phi(S)<br>$$<br>我们总是取小于一半的 $S$. 使得 $\Phi(S) &#x3D; \Phi(P)$ 的 $S$ 是这个图的瓶颈.</p>
+<p>下面的定理说明了 small expansion implies slow mixing.</p>
+<p><strong>Theorem 7</strong><br>$$<br>\tau_{mix}(\varepsilon) \ge \frac{1-2\varepsilon}{2} \frac{1}{\Phi(P)}<br>$$<br><strong>Proof:</strong>  令 $S$ 为这个图中的瓶颈.<br>$$<br>\begin{split}<br>\mathbf{Pr}[X_t \in \overline{S}\ \vert\ X_0 \in S] &amp;&#x3D; \frac{\mathbf{Pr}[X_t \in \overline{S} \land X_0 \in S]}{\mathbf{Pr}[X_0 \in S]} \<br>&amp;\le \frac{\sum_{i&#x3D;0}^{t-1} \mathbf{Pr}[X_i \in S \land X_{i+1} \in \overline{S}]}{\mathbf{Pr}[X_0 \in S]}  \<br>&amp;&#x3D; t \mathbf{Pr}[X_1 \in \overline{S}\ \vert\ X_0 \in S] &#x3D; t \cdot \Phi(S)<br>\end{split}<br>$$<br>因此<br>$$<br>\mathbf{Pr}[X_t \in S\ \vert\ X_0 &#x3D; x_0] \ge 1 - t \cdot \Phi(S)<br>$$<br>那么<br>$$<br>D_{TV} (P^t(x_0, \cdot), \pi) \ge 1 - t \cdot \Phi(S) - \pi(S) \ge \frac{1}{2} - t \cdot \Phi(S)<br>$$</p>
+<p>令它 $\ge \varepsilon$，得到 $t \le \frac{1-2 \varepsilon}{2}  \frac{1}{\Phi(P)}$. 因此 mixing time 必须大等于它.</p>
+<h1 id="Lec-14"><a href="#Lec-14" class="headerlink" title="Lec 14"></a>Lec 14</h1><h2 id="Graph-Expansion-Cont’"><a href="#Graph-Expansion-Cont’" class="headerlink" title="Graph Expansion (Cont’)"></a>Graph Expansion (Cont’)</h2><p>Graph Expansion 还能在一般的带权无向图上定义<br>$$<br>\Phi(S) &#x3D; \frac{\sum_{i \in S, j \in \Omega \setminus S} w(i, j) }{\sum_{i, j \in S} w(i, j)}<br>$$<br> 我们回顾 sampling coloring. 我们已经证明了 $\tau_{mix}(\varepsilon) \le q n \ log \frac{n} \varepsilon$ 对于 $q &gt; 4 \Delta$. 这里我们用 Graph Expansion 来做。</p>
+<p>考虑一个 star，并且设 1 是中间的点。记 $Z$ 是所有的 proper colorings，$S$ 是所有将 1 染成 1 的 proper colorings. 那么有<br>$$<br>Q(S, \overline{S}) &#x3D; \sum_{i \in S, j \in \overline{S}} \pi(i) P(i, j) &#x3D; \frac{(q-1)(q-2)^{n-1}}{Z \cdot nq}<br>$$<br>$\pi(S) &#x3D; \frac{(q-1)^{n-1}}{Z}$. 那么<br>$$<br>\Phi(S) &#x3D; \frac{1}{nq} \frac{(q-2)^{n-1}}{(q-1)^{n-2}} &#x3D; \frac{q-1}{nq} \cdot \bigg( 1 - \frac{1}{q-1}\bigg)^{n-2} \le \frac{1}{n} \exp \bigg( - \frac{n-2}{q-1} \bigg).<br>$$<br>也就是说 $\tau_{mix} &#x3D; \Omega \bigg( n \cdot \exp  \frac{n-2}{q-1}  \bigg)&#x3D; n^{\omega(1)}$ 若 $q &#x3D; O(\frac{n}{\log n})$ .</p>
+<h2 id="Cheeger’s-Inequality"><a href="#Cheeger’s-Inequality" class="headerlink" title="Cheeger’s Inequality"></a>Cheeger’s Inequality</h2><p>考虑 $P$ 的 Laplacian，也就是 $L &#x3D; I - P$. 有分解<br>$$<br>L &#x3D;\sum_{i&#x3D;1}^n (1-\lambda_i) v_i v_i^T \Pi<br>$$<br>我们记它的特征值为 $\gamma_i &#x3D; 1 - \lambda_i$. 那么有 $0 &#x3D; \gamma_1 \le \gamma_2 \le \dots \le \gamma_n \le 2$. </p>
+<p>Cheeger’s Inequality 为<br>$$<br>\frac{\gamma_2}{2} \le \Phi(P) \le \sqrt{2 \gamma_2}<br>$$</p>
+
+  </div>
+</article>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+        
+          <li><a href="/blog/">Home</a></li>
+        
+          <li><a href="/blog/about/">About</a></li>
+        
+          <li><a href="/blog/archives/">Articles</a></li>
+        
+          <li><a href="/blog/links/">Links</a></li>
+        
+          <li><a target="_blank" rel="noopener" href="http://chaofanlin.com">Academic Page</a></li>
+        
+      </ul>
+    </div>
+
+    
+    
+      <div id="toc-footer" style="display: none">
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#CS3958-Advanced-Algorithms"><span class="toc-number">1.</span> <span class="toc-text">CS3958: Advanced Algorithms</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Lec1"><span class="toc-number">2.</span> <span class="toc-text">Lec1</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Concentration-Inequalities"><span class="toc-number">2.1.</span> <span class="toc-text">Concentration Inequalities</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#The-Averaging-Trick"><span class="toc-number">2.2.</span> <span class="toc-text">The Averaging Trick</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Chernoff-Bound"><span class="toc-number">2.3.</span> <span class="toc-text">Chernoff Bound</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#The-Median-Trick"><span class="toc-number">2.4.</span> <span class="toc-text">The Median Trick</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Lec-2"><span class="toc-number">3.</span> <span class="toc-text">Lec 2</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Threshold-Behavior-of-Random-Graphs"><span class="toc-number">3.1.</span> <span class="toc-text">Threshold Behavior of Random Graphs</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Hoeffding%E2%80%99s-Inequality"><span class="toc-number">3.2.</span> <span class="toc-text">Hoeffding’s Inequality</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Concentration-on-Margtinalges"><span class="toc-number">3.3.</span> <span class="toc-text">Concentration on Margtinalges</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Azuma-Hoeffding%E2%80%99s-Inequality"><span class="toc-number">3.4.</span> <span class="toc-text">Azuma-Hoeffding’s Inequality</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Lec-3"><span class="toc-number">4.</span> <span class="toc-text">Lec 3</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Martingale-cont%E2%80%99d"><span class="toc-number">4.1.</span> <span class="toc-text">Martingale (cont’d)</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#McDiarmid%E2%80%99s-Inequality"><span class="toc-number">4.2.</span> <span class="toc-text">McDiarmid’s Inequality</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Stopping-Time"><span class="toc-number">4.3.</span> <span class="toc-text">Stopping Time</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Optional-Stopping-Theorem-OST"><span class="toc-number">4.4.</span> <span class="toc-text">Optional Stopping Theorem (OST)</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Lec-4"><span class="toc-number">5.</span> <span class="toc-text">Lec 4</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Proof-of-OST"><span class="toc-number">5.1.</span> <span class="toc-text">Proof of OST</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Doobs-martingale-inequality"><span class="toc-number">5.2.</span> <span class="toc-text">Doobs martingale inequality</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#1-dim-Random-Walk-with-Two-Absorbing-Barriers"><span class="toc-number">5.3.</span> <span class="toc-text">1-dim Random Walk with Two Absorbing Barriers</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Pattern-Matching"><span class="toc-number">5.4.</span> <span class="toc-text">Pattern Matching</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Wald%E2%80%99s-Equation"><span class="toc-number">5.5.</span> <span class="toc-text">Wald’s Equation</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Lec-5"><span class="toc-number">6.</span> <span class="toc-text">Lec 5</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Multi-Armed-Bandit"><span class="toc-number">6.1.</span> <span class="toc-text">Multi-Armed Bandit</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#The-Explore-then-Commit-ETC-Algorithm"><span class="toc-number">6.2.</span> <span class="toc-text">The Explore-then-Commit (ETC) Algorithm</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#The-Upper-Confidance-Bounds-UCB-Algorithm"><span class="toc-number">6.3.</span> <span class="toc-text">The Upper Confidance Bounds (UCB) Algorithm</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Lec-6"><span class="toc-number">7.</span> <span class="toc-text">Lec 6</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#An-Online-Number-Guessing-Game"><span class="toc-number">7.1.</span> <span class="toc-text">An Online Number Guessing Game</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Stochastic-Setting"><span class="toc-number">7.2.</span> <span class="toc-text">Stochastic Setting</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#The-Adversarial-Setting"><span class="toc-number">7.3.</span> <span class="toc-text">The Adversarial Setting</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#The-Follow-The-Leader-Algorithm"><span class="toc-number">7.4.</span> <span class="toc-text">The Follow-The-Leader Algorithm</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Online-Learning"><span class="toc-number">7.5.</span> <span class="toc-text">Online Learning</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Lec-7"><span class="toc-number">8.</span> <span class="toc-text">Lec 7</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Convex-Optimization"><span class="toc-number">8.1.</span> <span class="toc-text">Convex Optimization</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Gradient-Descent-Algorithm"><span class="toc-number">8.2.</span> <span class="toc-text">Gradient Descent Algorithm</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Online-Gradient-Descent"><span class="toc-number">8.3.</span> <span class="toc-text">Online Gradient Descent</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Strongly-Convex-Function"><span class="toc-number">8.4.</span> <span class="toc-text">Strongly Convex Function</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Lec-8"><span class="toc-number">9.</span> <span class="toc-text">Lec 8</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Learning-with-Expert-Advice"><span class="toc-number">9.1.</span> <span class="toc-text">Learning with Expert Advice</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Online-Stochastic-Gradient-Descent"><span class="toc-number">9.2.</span> <span class="toc-text">Online Stochastic Gradient Descent</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Online-Shortest-Paths"><span class="toc-number">9.3.</span> <span class="toc-text">Online Shortest Paths</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Lec-9"><span class="toc-number">10.</span> <span class="toc-text">Lec 9</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Lec-10"><span class="toc-number">11.</span> <span class="toc-text">Lec 10</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Basics-of-Markov-Chains"><span class="toc-number">11.1.</span> <span class="toc-text">Basics of Markov Chains</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Fundamental-Theorem-of-Markov-Chains"><span class="toc-number">11.2.</span> <span class="toc-text">Fundamental Theorem of Markov Chains</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Coupling"><span class="toc-number">11.3.</span> <span class="toc-text">Coupling</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Lec-11"><span class="toc-number">12.</span> <span class="toc-text">Lec 11</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Proof-of-FTMC"><span class="toc-number">12.1.</span> <span class="toc-text">Proof of FTMC</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Mixing-Time"><span class="toc-number">12.2.</span> <span class="toc-text">Mixing Time</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Lec-12"><span class="toc-number">13.</span> <span class="toc-text">Lec 12</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Reversible-Chains"><span class="toc-number">13.1.</span> <span class="toc-text">Reversible Chains</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Metropolis-Algorithm"><span class="toc-number">13.2.</span> <span class="toc-text">Metropolis Algorithm</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Sample-Proper-Coloring"><span class="toc-number">13.3.</span> <span class="toc-text">Sample Proper Coloring</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Spectrum-of-Reversible-Markov-Chain"><span class="toc-number">13.4.</span> <span class="toc-text">Spectrum of Reversible Markov Chain</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Lec-13"><span class="toc-number">14.</span> <span class="toc-text">Lec 13</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Variational-Characterization-of-Eigenvalues"><span class="toc-number">14.1.</span> <span class="toc-text">Variational Characterization of Eigenvalues</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#FTMC-for-Reversible-Chains"><span class="toc-number">14.2.</span> <span class="toc-text">FTMC for Reversible Chains</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Relaxation-Time"><span class="toc-number">14.3.</span> <span class="toc-text">Relaxation Time</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#From-Coupling-to-Spectral-Gap"><span class="toc-number">14.4.</span> <span class="toc-text">From Coupling to Spectral Gap</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Graph-Expansion"><span class="toc-number">14.5.</span> <span class="toc-text">Graph Expansion</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Lec-14"><span class="toc-number">15.</span> <span class="toc-text">Lec 14</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Graph-Expansion-Cont%E2%80%99"><span class="toc-number">15.1.</span> <span class="toc-text">Graph Expansion (Cont’)</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Cheeger%E2%80%99s-Inequality"><span class="toc-number">15.2.</span> <span class="toc-text">Cheeger’s Inequality</span></a></li></ol></li></ol>
+      </div>
+    
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://siriusneo.github.io/blog/2023/01/08/cs3958-advanced-algorithm-notes/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://siriusneo.github.io/blog/2023/01/08/cs3958-advanced-algorithm-notes/&text=CS3958-Advanced Algorithm-Notes"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://siriusneo.github.io/blog/2023/01/08/cs3958-advanced-algorithm-notes/&title=CS3958-Advanced Algorithm-Notes"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://siriusneo.github.io/blog/2023/01/08/cs3958-advanced-algorithm-notes/&is_video=false&description=CS3958-Advanced Algorithm-Notes"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=CS3958-Advanced Algorithm-Notes&body=Check out this article: https://siriusneo.github.io/blog/2023/01/08/cs3958-advanced-algorithm-notes/"><i class="fa-solid fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://siriusneo.github.io/blog/2023/01/08/cs3958-advanced-algorithm-notes/&title=CS3958-Advanced Algorithm-Notes"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://siriusneo.github.io/blog/2023/01/08/cs3958-advanced-algorithm-notes/&title=CS3958-Advanced Algorithm-Notes"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://siriusneo.github.io/blog/2023/01/08/cs3958-advanced-algorithm-notes/&title=CS3958-Advanced Algorithm-Notes"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://siriusneo.github.io/blog/2023/01/08/cs3958-advanced-algorithm-notes/&title=CS3958-Advanced Algorithm-Notes"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://siriusneo.github.io/blog/2023/01/08/cs3958-advanced-algorithm-notes/&name=CS3958-Advanced Algorithm-Notes&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://siriusneo.github.io/blog/2023/01/08/cs3958-advanced-algorithm-notes/&t=CS3958-Advanced Algorithm-Notes"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fa-solid fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        
+          <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fa-solid fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fa-solid fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy;
+    
+    
+    2020-2023
+    Chaofan
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+        <!--
+       --><li><a href="/blog/">Home</a></li><!--
+     --><!--
+       --><li><a href="/blog/about/">About</a></li><!--
+     --><!--
+       --><li><a href="/blog/archives/">Articles</a></li><!--
+     --><!--
+       --><li><a href="/blog/links/">Links</a></li><!--
+     --><!--
+       --><li><a target="_blank" rel="noopener" href="http://chaofanlin.com">Academic Page</a></li><!--
+     -->
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+
+
+  <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" crossorigin="anonymous" onload="this.onload=null;this.rel='stylesheet'"/>
+
+
+    <!-- jquery -->
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" crossorigin="anonymous"></script>
+
+
+
+
+<!-- clipboard -->
+
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.7/clipboard.min.js" crossorigin="anonymous"></script>
+  
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"Copy to clipboard!\">";
+    btn += '<i class="fa-regular fa-clone"></i>';
+    btn += '</span>';
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "Copied!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/blog/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Baidu Analytics -->
+
+<!-- Cloudflare Analytics -->
+
+<!-- Disqus Comments -->
+
+<!-- utterances Comments -->
+
+</body>
+</html>

@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang=en>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+    <meta name="description" content="好久没更博客啦，大二上的时光也走过 2&#x2F;3 了。这学期忙碌程度我觉得和大一上可以相提并论了。 大一上为什么会那么忙呢？主要是因为刚进大学，啥事效率都挺低的，而且大作业也是磨了我很久，数分和高代两门硬课也需要好好学。似乎到了大一下之后，就没有这么忙了——Ticket System 虽然也是一项大作业，但是由于 STLite 比较友好，我很早就开始了火车票的开发，并且火车票实际上 debug">
+<meta property="og:type" content="article">
+<meta property="og:title" content="火龙果味的近况随记">
+<meta property="og:url" content="https://siriusneo.github.io/blog/2021/11/30/%E7%81%AB%E9%BE%99%E6%9E%9C%E5%91%B3%E7%9A%84%E8%BF%91%E5%86%B5%E9%9A%8F%E8%AE%B0/index.html">
+<meta property="og:site_name" content="Metric Space | 度量空间">
+<meta property="og:description" content="好久没更博客啦，大二上的时光也走过 2&#x2F;3 了。这学期忙碌程度我觉得和大一上可以相提并论了。 大一上为什么会那么忙呢？主要是因为刚进大学，啥事效率都挺低的，而且大作业也是磨了我很久，数分和高代两门硬课也需要好好学。似乎到了大一下之后，就没有这么忙了——Ticket System 虽然也是一项大作业，但是由于 STLite 比较友好，我很早就开始了火车票的开发，并且火车票实际上 debug">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2021-11-30T14:41:55.000Z">
+<meta property="article:modified_time" content="2023-10-08T17:19:36.665Z">
+<meta property="article:author" content="Chaofan">
+<meta name="twitter:card" content="summary">
+    
+    
+      
+        
+          <link rel="shortcut icon" href="/blog/images/favicon.ico">
+        
+      
+      
+        
+          <link rel="icon" type="image/png" href="/blog/images/android-chrome-192x192.png" sizes="192x192">
+        
+      
+      
+        
+          <link rel="apple-touch-icon" sizes="180x180" href="/blog/images/apple-touch-icon.png">
+        
+      
+    
+    <!-- title -->
+    <title>火龙果味的近况随记</title>
+    <!-- async scripts -->
+    <!-- Google Analytics -->
+
+
+    <!-- Umami Analytics -->
+
+
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/blog/css/style.css">
+
+    <!-- persian styles -->
+    
+    <!-- rss -->
+    
+    
+	<!-- mathjax -->
+	
+		<script type="text/x-mathjax-config">
+		  MathJax.Hub.Config({
+			tex2jax: {
+			  skipTags: ['script', 'noscript', 'style', 'textarea', 'pre'],
+			  inlineMath: [['$','$']]
+			}
+		  });
+		</script>
+		<script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-MML-AM_CHTML' async></script>
+	
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#" aria-label="Menu"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#" aria-label="Menu"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" aria-label="Top" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fa-solid fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+        <!--
+       --><li><a href="/blog/">Home</a></li><!--
+     --><!--
+       --><li><a href="/blog/about/">About</a></li><!--
+     --><!--
+       --><li><a href="/blog/archives/">Articles</a></li><!--
+     --><!--
+       --><li><a href="/blog/links/">Links</a></li><!--
+     --><!--
+       --><li><a target="_blank" rel="noopener" href="http://chaofanlin.com">Academic Page</a></li><!--
+     -->
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" aria-label="Previous post" href="/blog/2022/03/04/%E5%88%86%E6%B2%BB%E8%89%BA%E6%9C%AF%E7%9A%84%E9%A1%B6%E7%82%B9%EF%BC%8C%E5%BF%AB%E9%80%9F%E5%82%85%E9%87%8C%E5%8F%B6%E5%8F%98%E6%8D%A2/"><i class="fa-solid fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" aria-label="Next post" href="/blog/2021/08/13/%E8%AE%B0%E5%8F%88%E4%B8%80%E6%AC%A1-touhou-%E7%BE%A4%E5%B0%8F%E8%81%9A/"><i class="fa-solid fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" aria-label="Back to top" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" aria-label="Share post" href="#"><i class="fa-solid fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://siriusneo.github.io/blog/2021/11/30/%E7%81%AB%E9%BE%99%E6%9E%9C%E5%91%B3%E7%9A%84%E8%BF%91%E5%86%B5%E9%9A%8F%E8%AE%B0/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://siriusneo.github.io/blog/2021/11/30/%E7%81%AB%E9%BE%99%E6%9E%9C%E5%91%B3%E7%9A%84%E8%BF%91%E5%86%B5%E9%9A%8F%E8%AE%B0/&text=火龙果味的近况随记"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://siriusneo.github.io/blog/2021/11/30/%E7%81%AB%E9%BE%99%E6%9E%9C%E5%91%B3%E7%9A%84%E8%BF%91%E5%86%B5%E9%9A%8F%E8%AE%B0/&title=火龙果味的近况随记"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://siriusneo.github.io/blog/2021/11/30/%E7%81%AB%E9%BE%99%E6%9E%9C%E5%91%B3%E7%9A%84%E8%BF%91%E5%86%B5%E9%9A%8F%E8%AE%B0/&is_video=false&description=火龙果味的近况随记"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=火龙果味的近况随记&body=Check out this article: https://siriusneo.github.io/blog/2021/11/30/%E7%81%AB%E9%BE%99%E6%9E%9C%E5%91%B3%E7%9A%84%E8%BF%91%E5%86%B5%E9%9A%8F%E8%AE%B0/"><i class="fa-solid fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://siriusneo.github.io/blog/2021/11/30/%E7%81%AB%E9%BE%99%E6%9E%9C%E5%91%B3%E7%9A%84%E8%BF%91%E5%86%B5%E9%9A%8F%E8%AE%B0/&title=火龙果味的近况随记"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://siriusneo.github.io/blog/2021/11/30/%E7%81%AB%E9%BE%99%E6%9E%9C%E5%91%B3%E7%9A%84%E8%BF%91%E5%86%B5%E9%9A%8F%E8%AE%B0/&title=火龙果味的近况随记"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://siriusneo.github.io/blog/2021/11/30/%E7%81%AB%E9%BE%99%E6%9E%9C%E5%91%B3%E7%9A%84%E8%BF%91%E5%86%B5%E9%9A%8F%E8%AE%B0/&title=火龙果味的近况随记"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://siriusneo.github.io/blog/2021/11/30/%E7%81%AB%E9%BE%99%E6%9E%9C%E5%91%B3%E7%9A%84%E8%BF%91%E5%86%B5%E9%9A%8F%E8%AE%B0/&title=火龙果味的近况随记"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://siriusneo.github.io/blog/2021/11/30/%E7%81%AB%E9%BE%99%E6%9E%9C%E5%91%B3%E7%9A%84%E8%BF%91%E5%86%B5%E9%9A%8F%E8%AE%B0/&name=火龙果味的近况随记&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://siriusneo.github.io/blog/2021/11/30/%E7%81%AB%E9%BE%99%E6%9E%9C%E5%91%B3%E7%9A%84%E8%BF%91%E5%86%B5%E9%9A%8F%E8%AE%B0/&t=火龙果味的近况随记"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    
+    
+  </span>
+</div>
+
+    
+    <div class="content index py4 ">
+        
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle p-name" itemprop="name headline">
+        火龙果味的近况随记
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author p-author h-card" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span class="p-name" itemprop="name">Chaofan</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2021-11-30T14:41:55.000Z" class="dt-published" itemprop="datePublished">2021-11-30</time>
+        
+      
+    </div>
+
+
+      
+    <div class="article-category">
+        <i class="fa-solid fa-archive"></i>
+        <a class="category-link" href="/blog/categories/%E6%9D%80%E6%84%8F%E7%9A%84%E7%99%BE%E5%90%88/">杀意的百合</a>
+    </div>
+
+
+      
+
+    </div>
+  </header>
+  
+
+  <div class="content e-content" itemprop="articleBody">
+    <p>好久没更博客啦，大二上的时光也走过 2&#x2F;3 了。这学期忙碌程度我觉得和大一上可以相提并论了。</p>
+<p>大一上为什么会那么忙呢？主要是因为刚进大学，啥事效率都挺低的，而且大作业也是磨了我很久，数分和高代两门硬课也需要好好学。似乎到了大一下之后，就没有这么忙了——Ticket System 虽然也是一项大作业，但是由于 STLite 比较友好，我很早就开始了火车票的开发，并且火车票实际上 debug 情况也比较好，组后也是开发完了前端。</p>
+<p>而现在，相比大一上，课是更少了。中期退课我把选修课退掉了，下午几乎就没啥子课。不过我（很愚蠢地）选择了双修科学计算和代数结构，这两门课都有点难度——事实上，加上数理逻辑，这三门数学课我觉得哪一门我的上课效率都极低。每次想着找个时间自学，每次又不声不响地拖到了下一节上课。以及编译器 + CPU 的双线大作业，确实工作量很大。CPU 的 debug 工作尤其耗时，而编译器主要是无法入手、不清楚怎么写。</p>
+<hr>
+<p>近况是 CPU 非 Bonus 部分基本写完 + 调试通过，因此我单线程的大脑就暂时将重心放在编译器了。IR 感觉已经懂了，不过仍需要时间施工。</p>
+<p>三门数学课都得找时间复习了。大体上还是学得懂的，不过总觉得没有数分得心应手了呢。</p>
+<p>物理课也有点迷了，我感觉自己上课的状态确实非常神游。可能我确实不适合面对面授课的方式吧。</p>
+<p>更别提一些奇怪的边边角角的事了。揽了学习委员、助教、团推优，估计过个一两周就要团日了。唉。</p>
+<hr>
+<p>近日还发生了一些倒霉的事情。拿了一些奖学金，于是请全班喝了个奶茶——很悲催的是，因为体测的原因，某一天中午我拖到了上课前5分钟才从宿舍出发，于是我就神志不清地把火龙果汁放到了书包里。它不负众望地被压爆了。</p>
+<p>苹果充电器报废*1，充电宝报废*1。净亏了200 RMB大概。</p>
+<p>然后就是这两天，不是充电宝坏了嘛，然后我又买了一个。然后，它，又丢了。真是日了狗了。而且我为了方便，双十一的时候买了个数据线收纳包，把很多杂七杂八的东西都放进去了，然后它们就，一起丢了！</p>
+<p>还包括我的 3ds，呜呜呜。又净亏了 200 左右吧</p>
+<p>现在大概已经释怀了吧。吃一堑长一智（虽然好像之前 1k 多的手表丢了之后也没有长啥智），这种事情就顺其自然吧。刚好也要期末了，游戏机丢了也算是断绝念头了（呜呜呜我的DP才刚开始），苹果充电线买了个罗森的数据线作为替代了。</p>
+<p>反正，我还有助教的工资嘛。奖学金也在呢。格局要大。（自我安慰状）</p>
+<hr>
+<p>前两周和女朋友的关系突然冷淡了下来，原因比较复杂——情感这种东西，确实很微妙。可能是我确实太少顾及她的感受了吧。于是这周末就和她吵架了，吵完后真的非常难过，感觉心里全想着她过去的那些种种的好，整个人都抑郁了。那天晚上，我不停地找着我们之前一起买的情侣手链。我怕把它弄丢了。弄丢了，就找不回来了啊。</p>
+<p>不过，幸运的是，我们马上就和好啦。一起吃了顿麦当劳，然后去我们熟悉的致远湖坐了坐。</p>
+<p>那天晚上很清爽，温度也不是很冷。</p>
+<p>东西丢了再买就是了，但我不能再让她伤心了——我要更加关心她，珍惜她，爱她。嗯。打字出来好像显得没那么肉麻了。</p>
+<p>虽然发生了种种糟糕的事，但其实没有什么非常致命性的灾难，学习节奏大概也是按着我的计划进行的。这学期应该会顺利吧。冬天过去之后，就是春天了吧？</p>
+<hr>
+<p>最后，我想以《Henceforth（从今往后）》的歌词作为 11 月的结尾——即使一无所有，还是要走下去啊。</p>
+<blockquote>
+<p>啊啊 以后也会是那样啊</p>
+<p>别无所求地活下去</p>
+<p>啊啊 比起金钱还是好的</p>
+<p>这样什么都不会失去吧</p>
+<p>啊啊！ 别哭泣啊天空，别担心！</p>
+<p>没有无尽的夜晚的</p>
+<p>啊啊 黑暗此般纯粹</p>
+<p>唯有畏惧的我如此弱小</p>
+</blockquote>
+
+  </div>
+</article>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+        
+          <li><a href="/blog/">Home</a></li>
+        
+          <li><a href="/blog/about/">About</a></li>
+        
+          <li><a href="/blog/archives/">Articles</a></li>
+        
+          <li><a href="/blog/links/">Links</a></li>
+        
+          <li><a target="_blank" rel="noopener" href="http://chaofanlin.com">Academic Page</a></li>
+        
+      </ul>
+    </div>
+
+    
+    
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://siriusneo.github.io/blog/2021/11/30/%E7%81%AB%E9%BE%99%E6%9E%9C%E5%91%B3%E7%9A%84%E8%BF%91%E5%86%B5%E9%9A%8F%E8%AE%B0/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://siriusneo.github.io/blog/2021/11/30/%E7%81%AB%E9%BE%99%E6%9E%9C%E5%91%B3%E7%9A%84%E8%BF%91%E5%86%B5%E9%9A%8F%E8%AE%B0/&text=火龙果味的近况随记"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://siriusneo.github.io/blog/2021/11/30/%E7%81%AB%E9%BE%99%E6%9E%9C%E5%91%B3%E7%9A%84%E8%BF%91%E5%86%B5%E9%9A%8F%E8%AE%B0/&title=火龙果味的近况随记"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://siriusneo.github.io/blog/2021/11/30/%E7%81%AB%E9%BE%99%E6%9E%9C%E5%91%B3%E7%9A%84%E8%BF%91%E5%86%B5%E9%9A%8F%E8%AE%B0/&is_video=false&description=火龙果味的近况随记"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=火龙果味的近况随记&body=Check out this article: https://siriusneo.github.io/blog/2021/11/30/%E7%81%AB%E9%BE%99%E6%9E%9C%E5%91%B3%E7%9A%84%E8%BF%91%E5%86%B5%E9%9A%8F%E8%AE%B0/"><i class="fa-solid fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://siriusneo.github.io/blog/2021/11/30/%E7%81%AB%E9%BE%99%E6%9E%9C%E5%91%B3%E7%9A%84%E8%BF%91%E5%86%B5%E9%9A%8F%E8%AE%B0/&title=火龙果味的近况随记"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://siriusneo.github.io/blog/2021/11/30/%E7%81%AB%E9%BE%99%E6%9E%9C%E5%91%B3%E7%9A%84%E8%BF%91%E5%86%B5%E9%9A%8F%E8%AE%B0/&title=火龙果味的近况随记"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://siriusneo.github.io/blog/2021/11/30/%E7%81%AB%E9%BE%99%E6%9E%9C%E5%91%B3%E7%9A%84%E8%BF%91%E5%86%B5%E9%9A%8F%E8%AE%B0/&title=火龙果味的近况随记"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://siriusneo.github.io/blog/2021/11/30/%E7%81%AB%E9%BE%99%E6%9E%9C%E5%91%B3%E7%9A%84%E8%BF%91%E5%86%B5%E9%9A%8F%E8%AE%B0/&title=火龙果味的近况随记"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://siriusneo.github.io/blog/2021/11/30/%E7%81%AB%E9%BE%99%E6%9E%9C%E5%91%B3%E7%9A%84%E8%BF%91%E5%86%B5%E9%9A%8F%E8%AE%B0/&name=火龙果味的近况随记&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://siriusneo.github.io/blog/2021/11/30/%E7%81%AB%E9%BE%99%E6%9E%9C%E5%91%B3%E7%9A%84%E8%BF%91%E5%86%B5%E9%9A%8F%E8%AE%B0/&t=火龙果味的近况随记"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fa-solid fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fa-solid fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy;
+    
+    
+    2020-2023
+    Chaofan
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+        <!--
+       --><li><a href="/blog/">Home</a></li><!--
+     --><!--
+       --><li><a href="/blog/about/">About</a></li><!--
+     --><!--
+       --><li><a href="/blog/archives/">Articles</a></li><!--
+     --><!--
+       --><li><a href="/blog/links/">Links</a></li><!--
+     --><!--
+       --><li><a target="_blank" rel="noopener" href="http://chaofanlin.com">Academic Page</a></li><!--
+     -->
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+
+
+  <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" crossorigin="anonymous" onload="this.onload=null;this.rel='stylesheet'"/>
+
+
+    <!-- jquery -->
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" crossorigin="anonymous"></script>
+
+
+
+
+<!-- clipboard -->
+
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.7/clipboard.min.js" crossorigin="anonymous"></script>
+  
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"Copy to clipboard!\">";
+    btn += '<i class="fa-regular fa-clone"></i>';
+    btn += '</span>';
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "Copied!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/blog/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Baidu Analytics -->
+
+<!-- Cloudflare Analytics -->
+
+<!-- Disqus Comments -->
+
+<!-- utterances Comments -->
+
+</body>
+</html>
