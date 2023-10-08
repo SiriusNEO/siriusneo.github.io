@@ -9,7 +9,7 @@
     <meta name="description" content="CS3958: Advanced Algorithms这是 ACM 班 2022 Fall 高级算法课程的个人整理小笔记. 众所周知, 我都是在期末复习的时候才认真做一遍笔记的. 课程框架：  Basic Probabilistic Tools Concentration Inequalities Martingale   Optimization First-Order Optimization">
 <meta property="og:type" content="article">
 <meta property="og:title" content="CS3958-Advanced Algorithm-Notes">
-<meta property="og:url" content="https://siriusneo.github.io/blog/2023/01/08/cs3958-advanced-algorithm-notes/index.html">
+<meta property="og:url" content="https://siriusneo.github.io/2023/01/08/cs3958-advanced-algorithm-notes/index.html">
 <meta property="og:site_name" content="Metric Space | 度量空间">
 <meta property="og:description" content="CS3958: Advanced Algorithms这是 ACM 班 2022 Fall 高级算法课程的个人整理小笔记. 众所周知, 我都是在期末复习的时候才认真做一遍笔记的. 课程框架：  Basic Probabilistic Tools Concentration Inequalities Martingale   Optimization First-Order Optimization">
 <meta property="og:locale" content="en_US">
@@ -21,17 +21,17 @@
     
       
         
-          <link rel="shortcut icon" href="/blog/images/favicon.ico">
+          <link rel="shortcut icon" href="/images/favicon.ico">
         
       
       
         
-          <link rel="icon" type="image/png" href="/blog/images/android-chrome-192x192.png" sizes="192x192">
+          <link rel="icon" type="image/png" href="/images/android-chrome-192x192.png" sizes="192x192">
         
       
       
         
-          <link rel="apple-touch-icon" sizes="180x180" href="/blog/images/apple-touch-icon.png">
+          <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
         
       
     
@@ -46,7 +46,7 @@
 
     <!-- styles -->
     
-<link rel="stylesheet" href="/blog/css/style.css">
+<link rel="stylesheet" href="/css/style.css">
 
     <!-- persian styles -->
     
@@ -77,13 +77,13 @@
     <span id="nav">
       <ul>
         <!--
-       --><li><a href="/blog/">Home</a></li><!--
+       --><li><a href="/">Home</a></li><!--
      --><!--
-       --><li><a href="/blog/about/">About</a></li><!--
+       --><li><a href="/about/">About</a></li><!--
      --><!--
-       --><li><a href="/blog/archives/">Articles</a></li><!--
+       --><li><a href="/archives/">Articles</a></li><!--
      --><!--
-       --><li><a href="/blog/links/">Links</a></li><!--
+       --><li><a href="/links/">Links</a></li><!--
      --><!--
        --><li><a target="_blank" rel="noopener" href="http://chaofanlin.com">Academic Page</a></li><!--
      -->
@@ -93,10 +93,10 @@
     <span id="actions">
       <ul>
         
-        <li><a class="icon" aria-label="Previous post" href="/blog/2023/05/30/%E9%BA%A6%E4%B9%90%E9%B8%A1%E5%91%B3%E7%9A%84%E8%BF%91%E5%86%B5%E9%9A%8F%E8%AE%B0/"><i class="fa-solid fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        <li><a class="icon" aria-label="Previous post" href="/2023/05/30/%E9%BA%A6%E4%B9%90%E9%B8%A1%E5%91%B3%E7%9A%84%E8%BF%91%E5%86%B5%E9%9A%8F%E8%AE%B0/"><i class="fa-solid fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
         
         
-        <li><a class="icon" aria-label="Next post" href="/blog/2023/01/08/%E5%85%B3%E4%BA%8E-pip-%E7%9A%84%E7%BD%91%E7%BB%9C%E9%97%AE%E9%A2%98/"><i class="fa-solid fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        <li><a class="icon" aria-label="Next post" href="/2023/01/08/%E5%85%B3%E4%BA%8E-pip-%E7%9A%84%E7%BD%91%E7%BB%9C%E9%97%AE%E9%A2%98/"><i class="fa-solid fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
         
         <li><a class="icon" aria-label="Back to top" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
         <li><a class="icon" aria-label="Share post" href="#"><i class="fa-solid fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
@@ -109,17 +109,17 @@
     <br/>
     <div id="share" style="display: none">
       <ul>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://siriusneo.github.io/blog/2023/01/08/cs3958-advanced-algorithm-notes/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://siriusneo.github.io/blog/2023/01/08/cs3958-advanced-algorithm-notes/&text=CS3958-Advanced Algorithm-Notes"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://siriusneo.github.io/blog/2023/01/08/cs3958-advanced-algorithm-notes/&title=CS3958-Advanced Algorithm-Notes"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://siriusneo.github.io/blog/2023/01/08/cs3958-advanced-algorithm-notes/&is_video=false&description=CS3958-Advanced Algorithm-Notes"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="mailto:?subject=CS3958-Advanced Algorithm-Notes&body=Check out this article: https://siriusneo.github.io/blog/2023/01/08/cs3958-advanced-algorithm-notes/"><i class="fa-solid fa-envelope " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://siriusneo.github.io/blog/2023/01/08/cs3958-advanced-algorithm-notes/&title=CS3958-Advanced Algorithm-Notes"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://siriusneo.github.io/blog/2023/01/08/cs3958-advanced-algorithm-notes/&title=CS3958-Advanced Algorithm-Notes"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://siriusneo.github.io/blog/2023/01/08/cs3958-advanced-algorithm-notes/&title=CS3958-Advanced Algorithm-Notes"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://siriusneo.github.io/blog/2023/01/08/cs3958-advanced-algorithm-notes/&title=CS3958-Advanced Algorithm-Notes"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://siriusneo.github.io/blog/2023/01/08/cs3958-advanced-algorithm-notes/&name=CS3958-Advanced Algorithm-Notes&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://siriusneo.github.io/blog/2023/01/08/cs3958-advanced-algorithm-notes/&t=CS3958-Advanced Algorithm-Notes"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://siriusneo.github.io/2023/01/08/cs3958-advanced-algorithm-notes/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://siriusneo.github.io/2023/01/08/cs3958-advanced-algorithm-notes/&text=CS3958-Advanced Algorithm-Notes"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://siriusneo.github.io/2023/01/08/cs3958-advanced-algorithm-notes/&title=CS3958-Advanced Algorithm-Notes"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://siriusneo.github.io/2023/01/08/cs3958-advanced-algorithm-notes/&is_video=false&description=CS3958-Advanced Algorithm-Notes"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=CS3958-Advanced Algorithm-Notes&body=Check out this article: https://siriusneo.github.io/2023/01/08/cs3958-advanced-algorithm-notes/"><i class="fa-solid fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://siriusneo.github.io/2023/01/08/cs3958-advanced-algorithm-notes/&title=CS3958-Advanced Algorithm-Notes"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://siriusneo.github.io/2023/01/08/cs3958-advanced-algorithm-notes/&title=CS3958-Advanced Algorithm-Notes"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://siriusneo.github.io/2023/01/08/cs3958-advanced-algorithm-notes/&title=CS3958-Advanced Algorithm-Notes"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://siriusneo.github.io/2023/01/08/cs3958-advanced-algorithm-notes/&title=CS3958-Advanced Algorithm-Notes"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://siriusneo.github.io/2023/01/08/cs3958-advanced-algorithm-notes/&name=CS3958-Advanced Algorithm-Notes&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://siriusneo.github.io/2023/01/08/cs3958-advanced-algorithm-notes/&t=CS3958-Advanced Algorithm-Notes"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
 </ul>
 
     </div>
@@ -160,7 +160,7 @@
       
     <div class="article-category">
         <i class="fa-solid fa-archive"></i>
-        <a class="category-link" href="/blog/categories/%E6%8E%8C%E4%B8%8A%E7%9A%84%E7%BA%AF%E5%85%89/">掌上的纯光</a>
+        <a class="category-link" href="/categories/%E6%8E%8C%E4%B8%8A%E7%9A%84%E7%BA%AF%E5%85%89/">掌上的纯光</a>
     </div>
 
 
@@ -520,13 +520,13 @@ $$
     <div id="nav-footer" style="display: none">
       <ul>
         
-          <li><a href="/blog/">Home</a></li>
+          <li><a href="/">Home</a></li>
         
-          <li><a href="/blog/about/">About</a></li>
+          <li><a href="/about/">About</a></li>
         
-          <li><a href="/blog/archives/">Articles</a></li>
+          <li><a href="/archives/">Articles</a></li>
         
-          <li><a href="/blog/links/">Links</a></li>
+          <li><a href="/links/">Links</a></li>
         
           <li><a target="_blank" rel="noopener" href="http://chaofanlin.com">Academic Page</a></li>
         
@@ -542,17 +542,17 @@ $$
 
     <div id="share-footer" style="display: none">
       <ul>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://siriusneo.github.io/blog/2023/01/08/cs3958-advanced-algorithm-notes/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://siriusneo.github.io/blog/2023/01/08/cs3958-advanced-algorithm-notes/&text=CS3958-Advanced Algorithm-Notes"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://siriusneo.github.io/blog/2023/01/08/cs3958-advanced-algorithm-notes/&title=CS3958-Advanced Algorithm-Notes"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://siriusneo.github.io/blog/2023/01/08/cs3958-advanced-algorithm-notes/&is_video=false&description=CS3958-Advanced Algorithm-Notes"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="mailto:?subject=CS3958-Advanced Algorithm-Notes&body=Check out this article: https://siriusneo.github.io/blog/2023/01/08/cs3958-advanced-algorithm-notes/"><i class="fa-solid fa-envelope fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://siriusneo.github.io/blog/2023/01/08/cs3958-advanced-algorithm-notes/&title=CS3958-Advanced Algorithm-Notes"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://siriusneo.github.io/blog/2023/01/08/cs3958-advanced-algorithm-notes/&title=CS3958-Advanced Algorithm-Notes"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://siriusneo.github.io/blog/2023/01/08/cs3958-advanced-algorithm-notes/&title=CS3958-Advanced Algorithm-Notes"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://siriusneo.github.io/blog/2023/01/08/cs3958-advanced-algorithm-notes/&title=CS3958-Advanced Algorithm-Notes"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://siriusneo.github.io/blog/2023/01/08/cs3958-advanced-algorithm-notes/&name=CS3958-Advanced Algorithm-Notes&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://siriusneo.github.io/blog/2023/01/08/cs3958-advanced-algorithm-notes/&t=CS3958-Advanced Algorithm-Notes"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://siriusneo.github.io/2023/01/08/cs3958-advanced-algorithm-notes/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://siriusneo.github.io/2023/01/08/cs3958-advanced-algorithm-notes/&text=CS3958-Advanced Algorithm-Notes"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://siriusneo.github.io/2023/01/08/cs3958-advanced-algorithm-notes/&title=CS3958-Advanced Algorithm-Notes"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://siriusneo.github.io/2023/01/08/cs3958-advanced-algorithm-notes/&is_video=false&description=CS3958-Advanced Algorithm-Notes"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=CS3958-Advanced Algorithm-Notes&body=Check out this article: https://siriusneo.github.io/2023/01/08/cs3958-advanced-algorithm-notes/"><i class="fa-solid fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://siriusneo.github.io/2023/01/08/cs3958-advanced-algorithm-notes/&title=CS3958-Advanced Algorithm-Notes"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://siriusneo.github.io/2023/01/08/cs3958-advanced-algorithm-notes/&title=CS3958-Advanced Algorithm-Notes"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://siriusneo.github.io/2023/01/08/cs3958-advanced-algorithm-notes/&title=CS3958-Advanced Algorithm-Notes"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://siriusneo.github.io/2023/01/08/cs3958-advanced-algorithm-notes/&title=CS3958-Advanced Algorithm-Notes"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://siriusneo.github.io/2023/01/08/cs3958-advanced-algorithm-notes/&name=CS3958-Advanced Algorithm-Notes&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://siriusneo.github.io/2023/01/08/cs3958-advanced-algorithm-notes/&t=CS3958-Advanced Algorithm-Notes"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
 </ul>
 
     </div>
@@ -582,13 +582,13 @@ $$
     <nav>
       <ul>
         <!--
-       --><li><a href="/blog/">Home</a></li><!--
+       --><li><a href="/">Home</a></li><!--
      --><!--
-       --><li><a href="/blog/about/">About</a></li><!--
+       --><li><a href="/about/">About</a></li><!--
      --><!--
-       --><li><a href="/blog/archives/">Articles</a></li><!--
+       --><li><a href="/archives/">Articles</a></li><!--
      --><!--
-       --><li><a href="/blog/links/">Links</a></li><!--
+       --><li><a href="/links/">Links</a></li><!--
      --><!--
        --><li><a target="_blank" rel="noopener" href="http://chaofanlin.com">Academic Page</a></li><!--
      -->
@@ -638,7 +638,7 @@ $$
   </script>
 
 
-<script src="/blog/js/main.js"></script>
+<script src="/js/main.js"></script>
 
 <!-- search -->
 

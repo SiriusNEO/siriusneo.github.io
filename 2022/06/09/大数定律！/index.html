@@ -9,7 +9,7 @@
     <meta name="description" content="简单整理一下概率论大数定律部分的内容，感觉这部分真的厉害，借用公理化把概率真正讲清楚了。 注：这部分的基础大量建立在“各种收敛”的概念上。 以及吐槽一句，这个 MathJax 难用极了，不知道为什么需要先 \begin{aligned} \end{aligned} 一下才能用 \xrightarrow，有时间考虑搬一下博客。 Motivation实验中发现，大量重复实验的结果呈现某种规律性，即每个">
 <meta property="og:type" content="article">
 <meta property="og:title" content="大数定律！">
-<meta property="og:url" content="https://siriusneo.github.io/blog/2022/06/09/%E5%A4%A7%E6%95%B0%E5%AE%9A%E5%BE%8B%EF%BC%81/index.html">
+<meta property="og:url" content="https://siriusneo.github.io/2022/06/09/%E5%A4%A7%E6%95%B0%E5%AE%9A%E5%BE%8B%EF%BC%81/index.html">
 <meta property="og:site_name" content="Metric Space | 度量空间">
 <meta property="og:description" content="简单整理一下概率论大数定律部分的内容，感觉这部分真的厉害，借用公理化把概率真正讲清楚了。 注：这部分的基础大量建立在“各种收敛”的概念上。 以及吐槽一句，这个 MathJax 难用极了，不知道为什么需要先 \begin{aligned} \end{aligned} 一下才能用 \xrightarrow，有时间考虑搬一下博客。 Motivation实验中发现，大量重复实验的结果呈现某种规律性，即每个">
 <meta property="og:locale" content="en_US">
@@ -21,17 +21,17 @@
     
       
         
-          <link rel="shortcut icon" href="/blog/images/favicon.ico">
+          <link rel="shortcut icon" href="/images/favicon.ico">
         
       
       
         
-          <link rel="icon" type="image/png" href="/blog/images/android-chrome-192x192.png" sizes="192x192">
+          <link rel="icon" type="image/png" href="/images/android-chrome-192x192.png" sizes="192x192">
         
       
       
         
-          <link rel="apple-touch-icon" sizes="180x180" href="/blog/images/apple-touch-icon.png">
+          <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
         
       
     
@@ -46,7 +46,7 @@
 
     <!-- styles -->
     
-<link rel="stylesheet" href="/blog/css/style.css">
+<link rel="stylesheet" href="/css/style.css">
 
     <!-- persian styles -->
     
@@ -77,13 +77,13 @@
     <span id="nav">
       <ul>
         <!--
-       --><li><a href="/blog/">Home</a></li><!--
+       --><li><a href="/">Home</a></li><!--
      --><!--
-       --><li><a href="/blog/about/">About</a></li><!--
+       --><li><a href="/about/">About</a></li><!--
      --><!--
-       --><li><a href="/blog/archives/">Articles</a></li><!--
+       --><li><a href="/archives/">Articles</a></li><!--
      --><!--
-       --><li><a href="/blog/links/">Links</a></li><!--
+       --><li><a href="/links/">Links</a></li><!--
      --><!--
        --><li><a target="_blank" rel="noopener" href="http://chaofanlin.com">Academic Page</a></li><!--
      -->
@@ -93,10 +93,10 @@
     <span id="actions">
       <ul>
         
-        <li><a class="icon" aria-label="Previous post" href="/blog/2023/01/03/cs2955-probcomp-notes/"><i class="fa-solid fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        <li><a class="icon" aria-label="Previous post" href="/2023/01/03/cs2955-probcomp-notes/"><i class="fa-solid fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
         
         
-        <li><a class="icon" aria-label="Next post" href="/blog/2022/04/26/%E3%80%8A%E6%B5%8B%E5%BA%A6%E4%B8%8E%E6%A6%82%E7%8E%87%E3%80%8B%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/"><i class="fa-solid fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        <li><a class="icon" aria-label="Next post" href="/2022/04/26/%E3%80%8A%E6%B5%8B%E5%BA%A6%E4%B8%8E%E6%A6%82%E7%8E%87%E3%80%8B%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/"><i class="fa-solid fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
         
         <li><a class="icon" aria-label="Back to top" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
         <li><a class="icon" aria-label="Share post" href="#"><i class="fa-solid fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
@@ -109,17 +109,17 @@
     <br/>
     <div id="share" style="display: none">
       <ul>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://siriusneo.github.io/blog/2022/06/09/%E5%A4%A7%E6%95%B0%E5%AE%9A%E5%BE%8B%EF%BC%81/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://siriusneo.github.io/blog/2022/06/09/%E5%A4%A7%E6%95%B0%E5%AE%9A%E5%BE%8B%EF%BC%81/&text=大数定律！"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://siriusneo.github.io/blog/2022/06/09/%E5%A4%A7%E6%95%B0%E5%AE%9A%E5%BE%8B%EF%BC%81/&title=大数定律！"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://siriusneo.github.io/blog/2022/06/09/%E5%A4%A7%E6%95%B0%E5%AE%9A%E5%BE%8B%EF%BC%81/&is_video=false&description=大数定律！"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="mailto:?subject=大数定律！&body=Check out this article: https://siriusneo.github.io/blog/2022/06/09/%E5%A4%A7%E6%95%B0%E5%AE%9A%E5%BE%8B%EF%BC%81/"><i class="fa-solid fa-envelope " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://siriusneo.github.io/blog/2022/06/09/%E5%A4%A7%E6%95%B0%E5%AE%9A%E5%BE%8B%EF%BC%81/&title=大数定律！"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://siriusneo.github.io/blog/2022/06/09/%E5%A4%A7%E6%95%B0%E5%AE%9A%E5%BE%8B%EF%BC%81/&title=大数定律！"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://siriusneo.github.io/blog/2022/06/09/%E5%A4%A7%E6%95%B0%E5%AE%9A%E5%BE%8B%EF%BC%81/&title=大数定律！"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://siriusneo.github.io/blog/2022/06/09/%E5%A4%A7%E6%95%B0%E5%AE%9A%E5%BE%8B%EF%BC%81/&title=大数定律！"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://siriusneo.github.io/blog/2022/06/09/%E5%A4%A7%E6%95%B0%E5%AE%9A%E5%BE%8B%EF%BC%81/&name=大数定律！&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://siriusneo.github.io/blog/2022/06/09/%E5%A4%A7%E6%95%B0%E5%AE%9A%E5%BE%8B%EF%BC%81/&t=大数定律！"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://siriusneo.github.io/2022/06/09/%E5%A4%A7%E6%95%B0%E5%AE%9A%E5%BE%8B%EF%BC%81/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://siriusneo.github.io/2022/06/09/%E5%A4%A7%E6%95%B0%E5%AE%9A%E5%BE%8B%EF%BC%81/&text=大数定律！"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://siriusneo.github.io/2022/06/09/%E5%A4%A7%E6%95%B0%E5%AE%9A%E5%BE%8B%EF%BC%81/&title=大数定律！"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://siriusneo.github.io/2022/06/09/%E5%A4%A7%E6%95%B0%E5%AE%9A%E5%BE%8B%EF%BC%81/&is_video=false&description=大数定律！"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=大数定律！&body=Check out this article: https://siriusneo.github.io/2022/06/09/%E5%A4%A7%E6%95%B0%E5%AE%9A%E5%BE%8B%EF%BC%81/"><i class="fa-solid fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://siriusneo.github.io/2022/06/09/%E5%A4%A7%E6%95%B0%E5%AE%9A%E5%BE%8B%EF%BC%81/&title=大数定律！"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://siriusneo.github.io/2022/06/09/%E5%A4%A7%E6%95%B0%E5%AE%9A%E5%BE%8B%EF%BC%81/&title=大数定律！"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://siriusneo.github.io/2022/06/09/%E5%A4%A7%E6%95%B0%E5%AE%9A%E5%BE%8B%EF%BC%81/&title=大数定律！"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://siriusneo.github.io/2022/06/09/%E5%A4%A7%E6%95%B0%E5%AE%9A%E5%BE%8B%EF%BC%81/&title=大数定律！"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://siriusneo.github.io/2022/06/09/%E5%A4%A7%E6%95%B0%E5%AE%9A%E5%BE%8B%EF%BC%81/&name=大数定律！&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://siriusneo.github.io/2022/06/09/%E5%A4%A7%E6%95%B0%E5%AE%9A%E5%BE%8B%EF%BC%81/&t=大数定律！"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
 </ul>
 
     </div>
@@ -160,7 +160,7 @@
       
     <div class="article-category">
         <i class="fa-solid fa-archive"></i>
-        <a class="category-link" href="/blog/categories/%E6%8E%8C%E4%B8%8A%E7%9A%84%E7%BA%AF%E5%85%89/">掌上的纯光</a>
+        <a class="category-link" href="/categories/%E6%8E%8C%E4%B8%8A%E7%9A%84%E7%BA%AF%E5%85%89/">掌上的纯光</a>
     </div>
 
 
@@ -405,13 +405,13 @@ $$
     <div id="nav-footer" style="display: none">
       <ul>
         
-          <li><a href="/blog/">Home</a></li>
+          <li><a href="/">Home</a></li>
         
-          <li><a href="/blog/about/">About</a></li>
+          <li><a href="/about/">About</a></li>
         
-          <li><a href="/blog/archives/">Articles</a></li>
+          <li><a href="/archives/">Articles</a></li>
         
-          <li><a href="/blog/links/">Links</a></li>
+          <li><a href="/links/">Links</a></li>
         
           <li><a target="_blank" rel="noopener" href="http://chaofanlin.com">Academic Page</a></li>
         
@@ -427,17 +427,17 @@ $$
 
     <div id="share-footer" style="display: none">
       <ul>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://siriusneo.github.io/blog/2022/06/09/%E5%A4%A7%E6%95%B0%E5%AE%9A%E5%BE%8B%EF%BC%81/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://siriusneo.github.io/blog/2022/06/09/%E5%A4%A7%E6%95%B0%E5%AE%9A%E5%BE%8B%EF%BC%81/&text=大数定律！"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://siriusneo.github.io/blog/2022/06/09/%E5%A4%A7%E6%95%B0%E5%AE%9A%E5%BE%8B%EF%BC%81/&title=大数定律！"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://siriusneo.github.io/blog/2022/06/09/%E5%A4%A7%E6%95%B0%E5%AE%9A%E5%BE%8B%EF%BC%81/&is_video=false&description=大数定律！"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="mailto:?subject=大数定律！&body=Check out this article: https://siriusneo.github.io/blog/2022/06/09/%E5%A4%A7%E6%95%B0%E5%AE%9A%E5%BE%8B%EF%BC%81/"><i class="fa-solid fa-envelope fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://siriusneo.github.io/blog/2022/06/09/%E5%A4%A7%E6%95%B0%E5%AE%9A%E5%BE%8B%EF%BC%81/&title=大数定律！"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://siriusneo.github.io/blog/2022/06/09/%E5%A4%A7%E6%95%B0%E5%AE%9A%E5%BE%8B%EF%BC%81/&title=大数定律！"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://siriusneo.github.io/blog/2022/06/09/%E5%A4%A7%E6%95%B0%E5%AE%9A%E5%BE%8B%EF%BC%81/&title=大数定律！"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://siriusneo.github.io/blog/2022/06/09/%E5%A4%A7%E6%95%B0%E5%AE%9A%E5%BE%8B%EF%BC%81/&title=大数定律！"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://siriusneo.github.io/blog/2022/06/09/%E5%A4%A7%E6%95%B0%E5%AE%9A%E5%BE%8B%EF%BC%81/&name=大数定律！&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://siriusneo.github.io/blog/2022/06/09/%E5%A4%A7%E6%95%B0%E5%AE%9A%E5%BE%8B%EF%BC%81/&t=大数定律！"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://siriusneo.github.io/2022/06/09/%E5%A4%A7%E6%95%B0%E5%AE%9A%E5%BE%8B%EF%BC%81/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://siriusneo.github.io/2022/06/09/%E5%A4%A7%E6%95%B0%E5%AE%9A%E5%BE%8B%EF%BC%81/&text=大数定律！"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://siriusneo.github.io/2022/06/09/%E5%A4%A7%E6%95%B0%E5%AE%9A%E5%BE%8B%EF%BC%81/&title=大数定律！"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://siriusneo.github.io/2022/06/09/%E5%A4%A7%E6%95%B0%E5%AE%9A%E5%BE%8B%EF%BC%81/&is_video=false&description=大数定律！"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=大数定律！&body=Check out this article: https://siriusneo.github.io/2022/06/09/%E5%A4%A7%E6%95%B0%E5%AE%9A%E5%BE%8B%EF%BC%81/"><i class="fa-solid fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://siriusneo.github.io/2022/06/09/%E5%A4%A7%E6%95%B0%E5%AE%9A%E5%BE%8B%EF%BC%81/&title=大数定律！"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://siriusneo.github.io/2022/06/09/%E5%A4%A7%E6%95%B0%E5%AE%9A%E5%BE%8B%EF%BC%81/&title=大数定律！"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://siriusneo.github.io/2022/06/09/%E5%A4%A7%E6%95%B0%E5%AE%9A%E5%BE%8B%EF%BC%81/&title=大数定律！"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://siriusneo.github.io/2022/06/09/%E5%A4%A7%E6%95%B0%E5%AE%9A%E5%BE%8B%EF%BC%81/&title=大数定律！"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://siriusneo.github.io/2022/06/09/%E5%A4%A7%E6%95%B0%E5%AE%9A%E5%BE%8B%EF%BC%81/&name=大数定律！&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://siriusneo.github.io/2022/06/09/%E5%A4%A7%E6%95%B0%E5%AE%9A%E5%BE%8B%EF%BC%81/&t=大数定律！"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
 </ul>
 
     </div>
@@ -467,13 +467,13 @@ $$
     <nav>
       <ul>
         <!--
-       --><li><a href="/blog/">Home</a></li><!--
+       --><li><a href="/">Home</a></li><!--
      --><!--
-       --><li><a href="/blog/about/">About</a></li><!--
+       --><li><a href="/about/">About</a></li><!--
      --><!--
-       --><li><a href="/blog/archives/">Articles</a></li><!--
+       --><li><a href="/archives/">Articles</a></li><!--
      --><!--
-       --><li><a href="/blog/links/">Links</a></li><!--
+       --><li><a href="/links/">Links</a></li><!--
      --><!--
        --><li><a target="_blank" rel="noopener" href="http://chaofanlin.com">Academic Page</a></li><!--
      -->
@@ -523,7 +523,7 @@ $$
   </script>
 
 
-<script src="/blog/js/main.js"></script>
+<script src="/js/main.js"></script>
 
 <!-- search -->
 

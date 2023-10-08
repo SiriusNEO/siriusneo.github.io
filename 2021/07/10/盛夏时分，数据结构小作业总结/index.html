@@ -9,7 +9,7 @@
     <meta name="description" content="前言离上一篇博客的时间算来已经有3个月了，趁着现在期末周结束的闲暇时光总结一下本学期数据结构的小作业，以及涉及到的算法。 以及不得不说，PPCA真的很累。  P1113 Travel题意 给定 M 叉树的前序遍历和后序遍历，求树可能的形态总数。 解法 我们知道给定前序遍历（或者后序遍历）+ 中序遍历可以确定一棵二叉树，而前序和后序不能。原因在于前序遍历是：根 左 右，后序遍历是：左 右 根，我们发">
 <meta property="og:type" content="article">
 <meta property="og:title" content="盛夏时分，数据结构小作业总结">
-<meta property="og:url" content="https://siriusneo.github.io/blog/2021/07/10/%E7%9B%9B%E5%A4%8F%E6%97%B6%E5%88%86%EF%BC%8C%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E5%B0%8F%E4%BD%9C%E4%B8%9A%E6%80%BB%E7%BB%93/index.html">
+<meta property="og:url" content="https://siriusneo.github.io/2021/07/10/%E7%9B%9B%E5%A4%8F%E6%97%B6%E5%88%86%EF%BC%8C%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E5%B0%8F%E4%BD%9C%E4%B8%9A%E6%80%BB%E7%BB%93/index.html">
 <meta property="og:site_name" content="Metric Space | 度量空间">
 <meta property="og:description" content="前言离上一篇博客的时间算来已经有3个月了，趁着现在期末周结束的闲暇时光总结一下本学期数据结构的小作业，以及涉及到的算法。 以及不得不说，PPCA真的很累。  P1113 Travel题意 给定 M 叉树的前序遍历和后序遍历，求树可能的形态总数。 解法 我们知道给定前序遍历（或者后序遍历）+ 中序遍历可以确定一棵二叉树，而前序和后序不能。原因在于前序遍历是：根 左 右，后序遍历是：左 右 根，我们发">
 <meta property="og:locale" content="en_US">
@@ -21,17 +21,17 @@
     
       
         
-          <link rel="shortcut icon" href="/blog/images/favicon.ico">
+          <link rel="shortcut icon" href="/images/favicon.ico">
         
       
       
         
-          <link rel="icon" type="image/png" href="/blog/images/android-chrome-192x192.png" sizes="192x192">
+          <link rel="icon" type="image/png" href="/images/android-chrome-192x192.png" sizes="192x192">
         
       
       
         
-          <link rel="apple-touch-icon" sizes="180x180" href="/blog/images/apple-touch-icon.png">
+          <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
         
       
     
@@ -46,7 +46,7 @@
 
     <!-- styles -->
     
-<link rel="stylesheet" href="/blog/css/style.css">
+<link rel="stylesheet" href="/css/style.css">
 
     <!-- persian styles -->
     
@@ -77,13 +77,13 @@
     <span id="nav">
       <ul>
         <!--
-       --><li><a href="/blog/">Home</a></li><!--
+       --><li><a href="/">Home</a></li><!--
      --><!--
-       --><li><a href="/blog/about/">About</a></li><!--
+       --><li><a href="/about/">About</a></li><!--
      --><!--
-       --><li><a href="/blog/archives/">Articles</a></li><!--
+       --><li><a href="/archives/">Articles</a></li><!--
      --><!--
-       --><li><a href="/blog/links/">Links</a></li><!--
+       --><li><a href="/links/">Links</a></li><!--
      --><!--
        --><li><a target="_blank" rel="noopener" href="http://chaofanlin.com">Academic Page</a></li><!--
      -->
@@ -93,10 +93,10 @@
     <span id="actions">
       <ul>
         
-        <li><a class="icon" aria-label="Previous post" href="/blog/2021/08/13/%E8%AE%B0%E5%8F%88%E4%B8%80%E6%AC%A1-touhou-%E7%BE%A4%E5%B0%8F%E8%81%9A/"><i class="fa-solid fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        <li><a class="icon" aria-label="Previous post" href="/2021/08/13/%E8%AE%B0%E5%8F%88%E4%B8%80%E6%AC%A1-touhou-%E7%BE%A4%E5%B0%8F%E8%81%9A/"><i class="fa-solid fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
         
         
-        <li><a class="icon" aria-label="Next post" href="/blog/2021/04/06/%E6%B8%85%E6%98%8E%EF%BC%8C%E6%B8%85%E7%90%86%E6%98%A8%E5%A4%A9%E3%80%81%E6%9C%9F%E5%BE%85%E6%98%8E%E5%A4%A9/"><i class="fa-solid fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        <li><a class="icon" aria-label="Next post" href="/2021/04/06/%E6%B8%85%E6%98%8E%EF%BC%8C%E6%B8%85%E7%90%86%E6%98%A8%E5%A4%A9%E3%80%81%E6%9C%9F%E5%BE%85%E6%98%8E%E5%A4%A9/"><i class="fa-solid fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
         
         <li><a class="icon" aria-label="Back to top" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
         <li><a class="icon" aria-label="Share post" href="#"><i class="fa-solid fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
@@ -109,17 +109,17 @@
     <br/>
     <div id="share" style="display: none">
       <ul>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://siriusneo.github.io/blog/2021/07/10/%E7%9B%9B%E5%A4%8F%E6%97%B6%E5%88%86%EF%BC%8C%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E5%B0%8F%E4%BD%9C%E4%B8%9A%E6%80%BB%E7%BB%93/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://siriusneo.github.io/blog/2021/07/10/%E7%9B%9B%E5%A4%8F%E6%97%B6%E5%88%86%EF%BC%8C%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E5%B0%8F%E4%BD%9C%E4%B8%9A%E6%80%BB%E7%BB%93/&text=盛夏时分，数据结构小作业总结"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://siriusneo.github.io/blog/2021/07/10/%E7%9B%9B%E5%A4%8F%E6%97%B6%E5%88%86%EF%BC%8C%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E5%B0%8F%E4%BD%9C%E4%B8%9A%E6%80%BB%E7%BB%93/&title=盛夏时分，数据结构小作业总结"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://siriusneo.github.io/blog/2021/07/10/%E7%9B%9B%E5%A4%8F%E6%97%B6%E5%88%86%EF%BC%8C%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E5%B0%8F%E4%BD%9C%E4%B8%9A%E6%80%BB%E7%BB%93/&is_video=false&description=盛夏时分，数据结构小作业总结"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="mailto:?subject=盛夏时分，数据结构小作业总结&body=Check out this article: https://siriusneo.github.io/blog/2021/07/10/%E7%9B%9B%E5%A4%8F%E6%97%B6%E5%88%86%EF%BC%8C%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E5%B0%8F%E4%BD%9C%E4%B8%9A%E6%80%BB%E7%BB%93/"><i class="fa-solid fa-envelope " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://siriusneo.github.io/blog/2021/07/10/%E7%9B%9B%E5%A4%8F%E6%97%B6%E5%88%86%EF%BC%8C%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E5%B0%8F%E4%BD%9C%E4%B8%9A%E6%80%BB%E7%BB%93/&title=盛夏时分，数据结构小作业总结"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://siriusneo.github.io/blog/2021/07/10/%E7%9B%9B%E5%A4%8F%E6%97%B6%E5%88%86%EF%BC%8C%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E5%B0%8F%E4%BD%9C%E4%B8%9A%E6%80%BB%E7%BB%93/&title=盛夏时分，数据结构小作业总结"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://siriusneo.github.io/blog/2021/07/10/%E7%9B%9B%E5%A4%8F%E6%97%B6%E5%88%86%EF%BC%8C%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E5%B0%8F%E4%BD%9C%E4%B8%9A%E6%80%BB%E7%BB%93/&title=盛夏时分，数据结构小作业总结"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://siriusneo.github.io/blog/2021/07/10/%E7%9B%9B%E5%A4%8F%E6%97%B6%E5%88%86%EF%BC%8C%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E5%B0%8F%E4%BD%9C%E4%B8%9A%E6%80%BB%E7%BB%93/&title=盛夏时分，数据结构小作业总结"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://siriusneo.github.io/blog/2021/07/10/%E7%9B%9B%E5%A4%8F%E6%97%B6%E5%88%86%EF%BC%8C%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E5%B0%8F%E4%BD%9C%E4%B8%9A%E6%80%BB%E7%BB%93/&name=盛夏时分，数据结构小作业总结&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://siriusneo.github.io/blog/2021/07/10/%E7%9B%9B%E5%A4%8F%E6%97%B6%E5%88%86%EF%BC%8C%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E5%B0%8F%E4%BD%9C%E4%B8%9A%E6%80%BB%E7%BB%93/&t=盛夏时分，数据结构小作业总结"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://siriusneo.github.io/2021/07/10/%E7%9B%9B%E5%A4%8F%E6%97%B6%E5%88%86%EF%BC%8C%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E5%B0%8F%E4%BD%9C%E4%B8%9A%E6%80%BB%E7%BB%93/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://siriusneo.github.io/2021/07/10/%E7%9B%9B%E5%A4%8F%E6%97%B6%E5%88%86%EF%BC%8C%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E5%B0%8F%E4%BD%9C%E4%B8%9A%E6%80%BB%E7%BB%93/&text=盛夏时分，数据结构小作业总结"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://siriusneo.github.io/2021/07/10/%E7%9B%9B%E5%A4%8F%E6%97%B6%E5%88%86%EF%BC%8C%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E5%B0%8F%E4%BD%9C%E4%B8%9A%E6%80%BB%E7%BB%93/&title=盛夏时分，数据结构小作业总结"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://siriusneo.github.io/2021/07/10/%E7%9B%9B%E5%A4%8F%E6%97%B6%E5%88%86%EF%BC%8C%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E5%B0%8F%E4%BD%9C%E4%B8%9A%E6%80%BB%E7%BB%93/&is_video=false&description=盛夏时分，数据结构小作业总结"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=盛夏时分，数据结构小作业总结&body=Check out this article: https://siriusneo.github.io/2021/07/10/%E7%9B%9B%E5%A4%8F%E6%97%B6%E5%88%86%EF%BC%8C%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E5%B0%8F%E4%BD%9C%E4%B8%9A%E6%80%BB%E7%BB%93/"><i class="fa-solid fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://siriusneo.github.io/2021/07/10/%E7%9B%9B%E5%A4%8F%E6%97%B6%E5%88%86%EF%BC%8C%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E5%B0%8F%E4%BD%9C%E4%B8%9A%E6%80%BB%E7%BB%93/&title=盛夏时分，数据结构小作业总结"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://siriusneo.github.io/2021/07/10/%E7%9B%9B%E5%A4%8F%E6%97%B6%E5%88%86%EF%BC%8C%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E5%B0%8F%E4%BD%9C%E4%B8%9A%E6%80%BB%E7%BB%93/&title=盛夏时分，数据结构小作业总结"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://siriusneo.github.io/2021/07/10/%E7%9B%9B%E5%A4%8F%E6%97%B6%E5%88%86%EF%BC%8C%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E5%B0%8F%E4%BD%9C%E4%B8%9A%E6%80%BB%E7%BB%93/&title=盛夏时分，数据结构小作业总结"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://siriusneo.github.io/2021/07/10/%E7%9B%9B%E5%A4%8F%E6%97%B6%E5%88%86%EF%BC%8C%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E5%B0%8F%E4%BD%9C%E4%B8%9A%E6%80%BB%E7%BB%93/&title=盛夏时分，数据结构小作业总结"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://siriusneo.github.io/2021/07/10/%E7%9B%9B%E5%A4%8F%E6%97%B6%E5%88%86%EF%BC%8C%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E5%B0%8F%E4%BD%9C%E4%B8%9A%E6%80%BB%E7%BB%93/&name=盛夏时分，数据结构小作业总结&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://siriusneo.github.io/2021/07/10/%E7%9B%9B%E5%A4%8F%E6%97%B6%E5%88%86%EF%BC%8C%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E5%B0%8F%E4%BD%9C%E4%B8%9A%E6%80%BB%E7%BB%93/&t=盛夏时分，数据结构小作业总结"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
 </ul>
 
     </div>
@@ -160,7 +160,7 @@
       
     <div class="article-category">
         <i class="fa-solid fa-archive"></i>
-        <a class="category-link" href="/blog/categories/%E6%8E%8C%E4%B8%8A%E7%9A%84%E7%BA%AF%E5%85%89/">掌上的纯光</a>
+        <a class="category-link" href="/categories/%E6%8E%8C%E4%B8%8A%E7%9A%84%E7%BA%AF%E5%85%89/">掌上的纯光</a>
     </div>
 
 
@@ -262,13 +262,13 @@
     <div id="nav-footer" style="display: none">
       <ul>
         
-          <li><a href="/blog/">Home</a></li>
+          <li><a href="/">Home</a></li>
         
-          <li><a href="/blog/about/">About</a></li>
+          <li><a href="/about/">About</a></li>
         
-          <li><a href="/blog/archives/">Articles</a></li>
+          <li><a href="/archives/">Articles</a></li>
         
-          <li><a href="/blog/links/">Links</a></li>
+          <li><a href="/links/">Links</a></li>
         
           <li><a target="_blank" rel="noopener" href="http://chaofanlin.com">Academic Page</a></li>
         
@@ -284,17 +284,17 @@
 
     <div id="share-footer" style="display: none">
       <ul>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://siriusneo.github.io/blog/2021/07/10/%E7%9B%9B%E5%A4%8F%E6%97%B6%E5%88%86%EF%BC%8C%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E5%B0%8F%E4%BD%9C%E4%B8%9A%E6%80%BB%E7%BB%93/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://siriusneo.github.io/blog/2021/07/10/%E7%9B%9B%E5%A4%8F%E6%97%B6%E5%88%86%EF%BC%8C%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E5%B0%8F%E4%BD%9C%E4%B8%9A%E6%80%BB%E7%BB%93/&text=盛夏时分，数据结构小作业总结"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://siriusneo.github.io/blog/2021/07/10/%E7%9B%9B%E5%A4%8F%E6%97%B6%E5%88%86%EF%BC%8C%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E5%B0%8F%E4%BD%9C%E4%B8%9A%E6%80%BB%E7%BB%93/&title=盛夏时分，数据结构小作业总结"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://siriusneo.github.io/blog/2021/07/10/%E7%9B%9B%E5%A4%8F%E6%97%B6%E5%88%86%EF%BC%8C%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E5%B0%8F%E4%BD%9C%E4%B8%9A%E6%80%BB%E7%BB%93/&is_video=false&description=盛夏时分，数据结构小作业总结"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="mailto:?subject=盛夏时分，数据结构小作业总结&body=Check out this article: https://siriusneo.github.io/blog/2021/07/10/%E7%9B%9B%E5%A4%8F%E6%97%B6%E5%88%86%EF%BC%8C%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E5%B0%8F%E4%BD%9C%E4%B8%9A%E6%80%BB%E7%BB%93/"><i class="fa-solid fa-envelope fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://siriusneo.github.io/blog/2021/07/10/%E7%9B%9B%E5%A4%8F%E6%97%B6%E5%88%86%EF%BC%8C%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E5%B0%8F%E4%BD%9C%E4%B8%9A%E6%80%BB%E7%BB%93/&title=盛夏时分，数据结构小作业总结"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://siriusneo.github.io/blog/2021/07/10/%E7%9B%9B%E5%A4%8F%E6%97%B6%E5%88%86%EF%BC%8C%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E5%B0%8F%E4%BD%9C%E4%B8%9A%E6%80%BB%E7%BB%93/&title=盛夏时分，数据结构小作业总结"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://siriusneo.github.io/blog/2021/07/10/%E7%9B%9B%E5%A4%8F%E6%97%B6%E5%88%86%EF%BC%8C%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E5%B0%8F%E4%BD%9C%E4%B8%9A%E6%80%BB%E7%BB%93/&title=盛夏时分，数据结构小作业总结"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://siriusneo.github.io/blog/2021/07/10/%E7%9B%9B%E5%A4%8F%E6%97%B6%E5%88%86%EF%BC%8C%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E5%B0%8F%E4%BD%9C%E4%B8%9A%E6%80%BB%E7%BB%93/&title=盛夏时分，数据结构小作业总结"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://siriusneo.github.io/blog/2021/07/10/%E7%9B%9B%E5%A4%8F%E6%97%B6%E5%88%86%EF%BC%8C%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E5%B0%8F%E4%BD%9C%E4%B8%9A%E6%80%BB%E7%BB%93/&name=盛夏时分，数据结构小作业总结&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://siriusneo.github.io/blog/2021/07/10/%E7%9B%9B%E5%A4%8F%E6%97%B6%E5%88%86%EF%BC%8C%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E5%B0%8F%E4%BD%9C%E4%B8%9A%E6%80%BB%E7%BB%93/&t=盛夏时分，数据结构小作业总结"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://siriusneo.github.io/2021/07/10/%E7%9B%9B%E5%A4%8F%E6%97%B6%E5%88%86%EF%BC%8C%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E5%B0%8F%E4%BD%9C%E4%B8%9A%E6%80%BB%E7%BB%93/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://siriusneo.github.io/2021/07/10/%E7%9B%9B%E5%A4%8F%E6%97%B6%E5%88%86%EF%BC%8C%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E5%B0%8F%E4%BD%9C%E4%B8%9A%E6%80%BB%E7%BB%93/&text=盛夏时分，数据结构小作业总结"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://siriusneo.github.io/2021/07/10/%E7%9B%9B%E5%A4%8F%E6%97%B6%E5%88%86%EF%BC%8C%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E5%B0%8F%E4%BD%9C%E4%B8%9A%E6%80%BB%E7%BB%93/&title=盛夏时分，数据结构小作业总结"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://siriusneo.github.io/2021/07/10/%E7%9B%9B%E5%A4%8F%E6%97%B6%E5%88%86%EF%BC%8C%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E5%B0%8F%E4%BD%9C%E4%B8%9A%E6%80%BB%E7%BB%93/&is_video=false&description=盛夏时分，数据结构小作业总结"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=盛夏时分，数据结构小作业总结&body=Check out this article: https://siriusneo.github.io/2021/07/10/%E7%9B%9B%E5%A4%8F%E6%97%B6%E5%88%86%EF%BC%8C%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E5%B0%8F%E4%BD%9C%E4%B8%9A%E6%80%BB%E7%BB%93/"><i class="fa-solid fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://siriusneo.github.io/2021/07/10/%E7%9B%9B%E5%A4%8F%E6%97%B6%E5%88%86%EF%BC%8C%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E5%B0%8F%E4%BD%9C%E4%B8%9A%E6%80%BB%E7%BB%93/&title=盛夏时分，数据结构小作业总结"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://siriusneo.github.io/2021/07/10/%E7%9B%9B%E5%A4%8F%E6%97%B6%E5%88%86%EF%BC%8C%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E5%B0%8F%E4%BD%9C%E4%B8%9A%E6%80%BB%E7%BB%93/&title=盛夏时分，数据结构小作业总结"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://siriusneo.github.io/2021/07/10/%E7%9B%9B%E5%A4%8F%E6%97%B6%E5%88%86%EF%BC%8C%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E5%B0%8F%E4%BD%9C%E4%B8%9A%E6%80%BB%E7%BB%93/&title=盛夏时分，数据结构小作业总结"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://siriusneo.github.io/2021/07/10/%E7%9B%9B%E5%A4%8F%E6%97%B6%E5%88%86%EF%BC%8C%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E5%B0%8F%E4%BD%9C%E4%B8%9A%E6%80%BB%E7%BB%93/&title=盛夏时分，数据结构小作业总结"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://siriusneo.github.io/2021/07/10/%E7%9B%9B%E5%A4%8F%E6%97%B6%E5%88%86%EF%BC%8C%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E5%B0%8F%E4%BD%9C%E4%B8%9A%E6%80%BB%E7%BB%93/&name=盛夏时分，数据结构小作业总结&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://siriusneo.github.io/2021/07/10/%E7%9B%9B%E5%A4%8F%E6%97%B6%E5%88%86%EF%BC%8C%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E5%B0%8F%E4%BD%9C%E4%B8%9A%E6%80%BB%E7%BB%93/&t=盛夏时分，数据结构小作业总结"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
 </ul>
 
     </div>
@@ -324,13 +324,13 @@
     <nav>
       <ul>
         <!--
-       --><li><a href="/blog/">Home</a></li><!--
+       --><li><a href="/">Home</a></li><!--
      --><!--
-       --><li><a href="/blog/about/">About</a></li><!--
+       --><li><a href="/about/">About</a></li><!--
      --><!--
-       --><li><a href="/blog/archives/">Articles</a></li><!--
+       --><li><a href="/archives/">Articles</a></li><!--
      --><!--
-       --><li><a href="/blog/links/">Links</a></li><!--
+       --><li><a href="/links/">Links</a></li><!--
      --><!--
        --><li><a target="_blank" rel="noopener" href="http://chaofanlin.com">Academic Page</a></li><!--
      -->
@@ -380,7 +380,7 @@
   </script>
 
 
-<script src="/blog/js/main.js"></script>
+<script src="/js/main.js"></script>
 
 <!-- search -->
 
