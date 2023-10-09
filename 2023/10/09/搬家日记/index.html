@@ -15,7 +15,7 @@
 <meta property="og:locale" content="en_US">
 <meta property="og:image" content="https://siriusneo.github.io/2023/10/09/%E6%90%AC%E5%AE%B6%E6%97%A5%E8%AE%B0/1.png">
 <meta property="article:published_time" content="2023-10-09T06:15:19.000Z">
-<meta property="article:modified_time" content="2023-10-09T07:19:34.125Z">
+<meta property="article:modified_time" content="2023-10-09T08:23:19.009Z">
 <meta property="article:author" content="Chaofan">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https://siriusneo.github.io/2023/10/09/%E6%90%AC%E5%AE%B6%E6%97%A5%E8%AE%B0/1.png">
@@ -166,6 +166,8 @@
 
       
 
+      | <i class="far fa-file-word fa-fw post-meta-icon"></i> Total Words: 5.8k
+      | <i class="far fa-clock fa-fw post-meta-icon"></i> Reading Time: 5 mins.
     </div>
   </header>
   
@@ -187,7 +189,13 @@
 <p>首先，我想先给老博客换个名字。原先的名字叫”没有风经过的旅店“，现在听起来略显中二（也不知道当初我怎么起的这个名字）。想来想去，我选择了 ”度量空间（Metric Space）” 这个名字。这很大程度上源于我之前买了一个域名 <code>me.tric.space</code>。不过之前这个域名用来放我的学术主页，在下决心将它作为博客后，我忙活了一阵，把学术主页挪到了一个基于我真实姓名的域名下面（这样也更正式一些嘛），然后把这个域名腾出来给我的 “度量空间” 了。</p>
 <p>为此我特地还买了一个新域名，就是那个学术主页的域名。由于是 <code>.com</code> 结尾，价格还相对贵一些。不过作为一个 CS 系学生，感觉如果不能拥有一个 <code>.com</code> 域名还挺遗憾的，于是乎还是掏钱买了一下。</p>
 <p>然后就开始配 Github Pages 和 Hexo 了。由于有经验，这个过程还是蛮顺利的。我用 WSL 上的 node 来跑 hexo 服务，用 Typora 来编辑 Markdown，整个体验可以说是非常棒。</p>
-<p>下一步就是选一个 Hexo 主题。由于老博客的主题有点花哨（而且有点太二次元了），新博客我想采用简洁复古风的主题。选来选去，我挑中了 <a target="_blank" rel="noopener" href="https://github.com/probberechts/hexo-theme-cactus">Cactus</a> 这个主题，它的界面非常干净、直接。我进行了一定程度的魔改来让这个博客更符合我的品味一点，包括把图标从仙人掌换成了更符合 “度量空间” 的正多面体，以及在 Home Page 上加了两个元素：Pinned Posts 与 Categories，让原先相对单薄的主页更加丰富一些。这些改动都很简单，最多只需要修改一下主题的 JavaScript 源码即可达成效果。</p>
+<p>下一步就是选一个 Hexo 主题。由于老博客的主题有点花哨（而且有点太二次元了），新博客我想采用简洁复古风的主题。选来选去，我挑中了 <a target="_blank" rel="noopener" href="https://github.com/probberechts/hexo-theme-cactus">Cactus</a> 这个主题，它的界面非常干净、直接。我进行了一定程度的魔改来让这个博客更符合我的品味一点，包括：</p>
+<ul>
+<li>把图标从仙人掌换成了更符合 “度量空间” 的正多面体</li>
+<li>在 Home Page 上加了两个元素：Pinned Posts 与 Categories，让原先相对单薄的主页更加丰富一些。</li>
+<li>给文章页面加上了字数统计和估计阅读时长。由于 Cactus 本身不支持这个，需要手动在源码里插入一些代码片。</li>
+</ul>
+<p>这些改动都很简单，最多只需要修改一下主题的 JavaScript 源码即可达成效果。</p>
 <p>在弄好主题后，下一步就是把原来的博客内容都搬过来。博客内容主要包含三部分：文章，评论和媒体（主要就是图片）。</p>
 <hr>
 <h2 id="搬运文章"><a href="#搬运文章" class="headerlink" title="搬运文章"></a>搬运文章</h2><p>Hexo 很良心地提供了原生的搬运支持，我照着 <a target="_blank" rel="noopener" href="https://hexo.io/zh-cn/docs/migration.html">这篇教程</a> 很轻松地就完成了前期搬运，具体操作就是在 Wordpress 那边导出一个 XML，然后用 Hexo 的 Migrator 导入就 OK。不过刚搬完问题自然是一堆：出现不存在的文章、格式混乱、日期对不上… 没办法，我只能硬着头皮一个个问题慢慢修。</p>
