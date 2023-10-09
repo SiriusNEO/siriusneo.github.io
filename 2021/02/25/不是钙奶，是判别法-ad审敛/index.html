@@ -179,46 +179,46 @@
 <h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><p>Abel-Dirichlet 判别法在数学分析的三个地方出现过：反常积分收敛判断、数项级数收敛判断、函数项级数一致收敛判断。这里以<strong>数项级数</strong>为例来详细讲讲，其它两种其实都可以看成自然而然的推广形式。</p>
 <p>数项级数中它的定义如下：</p>
 <blockquote>
-<p>${a_n}$ 单调有界，${\sum\limits_{i&#x3D;1}^nb_n}$ 有界. 再添加如下条件之一都可得到 ${\sum\limits_{i&#x3D;1}^na_ib_i}$ 收敛.</p>
-<p>$1.\ \textbf{(Abel)}\ \sum\limits_{i&#x3D;1}^{\infty}b_i\ 收敛.$</p>
-<p>$2. \ \textbf{(Dirichlet)}\ \lim\limits_{n\rightarrow\infty}a_n&#x3D;0.$</p>
+<p>$\{a_n\}$ 单调有界，$\{\sum\limits_{i=1}^nb_n\}$ 有界. 再添加如下条件之一都可得到 $\{\sum\limits_{i=1}^na_ib_i\}$ 收敛.</p>
+<p>$1.\ \textbf{(Abel)}\ \sum\limits_{i=1}^{\infty}b_i\ 收敛.$</p>
+<p>$2. \ \textbf{(Dirichlet)}\ \lim\limits_{n\rightarrow\infty}a_n=0.$</p>
 </blockquote>
 <p>这里我为了下面的解释方便所以稍微整理了一下定理的形式，所以和教科书上有点不一样。</p>
 <p>当然干看这个肯定还是比较难受的，下面我们在推导过程中详细剖析一下它的道理。</p>
 <hr>
 <h2 id="推导"><a href="#推导" class="headerlink" title="推导"></a>推导</h2><h4 id="为什么要有那两个前置条件？"><a href="#为什么要有那两个前置条件？" class="headerlink" title="为什么要有那两个前置条件？"></a>为什么要有那两个前置条件？</h4><p>其实这个前置条件是我整理得到的，也就是 Abel 和 Dirichlet 它们共同要求的性质。</p>
 <p>那么它们为什么不约而同都会需要这些呢？有界可能好理解，因为可以进行放缩；那单调又算怎么回事？</p>
-<p>我们首先要弄清楚AD判别法是为了干什么。既然叫判别法，肯定是为了判断——判断数列是否收敛。更准确地，AD专门判断形如两个数列对应项乘起来得到的级数的收敛情况，即如下的<strong>乘积形式</strong>：$$\sum_{i&#x3D;1}^na_ib_i $$</p>
+<p>我们首先要弄清楚AD判别法是为了干什么。既然叫判别法，肯定是为了判断——判断数列是否收敛。更准确地，AD专门判断形如两个数列对应项乘起来得到的级数的收敛情况，即如下的<strong>乘积形式</strong>：<script type="math/tex">\sum_{i=1}^na_ib_i</script></p>
 <p>由于我们只关心它收不收敛，不关心它收敛到哪（至少在这个问题上我们是不关心的），所以我们直接采用<strong>柯西收敛原理</strong>。这个定理的好处在于我们可以仅通过级数本身判断其收敛情况，而不用关心极限点。</p>
 <p>也就是说，我们要得到如下形式的不等式：</p>
-<p>$$\sum_{i&#x3D;n+1}^ma_ib_i \le \varepsilon$$</p>
-<p>我们的目标就是给这两个数列加上一定的条件，使得它满足柯西条件，进而能判断它收敛。不过只是这个形式并不好操作——<strong>求和号</strong>的存在极大限制了我们进行分析，大神Abel提供了一种很棒的变形思路，能帮助我们处理这个式子：</p>
+<script type="math/tex; mode=display">\sum_{i=n+1}^ma_ib_i \le \varepsilon</script><p>我们的目标就是给这两个数列加上一定的条件，使得它满足柯西条件，进而能判断它收敛。不过只是这个形式并不好操作——<strong>求和号</strong>的存在极大限制了我们进行分析，大神Abel提供了一种很棒的变形思路，能帮助我们处理这个式子：</p>
 <blockquote>
 <p><strong>(定理) Abel变换:</strong></p>
-<p>$$\sum_{i&#x3D;1}^na_ib_i &#x3D; a_nB_n-\sum_{i&#x3D;1}^{n-1}(a_{i+1}-a_i)B_i$$</p>
-<p>其中 $$B_i&#x3D;\sum_{j&#x3D;1}^i b_j$$ 即 b 的前 n 项和。</p>
+<script type="math/tex; mode=display">\sum_{i=1}^na_ib_i = a_nB_n-\sum_{i=1}^{n-1}(a_{i+1}-a_i)B_i</script><p>其中 <script type="math/tex">B_i=\sum_{j=1}^i b_j</script> 即 b 的前 n 项和。</p>
 </blockquote>
 <p>你可能会觉得这样变换反而增加了复杂度，能有什么好处？但事实上，观察后面那一项式子，我们发现出现了 $a_{i+1}-a_i$ 这样的<strong>差分形式</strong>，这种东西在求和时很有希望能<strong>临项相消</strong>掉，有助于我们<strong>去掉求和符号</strong>。</p>
 <p>这个变换其实是个很初等的变换，只是写成了这样的形式不太好看出来。事实上它可以理解成“离散分部积分公式”——只要把求前 n 项和当成积分，差分形式当成微分就好。</p>
 <p>此外还有个很直观的理解，可以看下面这张图。</p>
-<p><img src="/2021/02/25/%E4%B8%8D%E6%98%AF%E9%92%99%E5%A5%B6%EF%BC%8C%E6%98%AF%E5%88%A4%E5%88%AB%E6%B3%95-ad%E5%AE%A1%E6%95%9B/1.jpg"></p>
-<p>然后为了让 $\sum_{i&#x3D;1}^{n-1}(a_{i+1}-a_i)B_i$ 能够临项相消，我们需要想办法去掉 B 。这里我们添加条件：<strong>数列 ${B_i}$ 有界</strong>，使得我们可以直接放掉。</p>
+<p><img src="1.jpg" alt=""></p>
+<p>然后为了让 $\sum_{i=1}^{n-1}(a_{i+1}-a_i)B_i$ 能够临项相消，我们需要想办法去掉 B 。这里我们添加条件：<strong>数列 $\{B_i\}$ 有界</strong>，使得我们可以直接放掉。</p>
 <p>有界除了有“把数列放缩成常数”这种作用外，还起到限制规模的效果——也就是说界永远是确定的数，这样如果能产生 $M\varepsilon$ 这种式子，我们的目的也达到了（其中 M 是界，也就是我们常说的 $ \varepsilon$ 可以乘上一个倍数这个道理）</p>
-<p>假设 $\exists M &gt; 0,\ \forall n,\ B_n \le M$，那么<br>$$<br>\sum_{i&#x3D;1}^na_ib_i &#x3D; a_nB_n-\sum_{i&#x3D;1}^{n-1}(a_{i+1}-a_i)B_i \le a_nB_n+\sum_{i&#x3D;1}^{n-1}a_{i+1}-a_iB_i \le M(a_n+\sum_{i&#x3D;1}^{n-1}a_{i+1}-a_i)<br>$$</p>
-<p>然后我们发现加了加了绝对值后出现了一个尴尬的事：$a_{i+1}-a_i$ 邻项是消不掉的。怎样去掉绝对值号呢？我们添加条件：<strong>数列 $a_i$ 单调</strong>，这样就使得</p>
-<p>$$<br>\sum_{i&#x3D;1}^{n-1}a_{i+1}-a_i&#x3D;\sum_{i&#x3D;1}^{n-1}(a_{i+1}-a_i)&#x3D;a_n-a_1<br>$$<br>这样原式就可以放缩为</p>
-<p>$$<br>\sum_{i&#x3D;1}^na_ib_i \le M(a_n+a_n-a_1) \le M(a_1+2a_n)<br>$$</p>
-<p>考虑我们使用的是柯西收敛原理，所以应该是</p>
-<p>$$<br>\sum_{i&#x3D;n+1}^{n+p}a_ib_i \le M(a_{n+p}+a_{n+p}-a_{n+1}) \le M(a_{n+1}+2a_{n+p})<br>$$</p>
-<p>注意此时起点变到了 n+1，因此 B 的定义也要改写一下</p>
-<p>$$<br>B_i&#x3D;\sum_{j&#x3D;n+1}^{n+i}b_j<br>$$</p>
-<p>同时新的 B 的界也会改变</p>
-<p>$$<br>B_i&#x3D;\sum_{j&#x3D;n+1}^{n+i}b_j&#x3D;\sum_{j&#x3D;1}^{n+i}b_j-\sum_{j&#x3D;1}^{n}b_j \le 2M<br>$$</p>
-<p>这下就方便我们继续添加约束了。此时 B 已经被我们放缩成有界量，而我们肯定不希望 $a_{n+1}$ 和 $a_{n+p}$ 无界，因此我们再添加条件：<strong>数列 $a_i$ 有界</strong>，为了区分两个界，分别记为 $M_a,\ M_B$，放缩结果就是</p>
-<p>$$<br>\sum_{i&#x3D;{n+1}}^{n+p}a_ib_i \le 6M_aM_B<br>$$</p>
-<p>接下来为了达成柯西列条件，我们只需要让 $M_a$ 或者 $M_B$ “变成” $\varepsilon$。</p>
-<p>如果想让 $M_a$ 变，就需要添加条件：$\lim\limits_{n\rightarrow\infty}a_n&#x3D;0$，也即 Dirichlet 收敛准则，这是因为只要 n 足够大，$a_{n+1},\ a_{n+p}$ 都能小于 $\varepsilon$；</p>
-<p>如果想让 $M_B$ 变，就需要添加条件：$\sum\limits_{i&#x3D;1}^{\infty}b_i$ 收敛，也即 Abel 收敛准则，这是因为此时根据柯西收敛原理，当 n 足够大时可以有 $ B_i &lt; \varepsilon $。</p>
+<p>假设 $\exists M &gt; 0,\ \forall n,\ B_n \le M$，那么</p>
+<script type="math/tex; mode=display">
+\sum_{i=1}^na_ib_i = a_nB_n-\sum_{i=1}^{n-1}(a_{i+1}-a_i)B_i \le a_nB_n+\sum_{i=1}^{n-1}a_{i+1}-a_iB_i \le M(a_n+\sum_{i=1}^{n-1}a_{i+1}-a_i)</script><p>然后我们发现加了加了绝对值后出现了一个尴尬的事：$a_{i+1}-a_i$ 邻项是消不掉的。怎样去掉绝对值号呢？我们添加条件：<strong>数列 $a_i$ 单调</strong>，这样就使得</p>
+<script type="math/tex; mode=display">
+\sum_{i=1}^{n-1}a_{i+1}-a_i=\sum_{i=1}^{n-1}(a_{i+1}-a_i)=a_n-a_1</script><p>这样原式就可以放缩为</p>
+<script type="math/tex; mode=display">
+\sum_{i=1}^na_ib_i \le M(a_n+a_n-a_1) \le M(a_1+2a_n)</script><p>考虑我们使用的是柯西收敛原理，所以应该是</p>
+<script type="math/tex; mode=display">
+\sum_{i=n+1}^{n+p}a_ib_i \le M(a_{n+p}+a_{n+p}-a_{n+1}) \le M(a_{n+1}+2a_{n+p})</script><p>注意此时起点变到了 n+1，因此 B 的定义也要改写一下</p>
+<script type="math/tex; mode=display">
+B_i=\sum_{j=n+1}^{n+i}b_j</script><p>同时新的 B 的界也会改变</p>
+<script type="math/tex; mode=display">
+B_i=\sum_{j=n+1}^{n+i}b_j=\sum_{j=1}^{n+i}b_j-\sum_{j=1}^{n}b_j \le 2M</script><p>这下就方便我们继续添加约束了。此时 B 已经被我们放缩成有界量，而我们肯定不希望 $a_{n+1}$ 和 $a_{n+p}$ 无界，因此我们再添加条件：<strong>数列 $a_i$ 有界</strong>，为了区分两个界，分别记为 $M_a,\ M_B$，放缩结果就是</p>
+<script type="math/tex; mode=display">
+\sum_{i={n+1}}^{n+p}a_ib_i \le 6M_aM_B</script><p>接下来为了达成柯西列条件，我们只需要让 $M_a$ 或者 $M_B$ “变成” $\varepsilon$。</p>
+<p>如果想让 $M_a$ 变，就需要添加条件：$\lim\limits_{n\rightarrow\infty}a_n=0$，也即 Dirichlet 收敛准则，这是因为只要 n 足够大，$a_{n+1},\ a_{n+p}$ 都能小于 $\varepsilon$；</p>
+<p>如果想让 $M_B$ 变，就需要添加条件：$\sum\limits_{i=1}^{\infty}b_i$ 收敛，也即 Abel 收敛准则，这是因为此时根据柯西收敛原理，当 n 足够大时可以有 $ B_i &lt; \varepsilon $。</p>
 <p>至此，我们相对自然地引入了A-D判别法。</p>
 <hr>
 <h2 id="其它"><a href="#其它" class="headerlink" title="其它"></a>其它</h2><p>都是一家之言，大家选择性吸收就好，笔误欢迎指正！</p>

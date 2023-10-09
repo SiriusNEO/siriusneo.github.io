@@ -171,7 +171,6 @@
 <p>我狂暴搜索了一堆解决方案，最后发现可能是我 wsl 终端代理设置的有点问题。查了一下之后，发现之前设好的 <code>ALL_PROXIES</code> 里的 <code>&lt;the ip of windows&gt;</code> 变了。我想了想，靠，我从学校放假回家了啊，当然变了！（这里涉及到 WSL 终端代理设置的一个很鬼畜的地方，就是由于 WSL 本身其实是一个 Hyper-V，所以这里必须填 Windows 的 ip，也就是 <code>&lt;the ip of windows&gt;:7890</code> 而不是 <code>127.0.0.1:7890</code> ） </p>
 <p>这时我突然回想起来最近回家后 <code>git</code> 走 <code>http/https</code> 也都是挂的，突然想到会不会和这个事情有关，一试果然。真是造孽啊！ 当然每次 IP 变了都要手动改也挺麻烦的，可以改成下面这样</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">win_host_ip=$(<span class="built_in">cat</span> /etc/resolv.conf grep <span class="string">&quot;nameserver&quot;</span> <span class="built_in">cut</span> -f 2 -d <span class="string">&quot; &quot;</span>)</span><br><span class="line"><span class="built_in">export</span> http_proxy=<span class="string">&quot;http://<span class="variable">$win_host_ip</span>:7890&quot;</span></span><br><span class="line"><span class="built_in">export</span> https_proxy=<span class="string">&quot;https://<span class="variable">$win_host_ip</span>:7890&quot;</span></span><br></pre></td></tr></table></figure>
-
 <p>省心省事。当然记得把 proxy 软件那边的 <code>Allow LAN</code> 打开。这件事告诉我们：</p>
 <ol>
 <li>不要怕折腾。折腾之后可能会把以前的一些未解之谜也解决了。</li>

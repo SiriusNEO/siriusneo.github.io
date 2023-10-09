@@ -208,7 +208,7 @@
 <h2 id="P1094-Pyramid"><a href="#P1094-Pyramid" class="headerlink" title="P1094 Pyramid"></a>P1094 Pyramid</h2><p><strong>题意</strong></p>
 <p>给定 $N$ 行 $M$ 列网格，每个格子都有一个权值。求如下子图形覆盖的最小权值和（指该图形所占网格的所有权值和）：</p>
 <p>一个 $b$ 行 $a$ 列的矩形，从中挖掉一个 $d$ 行 $c$ 列的矩形。挖掉的格子不能在$b$ 行 $a$ 列的矩形的边界上。如下图灰色部分。</p>
-<p><img src="/2021/03/29/%E6%A8%B1%E8%8A%B1%E6%97%B6%E8%8A%82%EF%BC%8C%E5%B8%A6%E4%BD%A0%E5%81%9Aacm%E6%95%B0%E7%BB%93%E5%B0%8F%E4%BD%9C%E4%B8%9A/1.png"></p>
+<p><img src="1.png" alt=""></p>
 <p>$3\le N, M \le 1000$。</p>
 <p><strong>解法</strong></p>
 <p>二维线段树暴过！$O(N \log^2 N)$</p>
@@ -245,39 +245,39 @@
 <p>给定长度为 $N$ 的非负整数序列，你可以选择其中若干数，但不能有大于 $M$ 个连续数字被选择，求所选的和最大值。$M \le N \le 10^6$。</p>
 <p><strong>解法</strong></p>
 <p>记 $f_i$ 为考虑到第 $i$ 个数字的答案且第 $i$ 个数字必须选，我们只要考虑最长能选多长，则</p>
-<p>$$<br>f_i&#x3D;\max_{i-m+1 \le j \le i}{f_{j-2} + sum_{i}-sum_{j-1}}<br>$$</p>
-<p>当然这个转移方程并不完全，因为选满后不一定要从 $f_{i-m-1}$ 转移过来，故：</p>
-<p>$$<br>f_i&#x3D;\max_{2 \le j \le i-m}{f_{j-2} + sum_{i}-sum_{i-m}}<br>$$</p>
-<p>对于两个方程我们显然是不好做的，注意有一个常用的想法：如果你设计的状态有“第 $i$ 个必须选” 这样的性质，那可以考虑取前驱max。</p>
+<script type="math/tex; mode=display">
+f_i=\max_{i-m+1 \le j \le i}\{f_{j-2} + sum_{i}-sum_{j-1}\}</script><p>当然这个转移方程并不完全，因为选满后不一定要从 $f_{i-m-1}$ 转移过来，故：</p>
+<script type="math/tex; mode=display">
+f_i=\max_{2 \le j \le i-m}\{f_{j-2} + sum_{i}-sum_{i-m}\}</script><p>对于两个方程我们显然是不好做的，注意有一个常用的想法：如果你设计的状态有“第 $i$ 个必须选” 这样的性质，那可以考虑取前驱max。</p>
 <p>所以我们状态可以改成：记 $f_i$ 为考虑到第 $i$ 个数字的答案。转移方程就变简单了：</p>
-<p>$$<br>f_i&#x3D;\max{f_{i-1},\max_{i-m+1 \le j \le i}{f_{j-2} + sum_{i}-sum_{j-1}}}<br>$$</p>
-<p>这种方程都有个特点：从一段区间的min&#x2F;max转移过来，区间的下界单调增加，并且 $i, j$ 非常好分离，姑且称作<strong>线性min&#x2F;max递推方程</strong>。这种递推dp用可以采用<strong>单调队列优化</strong>，复杂度 $O(n)$。</p>
+<script type="math/tex; mode=display">
+f_i=\max\{f_{i-1},\max_{i-m+1 \le j \le i}\{f_{j-2} + sum_{i}-sum_{j-1}\}\}</script><p>这种方程都有个特点：从一段区间的min/max转移过来，区间的下界单调增加，并且 $i, j$ 非常好分离，姑且称作<strong>线性min/max递推方程</strong>。这种递推dp用可以采用<strong>单调队列优化</strong>，复杂度 $O(n)$。</p>
 <p>此外这题也可以反着做（所谓正难则反），最后也需要单调队列优化~</p>
 <hr>
 <h2 id="P1100-投资大师"><a href="#P1100-投资大师" class="headerlink" title="P1100 投资大师"></a>P1100 投资大师</h2><p><strong>题意</strong></p>
-<p>共有 $T$ 天，给出每天的股票买入价 $AP_i$、卖出价 $BP_i$以及每天至多购买数量$AS_i$、每天至多卖出数量 $BS_i$。此外如果在某天进行了买入&#x2F;卖出操作后，接下来的 $W$ 天都不能再交易，且规定任何时刻持股上限为 $MaxP$。求最多能赚多少钱？</p>
+<p>共有 $T$ 天，给出每天的股票买入价 $AP_i$、卖出价 $BP_i$以及每天至多购买数量$AS_i$、每天至多卖出数量 $BS_i$。此外如果在某天进行了买入/卖出操作后，接下来的 $W$ 天都不能再交易，且规定任何时刻持股上限为 $MaxP$。求最多能赚多少钱？</p>
 <p>$W \le T \le 2000,\ MaxP \le 2000$。</p>
 <p><strong>解法</strong></p>
 <p>看起来有点背包的感觉，而且持股量和天数都是 $n^2$ 级别的，因此我们记状态 $f(i,j)$ 表示考虑到第 i 天，持股量为 j 的最大收益。（这里取了前缀max，不要求第 i 天必须交易）</p>
 <p>则有转移：</p>
 <ol>
-<li>$f(i,j)&#x3D;f(i-1,j)$，即第 i 天不进行交易操作</li>
-<li>$f(i,j)&#x3D;f(i-W-1,j-k)+AP_ik$，即第 i 天买入 k 张股票</li>
-<li>$f(i,j)&#x3D;f(i-W-1,j+k)+BP_ik$，即第 i 天卖出 k 张股票</li>
+<li>$f(i,j)=f(i-1,j)$，即第 i 天不进行交易操作</li>
+<li>$f(i,j)=f(i-W-1,j-k)+AP_ik$，即第 i 天买入 k 张股票</li>
+<li>$f(i,j)=f(i-W-1,j+k)+BP_ik$，即第 i 天卖出 k 张股票</li>
 </ol>
 <p>这样转移是 $O(n^3)$ 的，但是我们发现这也是滑动区间的max问题，所以可以上单调队列优化就能变成 $O(n^2)$。</p>
 <hr>
 <h2 id="P1101-特别行动队"><a href="#P1101-特别行动队" class="headerlink" title="P1101 特别行动队"></a>P1101 特别行动队</h2><p><strong>题意</strong></p>
-<p>有一列长度为 $N$ 的正整数序列 ${a_i}$，并给定一二次函数 $g(x)&#x3D;ax^2+bx+c$，先需要你将此序列划分为若干连续段 ${A_k}$，使得</p>
-<p>$$<br>\sum_{i&#x3D;1}^k g(\sum_{a_j \in A_i} a_j)<br>$$</p>
-<p>最大，$N \le 10^6$。</p>
+<p>有一列长度为 $N$ 的正整数序列 $\{a_i\}$，并给定一二次函数 $g(x)=ax^2+bx+c$，先需要你将此序列划分为若干连续段 $\{A_k\}$，使得</p>
+<script type="math/tex; mode=display">
+\sum_{i=1}^k g(\sum_{a_j \in A_i} a_j)</script><p>最大，$N \le 10^6$。</p>
 <p><strong>解法</strong></p>
 <p>仿照上面的思想，还是先想dp怎么转移。设 $f_i$ 为第 i 个位置一定是断点的最大值，则有：（这里这么设计一是转移简单，二是第 n 个位置一定是断点）</p>
-<p>$$<br>f_i&#x3D;\max_{1 \le j &lt; i}{f_j+g(sum_i-sum_{j})}<br>$$</p>
-<p>我们发现这有点类似上一题的转移了，但是这时候后面那一项不再是线性的了（关键在于有一项关于 i 的和一项关于 j 的乘在一起了），单调队列已经无能为力。</p>
+<script type="math/tex; mode=display">
+f_i=\max_{1 \le j < i}\{f_j+g(sum_i-sum_{j})\}</script><p>我们发现这有点类似上一题的转移了，但是这时候后面那一项不再是线性的了（关键在于有一项关于 i 的和一项关于 j 的乘在一起了），单调队列已经无能为力。</p>
 <p>这种问题一般可以抽象成形如以下的式子：</p>
-<p>$$<br>b_i&#x3D;{\min or \max}_{j \in window} {y_j-k_ix_j}<br>$$</p>
-<p>可以用<strong>斜率优化</strong>进行处理，用单调队列维护一个凸包，复杂度 $O(N)$。</p>
+<script type="math/tex; mode=display">
+b_i={\min or \max}_{j \in window} \{y_j-k_ix_j\}</script><p>可以用<strong>斜率优化</strong>进行处理，用单调队列维护一个凸包，复杂度 $O(N)$。</p>
 <hr>
 <h2 id="后记"><a href="#后记" class="headerlink" title="后记"></a>后记</h2><p>第一次数据结构小作业主要设计树状数组、线段树和平衡树，都是 log 高效数据结构。</p>
 <p>前两个我认为优化之处都在于维护了尽量少的一组“基信息 ($N \log N$ 规模) ”使得对于任意的区间都能通过至多 log 个基组合出来。平衡树则比较多样了，比如Splay它是通过旋转不改变树性质（树性质是查找快速的关键）却能改变树高，进而使得树尽量平衡。</p>

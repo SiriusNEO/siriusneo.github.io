@@ -191,12 +191,12 @@
 <p>树形背包问题。$N$ 个物品，每个物品有价值 $v_i$ 以及重量 $w_i$，以及可能有一个依赖关系，即购买第 $j$ 件物品前必须先购买第 $i$ 件物品。保证依赖关系为拓扑图。$N \le 5000$</p>
 <p><strong>解法</strong></p>
 <p>常规的树形背包复杂度是 $O(N^3)$ 的，转移方程考虑树形 DP 的经典设计，$f[u][i]$ 表示在 u 的子树（包括自己）中已使用空间为 i 的最优价值（即对树上每个节点做一次背包，假设每个节点容量都是 1）</p>
-<p>$$<br>f[u][i] &#x3D; \max(f[u][j] + f[v][i-j] + v[v])<br>$$</p>
-<p>对于一个子树节点，需要枚举两层循环。</p>
+<script type="math/tex; mode=display">
+f[u][i] = \max(f[u][j] + f[v][i-j] + v[v])</script><p>对于一个子树节点，需要枚举两层循环。</p>
 <p>而这题数据范围是 $O(N^2)$ 的，我们考虑复杂度的瓶颈：我们枚举了要选择的节点个数，而实际上子树我们也枚举过一遍，这里面重复做了事情。</p>
 <p>因此我们考虑使用前面已经搜过的信息，考虑按 dfs 序转移。设 $f[i][j]$ 表示 dp 到 dfs 序为 i 的节点，已经选了 j 个节点，则选 or 不选转移如下</p>
-<p>$$<br>f[i][j] &#x3D; max(f[i+siz[dfnToPos[i]]][j], f[i+1][j-w[dfnToPos[i]]]+v[dfnToPos[i]])<br>$$</p>
-<hr>
+<script type="math/tex; mode=display">
+f[i][j] = max(f[i+siz[dfnToPos[i]]][j], f[i+1][j-w[dfnToPos[i]]]+v[dfnToPos[i]])</script><hr>
 <h2 id="P1116-Forest"><a href="#P1116-Forest" class="headerlink" title="P1116 Forest"></a>P1116 Forest</h2><p><strong>题意</strong></p>
 <p>一棵树不断删边，每删一次边询问一次所有树直径的乘积。$N \le 10^5$</p>
 <p><strong>解法</strong></p>
@@ -227,13 +227,12 @@
 <hr>
 <h2 id="P1131-加分二叉树"><a href="#P1131-加分二叉树" class="headerlink" title="P1131 加分二叉树"></a>P1131 加分二叉树</h2><p><strong>题意</strong></p>
 <p>对于一个每个点有权值 $d[i]$ 的二叉树，定义子树 u 的分数为：</p>
-<p>$$f[u] &#x3D; f[left] \cdot f[right] + d[u]$$</p>
-<p>且规定只有一边子树，另一侧空树的分数算作 1；叶子节点，分数即为 $d[i]$</p>
+<script type="math/tex; mode=display">f[u] = f[left] \cdot f[right] + d[u]</script><p>且规定只有一边子树，另一侧空树的分数算作 1；叶子节点，分数即为 $d[i]$</p>
 <p>试求一个中序遍历为 1, 2, 3, … n 且根节点分数最高的二叉树。</p>
 <p><strong>解法</strong></p>
 <p>中序遍历可以看作是投影，对于一个既定的中序遍历，我们可以选择其中任意一个位置 pos 作为根节点，那么左子树中序遍历就是 $[l, pos-1]$，右子树就是 $[pos+1, r]$，我们记 $f[l][r]$ 为加分值，那么</p>
-<p>$$<br>f[l][r]&#x3D;\max(f[l][k-1] \cdot f[k+1][r] + d[k])<br>$$</p>
-<hr>
+<script type="math/tex; mode=display">
+f[l][r]=\max(f[l][k-1] \cdot f[k+1][r] + d[k])</script><hr>
 <h2 id="P1133-二哥吃糖"><a href="#P1133-二哥吃糖" class="headerlink" title="P1133 二哥吃糖"></a>P1133 二哥吃糖</h2><p><strong>题意</strong></p>
 <p>初始状态所有盒子里都有一颗糖，有三种类型的操作：</p>
 <ul>

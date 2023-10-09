@@ -191,11 +191,11 @@
 <blockquote>
 <p><strong>左偏性：</strong>对于左偏树上任何一个点，$dis_{leftson} \ge dis_{rightson}$。</p>
 </blockquote>
-<p><img src="/2021/02/22/%E5%81%8F%E6%96%9C%E7%9A%84%E8%89%BA%E6%9C%AF%EF%BC%8C%E5%B7%A6%E5%81%8F%E6%A0%91/leftist-tree.png"></p>
+<p><img src="leftist-tree.png" alt=""></p>
 <p>上图是个左偏树的实例，图中黑色表示键值，红色表示距离，以大根堆为例。</p>
 <p>按照这个基本性质，我们很容易得到一些推论。</p>
 <blockquote>
-<p><strong>推论1：</strong>$dis_{node}&#x3D;dis_{rightson} + 1$</p>
+<p><strong>推论1：</strong>$dis_{node}=dis_{rightson} + 1$</p>
 </blockquote>
 <p>这是因为右儿子距离总是较小的，按“最近”这个定义可以很容易看出来。</p>
 <blockquote>
@@ -203,7 +203,7 @@
 <p>其中N是节点总数，并且当且仅当其为完全二叉树时，并且node为根节点时取等。</p>
 </blockquote>
 <p>我们可以只考虑根节点，因为如果存在子节点的距离更大，我们可以递归地考虑那个子树，显然此时 N 更小，不等式更强了。</p>
-<p>而假设根节点的距离为d，也即一直往根节点右手走有d这么长，那么点最少的情况一定是完全二叉树，此时点数为 $$2^{d+1}-1$$</p>
+<p>而假设根节点的距离为d，也即一直往根节点右手走有d这么长，那么点最少的情况一定是完全二叉树，此时点数为 <script type="math/tex">2^{d+1}-1</script></p>
 <p>因此得证。</p>
 <hr>
 <h2 id="时间复杂度"><a href="#时间复杂度" class="headerlink" title="时间复杂度"></a>时间复杂度</h2><p>由于左偏树主要优势在于合并，而添加节点、删除节点都可以通过合并来达到（事实上，可并堆的插入、删除都可以这样归结为合并），因此这里只考虑合并这一操作。</p>

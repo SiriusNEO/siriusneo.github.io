@@ -6,12 +6,12 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="HandheldFriendly" content="True">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
-    <meta name="description" content="简单整理一下 CS2955 这门四周小学期课的笔记，不是很细致。 IntroWhy Randomness? Simplicity Efficiency Better in adversarial situation: 由于随机性很难造数据卡掉  Toy Examplearray $A: A[i]&#x3D;0$ for $\frac{n}{3}$ indices $i$. Output some">
+    <meta name="description" content="简单整理一下 CS2955 这门四周小学期课的笔记，不是很细致。 IntroWhy Randomness? Simplicity Efficiency Better in adversarial situation: 由于随机性很难造数据卡掉  Toy Examplearray $A: A[i]&#x3D;0$ for $\frac{n}{3}$ indices $i$. Output some $i$ s">
 <meta property="og:type" content="article">
 <meta property="og:title" content="CS2955-Prob&amp;Comp-Notes">
 <meta property="og:url" content="https://siriusneo.github.io/2023/01/03/cs2955-probcomp-notes/index.html">
 <meta property="og:site_name" content="Metric Space | 度量空间">
-<meta property="og:description" content="简单整理一下 CS2955 这门四周小学期课的笔记，不是很细致。 IntroWhy Randomness? Simplicity Efficiency Better in adversarial situation: 由于随机性很难造数据卡掉  Toy Examplearray $A: A[i]&#x3D;0$ for $\frac{n}{3}$ indices $i$. Output some">
+<meta property="og:description" content="简单整理一下 CS2955 这门四周小学期课的笔记，不是很细致。 IntroWhy Randomness? Simplicity Efficiency Better in adversarial situation: 由于随机性很难造数据卡掉  Toy Examplearray $A: A[i]&#x3D;0$ for $\frac{n}{3}$ indices $i$. Output some $i$ s">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2023-01-03T07:17:48.000Z">
 <meta property="article:modified_time" content="2023-10-08T17:20:26.016Z">
@@ -126,7 +126,7 @@
     
     
       <div id="toc">
-        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Intro"><span class="toc-number">1.</span> <span class="toc-text">Intro</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Why-Randomness"><span class="toc-number">1.1.</span> <span class="toc-text">Why Randomness?</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Toy-Example"><span class="toc-number">1.2.</span> <span class="toc-text">Toy Example</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Monte-Carlo-Las-Vegas"><span class="toc-number">1.3.</span> <span class="toc-text">Monte-Carlo &amp; Las Vegas</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Polynomial-Identity-Testing-P-I-T"><span class="toc-number">2.</span> <span class="toc-text">Polynomial Identity Testing (P.I.T)</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Problem-Description"><span class="toc-number">2.1.</span> <span class="toc-text">Problem Description</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#A-Simple-Deterministic-Algorithm"><span class="toc-number">2.1.1.</span> <span class="toc-text">A Simple Deterministic Algorithm</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Randomized-Algorithm"><span class="toc-number">2.1.2.</span> <span class="toc-text">Randomized Algorithm</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Fingerprinting"><span class="toc-number">2.1.3.</span> <span class="toc-text">Fingerprinting</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#New-Algorithm-Random-with-Fingerprinting"><span class="toc-number">2.1.4.</span> <span class="toc-text">New Algorithm (Random with Fingerprinting)</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Multiple-Variables"><span class="toc-number">2.2.</span> <span class="toc-text">Multiple Variables</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Schwartz-Zippel-Lemma"><span class="toc-number">2.3.</span> <span class="toc-text">Schwartz-Zippel Lemma</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Proof"><span class="toc-number">2.3.1.</span> <span class="toc-text">Proof</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Application-Bipartite-Matching"><span class="toc-number">2.3.2.</span> <span class="toc-text">Application: Bipartite Matching</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Finding-a-Perfect-Matching"><span class="toc-number">3.</span> <span class="toc-text">Finding a Perfect Matching</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Trivial-Alg"><span class="toc-number">3.1.</span> <span class="toc-text">Trivial Alg</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Isolation-Lemma"><span class="toc-number">3.2.</span> <span class="toc-text">Isolation Lemma</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Counterintuitive"><span class="toc-number">3.2.1.</span> <span class="toc-text">Counterintuitive:</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Proof-due-to-Joel-Spence"><span class="toc-number">3.2.2.</span> <span class="toc-text">Proof (due to Joel Spence)</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Parallel-Alg"><span class="toc-number">3.3.</span> <span class="toc-text">Parallel Alg</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Toss-Coin"><span class="toc-number">4.</span> <span class="toc-text">Toss Coin</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Question"><span class="toc-number">4.1.</span> <span class="toc-text">Question</span></a></li></ol></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Intro"><span class="toc-number">1.</span> <span class="toc-text">Intro</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Why-Randomness"><span class="toc-number">1.1.</span> <span class="toc-text">Why Randomness?</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Toy-Example"><span class="toc-number">1.2.</span> <span class="toc-text">Toy Example</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Monte-Carlo-amp-Las-Vegas"><span class="toc-number">1.3.</span> <span class="toc-text">Monte-Carlo &amp; Las Vegas</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Multiple-Variables"><span class="toc-number">1.4.</span> <span class="toc-text">Multiple Variables</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Schwartz-Zippel-Lemma"><span class="toc-number">1.5.</span> <span class="toc-text">Schwartz-Zippel Lemma</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Proof"><span class="toc-number">1.5.1.</span> <span class="toc-text">Proof</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Application-Bipartite-Matching"><span class="toc-number">1.5.2.</span> <span class="toc-text">Application: Bipartite Matching</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Finding-a-Perfect-Matching"><span class="toc-number">2.</span> <span class="toc-text">Finding a Perfect Matching</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Trivial-Alg"><span class="toc-number">2.1.</span> <span class="toc-text">Trivial Alg</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Isolation-Lemma"><span class="toc-number">2.2.</span> <span class="toc-text">Isolation Lemma</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Counterintuitive"><span class="toc-number">2.2.1.</span> <span class="toc-text">Counterintuitive:</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Proof-due-to-Joel-Spence"><span class="toc-number">2.2.2.</span> <span class="toc-text">Proof (due to Joel Spence)</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Parallel-Alg"><span class="toc-number">2.3.</span> <span class="toc-text">Parallel Alg</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Toss-Coin"><span class="toc-number">3.</span> <span class="toc-text">Toss Coin</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Question"><span class="toc-number">3.1.</span> <span class="toc-text">Question</span></a></li></ol></li></ol>
       </div>
     
   </span>
@@ -177,82 +177,127 @@
 <li>Efficiency</li>
 <li>Better in adversarial situation: 由于随机性很难造数据卡掉</li>
 </ul>
-<h3 id="Toy-Example"><a href="#Toy-Example" class="headerlink" title="Toy Example"></a>Toy Example</h3><p>array $A: A[i]&#x3D;0$ for $\frac{n}{3}$ indices $i$. Output some $i$ s.t. $A[i]&#x3D;0$.</p>
+<h3 id="Toy-Example"><a href="#Toy-Example" class="headerlink" title="Toy Example"></a>Toy Example</h3><p>array $A: A[i]=0$ for $\frac{n}{3}$ indices $i$. Output some $i$ s.t. $A[i]=0$.</p>
 <ul>
 <li><p>Deterministic: check $\frac{2n}{3}-1$ positions. Runtime $\Omega(n)$.</p>
 </li>
-<li><p>Randomized: choose a uniformly random $i$. $Pr{A[i]&#x3D;0} &#x3D; \frac{1}{3}$. Repeat $10$ times.</p>
+<li><p>Randomized: choose a uniformly random $i$. $Pr\{A[i]=0\} = \frac{1}{3}$. Repeat $10$ times.</p>
 <ul>
 <li>Failure Prob $(\frac{1}{3})^{10}$</li>
 </ul>
 <p>Runtime $O(1)$.</p>
 </li>
 </ul>
-<h3 id="Monte-Carlo-Las-Vegas"><a href="#Monte-Carlo-Las-Vegas" class="headerlink" title="Monte-Carlo &amp; Las Vegas"></a>Monte-Carlo &amp; Las Vegas</h3><ul>
+<h3 id="Monte-Carlo-amp-Las-Vegas"><a href="#Monte-Carlo-amp-Las-Vegas" class="headerlink" title="Monte-Carlo &amp; Las Vegas"></a>Monte-Carlo &amp; Las Vegas</h3><ul>
 <li>Monte-Carlo: finite time, but the output could be WRONG.</li>
 <li>Las Vegas: output is always CORRECT. (Runtime could be infinite, but the $\mathbb{E}(\text{runtime})$ must be finite).</li>
 </ul>
 <p>可以被 Monte-Carlo 解决的复杂性类: BPP (Bounded error Probabilistic Polynomial time).</p>
 <p>可以被 Las Vegas 解决的复杂性类: ZPP (Zero-error Probabilistic Polynomial time).</p>
-<p>$$ZPP \subseteq BPP$$ (Las Vegas 无限长运行时间，可以设一个 Threshold 截断. )</p>
-<p>e.g. 一个 Las Vegas 算法有期望运行时间 $\mathbb{E}[T]$, 设置一个 Threshold $T_0 &#x3D; 3\mathbb{E}[T]$ ，那么有<br>$$<br>Pr(T &gt; T_0) \le \frac{1}{3}<br>$$<br>在此 Threshold 截断得到的新算法，w.p. $\frac{1}{3}$ 没有输出或者输出错误.</p>
-<p>使用到了: </p>
-<ul>
-<li><p>Markov’s Ineq<br>$$<br>Pr{X \ge a} \le \frac{\mathbb{E}X}{a}<br>$$</p>
-</li>
-<li><p>Chebyshev’s Ineq<br>$$<br>Pr{|X-\mathbb{E}X| \ge a} \le \frac{\text{Var}(X)}{a^2}<br>$$<br>推广:<br>$$<br>Pr{|X-\mathbb{E}X|^l \ge a^l} \le \frac{\mathbb{E}[|X-\mathbb{E}X|^l]}{a^l}<br>$$</p>
-</li>
-</ul>
-<h2 id="Polynomial-Identity-Testing-P-I-T"><a href="#Polynomial-Identity-Testing-P-I-T" class="headerlink" title="Polynomial Identity Testing (P.I.T)"></a>Polynomial Identity Testing (P.I.T)</h2><h3 id="Problem-Description"><a href="#Problem-Description" class="headerlink" title="Problem Description"></a>Problem Description</h3><p>Alice has<br>$$<br>f(x) &#x3D; \sum_{i&#x3D;0}^{n-1} a_i x^i<br>$$<br>Bob has<br>$$<br>g(x) &#x3D; \sum_{i&#x3D;0}^{n-1} b_i x^i<br>$$<br>Alice send sth to Bob, and Bob answer the question “whether $f(x)$ and $g(x)$ are identical”.</p>
-<h4 id="A-Simple-Deterministic-Algorithm"><a href="#A-Simple-Deterministic-Algorithm" class="headerlink" title="A Simple Deterministic Algorithm"></a>A Simple Deterministic Algorithm</h4><p>Alice send all the coefficients $a_i$ to Bob. </p>
-<p>Assumption: $a_i$, $b_i$ are of size $poly(n)$, so we can use $\log(n)$ bits to represent them. Totally it takes </p>
-<p>$O(n \log n)$.</p>
-<h4 id="Randomized-Algorithm"><a href="#Randomized-Algorithm" class="headerlink" title="Randomized Algorithm"></a>Randomized Algorithm</h4><ul>
-<li><p>Idea: Select a random $r$. check if $f(r) &#x3D; g(r)$.</p>
-</li>
-<li><p>Analysis: </p>
-<ul>
-<li>Depends on $r$ (trade off): large range of $r$ $\Longrightarrow$ smaller failure prob; large communication complexity.</li>
-<li>If $f(x)&#x3D;g(x)$, this algorithm is always correct.</li>
-<li>If $f(x) \neq g(x)$, the algorithm fails only when $r$ is a root of $f(x)-g(x)$.</li>
-<li>$f(x)-g(x)$ has at most $n$ roots hence if we choose $r$ from ${1,2, \dots, 100n}$, the failure prob is $\frac{1}{100}$.</li>
-</ul>
-</li>
-<li><p>Communication Complexity:</p>
-<ul>
-<li>$r$ : $O(\log n)$</li>
-<li>$f(r)$: $O(n \log n)$</li>
-</ul>
-</li>
-</ul>
-<h4 id="Fingerprinting"><a href="#Fingerprinting" class="headerlink" title="Fingerprinting"></a>Fingerprinting</h4><p>Choose a random prime $p$, if $a \equiv b \mod p$ then there is a good chance $a &#x3D; b$.</p>
-<p><strong>Fingerprints</strong>: $a\  \text{mod}\ p$,  $b\  \text{mod}\ p$ </p>
-<h4 id="New-Algorithm-Random-with-Fingerprinting"><a href="#New-Algorithm-Random-with-Fingerprinting" class="headerlink" title="New Algorithm (Random with Fingerprinting)"></a>New Algorithm (Random with Fingerprinting)</h4><p>Check if<br>$$<br>f(r) \equiv g(r) \mod p<br>$$<br>Only need to pass $f(r)\  \text{mod}\ p$.</p>
-<ul>
-<li><p>Analysis: Failure probability comes from</p>
-<ul>
-<li><p>Case1: $r$ is a root of $f(x)-g(x)$</p>
-</li>
-<li><p>Case 2: $p$ is a factor of $f(r)-g(r)$</p>
-<ul>
-<li><p>$f(r)-g(r)$ is a number with size $n^n$, has $\le n \log n$ prime factors.</p>
-</li>
-<li><p>There are $O(\frac{n^2}{\ln n})$ primes $\le n^2$.</p>
-</li>
-</ul>
-<p>Then choose a prime $p \le n^2$.<br>$$<br>Pr{p \mid f(r)-g(r)} &#x3D; \frac{n \ln n}{\frac{n^2}{\ln n}} &#x3D; O(\frac{\ln^2 n}{n})<br>$$</p>
-</li>
-</ul>
-</li>
+<script type="math/tex; mode=display">ZPP \subseteq BPP$$ (Las Vegas 无限长运行时间，可以设一个 Threshold 截断. )
+
+e.g. 一个 Las Vegas 算法有期望运行时间 $\mathbb{E}[T]$, 设置一个 Threshold $T_0 = 3\mathbb{E}[T]$ ，那么有</script><p>Pr(T &gt; T_0) \le \frac{1}{3}</p>
+<script type="math/tex; mode=display">
+在此 Threshold 截断得到的新算法，w.p. $\frac{1}{3}$ 没有输出或者输出错误.
+
+
+
+使用到了: 
+
+- Markov's Ineq</script><p>  Pr\{X \ge a\} \le \frac{\mathbb{E}X}{a}</p>
+<script type="math/tex; mode=display">
+
+- Chebyshev's Ineq</script><p>  Pr\{|X-\mathbb{E}X| \ge a\} \le \frac{\text{Var}(X)}{a^2}</p>
+<script type="math/tex; mode=display">
+  推广:</script><p>  Pr\{|X-\mathbb{E}X|^l \ge a^l\} \le \frac{\mathbb{E}[|X-\mathbb{E}X|^l]}{a^l}</p>
+<script type="math/tex; mode=display">
+
+
+
+
+##  Polynomial Identity Testing (P.I.T)
+
+### Problem Description
+
+Alice has</script><p>f(x) = \sum_{i=0}^{n-1} a_i x^i</p>
+<script type="math/tex; mode=display">
+Bob has</script><p>g(x) = \sum_{i=0}^{n-1} b_i x^i</p>
+<script type="math/tex; mode=display">
+Alice send sth to Bob, and Bob answer the question "whether $f(x)$ and $g(x)$ are identical".
+
+
+
+#### A Simple Deterministic Algorithm
+
+Alice send all the coefficients $a_i$ to Bob. 
+
+Assumption: $a_i$, $b_i$ are of size $poly(n)$, so we can use $\log(n)$ bits to represent them. Totally it takes 
+
+$O(n \log n)$.
+
+
+
+#### Randomized Algorithm
+
+- Idea: Select a random $r$. check if $f(r) = g(r)$.
+
+- Analysis: 
+  - Depends on $r$ (trade off): large range of $r$ $\Longrightarrow$ smaller failure prob; large communication complexity.
+  - If $f(x)=g(x)$, this algorithm is always correct.
+  - If $f(x) \neq g(x)$, the algorithm fails only when $r$ is a root of $f(x)-g(x)$.
+  - $f(x)-g(x)$ has at most $n$ roots hence if we choose $r$ from $\{1,2, \dots, 100n\}$, the failure prob is $\frac{1}{100}$.
+
+- Communication Complexity:
+  - $r$ : $O(\log n)$
+  - $f(r)$: $O(n \log n)$
+
+
+
+#### Fingerprinting
+
+Choose a random prime $p$, if $a \equiv b \mod p$ then there is a good chance $a = b$.
+
+**Fingerprints**: $a\  \text{mod}\ p$,  $b\  \text{mod}\ p$ 
+
+
+
+#### New Algorithm (Random with Fingerprinting)
+
+Check if</script><p>f(r) \equiv g(r) \mod p</p>
+<script type="math/tex; mode=display">
+Only need to pass $f(r)\  \text{mod}\ p$.
+
+
+
+- Analysis: Failure probability comes from
+
+  - Case1: $r$ is a root of $f(x)-g(x)$
+
+  - Case 2: $p$ is a factor of $f(r)-g(r)$
+
+    - $f(r)-g(r)$ is a number with size $n^n$, has $\le n \log n$ prime factors.
+
+    - There are $O(\frac{n^2}{\ln n})$ primes $\le n^2$.
+
+    Then choose a prime $p \le n^2$.</script><pre><code>Pr\&#123;p \mid f(r)-g(r)\&#125; = \frac&#123;n \ln n&#125;&#123;\frac&#123;n^2&#125;&#123;\ln n&#125;&#125; = O(\frac&#123;\ln^2 n&#125;&#123;n&#125;)
+$$
+</code></pre><ul>
 <li><p>Facts used in Analysis:</p>
 <ul>
-<li><p>(Prime Number Thm) 设 $\pi(x)$ 为不超过 $x$ 的素数个数,<br>$$<br>\pi(x) \sim \frac{x}{\ln x}<br>$$</p>
-</li>
+<li><p>(Prime Number Thm) 设 $\pi(x)$ 为不超过 $x$ 的素数个数,</p>
+<script type="math/tex; mode=display">
+\pi(x) \sim \frac{x}{\ln x}</script></li>
 <li><p>$N$ has $\le \ln N$ prime factors.</p>
-<p>考虑前 $m$ 个质数连乘, 数量级为<br>$$<br>e^{(1+o(1))m \ln m} &#x3D; #m<br>$$<br>$m \sim \frac{\ln N}{\ln m} \le \ln N$.</p>
+<p>考虑前 $m$ 个质数连乘, 数量级为</p>
+<script type="math/tex; mode=display">
+e^{(1+o(1))m \ln m} = \#m</script><p>$m \sim \frac{\ln N}{\ln m} \le \ln N$.</p>
 </li>
 <li><p>上面的部分简单推导</p>
-<p>设 $\theta(x) :&#x3D; \sum_{k&#x3D;1}^{\pi(x)} \ln p_k$ (Chebyshev Function), 素数定理等价于<br>$$<br>\theta(n) \sim n<br>$$<br>又有<br>$$<br>p_m \sim m \ln m<br>$$<br>那么 $\theta(p_m) \sim p_m$, $\ln (#m) \sim p_m \sim m \ln m$</p>
+<p>设 $\theta(x) := \sum_{k=1}^{\pi(x)} \ln p_k$ (Chebyshev Function), 素数定理等价于</p>
+<script type="math/tex; mode=display">
+\theta(n) \sim n</script><p>又有</p>
+<script type="math/tex; mode=display">
+p_m \sim m \ln m</script><p>那么 $\theta(p_m) \sim p_m$, $\ln (#m) \sim p_m \sim m \ln m$</p>
 </li>
 </ul>
 </li>
@@ -265,31 +310,58 @@
 </li>
 </ul>
 <p>Repeat $O(\log (\frac{1}{\delta}))$ times to achieve suc prob $\ge 1-\delta$.</p>
-<h3 id="Multiple-Variables"><a href="#Multiple-Variables" class="headerlink" title="Multiple Variables"></a>Multiple Variables</h3><p>Input: $f, g \in \mathbb{F}[x_1, x_2, \dots, x_n]$ of total degree $d$.<br>$$<br>f(x_1, \dots, x_n) &#x3D; \sum_{i_1, \dots, i_n \ge 0,\ i_1+	\dots+i_n \le d} a_{i_1, \dots, i_n} x_1^{i_1} x_2^{i_2} \dots x_n^{i_n}<br>$$<br>Output: $f$ and $g$ are identical?</p>
+<h3 id="Multiple-Variables"><a href="#Multiple-Variables" class="headerlink" title="Multiple Variables"></a>Multiple Variables</h3><p>Input: $f, g \in \mathbb{F}[x_1, x_2, \dots, x_n]$ of total degree $d$.</p>
+<script type="math/tex; mode=display">
+f(x_1, \dots, x_n) = \sum_{i_1, \dots, i_n \ge 0,\ i_1+    \dots+i_n \le d} a_{i_1, \dots, i_n} x_1^{i_1} x_2^{i_2} \dots x_n^{i_n}</script><p>Output: $f$ and $g$ are identical?</p>
 <p>这个问题等价于输入 $f \in \mathbb{F}[x_1, x_2, \dots, x_n]$, 输出 $f$ 是否等于 $0$.</p>
 <p>输入 $f$ 方式：Blackbox Model: Given $x_1, \dots, x_n$, return $f(x_1, \dots, x_n)$.</p>
-<h3 id="Schwartz-Zippel-Lemma"><a href="#Schwartz-Zippel-Lemma" class="headerlink" title="Schwartz-Zippel Lemma"></a>Schwartz-Zippel Lemma</h3><p>Let $P \in \mathbb{F}[x_1, x_2, \dots, x_n]$, $P \neq 0$, total degree $d$ over field $\mathbb{F}$. Let $S$ be a finite subset of $\mathbb{F}$ and let $r_1, r_2, \dots, r_n$ be selected at random independently and uniformly from $S$. Then<br>$$<br>Pr[P(r_1, r_2, \dots, r_n) &#x3D; 0] \le \frac{d}{|S|}<br>$$</p>
-<h4 id="Proof"><a href="#Proof" class="headerlink" title="Proof"></a>Proof</h4><p>By induction.<br>$$<br>P(x_1, x_2, \dots, x_n) &#x3D; \sum_{i&#x3D;0}^d x_1^i P_i(x_2, \dots, x_n)<br>$$<br>Consider the largest $i$.<br>$$<br>Pr[P_i(r_2, \dots, r_n)&#x3D;0] \le \frac{d-i}{|S|}<br>$$</p>
-<p>$$<br>Pr[P(r_1, r_2, \dots, r_n)&#x3D;0 | P_i(r_2, \dots, r_n)\neq0] &#x3D; Pr[P(x_1, r_2, \dots, r_n)&#x3D;0] \le \frac{i}{|S|}<br>$$</p>
-<p>Therefore<br>$$<br>\begin{aligned}<br>    Pr[P(r_1, r_2, \dots, r_n) &#x3D; 0] &amp;&#x3D; Pr[P(r_1, r_2, \dots, r_n) &#x3D; 0|P_i(r_2, \dots, r_n)&#x3D;0]Pr[P_i(r_2, \dots, r_n)&#x3D;0] \&amp;+ Pr[P(r_1, r_2, \dots, r_n) &#x3D; 0|P_i(r_2, \dots, r_n)\neq0]Pr[P_i(r_2, \dots, r_n)\neq0] \<br>    &amp;Pr[P_i(r_2, \dots, r_n)&#x3D;0] \<br>    &amp;\le \frac{d-i}{|S|} + \frac{i}{|S|} \<br>    &amp;&#x3D; \frac{d}{|S|}<br>\end{aligned}<br>$$</p>
-<p>Q.E.D.</p>
+<h3 id="Schwartz-Zippel-Lemma"><a href="#Schwartz-Zippel-Lemma" class="headerlink" title="Schwartz-Zippel Lemma"></a>Schwartz-Zippel Lemma</h3><p>Let $P \in \mathbb{F}[x_1, x_2, \dots, x_n]$, $P \neq 0$, total degree $d$ over field $\mathbb{F}$. Let $S$ be a finite subset of $\mathbb{F}$ and let $r_1, r_2, \dots, r_n$ be selected at random independently and uniformly from $S$. Then</p>
+<script type="math/tex; mode=display">
+Pr[P(r_1, r_2, \dots, r_n) = 0] \le \frac{d}{|S|}</script><h4 id="Proof"><a href="#Proof" class="headerlink" title="Proof"></a>Proof</h4><p>By induction.</p>
+<script type="math/tex; mode=display">
+P(x_1, x_2, \dots, x_n) = \sum_{i=0}^d x_1^i P_i(x_2, \dots, x_n)</script><p>Consider the largest $i$.</p>
+<script type="math/tex; mode=display">
+Pr[P_i(r_2, \dots, r_n)=0] \le \frac{d-i}{|S|}</script><script type="math/tex; mode=display">
+Pr[P(r_1, r_2, \dots, r_n)=0 | P_i(r_2, \dots, r_n)\neq0] = Pr[P(x_1, r_2, \dots, r_n)=0] \le \frac{i}{|S|}</script><p>Therefore</p>
+<script type="math/tex; mode=display">
+\begin{aligned}
+    Pr[P(r_1, r_2, \dots, r_n) = 0] &= Pr[P(r_1, r_2, \dots, r_n) = 0|P_i(r_2, \dots, r_n)=0]Pr[P_i(r_2, \dots, r_n)=0] \\&+ Pr[P(r_1, r_2, \dots, r_n) = 0|P_i(r_2, \dots, r_n)\neq0]Pr[P_i(r_2, \dots, r_n)\neq0] \\
+    &Pr[P_i(r_2, \dots, r_n)=0] \\
+    &\le \frac{d-i}{|S|} + \frac{i}{|S|} \\
+    &= \frac{d}{|S|}
+\end{aligned}</script><p>Q.E.D.</p>
 <h4 id="Application-Bipartite-Matching"><a href="#Application-Bipartite-Matching" class="headerlink" title="Application: Bipartite Matching"></a>Application: Bipartite Matching</h4><p>check whether G has a perfect matching (algebra method)</p>
-<p>$A: n \times n$ matrix:<br>$$<br>A_{ij} &#x3D; \begin{cases}<br>x_{ij} &amp; (i,j) \in E \<br>0 &amp; (i, j) \not\in E<br>\end{cases}<br>$$<br><strong>Claim:</strong> $\text{det} A &#x3D; 0$ iff G has no perfect matching.</p>
+<p>$A: n \times n$ matrix:</p>
+<script type="math/tex; mode=display">
+A_{ij} = \begin{cases}
+x_{ij} & (i,j) \in E \\
+0 & (i, j) \not\in E
+\end{cases}</script><p><strong>Claim:</strong> $\text{det} A = 0$ iff G has no perfect matching.</p>
 <p>Proof:</p>
 <p>Alg:</p>
 <h2 id="Finding-a-Perfect-Matching"><a href="#Finding-a-Perfect-Matching" class="headerlink" title="Finding a Perfect Matching"></a>Finding a Perfect Matching</h2><h3 id="Trivial-Alg"><a href="#Trivial-Alg" class="headerlink" title="Trivial Alg"></a>Trivial Alg</h3><p>爆搜。每次找一个配对，然后把这条边以及这两个点都删了，查找删掉的图是否有完美匹配。</p>
-<h3 id="Isolation-Lemma"><a href="#Isolation-Lemma" class="headerlink" title="Isolation Lemma"></a>Isolation Lemma</h3><p>Let $S$ be a family of subsets on a ground set $U$ with $|U|&#x3D;n$. For each $x \in U$, assign a weight</p>
-<p>$w(x)$ from ${1, 2, \dots, 100n}$ uniformly.</p>
+<h3 id="Isolation-Lemma"><a href="#Isolation-Lemma" class="headerlink" title="Isolation Lemma"></a>Isolation Lemma</h3><p>Let $S$ be a family of subsets on a ground set $U$ with $|U|=n$. For each $x \in U$, assign a weight</p>
+<p>$w(x)$ from $\{1, 2, \dots, 100n\}$ uniformly.</p>
 <p>Then there exists a unique minimum weight subset in $S$ w.p. $\ge 0.99$.</p>
 <h4 id="Counterintuitive"><a href="#Counterintuitive" class="headerlink" title="Counterintuitive:"></a>Counterintuitive:</h4><p>一共有 $2^n$ 个 subsets, 权值 $\le 100n^2$ ，那么每个权值感觉上对应了 $\frac{2^n}{100n^2}$ 个子集，为什么最小权只对应一个子集？</p>
 <h4 id="Proof-due-to-Joel-Spence"><a href="#Proof-due-to-Joel-Spence" class="headerlink" title="Proof (due to Joel Spence)"></a>Proof (due to Joel Spence)</h4><p>For an element $u$, let $F_u$ be the subsets in $S$ that contains $u$, $G_u$ be the subsets in $S$ that doesn’t contain $u$.</p>
-<p>Consider<br>$$<br>\alpha(u) &#x3D; \min_{T \in G_u} w(T) - \min_{T \in F_u} w(T \setminus {u})<br>$$<br>Key Ob: $\alpha(u)$ is determined by weights of element other than $u$. Because $\alpha(u)$ is a fixed integer in $[0, 100n]$, therefore<br>$$<br>Pr{\alpha(u) &#x3D; w(u)}  \le \frac{1}{100n}<br>$$<br>Then (take a union bound)<br>$$<br>Pr{\exists u, \alpha(u) &#x3D; w(u)} \le \frac{1}{100}<br>$$<br>If there are distinct min weight subsets $A$, $B$ , $\exists v \in A\setminus B$.<br>$$<br>\alpha(v) &#x3D; w(B) - w(A \setminus {v}) &#x3D; w(v)<br>$$<br>Then<br>$$<br>Pr{\exists v \in A \setminus B} \le Pr{\exists v,\ \alpha(v) &#x3D; w(v)} \le \frac{1}{100}<br>$$<br>Q.E.D.</p>
+<p>Consider</p>
+<script type="math/tex; mode=display">
+\alpha(u) = \min_{T \in G_u} w(T) - \min_{T \in F_u} w(T \setminus \{u\})</script><p>Key Ob: $\alpha(u)$ is determined by weights of element other than $u$. Because $\alpha(u)$ is a fixed integer in $[0, 100n]$, therefore</p>
+<script type="math/tex; mode=display">
+Pr\{\alpha(u) = w(u)\}  \le \frac{1}{100n}</script><p>Then (take a union bound)</p>
+<script type="math/tex; mode=display">
+Pr\{\exists u, \alpha(u) = w(u)\} \le \frac{1}{100}</script><p>If there are distinct min weight subsets $A$, $B$ , $\exists v \in A\setminus B$.</p>
+<script type="math/tex; mode=display">
+\alpha(v) = w(B) - w(A \setminus \{v\}) = w(v)</script><p>Then</p>
+<script type="math/tex; mode=display">
+Pr\{\exists v \in A \setminus B\} \le Pr\{\exists v,\ \alpha(v) = w(v)\} \le \frac{1}{100}</script><p>Q.E.D.</p>
 <h3 id="Parallel-Alg"><a href="#Parallel-Alg" class="headerlink" title="Parallel Alg"></a>Parallel Alg</h3><p>给每条边 $(i, j) \in E$ 随机赋一个权重 $2^{w_{ij}}$, 那么最小完美匹配的权重 $W$ 即为整除行列式的最大的 $2^W$.</p>
 <p>算法：先计算出 $W$. 我们的目标是找一组完美匹配的边。怎样判断一条边 $(i, j)$ 是否是完美匹配呢？答案是只要</p>
-<p>$$<br>\text{det}(A’) \frac{2^{w_{ij}}}{2^W}<br>$$</p>
-<p>是 odd （奇）的即可。$A’$ 是去掉这条边（以及两端点）后的图的 Tutte 矩阵。（回忆行列式写开来，被除剩奇数说明有一项是 $2^W&#x2F;2^W&#x3D;1$，即最小权刚好是这个）</p>
+<script type="math/tex; mode=display">
+\\text{det}(A') \\frac{2^{w\_{ij}}}{2^W}</script><p>是 odd （奇）的即可。$A’$ 是去掉这条边（以及两端点）后的图的 Tutte 矩阵。（回忆行列式写开来，被除剩奇数说明有一项是 $2^W/2^W=1$，即最小权刚好是这个）</p>
 <h2 id="Toss-Coin"><a href="#Toss-Coin" class="headerlink" title="Toss Coin"></a>Toss Coin</h2><h3 id="Question"><a href="#Question" class="headerlink" title="Question"></a>Question</h3><p>Toss a fair coin $n$ times independently.</p>
-<p>Find the smallest $T$, s.t. $Pr{\text</p>
+<p>Find the smallest $T$, s.t. $Pr\{\text</p>
 
   </div>
 </article>
@@ -325,7 +397,7 @@
     
     
       <div id="toc-footer" style="display: none">
-        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Intro"><span class="toc-number">1.</span> <span class="toc-text">Intro</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Why-Randomness"><span class="toc-number">1.1.</span> <span class="toc-text">Why Randomness?</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Toy-Example"><span class="toc-number">1.2.</span> <span class="toc-text">Toy Example</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Monte-Carlo-Las-Vegas"><span class="toc-number">1.3.</span> <span class="toc-text">Monte-Carlo &amp; Las Vegas</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Polynomial-Identity-Testing-P-I-T"><span class="toc-number">2.</span> <span class="toc-text">Polynomial Identity Testing (P.I.T)</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Problem-Description"><span class="toc-number">2.1.</span> <span class="toc-text">Problem Description</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#A-Simple-Deterministic-Algorithm"><span class="toc-number">2.1.1.</span> <span class="toc-text">A Simple Deterministic Algorithm</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Randomized-Algorithm"><span class="toc-number">2.1.2.</span> <span class="toc-text">Randomized Algorithm</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Fingerprinting"><span class="toc-number">2.1.3.</span> <span class="toc-text">Fingerprinting</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#New-Algorithm-Random-with-Fingerprinting"><span class="toc-number">2.1.4.</span> <span class="toc-text">New Algorithm (Random with Fingerprinting)</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Multiple-Variables"><span class="toc-number">2.2.</span> <span class="toc-text">Multiple Variables</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Schwartz-Zippel-Lemma"><span class="toc-number">2.3.</span> <span class="toc-text">Schwartz-Zippel Lemma</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Proof"><span class="toc-number">2.3.1.</span> <span class="toc-text">Proof</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Application-Bipartite-Matching"><span class="toc-number">2.3.2.</span> <span class="toc-text">Application: Bipartite Matching</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Finding-a-Perfect-Matching"><span class="toc-number">3.</span> <span class="toc-text">Finding a Perfect Matching</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Trivial-Alg"><span class="toc-number">3.1.</span> <span class="toc-text">Trivial Alg</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Isolation-Lemma"><span class="toc-number">3.2.</span> <span class="toc-text">Isolation Lemma</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Counterintuitive"><span class="toc-number">3.2.1.</span> <span class="toc-text">Counterintuitive:</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Proof-due-to-Joel-Spence"><span class="toc-number">3.2.2.</span> <span class="toc-text">Proof (due to Joel Spence)</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Parallel-Alg"><span class="toc-number">3.3.</span> <span class="toc-text">Parallel Alg</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Toss-Coin"><span class="toc-number">4.</span> <span class="toc-text">Toss Coin</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Question"><span class="toc-number">4.1.</span> <span class="toc-text">Question</span></a></li></ol></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Intro"><span class="toc-number">1.</span> <span class="toc-text">Intro</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Why-Randomness"><span class="toc-number">1.1.</span> <span class="toc-text">Why Randomness?</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Toy-Example"><span class="toc-number">1.2.</span> <span class="toc-text">Toy Example</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Monte-Carlo-amp-Las-Vegas"><span class="toc-number">1.3.</span> <span class="toc-text">Monte-Carlo &amp; Las Vegas</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Multiple-Variables"><span class="toc-number">1.4.</span> <span class="toc-text">Multiple Variables</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Schwartz-Zippel-Lemma"><span class="toc-number">1.5.</span> <span class="toc-text">Schwartz-Zippel Lemma</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Proof"><span class="toc-number">1.5.1.</span> <span class="toc-text">Proof</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Application-Bipartite-Matching"><span class="toc-number">1.5.2.</span> <span class="toc-text">Application: Bipartite Matching</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Finding-a-Perfect-Matching"><span class="toc-number">2.</span> <span class="toc-text">Finding a Perfect Matching</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Trivial-Alg"><span class="toc-number">2.1.</span> <span class="toc-text">Trivial Alg</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Isolation-Lemma"><span class="toc-number">2.2.</span> <span class="toc-text">Isolation Lemma</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Counterintuitive"><span class="toc-number">2.2.1.</span> <span class="toc-text">Counterintuitive:</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Proof-due-to-Joel-Spence"><span class="toc-number">2.2.2.</span> <span class="toc-text">Proof (due to Joel Spence)</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Parallel-Alg"><span class="toc-number">2.3.</span> <span class="toc-text">Parallel Alg</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Toss-Coin"><span class="toc-number">3.</span> <span class="toc-text">Toss Coin</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Question"><span class="toc-number">3.1.</span> <span class="toc-text">Question</span></a></li></ol></li></ol>
       </div>
     
 

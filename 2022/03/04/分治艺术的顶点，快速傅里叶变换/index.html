@@ -6,15 +6,15 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="HandheldFriendly" content="True">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
-    <meta name="description" content="前言快速傅里叶变换（Fast Fourier Transformation，简称 FFT），用于大整数乘法与多项式乘法&#x2F;卷积的高效计算，其复杂度可以达到非常令人惊叹的 $O(n \log n)$ 。之所以这么说，就是因为这个问题看起来好像就感觉只能用 $O(n^2)$ 的算法来解决，并且直觉上似乎并没有什么优化空间的样子。而 FFT 用堪称艺术的巧妙取点和分治，非常优雅地解决了这个问题。">
+    <meta name="description" content="前言快速傅里叶变换（Fast Fourier Transformation，简称 FFT），用于大整数乘法与多项式乘法&#x2F;卷积的高效计算，其复杂度可以达到非常令人惊叹的 $O(n \log n)$ 。之所以这么说，就是因为这个问题看起来好像就感觉只能用 $O(n^2)$ 的算法来解决，并且直觉上似乎并没有什么优化空间的样子。而 FFT 用堪称艺术的巧妙取点和分治，非常优雅地解决了这个问题。 为什么突">
 <meta property="og:type" content="article">
 <meta property="og:title" content="分治艺术的顶点，快速傅里叶变换">
 <meta property="og:url" content="https://siriusneo.github.io/2022/03/04/%E5%88%86%E6%B2%BB%E8%89%BA%E6%9C%AF%E7%9A%84%E9%A1%B6%E7%82%B9%EF%BC%8C%E5%BF%AB%E9%80%9F%E5%82%85%E9%87%8C%E5%8F%B6%E5%8F%98%E6%8D%A2/index.html">
 <meta property="og:site_name" content="Metric Space | 度量空间">
-<meta property="og:description" content="前言快速傅里叶变换（Fast Fourier Transformation，简称 FFT），用于大整数乘法与多项式乘法&#x2F;卷积的高效计算，其复杂度可以达到非常令人惊叹的 $O(n \log n)$ 。之所以这么说，就是因为这个问题看起来好像就感觉只能用 $O(n^2)$ 的算法来解决，并且直觉上似乎并没有什么优化空间的样子。而 FFT 用堪称艺术的巧妙取点和分治，非常优雅地解决了这个问题。">
+<meta property="og:description" content="前言快速傅里叶变换（Fast Fourier Transformation，简称 FFT），用于大整数乘法与多项式乘法&#x2F;卷积的高效计算，其复杂度可以达到非常令人惊叹的 $O(n \log n)$ 。之所以这么说，就是因为这个问题看起来好像就感觉只能用 $O(n^2)$ 的算法来解决，并且直觉上似乎并没有什么优化空间的样子。而 FFT 用堪称艺术的巧妙取点和分治，非常优雅地解决了这个问题。 为什么突">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2022-03-03T16:57:27.000Z">
-<meta property="article:modified_time" content="2023-10-08T17:19:49.951Z">
+<meta property="article:modified_time" content="2023-10-09T03:59:08.896Z">
 <meta property="article:author" content="Chaofan">
 <meta name="twitter:card" content="summary">
     
@@ -126,7 +126,7 @@
     
     
       <div id="toc">
-        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%89%8D%E8%A8%80"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%97%AE%E9%A2%98"><span class="toc-number">2.</span> <span class="toc-text">问题</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Brute-Force"><span class="toc-number">3.</span> <span class="toc-text">Brute-Force</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Karatsuba"><span class="toc-number">4.</span> <span class="toc-text">Karatsuba</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%BA%E4%BB%80%E4%B9%88%E8%A6%81%E7%82%B9%E5%80%BC%E8%A1%A8%E7%A4%BA"><span class="toc-number">5.</span> <span class="toc-text">为什么要点值表示</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#left-begin-matrix-F-x-0-F-x-1-vdots-F-x-n-end-matrix-right"><span class="toc-number"></span> <span class="toc-text">$$\left[\begin{matrix}F(x_0) \F(x_1) \\vdots \F(x_n)\end{matrix}\right]  </span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#DFT-%E9%AB%98%E6%95%88%E5%9C%B0%E4%BB%8E%E7%B3%BB%E6%95%B0%E8%A1%A8%E7%A4%BA%E5%88%B0%E7%82%B9%E5%80%BC%E8%A1%A8%E7%A4%BA"><span class="toc-number">1.</span> <span class="toc-text">DFT-高效地从系数表示到点值表示</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#left-begin-matrix-F-x-0-F-x-1-vdots-F-x-n-end-matrix-right-1"><span class="toc-number"></span> <span class="toc-text">$$\left[\begin{matrix}F(x_0) \F(x_1) \\vdots \F(x_n)\end{matrix}\right]  </span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#IDFT-%E9%AB%98%E6%95%88%E5%9C%B0%E4%BB%8E%E7%82%B9%E5%80%BC%E8%A1%A8%E7%A4%BA%E5%88%B0%E7%B3%BB%E6%95%B0%E8%A1%A8%E7%A4%BA"><span class="toc-number">1.</span> <span class="toc-text">IDFT-高效地从点值表示到系数表示</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%80%9D%E8%80%83%E6%80%BB%E7%BB%93"><span class="toc-number">2.</span> <span class="toc-text">思考总结</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#NTT"><span class="toc-number">3.</span> <span class="toc-text">NTT</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BB%A3%E7%A0%81"><span class="toc-number">4.</span> <span class="toc-text">代码</span></a></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%89%8D%E8%A8%80"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%97%AE%E9%A2%98"><span class="toc-number">2.</span> <span class="toc-text">问题</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Brute-Force"><span class="toc-number">3.</span> <span class="toc-text">Brute-Force</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Karatsuba"><span class="toc-number">4.</span> <span class="toc-text">Karatsuba</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%BA%E4%BB%80%E4%B9%88%E8%A6%81%E7%82%B9%E5%80%BC%E8%A1%A8%E7%A4%BA"><span class="toc-number">5.</span> <span class="toc-text">为什么要点值表示</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#DFT-%E9%AB%98%E6%95%88%E5%9C%B0%E4%BB%8E%E7%B3%BB%E6%95%B0%E8%A1%A8%E7%A4%BA%E5%88%B0%E7%82%B9%E5%80%BC%E8%A1%A8%E7%A4%BA"><span class="toc-number">6.</span> <span class="toc-text">DFT-高效地从系数表示到点值表示</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#IDFT-%E9%AB%98%E6%95%88%E5%9C%B0%E4%BB%8E%E7%82%B9%E5%80%BC%E8%A1%A8%E7%A4%BA%E5%88%B0%E7%B3%BB%E6%95%B0%E8%A1%A8%E7%A4%BA"><span class="toc-number">7.</span> <span class="toc-text">IDFT-高效地从点值表示到系数表示</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%80%9D%E8%80%83%E6%80%BB%E7%BB%93"><span class="toc-number">8.</span> <span class="toc-text">思考总结</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#NTT"><span class="toc-number">9.</span> <span class="toc-text">NTT</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BB%A3%E7%A0%81"><span class="toc-number">10.</span> <span class="toc-text">代码</span></a></li></ol>
       </div>
     
   </span>
@@ -171,42 +171,61 @@
   
 
   <div class="content e-content" itemprop="articleBody">
-    <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>快速傅里叶变换（Fast Fourier Transformation，简称 FFT），用于大整数乘法与多项式乘法&#x2F;卷积的高效计算，其复杂度可以达到非常令人惊叹的 $O(n \log n)$ 。之所以这么说，就是因为这个问题看起来好像就感觉只能用 $O(n^2)$ 的算法来解决，并且直觉上似乎并没有什么优化空间的样子。而 FFT 用堪称艺术的巧妙取点和分治，非常优雅地解决了这个问题。</p>
+    <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>快速傅里叶变换（Fast Fourier Transformation，简称 FFT），用于大整数乘法与多项式乘法/卷积的高效计算，其复杂度可以达到非常令人惊叹的 $O(n \log n)$ 。之所以这么说，就是因为这个问题看起来好像就感觉只能用 $O(n^2)$ 的算法来解决，并且直觉上似乎并没有什么优化空间的样子。而 FFT 用堪称艺术的巧妙取点和分治，非常优雅地解决了这个问题。</p>
 <p>为什么突然想写这个算法呢？直接原因是，这一算法是我的算法课 “Divide and Conquer” 这一章所讲的最后一个算法。当然，我早已经不是第一次听到了——高中搞 OI 时候就学过一遍；在面试 ACM 班时被问及我最喜欢的算法时，我不假思索地回答了 FFT；上学期的科学计算课程（看起来和 FFT 八竿子打不着的数学课）也讲到了它，足以说明这一算法的魅力所在。可以说，我和它的缘分也是不浅了。</p>
 <p>我一直认为，只要一个算法，或者说一个想法，具有令人惊叹、或者可以让人发自内心地赞叹“优美、巧妙”的地方，就已经有足够的价值了；至于它是否能被应用，其实也没那么重要。但 FFT 不仅巧妙绝伦，它还非常有用——因为它解决的问题实在是太基本了。</p>
 <p>这大概就是这篇文章诞生的目的了。如果你此时能为“不知道 FFT”感到遗憾的话，那就看下去吧！</p>
 <hr>
 <h2 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h2><p>因为大整数乘法其实本质就是多项式乘法，所以这里我们就直接来研究多项式乘法问题。</p>
-<p>给定两个多项式 $F(x) &#x3D; \sum_{i&#x3D;0}^n a_i x^i $, $G(x) &#x3D; \sum_{i&#x3D;0}^m b_i x^i $, 求 $F(x) \cdot G(x)$. 你只要输出这个相乘后的多项式的系数就好。</p>
+<p>给定两个多项式 $F(x) = \sum_{i=0}^n a_i x^i $, $G(x) = \sum_{i=0}^m b_i x^i $, 求 $F(x) \cdot G(x)$. 你只要输出这个相乘后的多项式的系数就好。</p>
 <hr>
 <h2 id="Brute-Force"><a href="#Brute-Force" class="headerlink" title="Brute-Force"></a>Brute-Force</h2><p>直观想法，当然是直接相乘啦~</p>
 <p>我们考虑相乘后多项式项 $x^k$ 前的系数，可以采取一个比较组合的观点来看：可以是 $F(x)$ 中的 1 乘以 $G(x)$ 中的 $x^k$, 也可以是$F(x)$ 中的 $x$ 乘以 $G(x)$ 中的 $x^{k-1}$ … …</p>
 <p>我们把这个想法写成式子，就是</p>
-<p>$$<br>\sum_{i+j&#x3D;k} a_i b_j x^k<br>$$</p>
-<p>这个复杂度是多少呢？考虑相乘后的多项式长度为 $n+m-1$，我们枚举这个多项式的每一项，且每一项前面都有一个求和号，所有满足条件的 $i+j&#x3D;k$ 有 $k+1$ 对，因此总复杂度为 $O(n^2)$（这里为了方便，我们不妨认为 $n$ 与 $m$ 是同一量级）</p>
+<script type="math/tex; mode=display">
+\sum_{i+j=k} a_i b_j x^k</script><p>这个复杂度是多少呢？考虑相乘后的多项式长度为 $n+m-1$，我们枚举这个多项式的每一项，且每一项前面都有一个求和号，所有满足条件的 $i+j=k$ 有 $k+1$ 对，因此总复杂度为 $O(n^2)$（这里为了方便，我们不妨认为 $n$ 与 $m$ 是同一量级）</p>
 <h2 id="Karatsuba"><a href="#Karatsuba" class="headerlink" title="Karatsuba"></a>Karatsuba</h2><p>这个优化方法是我在算法课上学到的，虽然不及 FFT 优秀，但是能将 n 上的系数从 2 优化成 1.x，而且想法也比较简单。</p>
 <p>考虑我们计算两位数乘法</p>
-<p>$$<br>\overline{ab} \times \overline{cd} &#x3D; (10a+b)(10c+d) &#x3D; 100ac+10ad+10bc+bd &#x3D; 100ac+10(ad+bc)+bd<br>$$</p>
-<p>那么两位数乘法需要花费 4 单位的时间。我们考虑式子展开后，需要计算 $ac, ad, bc, bd$ 四个一位数乘法，也需要 4 单位的时间。</p>
+<script type="math/tex; mode=display">
+\overline{ab} \times \overline{cd} = (10a+b)(10c+d) = 100ac+10ad+10bc+bd = 100ac+10(ad+bc)+bd</script><p>那么两位数乘法需要花费 4 单位的时间。我们考虑式子展开后，需要计算 $ac, ad, bc, bd$ 四个一位数乘法，也需要 4 单位的时间。</p>
 <p>算法的关键部分来了：我们其实并不需要计算 4 个东西的乘法，因为我们实际关心的是 $ac, ad+bc, bd$ 三个式子。我们考虑如果我们计算 $(a+b)(c+d), ac, bd$ 三个乘法，是不是就可以通过加减法得到我们要的三个式子了。</p>
 <p>当然直接用两位数乘法来讲，可能会导致你产生一些关于计算模型上的疑惑（比如乘以 100 要花费多少时间？$(a+b)(c+d)$ 这一项是一位数乘法还是两位数？）这些都不重要，我们直接把这个思想用于多项式中，这样你就知道这一算法的优化之处了。</p>
 <p>为了方便暂时设两个多项式长度相同，记</p>
-<p>$$<br>F(x) &#x3D; f_1(x) + f_2(x) x^{n&#x2F;2},\ G(x) &#x3D; g_1(x) + g_2(x) x^{n&#x2F;2}<br>$$</p>
-<p>那么</p>
-<p>$$<br>F(x) \cdot G(x) &#x3D; [f_1(x) + f_2(x) x^{\frac{n}{2}}] [g_1(x) + g_2(x) x^{\frac{n}{2}}] \<br>&#x3D; f_1(x) g_1(x) + [f_2(x) g_1(x) + f_1(x) g_2(x)] x^{\frac{n}{2}} + f_2(x) g_2(x) x^n<br>$$</p>
-<p>其中 $f_1, f_2, g_1, g_2$ 均为长度为 $\frac{n}{2}$ 的多项式。应用上面的方法，我们也只要计算三个多项式的乘积：$(f_1+f_2)(g_1+g_2), f_1g_1, f_2g_2$. 这样我们的时间复杂度递推式就可以写作</p>
-<p>$$<br>T(n) &#x3D; 3T(\frac{n}{2}) + O(n)<br>$$</p>
-<p>应用 Master Theorem（当然你也可以用你高超的数学技巧）可以求出复杂度为 $O(n^{\log_2 3})$，大约是 $O(n^{1.6})$. 这一算法被称为 Karatsuba 算法。</p>
+<script type="math/tex; mode=display">
+F(x) = f_1(x) + f_2(x) x^{n/2},\ G(x) = g_1(x) + g_2(x) x^{n/2}</script><p>那么</p>
+<script type="math/tex; mode=display">
+F(x) \cdot G(x) = [f_1(x) + f_2(x) x^{\frac{n}{2}}] [g_1(x) + g_2(x) x^{\frac{n}{2}}] \\
+= f_1(x) g_1(x) + [f_2(x) g_1(x) + f_1(x) g_2(x)] x^{\frac{n}{2}} + f_2(x) g_2(x) x^n</script><p>其中 $f_1, f_2, g_1, g_2$ 均为长度为 $\frac{n}{2}$ 的多项式。应用上面的方法，我们也只要计算三个多项式的乘积：$(f_1+f_2)(g_1+g_2), f_1g_1, f_2g_2$. 这样我们的时间复杂度递推式就可以写作</p>
+<script type="math/tex; mode=display">
+T(n) = 3T(\frac{n}{2}) + O(n)</script><p>应用 Master Theorem（当然你也可以用你高超的数学技巧）可以求出复杂度为 $O(n^{\log_2 3})$，大约是 $O(n^{1.6})$. 这一算法被称为 Karatsuba 算法。</p>
 <hr>
 <h2 id="为什么要点值表示"><a href="#为什么要点值表示" class="headerlink" title="为什么要点值表示"></a>为什么要点值表示</h2><p>前面讲了那么多其它做法，始终没有来到正题。</p>
 <p>虽然 Karatsuba 已经比较巧妙了，但我们仍能感觉到其中的瓶颈——你总是得算点什么东西。并且已经证明了每次算“3”个多项式已经是最少的了（如果你能做到每次转化成算两个 $T(\frac{n}{2})$ 的操作，那你就做到了线性复杂度！）</p>
 <p>所以我们需要来一个思路上的转变。FFT 第一个能够优化的关键，就是它使用点值表达，而非系数表达的方式来考虑一个多项式，进而能够使得乘法操作变得非常简单。</p>
 <p>什么叫点值表达呢？我们知道一个多项式的所有系数，当然可以确定它；但我们只要知道其之上足够多的点，我们也能确定它。事实上，对于 n 次多项式，我们只要知道 n+1 个不同的点就可以做到。下面我们进行一个简单的证明。</p>
 <p>考虑现在你有点值 $(x_0, F(x_0)), (x_1, F(x_1)), \dots, (x_n, F(x_n))$，我们先做一个待定系数</p>
-<p>$$<br>F(x) &#x3D; a_0 + a_1 x + \dots + a_n x^n<br>$$</p>
-<p>我们把系数当成未知数，只要我们的信息量足够解出它们就可以了。因此我们得到方程</p>
-<h1 id="left-begin-matrix-F-x-0-F-x-1-vdots-F-x-n-end-matrix-right"><a href="#left-begin-matrix-F-x-0-F-x-1-vdots-F-x-n-end-matrix-right" class="headerlink" title="$$\left[\begin{matrix}F(x_0) \F(x_1) \\vdots \F(x_n)\end{matrix}\right]  "></a>$$<br>\left[\begin{matrix}<br>F(x_0) \<br>F(x_1) \<br>\vdots \<br>F(x_n)<br>\end{matrix}\right]  </h1><p>\left(\begin{matrix}<br>1 &amp; x_0 &amp; \dots &amp; x_0^n \<br>1 &amp; x_1 &amp; \dots &amp; x_1^n \<br>\vdots &amp; \vdots &amp; &amp; \vdots \<br>1 &amp; x_n &amp; \dots &amp; x_n^n<br>\end{matrix}\right)<br>\left[\begin{matrix}<br>a_0 \<br>a_1 \<br>\vdots \<br>a_n<br>\end{matrix}\right]<br>$$</p>
-<p>注意到这是一个 Vandermonde 矩阵，因此其可逆。所以此方程有唯一解，这就证明了 n+1 个点的点值信息可以唯一确定此多项式。</p>
+<script type="math/tex; mode=display">
+F(x) = a_0 + a_1 x + \dots + a_n x^n</script><p>我们把系数当成未知数，只要我们的信息量足够解出它们就可以了。因此我们得到方程</p>
+<script type="math/tex; mode=display">
+\left[\begin{matrix}  
+F(x_0) \\  
+F(x_1) \\  
+\vdots \\  
+F(x_n)  
+\end{matrix}\right]  
+=  
+\left(\begin{matrix}  
+1 & x_0 & \dots & x_0^n \\  
+1 & x_1 & \dots & x_1^n \\  
+\vdots & \vdots & & \vdots \\  
+1 & x_n & \dots & x_n^n  
+\end{matrix}\right)  
+\left[\begin{matrix}  
+a_0 \\  
+a_1 \\  
+\vdots \\  
+a_n  
+\end{matrix}\right]</script><p>注意到这是一个 Vandermonde 矩阵，因此其可逆。所以此方程有唯一解，这就证明了 n+1 个点的点值信息可以唯一确定此多项式。</p>
 <p>但其实我们日常生活中谈论“多项式”，点值表示其实非常少用。毕竟在做数学作业时，你也不会拿着一些点，然后称其为“多项式”吧？所以在这里特地提到这一表示法，它肯定有其优势之处——在解决我们的乘法问题方面。</p>
 <p>考虑一开始的乘法问题 $F(x) \cdot G(x)$，我们现在如果用点值的观点去思考，就不用去算它的系数了——我们只要找到相当于它“次数+1”（在我们的预设中，即为 $n+m+1$）个点。那我们只要选定 $x_0, x_1, \dots, x_{n+m+1}$ 个横坐标，求出 $F(x_i)$ 与 $G(x_i)$ 的点值，那么乘法结果在此处的点值即为 $F(x_i) \cdot G(x_i)$.</p>
 <p>你可以注意到，我们的乘法 $F(x_i) \cdot G(x_i)$ 在这时只需要 $n+m+1$ 次！我们采用点值表示的方法，绕开了多项式系数那些“相互组合”的情况，比较本质地把这个“乘法”给体现出来了。</p>
@@ -214,56 +233,96 @@
 <hr>
 <h2 id="DFT-高效地从系数表示到点值表示"><a href="#DFT-高效地从系数表示到点值表示" class="headerlink" title="DFT-高效地从系数表示到点值表示"></a>DFT-高效地从系数表示到点值表示</h2><p>我们在回顾上一步，现在我们第一步需要从系数表示快速地求得点值表示。</p>
 <p>重新考虑这个方程（实际上，这个方程就是沟通两个表示法的方程）</p>
-<h1 id="left-begin-matrix-F-x-0-F-x-1-vdots-F-x-n-end-matrix-right-1"><a href="#left-begin-matrix-F-x-0-F-x-1-vdots-F-x-n-end-matrix-right-1" class="headerlink" title="$$\left[\begin{matrix}F(x_0) \F(x_1) \\vdots \F(x_n)\end{matrix}\right]  "></a>$$<br>\left[\begin{matrix}<br>F(x_0) \<br>F(x_1) \<br>\vdots \<br>F(x_n)<br>\end{matrix}\right]  </h1><p>\left(\begin{matrix}<br>1 &amp; x_0 &amp; \dots &amp; x_0^n \<br>1 &amp; x_1 &amp; \dots &amp; x_1^n \<br>\vdots &amp; \vdots &amp; &amp; \vdots \<br>1 &amp; x_n &amp; \dots &amp; x_n^n<br>\end{matrix}\right)<br>\left[\begin{matrix}<br>a_0 \<br>a_1 \<br>\vdots \<br>a_n<br>\end{matrix}\right]<br>$$</p>
-<p>写成这样，也就不难理解我们上一部分所说的 $O(n^2)$ 复杂度了——暴力地进行矩阵乘以向量，当然是平方啦。但 FFT 是怎么优化到 $O(n \log n)$ 的呢？</p>
+<script type="math/tex; mode=display">
+\left[\begin{matrix}  
+F(x_0) \\  
+F(x_1) \\  
+\vdots \\  
+F(x_n)  
+\end{matrix}\right]  
+=  
+\left(\begin{matrix}  
+1 & x_0 & \dots & x_0^n \\  
+1 & x_1 & \dots & x_1^n \\  
+\vdots & \vdots & & \vdots \\  
+1 & x_n & \dots & x_n^n  
+\end{matrix}\right)  
+\left[\begin{matrix}  
+a_0 \\  
+a_1 \\  
+\vdots \\  
+a_n  
+\end{matrix}\right]</script><p>写成这样，也就不难理解我们上一部分所说的 $O(n^2)$ 复杂度了——暴力地进行矩阵乘以向量，当然是平方啦。但 FFT 是怎么优化到 $O(n \log n)$ 的呢？</p>
 <p>设计算法第一原则：每当我们想要优化算法时，想想我们现在的算法重复干了什么事，以及有什么信息没有用到。（当然，这是我自己编的）</p>
 <p>似乎看上去，我们并没有在重复干事情。但我们可以很快意识到，我们忽略了一些条件，或者说变相加强了问题——我们在研究任意取点 $x_0, x_1, \dots, x_n$ 的情况，但取点完全可以由我们自己决定。</p>
-<p>首先，我们肯定会趋向代入一些，尽量让计算简单的情况——比如 $x&#x3D;0$。算都不用算！但你需要继续找 $n+m$ 个像 0 这样特殊的点，这对于数据规模越来越大的情况实在不是很可行。</p>
+<p>首先，我们肯定会趋向代入一些，尽量让计算简单的情况——比如 $x=0$。算都不用算！但你需要继续找 $n+m$ 个像 0 这样特殊的点，这对于数据规模越来越大的情况实在不是很可行。</p>
 <p>所以，我们不能想着找“若干个”特殊点，而应该找“若干类”，或者说想办法让点与点之间有关联、有大量重复部分，进而简化计算。</p>
-<p>考虑我们取 $x_0 &#x3D; 1, x_1 &#x3D; -1$ 两个（看起来就很有关系）的对偶点，代入得到</p>
-<p>$$<br>F(1) &#x3D; a_0 + a_1 + \dots + a_n \<br>F(-1) &#x3D; a_0 - a_1 + \dots + (-1)^n a_n<br>$$</p>
-<p>假如我们记奇数部分的和为 $f_1$，偶数部分的和为 $f_2$，那么有 $F(1)&#x3D;f_1+f_2, F(-1)&#x3D;f_1-f_2$。而计算 $f_1, f_2$ 的总和时间为 $n$（而不是 $2n$！），也就意味着这两个点值的计算，我们只花费了一个 $n$。</p>
+<p>考虑我们取 $x_0 = 1, x_1 = -1$ 两个（看起来就很有关系）的对偶点，代入得到</p>
+<script type="math/tex; mode=display">
+F(1) = a_0 + a_1 + \dots + a_n \\ 
+F(-1) = a_0 - a_1 + \dots + (-1)^n a_n</script><p>假如我们记奇数部分的和为 $f_1$，偶数部分的和为 $f_2$，那么有 $F(1)=f_1+f_2, F(-1)=f_1-f_2$。而计算 $f_1, f_2$ 的总和时间为 $n$（而不是 $2n$！），也就意味着这两个点值的计算，我们只花费了一个 $n$。</p>
 <p>而这样的点对关系其实并不特殊——任意两个互为相反数的取点都能做到。假设我们能够对于 $f_1$ 与 $f_2$ 这种部分不断往下如此做，即</p>
-<p>$$<br>F(x) &#x3D; (a_0+a_2 x^2 + a_4 x^4 + \dots) + x (a_1 + a_3 x^2 + a_5 x^4 + \dots) \<br>F(-x) &#x3D; (a_0+a_2 x^2 + a_4 x^4 + \dots) - x (a_1 + a_3 x^2 + a_5 x^4 + \dots)<br>$$</p>
-<p>我们就能得到递推式</p>
-<p>$$<br>T(n) &#x3D; 2 T(\frac{n}{2}) + O(n)<br>$$</p>
-<p>注意这里的 n 表示的是点的个数（按上面的假设其实应该是 n+1，不过讨论复杂度并不用关心），我们本来要求 n 个点的点值，但因为我们的取点是 $x_0, -x_0, x_1, -x_1, \dots$，我们只需要计算其中一半（比如都为正的那一半）的取点情况。</p>
-<p>注意上面有个前提：“如果我们能一直做下去”。假设这个成立的话，根据上述递推式也很容易求出时间复杂度为 $O(n \log n)$。但很遗憾，这个前提明显是不成立的——事实上，应该是“一定不”。因为假设原问题的点是 $x_0, -x_0, x_1, -x_1, \dots$，那么子问题的点就是 $x_0^2, x_1^2, \dots$，如果子问题还能像这样“相反数配对”的话，即有 $x_i^2&#x3D;-x_j^2$，得到 $x_i&#x3D;x_j&#x3D;0$（如果是在实数域讨论的话）</p>
-<p>相信读者已经发现端倪了——实数域确实无法找到，但在复数域似乎大有可为。如果考虑复数域，$x_i^2&#x3D;-x_j^2$ 即为 $x_i&#x3D;i x_j$（注意 i 在此处有点重名，注意辨别复数单位 i 与下标 i）</p>
+<script type="math/tex; mode=display">
+F(x) = (a_0+a_2 x^2 + a_4 x^4 + \dots) + x (a_1 + a_3 x^2 + a_5 x^4 + \dots) \\  
+F(-x) = (a_0+a_2 x^2 + a_4 x^4 + \dots) - x (a_1 + a_3 x^2 + a_5 x^4 + \dots)</script><p>我们就能得到递推式</p>
+<script type="math/tex; mode=display">
+T(n) = 2 T(\frac{n}{2}) + O(n)</script><p>注意这里的 n 表示的是点的个数（按上面的假设其实应该是 n+1，不过讨论复杂度并不用关心），我们本来要求 n 个点的点值，但因为我们的取点是 $x_0, -x_0, x_1, -x_1, \dots$，我们只需要计算其中一半（比如都为正的那一半）的取点情况。</p>
+<p>注意上面有个前提：“如果我们能一直做下去”。假设这个成立的话，根据上述递推式也很容易求出时间复杂度为 $O(n \log n)$。但很遗憾，这个前提明显是不成立的——事实上，应该是“一定不”。因为假设原问题的点是 $x_0, -x_0, x_1, -x_1, \dots$，那么子问题的点就是 $x_0^2, x_1^2, \dots$，如果子问题还能像这样“相反数配对”的话，即有 $x_i^2=-x_j^2$，得到 $x_i=x_j=0$（如果是在实数域讨论的话）</p>
+<p>相信读者已经发现端倪了——实数域确实无法找到，但在复数域似乎大有可为。如果考虑复数域，$x_i^2=-x_j^2$ 即为 $x_i=i x_j$（注意 i 在此处有点重名，注意辨别复数单位 i 与下标 i）</p>
 <p>因此假设我们需要快速对 4 个取点的情况进行计算，首先我们当然取 $1, -1$ 两个比较方便的相反数。又根据上面，$i, -i$ 也要纳入我们的考量。 我们进行一次子问题转换：$1, -1, i, -i$ 变为 $1, -1$，能够继续进行下去！</p>
 <p>事实上，这些特殊的点就是复数域上的 $n$ 次单位根。“相反数”在复数的空间上其实就是相差 $ \pi $ 的角度，而“乘以 i”则相当于相差 $ \frac{\pi}{2} $ 的角度。所以一组符合上面条件的 4 个取点实际上就是一个“十字架”。</p>
 <p>我们可以再来手模一下 8 个点的过程，我们取 8 次单位根，按照正负-正负分组，每次进行一次平方操作往下变换：</p>
-<p>$$<br>\begin{matrix}<br>1 &amp; -1 &amp; i &amp; -i &amp; \sqrt{i} &amp; -\sqrt{i} &amp; \sqrt{-i} &amp; -\sqrt{-i} \<br>1 &amp; -1 &amp; i &amp; -i \<br>1 &amp; -1 \<br>1<br>\end{matrix}<br>$$</p>
-<p>这样，我们就做到了在 $O(n \log n)$ 中高效地转换点值表达式了。这一过程被称为 DFT（Discrete Fourier Transform，离散傅里叶变换）。</p>
+<script type="math/tex; mode=display">
+\begin{matrix}  
+1 & -1 & i & -i & \sqrt{i} & -\sqrt{i} & \sqrt{-i} & -\sqrt{-i} \\  
+1 & -1 & i & -i \\  
+1 & -1 \\  
+1  
+\end{matrix}</script><p>这样，我们就做到了在 $O(n \log n)$ 中高效地转换点值表达式了。这一过程被称为 DFT（Discrete Fourier Transform，离散傅里叶变换）。</p>
 <p>接下来，相乘的时间复杂度是线性的，所以我们似乎已经得到了结果——但是之前说过，实际生活中通常期望我们的结果表示成系数的表达方法，因此我们还需要考虑能否高效地将点值表达式转回系数表达式。</p>
 <hr>
 <h2 id="IDFT-高效地从点值表示到系数表示"><a href="#IDFT-高效地从点值表示到系数表示" class="headerlink" title="IDFT-高效地从点值表示到系数表示"></a>IDFT-高效地从点值表示到系数表示</h2><p>重新考虑那个方程，为了方便我们记函数值的向量为 $Y$, 矩阵为 $X$, 系数向量为 $\alpha$，将方程重写为</p>
-<p>$$<br>Y &#x3D; X \alpha<br>$$</p>
-<p>我们知道取 n 次单位根作为横坐标时（记此时的矩阵 $X$ 为一个特殊的矩阵 $W$），我们已经能高效从 $\alpha$ 得到 $Y$。而现在相当于我有 $Y$，并且矩阵还是 $W$（这里不能再自己取值了，因为我们求乘积所用的 $F$ 和 $G$ 的点值表达所取的横坐标是 n 次单位根，那乘积的点值表达也只能是这些横坐标）</p>
+<script type="math/tex; mode=display">
+Y = X \alpha</script><p>我们知道取 n 次单位根作为横坐标时（记此时的矩阵 $X$ 为一个特殊的矩阵 $W$），我们已经能高效从 $\alpha$ 得到 $Y$。而现在相当于我有 $Y$，并且矩阵还是 $W$（这里不能再自己取值了，因为我们求乘积所用的 $F$ 和 $G$ 的点值表达所取的横坐标是 n 次单位根，那乘积的点值表达也只能是这些横坐标）</p>
 <p>已经证明 $W$ 是可逆的，因此我们只需要能够比较快速地计算</p>
-<p>$$<br>\alpha &#x3D; W^{-1} Y<br>$$</p>
-<p>这里涉及到两个难题：求逆和乘法。我们知道矩阵求逆可不是一件轻松的事，一般的矩阵需要 $O(n^3)$。但我们既然都跟着 FFT 做到这一步了，说明 $W$ 一定有某种奇妙的性质使得它可以快速求逆。</p>
+<script type="math/tex; mode=display">
+\alpha = W^{-1} Y</script><p>这里涉及到两个难题：求逆和乘法。我们知道矩阵求逆可不是一件轻松的事，一般的矩阵需要 $O(n^3)$。但我们既然都跟着 FFT 做到这一步了，说明 $W$ 一定有某种奇妙的性质使得它可以快速求逆。</p>
 <p>这里就要点一下题了，我们来看 FFT 的全称“快速傅里叶变换”。学过分析的同学可能都知道傅里叶变换，之所以 FFT 和分析里的傅里叶变换本质是一样的，是因为复数域的单位根和三角函数在某种意义上是一样的——其实分析里的傅里叶变换用复数的形式写，就很能看出它们的关系了。</p>
-<p>因此，我们不难从傅里叶变换来猜想，$W$ 是否可能具有某种正交性？如果其为正交矩阵，那它求逆可太简单了——就是它的共轭转置（正交矩阵满足 $W^H W &#x3D; E$）。</p>
+<p>因此，我们不难从傅里叶变换来猜想，$W$ 是否可能具有某种正交性？如果其为正交矩阵，那它求逆可太简单了——就是它的共轭转置（正交矩阵满足 $W^H W = E$）。</p>
 <p>观察到 $W$ 其实是个对称矩阵，因此 $W^H$ 只要把其元素取共轭就好了。我们观察 $W$ 的形态（假设对于取 $n+1$ 个点的情况，我们取 $n+1$ 次单位根）</p>
-<p>$$<br>\left(\begin{matrix}<br>1 &amp; 1 &amp; 1 &amp; \dots &amp; 1 \<br>1 &amp; \omega &amp; \omega^2 &amp; \dots &amp; \omega^n \<br>1 &amp; \omega^2 &amp; \omega^4 &amp; \dots &amp; \omega^{2n} \<br>\vdots &amp; \vdots &amp; \vdots &amp; &amp; \vdots \<br>1 &amp; \omega^n &amp; \omega^{2n} &amp; \dots &amp; \omega^{n^2}<br>\end{matrix}\right)<br>$$</p>
-<p>因此 $W^HW$ 的 $(i, i)$（也即对角线位置一定是）</p>
-<p>$$<br>1 + \overline{\omega^{i+1}}\omega^{i+1} + \overline{\omega^{2(i+1)}}\omega^{2(i+1)} + \dots + \overline{\omega^{n(i+1)}}\omega^{n(i+1)} &#x3D; n+1<br>$$</p>
-<p>而非对角线部分，$(i, j)$</p>
-<p>$$<br>\begin{aligned}<br>&amp;1 + \overline{\omega^{i+1}}\omega^{j+1} + \overline{\omega^{2(i+1)}}\omega^{2(j+1)} + \dots + \overline{\omega^{n(i+1)}}\omega^{n(j+1)} \ &#x3D;\ &amp;1 + \omega^{i-j} + \omega^{2(i-j)} + \dots + \omega^{n(j-i)} \<br>&#x3D;\ &amp;\frac{1-\omega^{(n+1)(j-i)}}{1-\omega^{j-i}} &#x3D; 0<br>\end{aligned}<br>$$</p>
-<p>这里你需要几个基本的数学知识</p>
+<script type="math/tex; mode=display">
+\left(\begin{matrix}  
+1 & 1 & 1 & \dots & 1 \\  
+1 & \omega & \omega^2 & \dots & \omega^n \\  
+1 & \omega^2 & \omega^4 & \dots & \omega^{2n} \\  
+\vdots & \vdots & \vdots & & \vdots \\  
+1 & \omega^n & \omega^{2n} & \dots & \omega^{n^2}  
+\end{matrix}\right)</script><p>因此 $W^HW$ 的 $(i, i)$（也即对角线位置一定是）</p>
+<script type="math/tex; mode=display">
+1 + \overline{\omega^{i+1}}\omega^{i+1} + \overline{\omega^{2(i+1)}}\omega^{2(i+1)} + \dots + \overline{\omega^{n(i+1)}}\omega^{n(i+1)} = n+1</script><p>而非对角线部分，$(i, j)$</p>
+<script type="math/tex; mode=display">
+\begin{aligned}
+&1 + \overline{\omega^{i+1}}\omega^{j+1} + \overline{\omega^{2(i+1)}}\omega^{2(j+1)} + \dots + \overline{\omega^{n(i+1)}}\omega^{n(j+1)} \\ =\ &1 + \omega^{i-j} + \omega^{2(i-j)} + \dots + \omega^{n(j-i)} \\  
+=\ &\frac{1-\omega^{(n+1)(j-i)}}{1-\omega^{j-i}} = 0
+\end{aligned}</script><p>这里你需要几个基本的数学知识</p>
 <ul>
-<li>对于一个复数 $\omega$，$ \overline{\omega} \omega &#x3D; \omega ^2 $。上文中均为单位根，所以模长为 1。</li>
+<li>对于一个复数 $\omega$，$ \overline{\omega} \omega = \omega ^2 $。上文中均为单位根，所以模长为 1。</li>
 <li>对于复数我们也可以应用等比数列求和公式。</li>
-<li>对于 $n+1$ 次单位根，$ \omega^{n+1} &#x3D; 1 $。</li>
+<li>对于 $n+1$ 次单位根，$ \omega^{n+1} = 1 $。</li>
 </ul>
 <p>因此我们得到其“基本是正交的”（在分析里，其实可以认为这就是正交的；不过在矩阵的定义中，正交矩阵相乘一定要等于 $E$ 而非 $cE$）。也即我们已经证明了</p>
-<p>$$<br>W^H W &#x3D; (n+1) E<br>$$</p>
-<p>所以我们有</p>
-<p>$$<br>\alpha &#x3D; W^{-1} Y &#x3D; \frac{1}{n+1} W^H Y<br>$$</p>
-<p>所以求逆我们实际上不需要花时间。但是我们还需要考虑矩阵乘法的事。我们来考量 $W^H$ 的形态：</p>
-<p>$$<br>\left(\begin{matrix}<br>1 &amp; 1 &amp; 1 &amp; \dots &amp; 1 \<br>1 &amp; \omega^{-1} &amp; \omega^{-2} &amp; \dots &amp; \omega^{-n} \<br>1 &amp; \omega^{-2} &amp; \omega^{-4} &amp; \dots &amp; \omega^{-2n} \<br>\vdots &amp; \vdots &amp; \vdots &amp; &amp; \vdots \<br>1 &amp; \omega^{-n} &amp; \omega^{-2n} &amp; \dots &amp; \omega^{-n^2}<br>\end{matrix}\right)<br>$$</p>
-<p>其中共轭用单位根的负指数表示，因为共轭实际上就是等价于某种倒数，或者说乘法逆元。我们惊喜地发现这和 $W$ 相比，只是把所有指数都换成了负号而已！那我们已经可以高效计算 $W$ 与一个向量相乘了，那$W^H$ 与一个向量相乘，我们似乎也应该能够很高效地计算——事实上确实是这样的。</p>
+<script type="math/tex; mode=display">
+W^H W = (n+1) E</script><p>所以我们有</p>
+<script type="math/tex; mode=display">
+\alpha = W^{-1} Y = \frac{1}{n+1} W^H Y</script><p>所以求逆我们实际上不需要花时间。但是我们还需要考虑矩阵乘法的事。我们来考量 $W^H$ 的形态：</p>
+<script type="math/tex; mode=display">
+\left(\begin{matrix}  
+1 & 1 & 1 & \dots & 1 \\  
+1 & \omega^{-1} & \omega^{-2} & \dots & \omega^{-n} \\  
+1 & \omega^{-2} & \omega^{-4} & \dots & \omega^{-2n} \\  
+\vdots & \vdots & \vdots & & \vdots \\  
+1 & \omega^{-n} & \omega^{-2n} & \dots & \omega^{-n^2}  
+\end{matrix}\right)</script><p>其中共轭用单位根的负指数表示，因为共轭实际上就是等价于某种倒数，或者说乘法逆元。我们惊喜地发现这和 $W$ 相比，只是把所有指数都换成了负号而已！那我们已经可以高效计算 $W$ 与一个向量相乘了，那$W^H$ 与一个向量相乘，我们似乎也应该能够很高效地计算——事实上确实是这样的。</p>
 <p>这是因为，我们能让算法高效进行的关键部分都保留住了。我们能让这个相乘高效进行，本质就是因为单位根良好的旋转对称性，而取负的单位根无非就是旋转方向从逆时针变成了顺时针，其它没有任何改变。所以如果你的 DFT 函数接口设计得好的话，你只要调用你已经写好的 DFT，只要在传参时候把单位根的选取变成它们的共轭，就可以完成这个过程。</p>
 <p>这个过程被称为 IDFT，也就是 DFT 的逆变换。至此，我们的 FFT 算法就完成了。</p>
 <hr>
@@ -315,7 +374,7 @@
     
     
       <div id="toc-footer" style="display: none">
-        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%89%8D%E8%A8%80"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%97%AE%E9%A2%98"><span class="toc-number">2.</span> <span class="toc-text">问题</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Brute-Force"><span class="toc-number">3.</span> <span class="toc-text">Brute-Force</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Karatsuba"><span class="toc-number">4.</span> <span class="toc-text">Karatsuba</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%BA%E4%BB%80%E4%B9%88%E8%A6%81%E7%82%B9%E5%80%BC%E8%A1%A8%E7%A4%BA"><span class="toc-number">5.</span> <span class="toc-text">为什么要点值表示</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#left-begin-matrix-F-x-0-F-x-1-vdots-F-x-n-end-matrix-right"><span class="toc-number"></span> <span class="toc-text">$$\left[\begin{matrix}F(x_0) \F(x_1) \\vdots \F(x_n)\end{matrix}\right]  </span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#DFT-%E9%AB%98%E6%95%88%E5%9C%B0%E4%BB%8E%E7%B3%BB%E6%95%B0%E8%A1%A8%E7%A4%BA%E5%88%B0%E7%82%B9%E5%80%BC%E8%A1%A8%E7%A4%BA"><span class="toc-number">1.</span> <span class="toc-text">DFT-高效地从系数表示到点值表示</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#left-begin-matrix-F-x-0-F-x-1-vdots-F-x-n-end-matrix-right-1"><span class="toc-number"></span> <span class="toc-text">$$\left[\begin{matrix}F(x_0) \F(x_1) \\vdots \F(x_n)\end{matrix}\right]  </span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#IDFT-%E9%AB%98%E6%95%88%E5%9C%B0%E4%BB%8E%E7%82%B9%E5%80%BC%E8%A1%A8%E7%A4%BA%E5%88%B0%E7%B3%BB%E6%95%B0%E8%A1%A8%E7%A4%BA"><span class="toc-number">1.</span> <span class="toc-text">IDFT-高效地从点值表示到系数表示</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%80%9D%E8%80%83%E6%80%BB%E7%BB%93"><span class="toc-number">2.</span> <span class="toc-text">思考总结</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#NTT"><span class="toc-number">3.</span> <span class="toc-text">NTT</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BB%A3%E7%A0%81"><span class="toc-number">4.</span> <span class="toc-text">代码</span></a></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%89%8D%E8%A8%80"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%97%AE%E9%A2%98"><span class="toc-number">2.</span> <span class="toc-text">问题</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Brute-Force"><span class="toc-number">3.</span> <span class="toc-text">Brute-Force</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Karatsuba"><span class="toc-number">4.</span> <span class="toc-text">Karatsuba</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%BA%E4%BB%80%E4%B9%88%E8%A6%81%E7%82%B9%E5%80%BC%E8%A1%A8%E7%A4%BA"><span class="toc-number">5.</span> <span class="toc-text">为什么要点值表示</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#DFT-%E9%AB%98%E6%95%88%E5%9C%B0%E4%BB%8E%E7%B3%BB%E6%95%B0%E8%A1%A8%E7%A4%BA%E5%88%B0%E7%82%B9%E5%80%BC%E8%A1%A8%E7%A4%BA"><span class="toc-number">6.</span> <span class="toc-text">DFT-高效地从系数表示到点值表示</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#IDFT-%E9%AB%98%E6%95%88%E5%9C%B0%E4%BB%8E%E7%82%B9%E5%80%BC%E8%A1%A8%E7%A4%BA%E5%88%B0%E7%B3%BB%E6%95%B0%E8%A1%A8%E7%A4%BA"><span class="toc-number">7.</span> <span class="toc-text">IDFT-高效地从点值表示到系数表示</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%80%9D%E8%80%83%E6%80%BB%E7%BB%93"><span class="toc-number">8.</span> <span class="toc-text">思考总结</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#NTT"><span class="toc-number">9.</span> <span class="toc-text">NTT</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BB%A3%E7%A0%81"><span class="toc-number">10.</span> <span class="toc-text">代码</span></a></li></ol>
       </div>
     
 
