@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+<html lang=en>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+    <meta name="description" content="一直感觉这方面自己的知识面不够系统。很早就 star 过 Lianmin 学长的 awesome-tensor-compilers，但是由于一直有这样那样的事（yi zhi mo yu）没有静下心来认真看过一遍。刚好最近要准备本班的学术节，趁机来翻译一下这篇 DL Compiler 的 Survey。不作通篇全翻译（主要前四章），一些术语不翻，以总结学习为主。 Abstract部署不同的 DL m">
+<meta property="og:type" content="article">
+<meta property="og:title" content="[译] The Deep Learning Compiler A Comprehensive Survey">
+<meta property="og:url" content="https://siriusneo.github.io/2023/06/24/[%E8%AF%91]%20The%20Deep%20Learning%20Compiler%20A%20Comprehensive%20Survey/index.html">
+<meta property="og:site_name" content="Metric Space | 度量空间">
+<meta property="og:description" content="一直感觉这方面自己的知识面不够系统。很早就 star 过 Lianmin 学长的 awesome-tensor-compilers，但是由于一直有这样那样的事（yi zhi mo yu）没有静下心来认真看过一遍。刚好最近要准备本班的学术节，趁机来翻译一下这篇 DL Compiler 的 Survey。不作通篇全翻译（主要前四章），一些术语不翻，以总结学习为主。 Abstract部署不同的 DL m">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2023-06-24T15:53:00.000Z">
+<meta property="article:modified_time" content="2023-10-09T05:12:48.198Z">
+<meta property="article:author" content="Chaofan">
+<meta name="twitter:card" content="summary">
+    
+    
+      
+        
+          <link rel="shortcut icon" href="/images/favicon.ico">
+        
+      
+      
+        
+          <link rel="icon" type="image/png" href="/images/android-chrome-192x192.png" sizes="192x192">
+        
+      
+      
+        
+          <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+        
+      
+    
+    <!-- title -->
+    <title>[译] The Deep Learning Compiler A Comprehensive Survey</title>
+    <!-- async scripts -->
+    <!-- Google Analytics -->
+
+
+    <!-- Umami Analytics -->
+
+
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+    <!-- rss -->
+    
+    
+	<!-- mathjax -->
+	
+		<script type="text/x-mathjax-config">
+		  MathJax.Hub.Config({
+			tex2jax: {
+			  skipTags: ['script', 'noscript', 'style', 'textarea', 'pre'],
+			  inlineMath: [['$','$']]
+			}
+		  });
+		</script>
+		<script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-MML-AM_CHTML' async></script>
+	
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#" aria-label="Menu"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#" aria-label="Menu"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" aria-label="Top" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fa-solid fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/about/">About</a></li><!--
+     --><!--
+       --><li><a href="/archives/">Articles</a></li><!--
+     --><!--
+       --><li><a href="/links/">Links</a></li><!--
+     --><!--
+       --><li><a target="_blank" rel="noopener" href="http://chaofanlin.com">Academic Page</a></li><!--
+     -->
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" aria-label="Previous post" href="/2023/06/25/Pointer%20Arithmetics%20in%20Triton/"><i class="fa-solid fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" aria-label="Next post" href="/2023/06/20/confession-of-a-bad-decision-maker/"><i class="fa-solid fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" aria-label="Back to top" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" aria-label="Share post" href="#"><i class="fa-solid fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://siriusneo.github.io/2023/06/24/[%E8%AF%91]%20The%20Deep%20Learning%20Compiler%20A%20Comprehensive%20Survey/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://siriusneo.github.io/2023/06/24/[%E8%AF%91]%20The%20Deep%20Learning%20Compiler%20A%20Comprehensive%20Survey/&text=[译] The Deep Learning Compiler A Comprehensive Survey"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://siriusneo.github.io/2023/06/24/[%E8%AF%91]%20The%20Deep%20Learning%20Compiler%20A%20Comprehensive%20Survey/&title=[译] The Deep Learning Compiler A Comprehensive Survey"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://siriusneo.github.io/2023/06/24/[%E8%AF%91]%20The%20Deep%20Learning%20Compiler%20A%20Comprehensive%20Survey/&is_video=false&description=[译] The Deep Learning Compiler A Comprehensive Survey"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=[译] The Deep Learning Compiler A Comprehensive Survey&body=Check out this article: https://siriusneo.github.io/2023/06/24/[%E8%AF%91]%20The%20Deep%20Learning%20Compiler%20A%20Comprehensive%20Survey/"><i class="fa-solid fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://siriusneo.github.io/2023/06/24/[%E8%AF%91]%20The%20Deep%20Learning%20Compiler%20A%20Comprehensive%20Survey/&title=[译] The Deep Learning Compiler A Comprehensive Survey"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://siriusneo.github.io/2023/06/24/[%E8%AF%91]%20The%20Deep%20Learning%20Compiler%20A%20Comprehensive%20Survey/&title=[译] The Deep Learning Compiler A Comprehensive Survey"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://siriusneo.github.io/2023/06/24/[%E8%AF%91]%20The%20Deep%20Learning%20Compiler%20A%20Comprehensive%20Survey/&title=[译] The Deep Learning Compiler A Comprehensive Survey"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://siriusneo.github.io/2023/06/24/[%E8%AF%91]%20The%20Deep%20Learning%20Compiler%20A%20Comprehensive%20Survey/&title=[译] The Deep Learning Compiler A Comprehensive Survey"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://siriusneo.github.io/2023/06/24/[%E8%AF%91]%20The%20Deep%20Learning%20Compiler%20A%20Comprehensive%20Survey/&name=[译] The Deep Learning Compiler A Comprehensive Survey&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://siriusneo.github.io/2023/06/24/[%E8%AF%91]%20The%20Deep%20Learning%20Compiler%20A%20Comprehensive%20Survey/&t=[译] The Deep Learning Compiler A Comprehensive Survey"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    
+    
+      <div id="toc">
+        <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#Abstract"><span class="toc-number">1.</span> <span class="toc-text">Abstract</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-Introduction"><span class="toc-number">2.</span> <span class="toc-text">1 Introduction</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-Background"><span class="toc-number">3.</span> <span class="toc-text">2 Background</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-1-Deep-Learning-Frameworks"><span class="toc-number">4.</span> <span class="toc-text">2.1 Deep Learning Frameworks</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-2-Deep-Learning-Hardware"><span class="toc-number">5.</span> <span class="toc-text">2.2 Deep Learning Hardware</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-3-Hardware-specific-DL-Code-Generator"><span class="toc-number">6.</span> <span class="toc-text">2.3 Hardware-specific DL Code Generator</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-Common-Design-Architecture-of-DL-Compilers"><span class="toc-number"></span> <span class="toc-text">3 Common Design Architecture of DL Compilers</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-Key-Components-of-DL-Compilers"><span class="toc-number"></span> <span class="toc-text">4 Key Components of DL Compilers</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#4-1-High-level-IR"><span class="toc-number">1.</span> <span class="toc-text">4.1 High-level IR</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-2-Low-level-IR"><span class="toc-number">2.</span> <span class="toc-text">4.2 Low-level IR</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-3-Frontend-Optimizations"><span class="toc-number">3.</span> <span class="toc-text">4.3 Frontend Optimizations</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-4-Backend-Optimizations"><span class="toc-number">4.</span> <span class="toc-text">4.4 Backend Optimizations</span></a></li></ol>
+      </div>
+    
+  </span>
+</div>
+
+    
+    <div class="content index py4 ">
+        
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle p-name" itemprop="name headline">
+        [译] The Deep Learning Compiler A Comprehensive Survey
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author p-author h-card" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span class="p-name" itemprop="name">Chaofan</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2023-06-24T15:53:00.000Z" class="dt-published" itemprop="datePublished">2023-06-24</time>
+        
+      
+    </div>
+
+
+      
+    <div class="article-category">
+        <i class="fa-solid fa-archive"></i>
+        <a class="category-link" href="/categories/%E6%8E%8C%E4%B8%8A%E7%9A%84%E7%BA%AF%E5%85%89/">掌上的纯光</a>
+    </div>
+
+
+      
+
+    </div>
+  </header>
+  
+
+  <div class="content e-content" itemprop="articleBody">
+    <p>一直感觉这方面自己的知识面不够系统。很早就 star 过 Lianmin 学长的 awesome-tensor-compilers，但是由于一直有这样那样的事（yi zhi mo yu）没有静下心来认真看过一遍。刚好最近要准备本班的学术节，趁机来翻译一下这篇 DL Compiler 的 Survey。不作通篇全翻译（主要前四章），一些术语不翻，以总结学习为主。</p>
+<h3 id="Abstract"><a href="#Abstract" class="headerlink" title="Abstract"></a>Abstract</h3><p>部署不同的 DL models 到多样的 DL 硬件上的困难推动了社区内对 DL 编译器的研究和开发。陆续有 DL 编译器从工业界与学术届被提出，例如 Tensorflow XLA 和 TVM。DL 编译器大都以在不同 DL 框架下写出的 DL 模型作为输入，然后以为不同的 DL 后端生成优化后的代码作为输出。然而，并没有一篇 survey 综合性地分析过 DL 编译器的独特设计架构。在这篇文章，我们通过详细剖析 DL 编译器中普遍被采用的设计来对现有的 DL 编译器做一个全面的分析，重点关注面向 DL 的多级 IR 设计，以及前后端的优化。我们对多级 IR 的设计进行了详尽的分析并且对其中常见的优化进行了说明。最后，我们着重指出了一些关于 DL 编译器之后潜在研究方向的 insights。这是第一个关注 DL 编译器设计结构的 survey，我们希望它能为未来 DL 编译器方向的研究铺开道路。</p>
+<h3 id="1-Introduction"><a href="#1-Introduction" class="headerlink" title="1 Introduction"></a>1 Introduction</h3><p>深度学习的发展给许多科研领域都带来了深远的影响。它不仅在 AI （子领域包括 NLP，CV）的有着非凡的价值，也在例如电商、智慧城市、药物研究等更大范围的相关应用上取得了成功。随着多样的 DL 模型（例如 CNN，RNN，LSTM 以及 GAN 等）的出现，简化它们的编程实现过程对于让它们被广泛使用、部署是很重要的。</p>
+<p>凭借工业界和学术界的不断努力，许多 DL 框架不断被开发出来，例如 TensorFlow，PyTorch，MXNet 和 CNTK，它们都是为了简化不同 DL 模型的实现。上述框架由于设计上的 tradeoff 导致它们都有各自的长处和短处，因此互通性就变得很重要（例如，你要在一个现有 model 上实现一个新提出的 DL models，这其中存在一些 engineering 的工作）。为了提供这种互通性，ONNX 随即被提出。它定义了一个统一的表示 DL models 的格式来方便不同框架之间的模型转换。</p>
+<p>同时，一些独特的计算特性例如矩阵乘法推动了芯片架构师去设计高效的 customized DL 加速器。互联网巨头（例如 Google TPU，Hisilicon NPU，Apple Bonic），处理器供应商（例如 NVIDIA Turing，Intel NNP），服务提供商（例如 Amazon Inferentia，Alibaba Hanguang）以及甚至一些创业公司（例如 Cambricon，Graphcore）都在开发 DL 芯片上投入了大量人力物力来加速 DL 模型。一般来讲，DL 硬件可以被分为以下几类：</p>
+<ul>
+<li>带有软硬件协同设计的通用硬件</li>
+<li>为 DL models 定制的专用硬件</li>
+<li>受到生物脑科学启发而设计的神经形态硬件</li>
+</ul>
+<p>例如，通用硬件（CPU、GPU）已经加入了特殊的硬件组件比如 AVX512 vector units 和 tensor core 来加速 DL models。而对专用硬件例如 Google TPU，application- specific 的内置电路设计（例如 Matmul engine 和高带宽的 memory）被设计来将性能和能耗效率提升到极致。在可预见的未来，DL 硬件的设计将会变得甚至更多元。</p>
+<p>为了拥抱硬件多样性，将计算高效地 map 到 DL 硬件是很重要的。在通用硬件上，高度优化的线性代数库例如 Basic Linear Algebra Subprograms（BLAS）库（MKL 和 cuBLAS）被作为 DL models 高效计算的基础。以卷积算子为例，DL 框架会将卷积算子转换为矩阵乘法，然后调用 BLAS 库中的 GEMM 函数。此外，硬件供应商也发行了为 DL 计算定制的高度优化的计算库（MKL-DNN 和 cuDNN），计算包括 forward 和 backward 的 conv，pooling，normalization 和 activation。更多高级的工具也被开发出来以进一步加速 DL 算子。例如，TensorRT 支持图优化（例如 layer fusion）和 low-bit quantization，并带有一系列高度优化的 GPU kernels。在专用 DL 硬件上也有相似的库。然而，依赖这些库的一个坏处是，他们通常落后于快速发展的 DL models，因此难以高效利用 DL 芯片。</p>
+<p>为了解决 DL 库和工具的这一短处，以及减轻人工在每个 DL 硬件上优化 DL 模型的负担，DL 社区诉诸于 domain specific 的编译器。很快，一些流行的 DL 编译器例如 TCM，Tensor Comprehension，Glow，nGraph 和 XLA 从工业界以及学术界纷纷被提出。DL 编译器以用 DL 框架所编写的模型定义作为输入，然后生成在多种多样的 DL 硬件上的高效代码作为输出。“模型定义”和“specific code implementation” 之间的变换也被根据 model specification 和后端硬件结构这些信息来高度优化。特别地，他们包含了面向 DL 的优化，例如 layer/operator fusion。这些优化使得高效代码生成变得可能。此外，现有的 DL compilers 也采用来自通用编译器的成熟的工具链（LLVM），在不同的硬件架构之间提供了更好的便利性。与传统编译器相似，DL 编译器也采用分层式的设计包括前端、IR 和后端。然而，DL 编译器的独特之处在于多级 IR 的设计和 DL 领域内特定的优化。</p>
+<p>在这篇文章里，我们通过对编译器的前端，多级 IR 和后端的设计进行剖析，来对现有的 DL 编译器做了一个综合性的 survey。我们特别关注 IR 设计和优化方法。特别地，这篇文章包括了：</p>
+<ul>
+<li>我们剖析了常见的 DL 编译器的架构设计，并且对一些关键的设计例如多级 IR，前端优化（包括 node-level、block-level 和 dataflow-level 的优化）和后端优化（包括 hardware- specific 的优化， auto-tuning 和 kernel 库）进行了详尽的分析。</li>
+<li>我们给现有的 DL 编译器从不同方面做了综合性的分类，对应了这篇 survey 里所述的那些关键组件。这个分类的目的是为了给那些实践者根据他们的需求在 DL 编译器这方面提供 guidelines。同时也可以给 researchers 提供一个详尽的总结。</li>
+<li>我们在 CNN （包括 full-fledges models 和 lightweight models）上进行了不同 DL 编译器的（量化）性能比较。我们同时比较了 end-to-end 的性能和每层的性能，来展示优化的效果。</li>
+<li>我们为未来 DL 编译器的开发提供了一些 insights，包括 dynamic shape 和 pre-/post- processing，更高级的 auto-tuning，polyhedral model，子图分割，quantization，unified optimizations，可微编程以及隐私保护。我们希望这些能促进 DL 编译器社区的研究。</li>
+</ul>
+<h3 id="2-Background"><a href="#2-Background" class="headerlink" title="2 Background"></a>2 Background</h3><h3 id="2-1-Deep-Learning-Frameworks"><a href="#2-1-Deep-Learning-Frameworks" class="headerlink" title="2.1 Deep Learning Frameworks"></a>2.1 Deep Learning Frameworks</h3><p>这一节我们纵览了一些流行的 DL 框架。</p>
+<p> <strong>TensorFlow.</strong> 在所有 DL 框架中，TensorFlow 有着最全面的编程语言接口支持，包括 C++，Python，Java，Go，R 和 Haskell。TensorFlow 采用了一个由 primitive operators 和 restricted control edge 组成的 dataflow graph 来表示一段可微的程序。TensorFlow Lite 是为了移动端和嵌入式深度学习设计的，提供了一套 Android 神经网络 API。为了降低使用 TensorFlow 的复杂性，Google 使用 Keras 作为 TensorFlow core 的前端。另外，TensorFlow 的 eager-mode 采用了和 PyTorch 相似的方式来更好地支持动态计算图。 </p>
+<p><strong>Keras.</strong> Keras 是一个为了快速搭建 DL 模型而生的 high-level 的 NN 库，使用纯 Python 实现。它自身并不是一个完整的 DL 框架，而是提供了一套 high-level 的 API 然后与 TensorFlow，MXNet，Theano 和 CNTK 相配合。使用 Keras，DL 开发者可以仅用几行代码就搭建起一个神经网络。此外，Keras 还可以和其它常用的 DL 包协同使用，例如 scikit-learn。然而，Keras 由于过度的封装导致其不够 flexible，在其中添加新算子或者得到 low-level 的 data information 都是很困难的。</p>
+<p><strong>PyTorch.</strong> Facebook 用 Python 重写了基于 Lua 的 DL 框架 Torch，然后在 Tensor level 上 refactor 了所有模块，由此发行了 PyTorch。作为最流行的动态框架，PyTorch 嵌入了用于构建动态图的 primitives，这里控制流是在 Python 解释器上执行的。PyTorch 1.0 整合了 PyTorch 0.4 和 Caffe2 的 codebases 来构建一个 unfied 的框架。这使得 PyTorch 能够吸收 Caffe2 在支持高效的 graph execution 以及移动端部署上的优势。FastAI 是一个基于 PyTorch 上层封装的进一步的 API 层。它完全参考了 Keras 来使得 PyTorch 变得更加易用。</p>
+<p><strong>Caffe/Caffe2</strong> Caffe 是 UC Berkeley 为了深度学习和图像分类设计的。它有 command line，Python 和 MATLAB 的 APIs。它的简洁性使得其源代码易于扩展，适合开发者深入分析。因此，Caffe 主要用于 research，使得它从始至终都很流行。Caffe2 基于原始的 Caffe project 搭建，和 TensorFlow 的代码架构很相似，不过它有着更 lightweight 的 API 以及更容易获取计算图中的中间结果。</p>
+<p><strong>MXNet</strong> MXnet 支持多种语言的 APIs 包括 Python，C++，R，Scala，Julia，Matlab 和 JavaScript。它自发明时就注重 scalable，并且是从减少 data loading 和 I/O 复杂度的视角来设计的。MXNet 提供了不同的</p>
+<p><strong>CNTK</strong> CNTK 可以通过 Python，C++ 和 C# APIs 来使用，也可以通过它自己的脚本语言（即 BrainScript）使用。CNTK 的设计目标是在生产过程中的大规模的数据上表现的易用以及 production-ready。然而，CNTK 并不支持 ARM 架构，这限制了它在移动设备上的使用。它使用和 TensorFlow 以及 Caffe 相似的静态图表示，这种表示下一个 DL model 被看作是一个有向图之上的一系列计算。</p>
+<p><strong>PaddlePaddle</strong> PaddlePaddle 的原始设计和 Caffe 相似，这种设计下 model 被表示为一系列 layers。然而，PaddlePaddle v2 参考 TensorFlow 然后接受了 operators 的概念，将 layers 进一步打碎成更细粒度的 operators，由此能支持更复杂的 DL models。以及 PaddlePaddle Fluid 和 PyTorch 相似，它提供了自己的 interpreter 来绕开 Python interpreter 的性能瓶颈。</p>
+<p><strong>ONNX</strong> 全称 Open Neural Network Exchange，它定义了一种 scalable 的计算图模型，因此不同 DL 框架 built 出来的计算图都可以很容易地转换到 ONNX。使用 ONNX，在不同框架之间转换模型是很容易的。例如，ONNX 能让开发者 build 一个 MXNet 的 model 然后使用 PyTorch 做 inference。</p>
+<p><strong>Historical Frameworks</strong> 由于 DL 社区的迅速发展，许多 DL 框架已经不再活跃。例如，PyTorch 取代了 Torch。作为最老的 DL 框架之一，Theano 已经不再维护了。Deeplearning4j 是一个基于 Java 和 Scala 的分布式 DL 框架，然而由于缺乏一个大的开发者社区而变得不活跃。Chainer 曾经是动态计算图的首选，然而最终被 MXNet，PyTorch 和 TensorFlow 所取代。</p>
+<p>之前有工作在不同的 app 上（例如 CV 和图像分类）以及不同的硬件上（例如 CPU，GPU，TPU）比较过不同 DL 框架的性能。和这些工作不同，这个 survey 更关注 DL compilers 上的研究，这些研究往往提供了一个更通用的在不同硬件上执行多种 DL models 的方法。</p>
+<h3 id="2-2-Deep-Learning-Hardware"><a href="#2-2-Deep-Learning-Hardware" class="headerlink" title="2.2 Deep Learning Hardware"></a>2.2 Deep Learning Hardware</h3><p>DL hardware 可以根据泛用性被分为三类：(1) 通用 hardware 可以通过软硬件优化支持 DL workloads；(2) 专用 hardware 可以基于完全定制的电路结构来加速 DL workloads；(3) 神经形态硬件可以通过模仿人脑来起作用。</p>
+<p><strong>General- purpose Hardware.</strong> 对 DL 模型最有代表性的通用 hardware 是 GPU，它通过多核架构实现高并行性。例如，NVIDIA GPUs 从 Volta 架构开始引入了 tensor core。Tensor cores 可以并行加速混合精度的矩阵乘法（mixed-precision matmul）和 accumulate calculations。这两种计算被广泛应用于 DL models 的 training 和 inference 中。凭着和硬件的协同优化，NVIDIA 也开发出了高度优化的 DL libraries 和 tools 例如 cuDAA 和 TensorRT 来进一步加速 DL models 的计算。</p>
+<p><strong>Dedicated Hardware.</strong> 专用硬件对 DL 计算专门做了优化，来将性能和能耗提升到极致。DL 应用和算法的快速发展激励了许多创业公司来开发专用 DL 硬件（例如 Graphcore GC2，Cambricon MLU270）。此外，传统的硬件公司（例如 Intel NNP，Qualcomm Cloud AI 100）和云服务提供者（例如 Google TPU，Amazon Inferentia 和 Alibaba Hanguang）也投资了这个领域。最出名的专用 DL 硬件是 Google TPU 系列。一个 TPU 包含矩阵乘法单元（MXU），Unified Buffer（UB）和激活单元（AU），它们由 host processor 通过 CISC 指令集来驱动。MXU 主要是由一个 systolic array（针对能耗和空间利用率在矩阵乘法这方面特别优化了）组成。和 CPU 和 GPU 相比，TPU 仍然是 programmable 的，但是它用 matrix 作为它的 primitive 而不是 vector/scalar。</p>
+<p><strong>Neuromorphic Hardware.</strong> 此处不是很感兴趣，省略.</p>
+<h3 id="2-3-Hardware-specific-DL-Code-Generator"><a href="#2-3-Hardware-specific-DL-Code-Generator" class="headerlink" title="2.3 Hardware-specific DL Code Generator"></a>2.3 Hardware-specific DL Code Generator</h3><p>略</p>
+<h2 id="3-Common-Design-Architecture-of-DL-Compilers"><a href="#3-Common-Design-Architecture-of-DL-Compilers" class="headerlink" title="3 Common Design Architecture of DL Compilers"></a>3 Common Design Architecture of DL Compilers</h2><p>一个 DL 编译器的通常的设计架构主要包含两个部分：编译器前端和编译器后端。中间表示（IR）贯穿于前端与后端之间。一般地，IR 是一个 program 的抽象，并且被用于 program 的优化。特别地，DL models 在 DL 编译器中被翻译成多级 IRs，其中 high-level IR 在前端部分，low-level IR 在后端部分。基于 high-level IR，编译器前端需要做一些硬件无关的变换和优化。基于 low-level IR，编译器后端需要做硬件相关的优化，代码生成以及编译。</p>
+<p><strong>The high-level IR</strong>，也被称作 graph IR，代表着计算和控制流，并且它是硬件无关的。High-level IR 的设计挑战是计算和控制流的，能捕捉并且表达多种多样的 DL models 的，这一抽象能力。High-level IR 的设计目标是建立 operators 和 data 之间的控制流和依赖，同时为 graph-level 的 optimization 提供一个 interface。它也包含着丰富的为编译准备的信息，以及为定制算子提供的可扩展性。</p>
+<p><strong>The low-level IR</strong> 被设计来在多种硬件 targets 上进行硬件有关的优化以及代码生成。因此，low-level IR 应该足够细粒度，能让它反映出硬件特性，以及表示那些硬件有关优化。同时它也应该能允许使用编译器后端中的一些成熟的第三方 tool-chains，例如 Halide，polyhedra model 和 LLVM。</p>
+<p><strong>The frontend</strong> 接受一个来自现有 DL 框架的 DL model 作为输入，然后将 model 转化成 graph IR 的表示形式。Frontend 需要实现不同的格式变换来支持不同深度学习框架中的格式。计算图优化包含通用编译器里的优化技术以及 DL 领域特定的优化，这些优化在 graph IR 的基础上减少了冗余并且提高了了性能。这些优化可以被分为 node-level（例如 nop elimination 和 zero-dim-tensor elimination），block-level（例如 algebraic simplification，operator fusion，operator sinking）和 dataflow-level（例如 CSE，DCE，static memory planning 和 layout transformation）。在经过 frontend 之后，优化后的计算图被生成然后传到 backend。</p>
+<p><strong>The backend</strong> 将 high-level IR 变换到 low-level IR，然后进行硬件有关的优化。在一方面，它可以直接将 high-level IR 变换到 third-party 的 tool-chains 例如 LLVM IR，来复用现有的在通用编译器上的优化和代码生成的一些基建。另一方面，它可以利用在 DL models 和硬件特性上的先验知识来实现更高效的代码生成，通过一些 customized 的编译 passes。通常使用的硬件相关优化包括 hardware intrinsic mapping，memory allocation and fetching，memory latency hiding，parallelization 以及 loop oriented optimizations。为了在一个很大的优化空间中确定最优的参数设置，有两种在现有的 DL 编译器中被广泛使用的方法：auto- scheduling（例如 polyhedral model）和 auto-tuning（例如 AutoTVM）。优化后的 low-level IR 使用 JIT 或者 AOT 来编译并针对不同的 hardware targets 生成代码。</p>
+<h2 id="4-Key-Components-of-DL-Compilers"><a href="#4-Key-Components-of-DL-Compilers" class="headerlink" title="4 Key Components of DL Compilers"></a>4 Key Components of DL Compilers</h2><h3 id="4-1-High-level-IR"><a href="#4-1-High-level-IR" class="headerlink" title="4.1 High-level IR"></a>4.1 High-level IR</h3><p>为了克服传统编译器中所使用的 IR 的局限（限制了 DL models 中复杂计算的表达能力），现有的 DL 编译器使用 high-level IR（graph IR）加上针对高效代码优化的特殊的设计。</p>
+<p><em>4.1.1 Representation of Graph IR.</em> Graph IR 的表示形式影响了 graph IR 的表达能力，同时也决定了 DL 编译器分析 graph IR 的方式。</p>
+<p><strong>DAG-based IR.</strong> DAG-based IR 是编译器建立一个计算图的最传统的一个方式，它将 nodes 和 edges 组织成一个有向无环图（DAG）。在 DL 编译器中，DAG 中的 nodes 代表着原子性的 DL 算子（convolution，pooling 等等），然后边代表着张量。并且这个图是无环的，这一点和通用编译器中的数据依赖图不同（DDG）。有着 DAG 计算图的帮助，DL 编译器可以分析不同算子之间的关系和依赖，并且使用它们来指导后续优化。DDG 上已经有很多现有的优化实现，例如公共子表达式消除（CSE）和死代码消除（DCE）。通过将 DL 领域内的知识和这些经典算法相结合，进一步的优化可以被应用在 DAG 计算图上。由于它的简单性，DAG-based 的 IR 用于编程和编译非常方便，但是也有着坏处，例如由缺少 computation scope 这一定义而导致的语义上的二义性。</p>
+<p><strong>Let-binding-based IR.</strong> Let-binding 是一种通过在特定函数中引入（带有限制性的 scope 的） let 表达式来解决语义二义性的方法，这一方法被用于许多 high-level 的编程语言中，例如 Javascript，F# 和 Scheme。当使用 let 关键字定义一个表达式时，一个 let node 会被生成，然后它指向表达式中的 operator 和 variable 而不是仅仅将 variables 之间的关系建立成一个 DAG。在一个 DAG-based 的编译器里，当一个进程需要获得一个 expression 的返回值时，它首先访问相应的节点，然后搜索相关的其它节点（这也被称作递归下降法）。而相应的，一个 let-binding 的编译器将所有 variables 的值在 let 表达式里就处理好了，然后它会建立一个变量-值 映射。当相应的值被需要时，编译器会查询这个 map 然后获得相应的值。在 DL 编译器中，TVM 的 Relay IR 同时采用 DAG-based IR 和 let-binding-based IR 来结合两者的优点。</p>
+<p><strong>Representing Tensor Computation.</strong> 不同的 graph IR 有着不同的方式来表示 tensors 上的计算。 不同 DL 框架中的算子被翻译成 graph IR 中的特定表示。以及，customized 的算子也需要在能在这种表示中被编写。张量计算的表示法可以大致被分为以下三类：</p>
+<p><strong>(1) Function-based:</strong> 基于函数的表示仅仅提供了封装好的算子。这种方式被 Glow，nGraph 和 XLA 所采用。以 XLA 的 HLO 为例，它由 symbolic programming 中的一系列 functions 组成，并且这些函数大多都是没有 side effects 的。指令被组织成三个层级，包括 HloModule（指代整个 program），HloComputation（一个 function）以及 HloInstruction（一个计算）。XLA 使用 HLO IR 来同时表示 graph IR 和 operation IR，因此 HLO 的操作能从 dataflow level 覆盖到 operator level。</p>
+<p><strong>(2) Lambda expression:</strong> Lambda 表达式是一种基于 index 的形式化表达式，它通过 variable binding 和 substitution 描述了计算。使用 lambda expression，programmers 可以迅速定义一个计算而不用去实现一个新函数。TVM 使用基于 lambda 表达式的 tensor expression（TE）来表示这种 tensor 计算。在 TVM 中，算子被 output tensor 的 shape 和用于计算的 lambda 表达式共同定义。</p>
+<p><strong>(3) Einstein notation:</strong> Einstein 记号，也被称作求和约定，是一种用来表示求和的记号约定。它要比 lambda 表达式更容易编程。以 TC 为例，临时变量的 indexes 不用被特地去定义。IR 可以基于 Einstein 记号，通过为定义变量的出现，来自动推断出真实的表达式。在 Einstein 记号中，operators 需要是既可以结合又可以交换的。这个限制保证了 reduction operator 可以以任意顺序被执行，使得进一步的并行成为可能。</p>
+<p><em>4.1.2 Implementation of Graph IR.</em> Graph IR 的实现完成了对 data 和 operation 的管理。</p>
+<p><strong>Data representation.</strong> DL 编译器中的 data（例如 inputs，weights 和中间数据）经常被组织为 tensors 的形式，也就是多维数组。DL 编译器可以直接用内存指针的方式表示 tensor，或者使用一个更 flexible 的方式——placeholders。一个 placeholder 包含了一个 tensor 每个维度的 size。某一个维度可以被标记为 unknown。为了优化，DL 编译器需要 data 的 layout 信息。此外，iterators 的边界也应该根据 placeholders 来推导。</p>
+<p><strong>(1) Placeholder:</strong> Placeholder 被广泛用于 symbolic programming（例如 Lisp，Tensorflow）。一个 placeholder 就是一个带有显式 shape 信息（例如每个维度的 size）的变量，并且这个信息可以随着计算传播。它允许 programmers 直接去描述算子以及构建计算图，而不用关心具体的数据元素，这有利于计算的“定义”与“执行”在 DL 编译器中的分离。此外，使用 placeholders 也让 programmers 能很方便地改变 input/output 以及相关联的中间数据的 shape，而不用改变计算定义。</p>
+<p><strong>(2) Unknown (Dynamic) shape representation:</strong> Unknown 维度在声明 placeholders 的时候通常都是支持的。例如，TVM 使用 Any 来代表 unknown 维度；XLA 使用 None；nGraph 使用它自己内部的 PartialShape 类。Unknown shape representation 对于支持动态的 model 是很重要的。然而，为了完全支持胴体啊 model，边界推导和维度检查应该被 relax（也就是做 best-effort 检查就好了）。此外，一些额外的机制应该被引入来保证 memory 的合法性。</p>
+<p><strong>(3) Data layout:</strong> Data layout 描述了一个 tensor 是如何在 memory 中被组织起来的。它通常是一个从 logical indices 到 memory indices 的映射。Data layout 通常包括维度的顺序（例如 NCHW 或者 NHWC），tiling，padding，striding，等等。TVM 和 Glow 将 data layout 作为算子的参数，并且在计算和优化时要求这些信息。然而，将 data layout 信息和算子相结合，而不是张量 / 数据本身，使得一些算子能够以符合直觉的方式实现，并且降低了编译的 overhead。XLA 将 data layout 表示成和后端 hardware 有关的 constraints。Relay 和 MLIR 即将把 data layout information 加到 tensors 的 type systems 中。</p>
+<p><strong>(4) Bound inference:</strong> 边界推导被用于在编译一个 DL models 时确定 iterators 的边界。尽管 DL 编译器中的 tensor 表示用来描述 inputs/outputs 很方便，它也给推导 iterator 的边界带来了很大的挑战。边界推导通常会递归地、迭代地被执行，主要依据计算图本身以及已知的 placeholders 这些信息。例如，在 TVM 中，iterators 形成了一个有向无环超图（hyper graph），图中每个 node 代表着一个 iterator，每个 hyper-edge 代表着两个或多个 iterators 之间的 relation（例如 split，fuse 或者 rebase）。一旦 root iterator 的 bound 被确定了（基于 placeholders 的 shape），其它 iterators 的 bound 可以递归地通过这些 relations 来确定。</p>
+<p><strong>Operator supported.</strong> DL 编译器中支持的 operators 是为了要去表示 DL workloads。他们是计算图里的 nodes。这些 operators 通常包括代数算子（加减乘除，exp，topK），NN 算子（卷积、池化），tensor 算子（reshape，resize，copy），broadcast &amp; reduction 算子（min，argmin）以及控制流算子（condition 和 loop）。这里，我们选三个有代表性的、在不同 DL 编译器中常用的算子来进行说明。此外我们还讨论了一下 customized 算子的设计。</p>
+<p><strong>(1) Broadcast:</strong> Broadcast 算子可以复制数据，并且生成一个有着合适 shape 的新数据。如果没有这种算子，输入 tensor 的 shapes 会更复杂。例如，对于一个 add，输入的 tensors 需要是相同的 shape。一些编译器例如 XLA 和 Relay 通过引入 broadcasting 算子来放松这种限制。例如，XLA 允许一个 matrix 和一个 vector 的加法，方式就是将 vector 沿着缺少的那个维度复制，直到它和 matrix shape 匹配。（其实就是最常说的那种 broadcasting 啦）</p>
+<p><strong>(2) Control flow:</strong> 当我们需要表示复杂的、flexible 的 models 时，控制流是必要的。一些模型（例如 RNN 和强化学习）依赖于循环的关系以及一些数据有关的条件执行，这些就需要 control-flow。如果 graph IR 里没有支持 control flow，这些 models 必须依赖于宿主语言中的 control flow（常见的就是 Python，也就是说用 Python 里的 if 和 while）或者做 static unrolling，这些都会导致计算性能下降。Relay 注意到任意的控制流都可以被 recursion 和 pattern 实现（这已经被函数编程的相关理论证明了）。因此，它提供了 if 算子和 recursive 函数来实现 control flow。而在另一边，XLA 通过一些特殊的 HLO 算子例如 while 和 conditional 来表示 control flow。</p>
+<p><strong>(3) Derivative:</strong> 一个 Op 的 derivative 算子接受 output 的梯度和 input 数据作为它的输入，然后计算 Op 的梯度。尽管一些 DL 编译器（例如 TVM 和 TC）支持自动求导，它们在应用链式法则时候需要 high-level IR 中所有算子的导数。TVM 正在支持代数算子和 NN 算子的导数。Programmers 可以用这些内置的导数算子来实现 customized operators 的导数。相比之下，PlaidML 可以自动生成导数算子，即使是 customized operators。特别地，那些不能提供导数的 DL 编译器也没有能力来进行 model training。</p>
+<p><strong>(4) Customized operators:</strong> 它允许 programmers 为了特定目的来定义自己的算子。给 customized operators 提供支持能提升 DL 编译器的扩展性。例如，当在 Glow 定义新 operators 时，programmers 需要实现逻辑和 node 封装。此外，还有一些额外的工作，例如 lowering 的步骤，IR 生成，指令生成，如果有必要的话。作为对比的，TVM 和 TC 在描述计算实现的时不需要那么麻烦。特别地，TVM 的用户u只需要描述 computation 和 schedule，以及声明 input/output 的 shape。此外，TVM 的 customized 的算子能通过 hooks 和 Python 函数相结合，这进一步减少了 programmers 的负担。</p>
+<p><em>4.1.3 Discussion.</em> 几乎所有的 DL 编译器都有他们独一无二的高层 IR。然而，他们的设计哲学大致都相同，例如使用 DAG 或者 let-binding 来建立他们的计算图。此外，他们通常给 programmers 提供了比较方便的表示 tensor computation 的方式。高层 IR 中设计的 data 和 operators 足够的 flexible、extensible 来支持不同的 DL 模型。更重要的是，高层 IR 是硬件无关的，因此可以被应用到不同的硬件后端。</p>
+<h3 id="4-2-Low-level-IR"><a href="#4-2-Low-level-IR" class="headerlink" title="4.2 Low-level IR"></a>4.2 Low-level IR</h3><p><em>4.2.1 Implementation of Low-Level IR.</em> Low-level IR 在一个比 high-level IR 更细粒度的表示上描述了一个 DL 模型中的计算，通过提供接口来 tune 其中的计算和内存访问实现了 target 有关的优化。在这一章，我们将 low-level IRs 的常规实现方式分为三类：基于 Halide 的 IR，基于多面体的 IR 和其它独特的 IR。</p>
+<p><strong>Halide-based IR.</strong> Halide 一开始是被提出来去并行化图像处理的，它在 DL compilers（例如 TVM 中）被证明是有效且可扩展的。Halide 的基本设计哲学是计算（computation）与调度（schedule）的分离。相比直接给出一个具体的策略，使用 Halide 的编译器会尝试不同的可能的 schedule 然后选择最好的那一个。Halide 中内存引用的边界以及多重循环被限制为沿着 axes 的有界 boxes 的形式。因此，Halide 无法表示一些复杂的计算模式（例如非矩形的计算）。不过幸运的是，DL 中的计算通常是比较正规的，因此能被 Halide 完美地表示。此外，Halide 可以很简单地并行这些边界，并且将它们暴露在 tuning 机制下。Halide 的原始 IR 需要在它被应用到 DL 编译器后端时候被修改。例如，Halide 的 input shape 是无穷的，然而 DL 编译器需要知道数据的准确 shape 来将算子映射到硬件指令上。一些编译器，例如 TC，要求数据是固定大小的，来保证张量数据能有更好的时间局部性。</p>
+<p>TVM 将 Halide IR 升级成了一个独立的 symbolic IR。它清除了在 LLVM 上的依赖，并且 refactor 了项目的结构以及 Halide 的 IR 设计，来追求更好的 organization，更好的对 graph IR 以及前端语言（例如 Python）的 accessibility。以及由于其实现了一个 runtime 的 dispatching 机制，添加 customized 算子也很方便，提高了复用性。TVM 将变量定义从字符串匹配简化成了指针匹配，保证了每个变量只有一个定义位置（也就是 SSA）</p>
+<p><strong>Polyhedral-based IR.</strong> 多面体模型是 DL 编译器中采用的一个很重要的技术。它使用线性规划，仿射变换和其它数学方法来优化基于 loop 的、静态 control-flow、静态 bounds 的代码。和 Halide 不同的是，内存引用和循环的边界可以是任意的多面体。这样的 flexibility 使得多面体模型在通用的编译器中广泛被使用。然而，这样的 flexibility 也妨碍了其和 tuning 机制相整合。不管怎样，由于其处理深度嵌套循环的能力，许多 DL 编译器，例如 TC 和 PlaidML（作为 nGraph 的后端），采用了多面体模型作为它们的 low-level IR。基于多面体的 IR 很容易能够进行许多多面体变换（例如 fusion，tiling，sinking 和 mapping），这同时包含了设备有关优化和设备无关优化。基于多面体的编译器使用了许多 toolchains，例如 isl，Omega，PIP，Polylib 和 PPL。</p>
+<p>TC 在 low-level IR 上有着独特的设计，它结合了 Halide 和多面体模型。它使用基于 Halide 的 IR 来表示计算，然后使用基于多面体的 IR 来表示循环结构。TC 通过 abstract instances 来表示具体的表达式，并且引入了特定的 node 类型。简单来说，TC 使用 domain 这个 node 来表示 index 变量的范围，使用 context node 来描述和 hardware 相关的迭代变量。并且它使用 band node 来确定迭代的顺序。filter node 代表着和一个 statement instance 相结合的迭代变量。Set 和 sequence 是用来指定 filter 的执行类型的关键字（parallel 执行或 serial 执行）。此外，TC 使用 extension node 来描述其它对代码生成来说必要的指令，例如内存移动。</p>
+<p>PlaidML 使用基于多面体的 IR（被叫做 Stripe）来表示张量操作。它通过将嵌套的、并行的多面体 blocks 来扩展成多层结构，从而创造了一个并行代码的层级结构。此外，它还允许嵌套多面体被 allocate 到嵌套的内存单元上，为 match 计算和内存结构提供了一种方式。在 Stripe 中，hardware 配置和 kernel 代码是相独立的。Stripe 中的 tags（在其他编译器中叫做 passes）不改变 kernel 结构，而是给优化 pass 提供了关于硬件 target 的一些额外信息。Stripe 将 DL 算子分割成 tiles 来 fit 进本地的硬件资源。</p>
+<p><strong>Other unique IR.</strong> 还有一些 DL 编译器使用 Halide 和多面体模型以外的，customized 的 low-level IR。在这些 IR 上，它们应用了一些硬件有关的优化，然后将其 lower 到 LLVM IR。</p>
+<p>Glow 的 low-level IR 是一个在 tensors 上操作的，并且通过地址引用 tensors 的基于指令的表达式。Glow low-level IR 中有两种基于指令的函数：declare 和 program。前者声明了常数内存区域的数量，这些区域的生命周期贯穿整个程序（例如，input，weight，bias）。后者是一列 locally 分配的区域，包含函数（例如 conv 和 pool）以及临时变量。指令可以运行在 global 的内存区域上或者 local 的内存区域上。此外，每个 operand 都被 annotate 上其中一个限定符：@in 表示从 buffer 读出的 operand；@out 表示写入到 buffer 的 operand；@inout 表示既读又写的 operand。这些指令和限定符帮助 Glow 来确定什么时候可以进行一些特定的内存优化。</p>
+<p>MLIR 受到了 LLVM 很大的影响，不过它比起 LLVM 来说，是一个更纯粹的编译器框架。MLIR 复用了 LLVM 中的很多 ideas 和接口，定位上位于模型表示（前端）与代码生成中间。MLIR 有着一个 flexible 的 type system，并且支持多级抽象。它引入了 Dialects 来表示这种多层抽象。每个 Dialect 由一系列定义好的不可变的 operations 组成。现有的 MLIR 的 Dialect 包括 Tensorflow IR，XLA HLO IR，实验性的多面体 IR 和 TensorFlow Lite。它支持 Dialects 之间进行灵活的变换。此外，MLIR 可以创建新的 Dialects 来和一个新的 low-level 编译器相连，给硬件开发者与编译器研究者铺开了一条路。</p>
+<p>XLA 的 HLO IR 可以被同时看作 high-level IR 和 low-level IR，因为 HLO 的粒度足够小，来表示一些硬件有关的信息。此外，HLO 支持一些硬件有关的优化，并且可以被用来生成 LLVM IR。</p>
+<p><em>4.2.2 Code Generation based on Low-Level IR.</em> 大多数 DL 编译器使用的 low-level IR 能最终被 lower 到 LLVM IR，然后从 LLVM 的成熟优化器与代码生成器中获益。进一步地，LLVM 可以显式地从，from scratch地，给专用加速器设计 customized 的指令集。然而，如果直接把代码转成 LLVM IR，传统的编译器可能会生成相对较差的代码。为了避免这种情况，DL 编译器通常通过两种方法来实现硬件特化的加速：(1) 在 LLVM IR 的基础上，做 target 有关的循环变换（Halide-based IR 和多面体 IR 的方法）；(2) 为优化 pass 提供额外的关于硬件 target 的信息。大多数 DL 编译器同时采用了两种方法，但是强调的部分不同。一般来讲，更倾向于前端用户的编译器（TC，TVM，XLA，nGraph）会更关注 (1)，而更倾向于后端开发者的编译器（Glow，PlaidML 和 MLIR）会更关注 (2)。</p>
+<p>DL 编译器里的编译策略可以粗略被分为两类：just-in-time（JIT）和 ahead-of-time（AOT）。对于 JIT 编译器，它可以 on the fly 地生成可执行代码，并且可以通过运行时的额外信息更好地优化代码。AOT 编译器首先生成所有的可执行二进制文件，然后执行他们。因此他们相比 JIT，在静态分析上有着更大的 scope 可以去考虑。此外，AOT 方法可以和嵌入式平台的交叉编译器（例如 C-GOOD）一起使用，以及还能在远程机器、customized 加速器上执行（TVM RPC）。</p>
+<p><em>4.2.3 Discussion.</em> 在 DL 编译器中，low-level IR 是一个更细粒度的 DL 模型的表示方式，它反映了 DL 模型部署到不同硬件上的详细过程。Low-level IRs 包括基于 Halide 的 IR，多面体 IR 和其它独特的 IR。虽然他们在设计上有一些区别，但是他们都复用了成熟编译器工具链和库，来给硬件有关优化和代码生成提供量身定做的接口。Low-level IR 的设计也影响到了新一代 DL 加速器的设计（例如 TVM Halide IR 和 Inferentia，还有 XLA HLO 和 TPU）。</p>
+<p>下面是优化部分，这部分我比较熟，所以就翻的简略一点。（才不是因为懒）</p>
+<h3 id="4-3-Frontend-Optimizations"><a href="#4-3-Frontend-Optimizations" class="headerlink" title="4.3 Frontend Optimizations"></a>4.3 Frontend Optimizations</h3><p>前端优化大概包含三个粒度：(1) node-level 的优化，(2) block-level（peephole，local）的优化，(3) dataflow-level（global）的优化。</p>
+<p><em>4.3.1 Node-level optimizations.</em> 计算图中的 nodes 这种粒度还是相对较粗的，以至于我们可以进行单个 node 上的优化。这个层级上的优化主要包括 node elimination（消除不必要的 nodes）和 node replacement（用其它更低代价的 node 替换这个 node）。</p>
+<p>DL编译器中的 Nop Elimination 主要负责删去一些无用的操作，例如对单个数据的 sum，0 宽度的 padding。还有一个叫 zero-dim-tensor elimination，也就是如果有维度的 size 是 0，那么这个 tensor 实际是没有元素的，它上面的操作都可以抹去（没有元素的 tensor + A 可以被直接替换成 A）。</p>
+<p><em>4.3.2 Block-level optimizations.</em></p>
+<p><strong>Algebraic simplification.</strong> 代数简化包括：(1) 代数等价性判断（algebraic identification），(2) 强度削弱（strength reduction）和 (3) 常量折叠（constant folding）。</p>
+<p><strong>Operator fusion.</strong> 算子融合是 DL 编译器中不可或缺的优化。它带来了更好的计算结果共享，消除了中间结果的内存分配，并且通过合并了嵌套循环（有点 loop fusion 的感觉）更有利于进一步优化，以及还减少了 launch 和 synchronization 的 overhead。在 TVM 中，算子被分为四类：injective，reduction，complex-out- fusible 和 opaque。当算子被定义后，它们相应的分类也确定了。对于以上的分类，TVM 在算子之间制定了 fusion 的规则。在 TC 中，算子融合直接说基于自动的多面体变换实现的。然而，如何去识别并且融合更复杂的 graph patterns，例如有多个 broadcast 和 reduce nodes 的 blocks，仍然是一个问题。</p>
+<p><strong>Operator sinking.</strong> 这种优化将一些算子（例如 transpose）下沉到其它算子（例如 batch normalization，ReLU，sigmoid 和 channel shuffle）之下。通过这种优化，许多相似的操作会靠得更近，使得我们有更多的机会进行代数简化。</p>
+<p><em>4.3.3 Dataflow-level optimizations.</em> </p>
+<p><strong>Common sub-expression elimination (CSE).</strong> 公共子表达式消除。</p>
+<p><strong>Dead code elimination (DCE).</strong> 死代码消除。</p>
+<p><strong>Static memory planning.</strong> 这个优化是为了尽可能地去复用 memory buffers。通常有两种方式：in-place memory sharing 和 standard memory sharing。第一种方式对 input 和 output 使用相同的内存。第二种方式则是复用之前操作的内存（只要没有 overlapping）。Static memory planning 是离线进行的，这使得我们能够应用更复杂的算法。</p>
+<p><strong>Layout transformation.</strong> 这个优化尝试找到最优的 layouts 来储存计算图中的 tensors，并且在图中插入 layout 变换的 node。注意真正的 layout 变换不是发生在这个 pass，而是在执行那些节点的时候。</p>
+<p>实际上，在不同的 data layouts 上执行相同的操作，性能是不同的。并且在不同的硬件上最优 layouts 往往也不同。例如，在 GPU 上 NCHW 格式往往会跑得更快，因此把其它 layout 变换到 NCHW 是优的（例如 Tensorflow）。一些 DL 编译器依靠硬件有关的库来达到更好的性能，这些库可能对 layout 有要求。此外，一些 DL 加速器更喜欢一些更复杂的 layouts（例如 tile）。此外，边缘设备通常包括很多异构计算单元，不同的单元可能要求不同的 data layouts 来达到更好的性能。因此 layout transformation 需要仔细地考虑。因此，编译器需要提供一种方式来在不同的硬件设备上进行 layout transformations。</p>
+<p>而且，不只是数据的 layouts 对最终性能有 nontrivial 的影响，做变换使用的算子也有着不可忽视的 overhead。</p>
+<p>一个最近的基于 TVM 的针对 CPU 的工作，将所有卷积操作的 layout 首先变换成 NCHW[x]c。这里 c 表示对 channel C 维度 split 的 sub- dimension，x 表示 split 出来的 sub- dimension 的 size。当给定硬件信息（cache 大小，vectorization 单元的大小和内存访问模式）后，所有的这些 x 都会全局地被 auto-tuning 出来。</p>
+<p><em>4.3.4 Discussion.</em> 前端是 DL 编译器最重要的组成部分之一，它负责将 DL 模型转换为 high-level IR（计算图）以及在此基础上做硬件无关的优化。虽然在不同的 DL 编译器上，前端的实现可能在 high-level IR 的数据表示、算子定义上都有不同，但是硬件无关的优化通常都会包含三部分：node-level，block-level 和 dataflow-level。在不同层级上的优化方法同时使用了通用的编译优化方法以及一些 DL 专用的优化方法，这些方法能减少计算冗余，同时在计算图层级上提升 DL models 的性能。</p>
+<h3 id="4-4-Backend-Optimizations"><a href="#4-4-Backend-Optimizations" class="headerlink" title="4.4 Backend Optimizations"></a>4.4 Backend Optimizations</h3><p><em>4.4.1 Hardware-specific Optimization.</em> 硬件有关优化，也被称作 target independent 优化，是用于在特定的硬件上取得高性能。一种做 backend 优化的方法是将 low-level IR 转化为 LLVM IR，然后复用 LLVM 的工具来生成高效 CPU/GPU 代码。另一种方法是通过领域知识来设计 customized 的优化，往往这种方法能更高效地利用 hardware。</p>
+<p><strong>Hardware intrinsic mapping.</strong> 这个优化可以把特定的 low-level IR 指令集合变换成已经在硬件上被高度优化的 kernels。在 TVM 里，这个优化被实现在方法 extensible tensorization 里，这一方法可以声明 hardware intrinsic 的行为，以及 intrinsic mapping 的 lowering 规则。这种方式可以让编译器后端针对特定 pattern 的算子，既能够应用硬件的实现，也可以利用那些经过手工高度优化的 micro-kernels，这使得性能大大提升。此外，Glow 还支持 quantization 这种 hardware intrinsic mapping。它可以估计神经网络每个阶段的可能的数值范围，然后支持 profile guided optimization（PGO）来自动 quantization。此外，Halide/TVM 会将特定的 IR patterns 映射到 每个 arch 上的 SIMD 指令码，来避免 LLVM IR 的低效映射（当遇到向量的 patterns 时）。</p>
+<p><strong>Memory allocation and fetching.</strong> 内存分配是代码生成的另一大挑战，特别是对 GPU 和 customized 的加速器。例如，GPU 有着一块 shared memory 空间（低延迟，内存空间有限）和 local memory space（高延迟，很大的内存容量）。这样的内存结构要求高效的内存分配和 fetching 技术来提升数据局部性。为了实现这种优化，TVM 引入了 memory scope 这个 scheduling 概念。Memory scope schedule primitives 可以给一个 compute stage 打上 shared 或者 thread-local 的标记。对于 shared 标记的 compute stages，TVM 会生成带有 shared memory 分配以及 cooperative data fetching（在正确的代码位置插入 memory barrier 来保证正确性）的代码。此外，TC 也通过扩展 PPCG 编译器来提供了相似的特性（被称作 memory promotion）。然而，TC 只支持一些预定义的 rules。特别地，TVM 通过 memory scope schedule primitives 在加速器中支持了特殊的 buffering。</p>
+<p><strong>Memory latency hiding.</strong> Memory latency hiding 也是编译器后端的重要技巧，它主要通过重排执行的 pipeline 来实现。由于大部分 DL 编译器支持 CPU 和 GPU 上的并行，memory latency hiding 可以自然地通过硬件来实现（例如，GPU 上的 warp context switching）。但是对于 TPU-like 的加速器（decoupled access-execute，DAE architecture），后端需要执行 scheduling 和细粒度的 synchronization 来得到正确且高效的代码。为了达到更好的性能同时减少编程负担，TVM 引入了 virtual threading schedule primitive，使得用户可以在虚拟的多线程架构上指定数据并行。然后 TVM 会通过插入必要的 memory barriers，以及将这些 threads 上的操作序列 interleave 到单个指令流来 lower 这些虚拟的并行的 threads，从而产生一个更好的在不同线程上的执行 pipeline 来 hide memory latency。</p>
+<p><strong>Loop oriented optimizations.</strong> 包括 loop fusion，sliding windows，tiling，loop reordering，loop unrolling。其它都熟悉了，sliding windows 是一种被 Halide 应用的技术，它的核心概念是在需要时候计算 values，然后 on the fly 地存储，来达到数据复用的效果。由于 sliding windows 会在两个 loops 间插入计算并且将它变成 serial 的，因此这是一个在并行性和数据复用间的 tradeoff。</p>
+<p><strong>Parallelization.</strong> 由于现代处理器大多数都支持多线程和 SIMD 并行，编译器后端需要充分利用并行性来达到高性能。Halide 使用一个 schedule primitive 叫做 parallel 来指定 loop 中的并行维度，来实现 thread-level 的并行；同时通过将标记有 parallel 的循环维度用 block 和 thread 的 annotation 来映射到 GPU 上，来实现 GPU 并行。它将一个 n 维的 loop 替换成一个宽度为 n 的 statement，然后可以进一步通过 hardware intrinsic mapping 映射到硬件有关的 SIMD 代码。Stripe 开发了一个多面体模型的变体叫做 nested polyhedral model。它引入了 parallel polyhedral block 作为它的 iteration 基本执行单元。在做这个扩展后，一个 nested polyhedral model 可以在 tiling 和 striding 的这个 level 上去检测结构上的并行性。此外，一些 DL 编译器依赖于手工的库例如 Glow，或者硬件供应商提供的高度优化的数学库。</p>
+<p><em>4.4.2 Auto-tuning.</em> 由于硬件有关优化中的调参空间巨大无比，使用 auto-tuning 技术来确定 optimal 的参数设置是很必要的。Auto-tuning 实现主要由四种关键组成部分。</p>
+<p><strong>Parameterization.</strong> (1) Data and target: data 参数描述了 data 的一些 specification，例如 input shapes。target 参数描述了硬件的特性和限制，这些信息需要在优化 scheduling 和代码生成时被考虑。例如，对 GPU target，硬件参数例如 shared memory size 和 register size 需要被指定。(2) Optimization options: 优化选项包括 optimization scheduling 和与之相关的参数，例如 loop oriented optimization 和 tile size。在 TVM 中，预定义的、用户定义的 scheduling 与参数都有被纳入考虑范围。同时，TC 和 XLA 更倾向于参数化 optimizations，这和性能有着很大的关系，以及可以在之后以很低的代价进行修改。例如，minibatch 的大小就是其中一个参数（通常被 map 到 CUDA 的 grid 维度），可以在 auto-tuning 时被优化。</p>
+<p><strong>Cost model.</strong> (1) Black-box model: 这个模型只考虑最终的执行时间，不考虑编译任务的特性。建立一个黑盒模型是很简单的，但是经常会带来很高的 overhead，并且由于没有任务特性的指引，优化的方案也少了。TC 采用了这个模型。(2) ML-based cost model. ML-based cost model 是一个统计学的方式，使用机器学习的方式来预测模型性能。它允许模型在新的 configuration 被发现时自动去更新参数，这使得其预测准确率很高。TVM 和 XLA 使用了这种模型，它们分别是用了树模型（gradient tree boosting model，GBDT）和前馈神经网络（FNN）。(3) Pre-defined cost model: 一个预定义的 cost model 的目标是一个基于编译任务特性的完美模型，能够准确估计 overall 的性能。和 ML-based model 相比，预定义模型的计算 overhead 更小，但是在新的 DL 模型和硬件上需要大量的工程精力来重建模型。</p>
+<p><strong>Searching technique.</strong> (1) Initialization and searching space determination: 初始化可以随机设置，也可以通过已知的 configuration 设置（例如历史最优的 configuration）。搜索空间则应该在 auto-tuning 前被确定。TVM 允许开发者通过他们的领域知识来指定搜索空间，并且可以基于计算描述为每个硬件自动提取出搜索空间。相反，TC 需要依赖编译 cache 和预定义的 rules。(2) Genetic algorithm (GA): 遗传算法将每个 tuning 参数看成基因，然后将每个 configuration 看成 candidate。新的 candidate 由交叉遗传、突变和选择根据适应度（fitness value）产生。这种算法其实是一种受自然选择现象启发而设计出来的元启发式算法（metaheuristic）。最终，最优的 candidate 被生成出来。TC 采用了这种方式。(3) Simulated annealing algorithm (SA): 模拟退火也是一种元启发式算法，受物理学中的退火现象而发明。对于越差的解法，这种算法跳到它的概率越低，使得我们可以在固定的迭代数内找到估计的全局最优解。TVM 使用了这种算法。(4) Reinforcement learning (RL): 强化学习，Chameleon (在 TVM 上开发出来的) 在 auto-tuning 中使用了 RL。</p>
+<p><strong>Acceleration.</strong> (1) Parallelization. 一种加速 auto-tuning 的方式就是并行。TC 提出了一种多线程、多 GPU 的遗传算法。相似地，TVM 支持交叉编译和 RPC，使得用户可以在本地机器上编译，在多个 targets 上跑不同的 auto- tuning configurations。(2) Configuration reuse. 另一个方式是通过复用之前的 auto-tuning 结果来加速。TC 将已知的最优代码以及相对应的 configuration 储存在编译 cache 里。相似的，TVM 会产生一个 log 文件，存着每个 scheduling 到的算子的最优 configuration，然后在编译时查询 log 文件。值得一提的是，TVM 是对每个算子 auto-tuning 的，因此最优 configuration 是由每个算子分别决定的。</p>
+<p><em>4.4.3 Optimized Kernel Libraries.</em> 有很多高度优化的 kernel 库被广泛应用在不同的硬件上加速 DL 的 training 和 inference。Intel 的 DNNL（之前的 MKL-DNN），NVIDIA 的 cuDNN，AMD 的 MIOpen 都是广泛使用的库。计算密集型的 primitives（例如 conv，GEMM，RNN）和内存带宽限制型的 primitives（例如 batch norm，pooling 和 shuffle）都根据不同的硬件（例如 AVX-512 ISA，tensor cores）特性高度优化过。可以定制的 data layouts 使得可以很容易整合进 DL 应用，还能避免频繁的数据 layout 变换。此外，低精度的 training 和 inference，包括 FP32，FP16，INT8，以及非 IEEE 的浮点数格式 bfloat16 也能够支持。</p>
+<p><em>4.4.4 Discussion.</em> 后端需要在 low-level IR 的基础上做裸机优化和代码生成。尽管后端的设计可能由于不同的 low-level IRs 而不同，它们的优化可以被粗略分为：硬件有关优化，auto-tuning 技术和优化的 kernel 库。这些优化可以分别应用，也可以联合使用，来通过充分利用软硬件特征达到更好的局部性和并行性。最终，DL 模型的 high-level IR 被转换为不同硬件上的高效代码实现。</p>
+
+  </div>
+</article>
+
+
+
+    <div class="blog-post-comments">
+        <div class="vcomment"></div>
+    </div>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+        
+          <li><a href="/">Home</a></li>
+        
+          <li><a href="/about/">About</a></li>
+        
+          <li><a href="/archives/">Articles</a></li>
+        
+          <li><a href="/links/">Links</a></li>
+        
+          <li><a target="_blank" rel="noopener" href="http://chaofanlin.com">Academic Page</a></li>
+        
+      </ul>
+    </div>
+
+    
+    
+      <div id="toc-footer" style="display: none">
+        <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#Abstract"><span class="toc-number">1.</span> <span class="toc-text">Abstract</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-Introduction"><span class="toc-number">2.</span> <span class="toc-text">1 Introduction</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-Background"><span class="toc-number">3.</span> <span class="toc-text">2 Background</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-1-Deep-Learning-Frameworks"><span class="toc-number">4.</span> <span class="toc-text">2.1 Deep Learning Frameworks</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-2-Deep-Learning-Hardware"><span class="toc-number">5.</span> <span class="toc-text">2.2 Deep Learning Hardware</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-3-Hardware-specific-DL-Code-Generator"><span class="toc-number">6.</span> <span class="toc-text">2.3 Hardware-specific DL Code Generator</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-Common-Design-Architecture-of-DL-Compilers"><span class="toc-number"></span> <span class="toc-text">3 Common Design Architecture of DL Compilers</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-Key-Components-of-DL-Compilers"><span class="toc-number"></span> <span class="toc-text">4 Key Components of DL Compilers</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#4-1-High-level-IR"><span class="toc-number">1.</span> <span class="toc-text">4.1 High-level IR</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-2-Low-level-IR"><span class="toc-number">2.</span> <span class="toc-text">4.2 Low-level IR</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-3-Frontend-Optimizations"><span class="toc-number">3.</span> <span class="toc-text">4.3 Frontend Optimizations</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-4-Backend-Optimizations"><span class="toc-number">4.</span> <span class="toc-text">4.4 Backend Optimizations</span></a></li></ol>
+      </div>
+    
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://siriusneo.github.io/2023/06/24/[%E8%AF%91]%20The%20Deep%20Learning%20Compiler%20A%20Comprehensive%20Survey/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://siriusneo.github.io/2023/06/24/[%E8%AF%91]%20The%20Deep%20Learning%20Compiler%20A%20Comprehensive%20Survey/&text=[译] The Deep Learning Compiler A Comprehensive Survey"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://siriusneo.github.io/2023/06/24/[%E8%AF%91]%20The%20Deep%20Learning%20Compiler%20A%20Comprehensive%20Survey/&title=[译] The Deep Learning Compiler A Comprehensive Survey"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://siriusneo.github.io/2023/06/24/[%E8%AF%91]%20The%20Deep%20Learning%20Compiler%20A%20Comprehensive%20Survey/&is_video=false&description=[译] The Deep Learning Compiler A Comprehensive Survey"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=[译] The Deep Learning Compiler A Comprehensive Survey&body=Check out this article: https://siriusneo.github.io/2023/06/24/[%E8%AF%91]%20The%20Deep%20Learning%20Compiler%20A%20Comprehensive%20Survey/"><i class="fa-solid fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://siriusneo.github.io/2023/06/24/[%E8%AF%91]%20The%20Deep%20Learning%20Compiler%20A%20Comprehensive%20Survey/&title=[译] The Deep Learning Compiler A Comprehensive Survey"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://siriusneo.github.io/2023/06/24/[%E8%AF%91]%20The%20Deep%20Learning%20Compiler%20A%20Comprehensive%20Survey/&title=[译] The Deep Learning Compiler A Comprehensive Survey"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://siriusneo.github.io/2023/06/24/[%E8%AF%91]%20The%20Deep%20Learning%20Compiler%20A%20Comprehensive%20Survey/&title=[译] The Deep Learning Compiler A Comprehensive Survey"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://siriusneo.github.io/2023/06/24/[%E8%AF%91]%20The%20Deep%20Learning%20Compiler%20A%20Comprehensive%20Survey/&title=[译] The Deep Learning Compiler A Comprehensive Survey"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://siriusneo.github.io/2023/06/24/[%E8%AF%91]%20The%20Deep%20Learning%20Compiler%20A%20Comprehensive%20Survey/&name=[译] The Deep Learning Compiler A Comprehensive Survey&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://siriusneo.github.io/2023/06/24/[%E8%AF%91]%20The%20Deep%20Learning%20Compiler%20A%20Comprehensive%20Survey/&t=[译] The Deep Learning Compiler A Comprehensive Survey"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fa-solid fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        
+          <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fa-solid fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fa-solid fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy;
+    
+    
+    2020-2023
+    Chaofan
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/about/">About</a></li><!--
+     --><!--
+       --><li><a href="/archives/">Articles</a></li><!--
+     --><!--
+       --><li><a href="/links/">Links</a></li><!--
+     --><!--
+       --><li><a target="_blank" rel="noopener" href="http://chaofanlin.com">Academic Page</a></li><!--
+     -->
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+
+
+  <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" crossorigin="anonymous" onload="this.onload=null;this.rel='stylesheet'"/>
+
+
+    <!-- jquery -->
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" crossorigin="anonymous"></script>
+
+
+
+
+<!-- clipboard -->
+
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.7/clipboard.min.js" crossorigin="anonymous"></script>
+  
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"Copy to clipboard!\">";
+    btn += '<i class="fa-regular fa-clone"></i>';
+    btn += '</span>';
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "Copied!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Baidu Analytics -->
+
+<!-- Cloudflare Analytics -->
+
+<!-- Disqus Comments -->
+
+<!-- utterances Comments -->
+
+<!-- Valine Comments -->
+
+    <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+    <script src="//unpkg.com/valine@latest/dist/Valine.min.js"></script>
+    <script type="text/javascript">
+        var notify = 'false' == true ? true : false;
+        var verify = 'false' == true ? true : false;
+        var GUEST_INFO = ['nick','mail','link'];
+        var guest_info = 'nick,mail,link'.split(',').filter(function(item){
+          return GUEST_INFO.indexOf(item) > -1
+        });
+        guest_info = guest_info.length == 0 ? GUEST_INFO :guest_info;
+        new Valine({
+            el: '.vcomment',
+            notify: notify,
+            verify: verify,
+            appId: "AyDHJHMfyHGtgF5Lc8CG4dpA-gzGzoHsz",
+            appKey: "JZWLrweBHY4Txn5nZuLwFzim",
+            avatar:"identicon",
+            placeholder: "Send a comment for this post!",
+            guest_info:guest_info,
+            pageSize:"10"
+        })
+</script>
+
+
+</body>
+</html>

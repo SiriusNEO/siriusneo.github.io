@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang=en>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+    <meta name="description" content="论文的 arxiv 链接：https:&#x2F;&#x2F;arxiv.org&#x2F;pdf&#x2F;2305.05920.pdf Abstract &amp; Introduction传统的 LLM serving systems 采用 run-to-completion 的方式来处理 inference jobs，这有着两个大问题：  head-of-line blocking。一个 large job（即 output l">
+<meta property="og:type" content="article">
+<meta property="og:title" content="针对 LLM Inference 的调度：Fast Distributed Inference Serving for Large Language Models">
+<meta property="og:url" content="https://siriusneo.github.io/2023/08/17/%E9%92%88%E5%AF%B9%20LLM%20Inference%20%E7%9A%84%E8%B0%83%E5%BA%A6%20Fast%20Distributed%20Inference%20Serving%20for%20Large%20Language%20Models/index.html">
+<meta property="og:site_name" content="Metric Space | 度量空间">
+<meta property="og:description" content="论文的 arxiv 链接：https:&#x2F;&#x2F;arxiv.org&#x2F;pdf&#x2F;2305.05920.pdf Abstract &amp; Introduction传统的 LLM serving systems 采用 run-to-completion 的方式来处理 inference jobs，这有着两个大问题：  head-of-line blocking。一个 large job（即 output l">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://siriusneo.github.io/2023/08/17/%E9%92%88%E5%AF%B9%20LLM%20Inference%20%E7%9A%84%E8%B0%83%E5%BA%A6%20Fast%20Distributed%20Inference%20Serving%20for%20Large%20Language%20Models/1.png">
+<meta property="article:published_time" content="2023-08-17T04:02:00.000Z">
+<meta property="article:modified_time" content="2023-10-09T05:57:58.380Z">
+<meta property="article:author" content="Chaofan">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://siriusneo.github.io/2023/08/17/%E9%92%88%E5%AF%B9%20LLM%20Inference%20%E7%9A%84%E8%B0%83%E5%BA%A6%20Fast%20Distributed%20Inference%20Serving%20for%20Large%20Language%20Models/1.png">
+    
+    
+      
+        
+          <link rel="shortcut icon" href="/images/favicon.ico">
+        
+      
+      
+        
+          <link rel="icon" type="image/png" href="/images/android-chrome-192x192.png" sizes="192x192">
+        
+      
+      
+        
+          <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+        
+      
+    
+    <!-- title -->
+    <title>针对 LLM Inference 的调度：Fast Distributed Inference Serving for Large Language Models</title>
+    <!-- async scripts -->
+    <!-- Google Analytics -->
+
+
+    <!-- Umami Analytics -->
+
+
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+    <!-- rss -->
+    
+    
+	<!-- mathjax -->
+	
+		<script type="text/x-mathjax-config">
+		  MathJax.Hub.Config({
+			tex2jax: {
+			  skipTags: ['script', 'noscript', 'style', 'textarea', 'pre'],
+			  inlineMath: [['$','$']]
+			}
+		  });
+		</script>
+		<script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-MML-AM_CHTML' async></script>
+	
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#" aria-label="Menu"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#" aria-label="Menu"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" aria-label="Top" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fa-solid fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/about/">About</a></li><!--
+     --><!--
+       --><li><a href="/archives/">Articles</a></li><!--
+     --><!--
+       --><li><a href="/links/">Links</a></li><!--
+     --><!--
+       --><li><a target="_blank" rel="noopener" href="http://chaofanlin.com">Academic Page</a></li><!--
+     -->
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" aria-label="Previous post" href="/2023/10/06/%E7%A4%BE%E4%BC%9A%E5%AD%A6%E7%9A%84%E2%80%9C%E6%9E%84%E9%80%A0%E6%B3%95%E2%80%9D%E2%80%94%E2%80%94%E9%87%8D%E8%AF%BB%E3%80%8A1984%E3%80%8B/"><i class="fa-solid fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" aria-label="Next post" href="/2023/08/17/%E6%B8%B8%E6%88%8F%E9%80%9F%E8%AF%84%EF%BC%9A%E8%A7%A3%E8%B0%9C%E7%A5%9E%E4%BD%9C%E3%80%8A%E5%B9%BD%E7%81%B5%E8%AF%A1%E8%AE%A1%E3%80%8B/"><i class="fa-solid fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" aria-label="Back to top" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" aria-label="Share post" href="#"><i class="fa-solid fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://siriusneo.github.io/2023/08/17/%E9%92%88%E5%AF%B9%20LLM%20Inference%20%E7%9A%84%E8%B0%83%E5%BA%A6%20Fast%20Distributed%20Inference%20Serving%20for%20Large%20Language%20Models/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://siriusneo.github.io/2023/08/17/%E9%92%88%E5%AF%B9%20LLM%20Inference%20%E7%9A%84%E8%B0%83%E5%BA%A6%20Fast%20Distributed%20Inference%20Serving%20for%20Large%20Language%20Models/&text=针对 LLM Inference 的调度：Fast Distributed Inference Serving for Large Language Models"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://siriusneo.github.io/2023/08/17/%E9%92%88%E5%AF%B9%20LLM%20Inference%20%E7%9A%84%E8%B0%83%E5%BA%A6%20Fast%20Distributed%20Inference%20Serving%20for%20Large%20Language%20Models/&title=针对 LLM Inference 的调度：Fast Distributed Inference Serving for Large Language Models"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://siriusneo.github.io/2023/08/17/%E9%92%88%E5%AF%B9%20LLM%20Inference%20%E7%9A%84%E8%B0%83%E5%BA%A6%20Fast%20Distributed%20Inference%20Serving%20for%20Large%20Language%20Models/&is_video=false&description=针对 LLM Inference 的调度：Fast Distributed Inference Serving for Large Language Models"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=针对 LLM Inference 的调度：Fast Distributed Inference Serving for Large Language Models&body=Check out this article: https://siriusneo.github.io/2023/08/17/%E9%92%88%E5%AF%B9%20LLM%20Inference%20%E7%9A%84%E8%B0%83%E5%BA%A6%20Fast%20Distributed%20Inference%20Serving%20for%20Large%20Language%20Models/"><i class="fa-solid fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://siriusneo.github.io/2023/08/17/%E9%92%88%E5%AF%B9%20LLM%20Inference%20%E7%9A%84%E8%B0%83%E5%BA%A6%20Fast%20Distributed%20Inference%20Serving%20for%20Large%20Language%20Models/&title=针对 LLM Inference 的调度：Fast Distributed Inference Serving for Large Language Models"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://siriusneo.github.io/2023/08/17/%E9%92%88%E5%AF%B9%20LLM%20Inference%20%E7%9A%84%E8%B0%83%E5%BA%A6%20Fast%20Distributed%20Inference%20Serving%20for%20Large%20Language%20Models/&title=针对 LLM Inference 的调度：Fast Distributed Inference Serving for Large Language Models"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://siriusneo.github.io/2023/08/17/%E9%92%88%E5%AF%B9%20LLM%20Inference%20%E7%9A%84%E8%B0%83%E5%BA%A6%20Fast%20Distributed%20Inference%20Serving%20for%20Large%20Language%20Models/&title=针对 LLM Inference 的调度：Fast Distributed Inference Serving for Large Language Models"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://siriusneo.github.io/2023/08/17/%E9%92%88%E5%AF%B9%20LLM%20Inference%20%E7%9A%84%E8%B0%83%E5%BA%A6%20Fast%20Distributed%20Inference%20Serving%20for%20Large%20Language%20Models/&title=针对 LLM Inference 的调度：Fast Distributed Inference Serving for Large Language Models"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://siriusneo.github.io/2023/08/17/%E9%92%88%E5%AF%B9%20LLM%20Inference%20%E7%9A%84%E8%B0%83%E5%BA%A6%20Fast%20Distributed%20Inference%20Serving%20for%20Large%20Language%20Models/&name=针对 LLM Inference 的调度：Fast Distributed Inference Serving for Large Language Models&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://siriusneo.github.io/2023/08/17/%E9%92%88%E5%AF%B9%20LLM%20Inference%20%E7%9A%84%E8%B0%83%E5%BA%A6%20Fast%20Distributed%20Inference%20Serving%20for%20Large%20Language%20Models/&t=针对 LLM Inference 的调度：Fast Distributed Inference Serving for Large Language Models"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    
+    
+      <div id="toc">
+        <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#Abstract-amp-Introduction"><span class="toc-number">1.</span> <span class="toc-text">Abstract &amp; Introduction</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Scheduling"><span class="toc-number">2.</span> <span class="toc-text">Scheduling</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Proactive-Key-Value-Cache-Management"><span class="toc-number">3.</span> <span class="toc-text">Proactive Key-Value Cache Management</span></a></li></ol>
+      </div>
+    
+  </span>
+</div>
+
+    
+    <div class="content index py4 ">
+        
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle p-name" itemprop="name headline">
+        针对 LLM Inference 的调度：Fast Distributed Inference Serving for Large Language Models
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author p-author h-card" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span class="p-name" itemprop="name">Chaofan</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2023-08-17T04:02:00.000Z" class="dt-published" itemprop="datePublished">2023-08-17</time>
+        
+      
+    </div>
+
+
+      
+    <div class="article-category">
+        <i class="fa-solid fa-archive"></i>
+        <a class="category-link" href="/categories/%E6%8E%8C%E4%B8%8A%E7%9A%84%E7%BA%AF%E5%85%89/">掌上的纯光</a>
+    </div>
+
+
+      
+
+    </div>
+  </header>
+  
+
+  <div class="content e-content" itemprop="articleBody">
+    <p>论文的 arxiv 链接：<a target="_blank" rel="noopener" href="https://arxiv.org/pdf/2305.05920.pdf">https://arxiv.org/pdf/2305.05920.pdf</a></p>
+<h3 id="Abstract-amp-Introduction"><a href="#Abstract-amp-Introduction" class="headerlink" title="Abstract &amp; Introduction"></a>Abstract &amp; Introduction</h3><p>传统的 LLM serving systems 采用 run-to-completion 的方式来处理 inference jobs，这有着两个大问题：</p>
+<ul>
+<li>head-of-line blocking。一个 large job（即 output length 很长的 job）将会运行很长时间，以至于 block 了后续的 short jobs。</li>
+<li>long JCT（job completion time）</li>
+<li>在此之前，Orca 被认为是 sota，它首先采用了 iteration-level scheduling（在每次 iteration 结束时候都 schedule 一次，然后重新改动 current processing batch）。然而，它采用先来先服务（FCFS）策略来处理 inference jobs。</li>
+</ul>
+<p>这篇文章则提出了一个新的名为 FastServe 的分布式 inference serving system for LLMs，其最大特征使用一个 skip-join Multi-Level Feedback Queue scheduler 来实现一个抢占式调度器。</p>
+<ul>
+<li>MLFQ 是一个很经典的减小平均 JCT 的手法，每个 job 先进入最高级别队列，随着其时间片的使用逐渐放低到低优先级队列。</li>
+<li>而由于 LLM inference 的一些特点（即其分为 prefill 阶段和 decode 阶段，prefill 阶段生成第一个 token 用时相对较长。在长 prompt 短 output 时 prefill 时间甚至是 dominate 的），这里特地加上了一个 skip-join。相比传统的 MLFQ，加上 skip-join 后新 job 不会直接进入最高优先级队列，而是根据 prefill time 来加入到合适的优先级。</li>
+<li>这种抢占式调度会带来额外的 memory overhead——每个 unfinished job 的 KV Cache 都得暂时保存在内存中。如果采用简单的方式（cache 满了，暂时不添加新的 job）可以解决问题，但是又会带来 head-of-line blocking；这篇文章设计了一个较高效的 GPU 内存管理机制，它会主动把低优先级 jobs 的 KV Cache 放到 host memory（CPU）中，并且采用了 pipelining 和 asynchronous 到 memory 操作来提高效率。</li>
+<li>FastServe 还采用了 tensor parallelism 和 pipeline parallelism。KV Cache manager 会将 KV Cache 分割到多个 GPU 上（distributed），并且在 GPU 和 host 之间 swapping。</li>
+</ul>
+<h3 id="Scheduling"><a href="#Scheduling" class="headerlink" title="Scheduling"></a>Scheduling</h3><p>这里先来介绍几种 scheduing 策略：</p>
+<ul>
+<li><strong>FCFS（First-Come-First-Serve）：</strong>先来先服务，也即 run-to-completion。最朴素的策略，没有 preemption 机制，也就是一个 job 一旦进入 running 状态就得等它跑完。这会有严重的 head-of-line blocking 问题。</li>
+<li><strong>Naive MLFQ：</strong>朴素的 MLFQ，最开始所有 job 都放在最高优先级队列，所以 J1、J2、J3 的 T1 都会先被执行。</li>
+<li><strong>Skip-Join MLFQ：</strong>也即本文提出的方法。由于有着 skip-join 的能力，最开始也会做一次类似 shortest remaining time 的 scheduling 操作（也即不是先跑 J1，而是先跑 J2、J3）。注意到 J2、J3 的 T2 比 J1 还要优先。</li>
+<li><strong>SRPT（Shortest Remaining Processing Time）：</strong>最理想的 scheduling 方式，也就是永远优先执行当前剩余时间最少的 job。但是在实际情况我们是不知道任务的剩余执行时间的，因此需要用 MLFQ 对其进行近似。</li>
+</ul>
+<p><img src="1.png" alt=""></p>
+<p><strong>Skip-Join MLFQ 算法:</strong> </p>
+<ul>
+<li><strong>Input:</strong> 各级队列 Q1, …, Qk，新到达的 jobs J_in，preempted 的 jobs J_pre</li>
+<li><strong>Output:</strong> 要被执行的任务 J_out</li>
+<li>Process newly arrival jobs: 将 J_in 的 jobs 根据 next tier time 插到 Qi 中</li>
+<li>Process preempted jobs: 对于那些已经被 preempted 的 jobs，我们直接输出新生成的 token（作为对比，没有 preempted 机制的 scheduler 必须等一个 job 跑完才能输出所有 tokens）。然后查看是否需要 demotion（即下放到更低优先级的队列）。</li>
+<li>由于这种机制也会出现 starving 现象，我们需要一个 promote 机制来定时地把一些 jobs promote 上去。详细来讲，每个 job 会设置一个 starve timer，如果它在 waiting 状态等待超过了某个 threshold，就直接把它提到最高级队列 Q1。系统管理者可以调整这个 threshold 来在 performance 和 starvation 之间做一个取舍。</li>
+<li>最后，scheduler 会（按队列优先级从高到低）选择不超过 max batch size 个 jobs 进行执行。</li>
+</ul>
+<h3 id="Proactive-Key-Value-Cache-Management"><a href="#Proactive-Key-Value-Cache-Management" class="headerlink" title="Proactive Key-Value Cache Management"></a>Proactive Key-Value Cache Management</h3><p><strong>Problem:</strong> </p>
+<p>Preemption 增加了 system 中 ongoing jobs 的数量。</p>
+<p>假设记一个 LLM inference job 的 input length 为 s，output length 为 t，hidden dim 为 h，transformer 层数为 l，并且所有的权重都是 FP16，那么这个 job 占据的 KV Cache 空间大小就为 $4 \times lh(s+t)$。如果用 GPT-3  175B 来计算，就需要 2.3GB 的 memory。</p>
+<p>FCFS 有一个好处，就是 waiting 中的 jobs 一定都没有 prefill，也就是说真正占用 KV Cache 的永远是当前正在处理的那些 jobs。根据测量，skip-join MLFQ 的内存开销可能有 FCFS 的 7x 大小。</p>
+<p>以下是作者提出的一些 Strawman solutions：</p>
+<ul>
+<li>如果 GPU 不够，直接推迟新到达的 jobs 的执行。这个方法会使得 MLFQ 退化成 FCFS。</li>
+<li>kill low-priority jobs。其实也就是 recomputation。这个做法有两个问题：第一，重算把中间状态丢了，需要重新 prefill，这又需要额外的计算资源和时间；第二，这可能会带来 deadlocks。当一个 low-priority job 被 kill 后，由于 promotion 机制，被 kill 的 job 可能会被提到最高优先级被执行，这时候它又会去 kill 之前那个 kill 它的 job。</li>
+</ul>
+<p>作者提出，一个 key observation 是只有当相应的 job 被 schedule 时，其对应的 KV cache 才需要在 GPU 中。FastServe 可以将 inactive job 对应的 KV cache offload 到 host memory 上，然后upload 必要的 KV cache 到 GPU 上。对 A100 上的 GPT-3 175B 来说，decoding phase 生成一个 token 大概需要 250ms，而在 host 和 GPU 中 transfer KV Cache 大概是 36ms（打满 PCIe 4.0 * 16。这里没说是一个 token 还是一个句子）。</p>
+<p><strong>Swapping Strategy:</strong> </p>
+<p>FastServe 采用一个 <strong>proactive（主动）</strong> 的 swapping 策略。作为对比，被动的策略是当 KV cache 满了之后才 swap；而主动的策略则是保留一些 idle 的 KV cache 为新到达的 jobs 做准备。当新的 job 到达后，它可以立刻拿到 slot 而不需要付出 offloading 的代价。</p>
+<p>Job 的 offloading 和 uploading 是基于 ENST（estimated nest scheduled time）来决定的。很自然地，ENST 越大的 job 会被优先 offload。</p>
+<p>这里有一个问题，还是之前提到的 promotion 机制。它意味着低优先级的 job 也可能被先执行。于是 FastServe 将 promote 的时间也引入了 ENST 的考虑之中。</p>
+<p>形式化地，对于 job i，它考虑两方面因素：promote job i 的时间，以及所有比 job i 执行优先的 jobs 的执行时间。一个优先于 i 的 job j 的执行时间可以记作：</p>
+<script type="math/tex; mode=display">
+T_{execute}(i, j) = \sum_{i.priority < k \le j.priority} quantum(k)</script><p>其中 $quantum(k)$ 是优先级为 k 的队列大小。那么比 i 优先的所有 job 执行时间求和（有点奇怪，这里为什么要求和？而且这里好像也不是很明确“时刻”和“时间”的概念）就得到</p>
+<script type="math/tex; mode=display">
+T_{execute}(i) = \sum_{i.priority < j.priority} T_{execute}(i, j)</script><p>最后再和 promote 时间取一个 min</p>
+<script type="math/tex; mode=display">
+ENST(i) = \min(T_{promote}(i), T_{execute}(i))</script>
+  </div>
+</article>
+
+
+
+    <div class="blog-post-comments">
+        <div class="vcomment"></div>
+    </div>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+        
+          <li><a href="/">Home</a></li>
+        
+          <li><a href="/about/">About</a></li>
+        
+          <li><a href="/archives/">Articles</a></li>
+        
+          <li><a href="/links/">Links</a></li>
+        
+          <li><a target="_blank" rel="noopener" href="http://chaofanlin.com">Academic Page</a></li>
+        
+      </ul>
+    </div>
+
+    
+    
+      <div id="toc-footer" style="display: none">
+        <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#Abstract-amp-Introduction"><span class="toc-number">1.</span> <span class="toc-text">Abstract &amp; Introduction</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Scheduling"><span class="toc-number">2.</span> <span class="toc-text">Scheduling</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Proactive-Key-Value-Cache-Management"><span class="toc-number">3.</span> <span class="toc-text">Proactive Key-Value Cache Management</span></a></li></ol>
+      </div>
+    
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://siriusneo.github.io/2023/08/17/%E9%92%88%E5%AF%B9%20LLM%20Inference%20%E7%9A%84%E8%B0%83%E5%BA%A6%20Fast%20Distributed%20Inference%20Serving%20for%20Large%20Language%20Models/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://siriusneo.github.io/2023/08/17/%E9%92%88%E5%AF%B9%20LLM%20Inference%20%E7%9A%84%E8%B0%83%E5%BA%A6%20Fast%20Distributed%20Inference%20Serving%20for%20Large%20Language%20Models/&text=针对 LLM Inference 的调度：Fast Distributed Inference Serving for Large Language Models"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://siriusneo.github.io/2023/08/17/%E9%92%88%E5%AF%B9%20LLM%20Inference%20%E7%9A%84%E8%B0%83%E5%BA%A6%20Fast%20Distributed%20Inference%20Serving%20for%20Large%20Language%20Models/&title=针对 LLM Inference 的调度：Fast Distributed Inference Serving for Large Language Models"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://siriusneo.github.io/2023/08/17/%E9%92%88%E5%AF%B9%20LLM%20Inference%20%E7%9A%84%E8%B0%83%E5%BA%A6%20Fast%20Distributed%20Inference%20Serving%20for%20Large%20Language%20Models/&is_video=false&description=针对 LLM Inference 的调度：Fast Distributed Inference Serving for Large Language Models"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=针对 LLM Inference 的调度：Fast Distributed Inference Serving for Large Language Models&body=Check out this article: https://siriusneo.github.io/2023/08/17/%E9%92%88%E5%AF%B9%20LLM%20Inference%20%E7%9A%84%E8%B0%83%E5%BA%A6%20Fast%20Distributed%20Inference%20Serving%20for%20Large%20Language%20Models/"><i class="fa-solid fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://siriusneo.github.io/2023/08/17/%E9%92%88%E5%AF%B9%20LLM%20Inference%20%E7%9A%84%E8%B0%83%E5%BA%A6%20Fast%20Distributed%20Inference%20Serving%20for%20Large%20Language%20Models/&title=针对 LLM Inference 的调度：Fast Distributed Inference Serving for Large Language Models"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://siriusneo.github.io/2023/08/17/%E9%92%88%E5%AF%B9%20LLM%20Inference%20%E7%9A%84%E8%B0%83%E5%BA%A6%20Fast%20Distributed%20Inference%20Serving%20for%20Large%20Language%20Models/&title=针对 LLM Inference 的调度：Fast Distributed Inference Serving for Large Language Models"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://siriusneo.github.io/2023/08/17/%E9%92%88%E5%AF%B9%20LLM%20Inference%20%E7%9A%84%E8%B0%83%E5%BA%A6%20Fast%20Distributed%20Inference%20Serving%20for%20Large%20Language%20Models/&title=针对 LLM Inference 的调度：Fast Distributed Inference Serving for Large Language Models"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://siriusneo.github.io/2023/08/17/%E9%92%88%E5%AF%B9%20LLM%20Inference%20%E7%9A%84%E8%B0%83%E5%BA%A6%20Fast%20Distributed%20Inference%20Serving%20for%20Large%20Language%20Models/&title=针对 LLM Inference 的调度：Fast Distributed Inference Serving for Large Language Models"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://siriusneo.github.io/2023/08/17/%E9%92%88%E5%AF%B9%20LLM%20Inference%20%E7%9A%84%E8%B0%83%E5%BA%A6%20Fast%20Distributed%20Inference%20Serving%20for%20Large%20Language%20Models/&name=针对 LLM Inference 的调度：Fast Distributed Inference Serving for Large Language Models&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://siriusneo.github.io/2023/08/17/%E9%92%88%E5%AF%B9%20LLM%20Inference%20%E7%9A%84%E8%B0%83%E5%BA%A6%20Fast%20Distributed%20Inference%20Serving%20for%20Large%20Language%20Models/&t=针对 LLM Inference 的调度：Fast Distributed Inference Serving for Large Language Models"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fa-solid fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        
+          <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fa-solid fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fa-solid fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy;
+    
+    
+    2020-2023
+    Chaofan
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/about/">About</a></li><!--
+     --><!--
+       --><li><a href="/archives/">Articles</a></li><!--
+     --><!--
+       --><li><a href="/links/">Links</a></li><!--
+     --><!--
+       --><li><a target="_blank" rel="noopener" href="http://chaofanlin.com">Academic Page</a></li><!--
+     -->
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+
+
+  <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" crossorigin="anonymous" onload="this.onload=null;this.rel='stylesheet'"/>
+
+
+    <!-- jquery -->
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" crossorigin="anonymous"></script>
+
+
+
+
+<!-- clipboard -->
+
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.7/clipboard.min.js" crossorigin="anonymous"></script>
+  
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"Copy to clipboard!\">";
+    btn += '<i class="fa-regular fa-clone"></i>';
+    btn += '</span>';
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "Copied!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Baidu Analytics -->
+
+<!-- Cloudflare Analytics -->
+
+<!-- Disqus Comments -->
+
+<!-- utterances Comments -->
+
+<!-- Valine Comments -->
+
+    <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+    <script src="//unpkg.com/valine@latest/dist/Valine.min.js"></script>
+    <script type="text/javascript">
+        var notify = 'false' == true ? true : false;
+        var verify = 'false' == true ? true : false;
+        var GUEST_INFO = ['nick','mail','link'];
+        var guest_info = 'nick,mail,link'.split(',').filter(function(item){
+          return GUEST_INFO.indexOf(item) > -1
+        });
+        guest_info = guest_info.length == 0 ? GUEST_INFO :guest_info;
+        new Valine({
+            el: '.vcomment',
+            notify: notify,
+            verify: verify,
+            appId: "AyDHJHMfyHGtgF5Lc8CG4dpA-gzGzoHsz",
+            appKey: "JZWLrweBHY4Txn5nZuLwFzim",
+            avatar:"identicon",
+            placeholder: "Send a comment for this post!",
+            guest_info:guest_info,
+            pageSize:"10"
+        })
+</script>
+
+
+</body>
+</html>
