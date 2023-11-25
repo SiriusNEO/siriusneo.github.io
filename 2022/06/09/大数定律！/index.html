@@ -6,15 +6,15 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="HandheldFriendly" content="True">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
-    <meta name="description" content="简单整理一下概率论大数定律部分的内容，感觉这部分真的厉害，借用公理化把概率真正讲清楚了。 注：这部分的基础大量建立在“各种收敛”的概念上。 以及吐槽一句，这个 MathJax 难用极了，不知道为什么需要先 \begin{aligned} \end{aligned} 一下才能用 \xrightarrow，有时间考虑搬一下博客。 Motivation实验中发现，大量重复实验的结果呈现某种规律性，即每个">
+    <meta name="description" content="简单整理一下概率论大数定律部分的内容，感觉这部分真的厉害，借用公理化把概率真正讲清楚了。 注：这部分的基础大量建立在“各种收敛”的概念上。 以及吐槽一句，这个 MathJax 难用极了，不知道为什么需要先 \begin&amp;#123;aligned&amp;#125; \end&amp;#123;aligned&amp;#125; 一下才能用 \xrightarrow，有时间考虑搬一下博客。 Motivation实验中发现，">
 <meta property="og:type" content="article">
 <meta property="og:title" content="大数定律！">
 <meta property="og:url" content="https://siriusneo.github.io/2022/06/09/%E5%A4%A7%E6%95%B0%E5%AE%9A%E5%BE%8B%EF%BC%81/index.html">
 <meta property="og:site_name" content="Metric Space | 度量空间">
-<meta property="og:description" content="简单整理一下概率论大数定律部分的内容，感觉这部分真的厉害，借用公理化把概率真正讲清楚了。 注：这部分的基础大量建立在“各种收敛”的概念上。 以及吐槽一句，这个 MathJax 难用极了，不知道为什么需要先 \begin{aligned} \end{aligned} 一下才能用 \xrightarrow，有时间考虑搬一下博客。 Motivation实验中发现，大量重复实验的结果呈现某种规律性，即每个">
+<meta property="og:description" content="简单整理一下概率论大数定律部分的内容，感觉这部分真的厉害，借用公理化把概率真正讲清楚了。 注：这部分的基础大量建立在“各种收敛”的概念上。 以及吐槽一句，这个 MathJax 难用极了，不知道为什么需要先 \begin&amp;#123;aligned&amp;#125; \end&amp;#123;aligned&amp;#125; 一下才能用 \xrightarrow，有时间考虑搬一下博客。 Motivation实验中发现，">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2022-06-09T10:47:25.000Z">
-<meta property="article:modified_time" content="2023-10-19T14:10:44.412Z">
+<meta property="article:modified_time" content="2023-11-25T19:21:44.664Z">
 <meta property="article:author" content="Chaofan">
 <meta name="twitter:card" content="summary">
     
@@ -177,7 +177,7 @@
   <div class="content e-content" itemprop="articleBody">
     <p>简单整理一下概率论大数定律部分的内容，感觉这部分真的厉害，借用公理化把概率真正讲清楚了。</p>
 <p>注：这部分的基础大量建立在“各种收敛”的概念上。</p>
-<p>以及吐槽一句，这个 MathJax 难用极了，不知道为什么需要先 \begin{aligned} \end{aligned} 一下才能用 \xrightarrow，有时间考虑搬一下博客。</p>
+<p>以及吐槽一句，这个 MathJax 难用极了，不知道为什么需要先 <code>\begin&#123;aligned&#125; \end&#123;aligned&#125;</code> 一下才能用 <code>\xrightarrow</code>，有时间考虑搬一下博客。</p>
 <h2 id="Motivation"><a href="#Motivation" class="headerlink" title="Motivation"></a>Motivation</h2><p>实验中发现，大量重复实验的结果呈现某种规律性，即每个事件出现的频率（在实验次数很大的时候）趋近于一个定值（在没有公理化时，这个就可以作为某种概率的定义）。</p>
 <h2 id="伯努利实验场合下的极限定理"><a href="#伯努利实验场合下的极限定理" class="headerlink" title="伯努利实验场合下的极限定理"></a>伯努利实验场合下的极限定理</h2><p>伯努利实验是一个很简单的模型，我们可以首先借其来研究，而后我们再研究独立同分布的情况。</p>
 <p>假设我们记 $X_1, X_2, \dots, X_n$ 是 n 次伯努利的结果（0/1，不发生/发生），这样频率即为发生次数/总次数，也即 $\frac{\sum_{i=1}^n X_i}{n}$.<br>之后我们为了方便会记一个前缀和 $S_m = \sum_{i=1}^m S_i$.</p>
