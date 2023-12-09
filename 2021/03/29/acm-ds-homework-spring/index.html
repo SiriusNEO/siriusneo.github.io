@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+<html lang=en>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+    <meta name="description" content="前言交大的 sakura 最近开了，真的好看死我了。不过不幸的是本人近来牙齿不适，常受牙医电钻酷刑，今天下午的樱花诗会便因为需要去龈下刮治咕掉了。 扯远了，这篇主要是总结一下我们班数据结构课的近两次小作业的有关知识点。第一次比较懒没有做B班题，所以只提到A班的那部分题。 本篇文章对没学过相关知识的读者不太友好，主要用作自己巩固知识用。所有题目均为ACM班班内OJ上对应题号的题目。  P1088 春">
+<meta property="og:type" content="article">
+<meta property="og:title" content="樱花时节，带你做ACM数结小作业">
+<meta property="og:url" content="https://siriusneo.github.io/2021/03/29/acm-ds-homework-spring/index.html">
+<meta property="og:site_name" content="Metric Space | 度量空间">
+<meta property="og:description" content="前言交大的 sakura 最近开了，真的好看死我了。不过不幸的是本人近来牙齿不适，常受牙医电钻酷刑，今天下午的樱花诗会便因为需要去龈下刮治咕掉了。 扯远了，这篇主要是总结一下我们班数据结构课的近两次小作业的有关知识点。第一次比较懒没有做B班题，所以只提到A班的那部分题。 本篇文章对没学过相关知识的读者不太友好，主要用作自己巩固知识用。所有题目均为ACM班班内OJ上对应题号的题目。  P1088 春">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://siriusneo.github.io/2021/03/29/acm-ds-homework-spring/1.png">
+<meta property="article:published_time" content="2021-03-28T16:08:32.000Z">
+<meta property="article:modified_time" content="2023-12-09T17:48:55.594Z">
+<meta property="article:author" content="Chaofan">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://siriusneo.github.io/2021/03/29/acm-ds-homework-spring/1.png">
+    
+    
+      
+        
+          <link rel="shortcut icon" href="/images/favicon.ico">
+        
+      
+      
+        
+          <link rel="icon" type="image/png" href="/images/android-chrome-192x192.png" sizes="192x192">
+        
+      
+      
+        
+          <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+        
+      
+    
+    <!-- title -->
+    <title>樱花时节，带你做ACM数结小作业</title>
+    <!-- async scripts -->
+    <!-- Google Analytics -->
+
+
+    <!-- Umami Analytics -->
+
+
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+    <!-- rss -->
+    
+    
+	<!-- mathjax -->
+	
+		<script type="text/x-mathjax-config">
+		  MathJax.Hub.Config({
+			tex2jax: {
+			  skipTags: ['script', 'noscript', 'style', 'textarea', 'pre'],
+			  inlineMath: [['$','$']]
+			}
+		  });
+		</script>
+		<script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-MML-AM_CHTML' async></script>
+	
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#" aria-label="Menu"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#" aria-label="Menu"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" aria-label="Top" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fa-solid fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/about/">About</a></li><!--
+     --><!--
+       --><li><a href="/archives/">Articles</a></li><!--
+     --><!--
+       --><li><a href="/links/">Links</a></li><!--
+     --><!--
+       --><li><a target="_blank" rel="noopener" href="https://siriusneo.top">Personal Page</a></li><!--
+     -->
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" aria-label="Previous post" href="/2021/04/06/qingming/"><i class="fa-solid fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" aria-label="Next post" href="/2021/02/25/abel-dirichlet/"><i class="fa-solid fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" aria-label="Back to top" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" aria-label="Share post" href="#"><i class="fa-solid fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://siriusneo.github.io/2021/03/29/acm-ds-homework-spring/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://siriusneo.github.io/2021/03/29/acm-ds-homework-spring/&text=樱花时节，带你做ACM数结小作业"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://siriusneo.github.io/2021/03/29/acm-ds-homework-spring/&title=樱花时节，带你做ACM数结小作业"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://siriusneo.github.io/2021/03/29/acm-ds-homework-spring/&is_video=false&description=樱花时节，带你做ACM数结小作业"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=樱花时节，带你做ACM数结小作业&body=Check out this article: https://siriusneo.github.io/2021/03/29/acm-ds-homework-spring/"><i class="fa-solid fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://siriusneo.github.io/2021/03/29/acm-ds-homework-spring/&title=樱花时节，带你做ACM数结小作业"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://siriusneo.github.io/2021/03/29/acm-ds-homework-spring/&title=樱花时节，带你做ACM数结小作业"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://siriusneo.github.io/2021/03/29/acm-ds-homework-spring/&title=樱花时节，带你做ACM数结小作业"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://siriusneo.github.io/2021/03/29/acm-ds-homework-spring/&title=樱花时节，带你做ACM数结小作业"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://siriusneo.github.io/2021/03/29/acm-ds-homework-spring/&name=樱花时节，带你做ACM数结小作业&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://siriusneo.github.io/2021/03/29/acm-ds-homework-spring/&t=樱花时节，带你做ACM数结小作业"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    
+    
+      <div id="toc">
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%89%8D%E8%A8%80"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#P1088-%E6%98%A5%E6%A8%B1%E5%AF%B9%E5%86%B3"><span class="toc-number">2.</span> <span class="toc-text">P1088 春樱对决</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#P1089-%E8%81%9A%E9%A4%90"><span class="toc-number">3.</span> <span class="toc-text">P1089 聚餐</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#P1090-Bang"><span class="toc-number">4.</span> <span class="toc-text">P1090 Bang</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#P1094-Pyramid"><span class="toc-number">5.</span> <span class="toc-text">P1094 Pyramid</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#P1095-%E6%8E%A8%E7%AE%B1%E5%AD%90"><span class="toc-number">6.</span> <span class="toc-text">P1095 推箱子</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#P1093-%E6%8E%92%E6%96%B9%E9%98%B5"><span class="toc-number">7.</span> <span class="toc-text">P1093 排方阵</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#P1098-%E6%8E%92%E9%98%9F"><span class="toc-number">8.</span> <span class="toc-text">P1098 排队</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#P1099-%E9%80%89%E6%95%B0%E5%AD%97"><span class="toc-number">9.</span> <span class="toc-text">P1099 选数字</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#P1100-%E6%8A%95%E8%B5%84%E5%A4%A7%E5%B8%88"><span class="toc-number">10.</span> <span class="toc-text">P1100 投资大师</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#P1101-%E7%89%B9%E5%88%AB%E8%A1%8C%E5%8A%A8%E9%98%9F"><span class="toc-number">11.</span> <span class="toc-text">P1101 特别行动队</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%90%8E%E8%AE%B0"><span class="toc-number">12.</span> <span class="toc-text">后记</span></a></li></ol>
+      </div>
+    
+  </span>
+</div>
+
+    
+    <div class="content index py4 ">
+        
+        <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+<article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle p-name" itemprop="name headline">
+        樱花时节，带你做ACM数结小作业
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author p-author h-card" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span class="p-name" itemprop="name">Chaofan</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2021-03-28T16:08:32.000Z" class="dt-published" itemprop="datePublished">2021-03-29</time>
+        
+      
+    </div>
+
+
+       
+    <div class="article-category">
+        <i class="fa-solid fa-archive"></i>
+        <a class="category-link" href="/categories/learning/">「掌上的纯光」</a>
+    </div>
+
+
+       
+
+      | <i class="fa fa-eye fa-fw post-meta-icon"></i><span style="color: #8c8c8c; font-size: 13.6px;"> Views: </span><span id="busuanzi_value_page_pv"></span>
+      | <i class="far fa-file-word fa-fw post-meta-icon"></i><span style="color: #8c8c8c; font-size: 13.6px;"> Total Words: 6.6k</span>
+      | <i class="far fa-clock fa-fw post-meta-icon"></i><span style="color: #8c8c8c; font-size: 13.6px;"> Reading Time: 6 mins.</span>
+    </div>
+  </header>
+  
+
+  <div class="content e-content" itemprop="articleBody">
+    <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>交大的 sakura 最近开了，真的好看死我了。不过不幸的是本人近来牙齿不适，常受牙医电钻酷刑，今天下午的樱花诗会便因为需要去龈下刮治咕掉了。</p>
+<p>扯远了，这篇主要是总结一下我们班数据结构课的近两次小作业的有关知识点。第一次比较懒没有做B班题，所以只提到A班的那部分题。</p>
+<p>本篇文章对没学过相关知识的读者不太友好，主要用作自己巩固知识用。所有题目均为ACM班班内OJ上对应题号的题目。</p>
+<hr>
+<h2 id="P1088-春樱对决"><a href="#P1088-春樱对决" class="headerlink" title="P1088 春樱对决"></a>P1088 春樱对决</h2><p><strong>题意</strong></p>
+<p>$1 - N$ 这 $N$ 个数按顺序排成一列，一次删除操作定义为：</p>
+<p>从当前起点开始向右数（起点为第1个点），如果遇到边界点就反向继续数，直到遇到第 $M$ 个点，删除它（即今后数数时不再考虑），并把下一次操作起点定为它的下一个点（同样，下一个点也遵循边界反弹）。</p>
+<p>给定 $N,M$，请问删除 $N-1$ 次后最后剩下的点编号为？$N \le 10^5,\ M \le 10^9$。</p>
+<p><strong>解法</strong></p>
+<p>最朴素的想法：模拟，链表删除 $O(1)$，但是数 M 个得跳 $O(N)$ 次（为什么是 $N$ ？因为可以根据跳的周期性将 $M$ 的范围缩小），数组删除 $O(N)$。</p>
+<p>自然想到用块链优化，然后直接过了。复杂度 $O(N \sqrt N)$</p>
+<hr>
+<h2 id="P1089-聚餐"><a href="#P1089-聚餐" class="headerlink" title="P1089 聚餐"></a>P1089 聚餐</h2><p><strong>题意</strong></p>
+<p>有 $M$ 组要求，每组要求由若干个绝对值为 $1-N$ ，可正可负的数构成。</p>
+<p>一个选择为 $1-N$ 的一个子序列。一个选择满足一个要求定义为：存在该要求中的一个数，若该数为正，则选择中含该数；若该数为负，则选择中不含该数。</p>
+<p>给定要求，问是否存在满足所有要求的选择？$N\le20,\ M\le60$。</p>
+<p><strong>解法</strong></p>
+<p>居然可以直接暴力，一个选择压成 $2^{20}$ 的数，枚举所有选择判断是否满足条件。复杂度 $O(2^NM)$。</p>
+<hr>
+<h2 id="P1090-Bang"><a href="#P1090-Bang" class="headerlink" title="P1090 Bang"></a>P1090 Bang</h2><p><strong>题意</strong></p>
+<p>给定连通无向图 $G(N,M)$，每个点都有一个点权。有两种操作：</p>
+<ol>
+<li>修改某个点的点权。</li>
+<li>给定两个人的起点 $S_1,S_2$，之后这两个人可以在图上游走<strong>但要走必须同时走</strong>，步数没有限制。问走若干步后两人所在地点权差绝对值的最小值。</li>
+</ol>
+<p>$N \le 10^5, M \le 2 \times 10^5, Q \le 10^5$。</p>
+<p><strong>解法</strong></p>
+<p>两个人同时走是很关键的性质，可以自己手玩一会儿。</p>
+<p>我们当然是想让他们走到同一个点的，这当且仅当起点间存在<strong>奇数长度</strong>（这里，长度定义为路径上的点数）路径才能做到。因此如果存在奇环，一定能走到。</p>
+<p>想到奇环自然会想到黑白染色。我们发现为什么会永远走不到呢？是因为若此图能黑白染色，那两个人一定只能在不同颜色上走。由于可以走任意步，实际上就是问所有黑点和所有白点间点权差最小的两个点是多少，动态维护这个。</p>
+<p>平衡树可以解决，当时做的时候是平衡树+优先队列，每次改点相当于删一个点、插一个点。复杂度 $O(N \log N)$。</p>
+<hr>
+<h2 id="P1094-Pyramid"><a href="#P1094-Pyramid" class="headerlink" title="P1094 Pyramid"></a>P1094 Pyramid</h2><p><strong>题意</strong></p>
+<p>给定 $N$ 行 $M$ 列网格，每个格子都有一个权值。求如下子图形覆盖的最小权值和（指该图形所占网格的所有权值和）：</p>
+<p>一个 $b$ 行 $a$ 列的矩形，从中挖掉一个 $d$ 行 $c$ 列的矩形。挖掉的格子不能在$b$ 行 $a$ 列的矩形的边界上。如下图灰色部分。</p>
+<p><img src="1.png" alt=""></p>
+<p>$3\le N, M \le 1000$。</p>
+<p><strong>解法</strong></p>
+<p>二维线段树暴过！$O(N \log^2 N)$</p>
+<hr>
+<h2 id="P1095-推箱子"><a href="#P1095-推箱子" class="headerlink" title="P1095 推箱子"></a>P1095 推箱子</h2><p><strong>题意</strong></p>
+<p>给定一个只有一个箱子的推箱子网格地图，问最少推几次箱子能到目的地？</p>
+<p>形式化地，有一个 $N \times M$ 网格地图，地图上有四种状态：</p>
+<ol>
+<li>玩家，可以上下左右移动</li>
+<li>箱子，如果对应方向无障碍物可以被玩家推动</li>
+<li>障碍，玩家和箱子均不可通过</li>
+<li>空格，玩家和箱子均可通过</li>
+</ol>
+<p>给定玩家、箱子的起始位置，问最少要推几步能把箱子推到目的地？注意这里问的是箱子移动步数，人空走是不算的。$N,M \le 100$。</p>
+<p><strong>解法</strong></p>
+<p>鉴于我们不关心人自己走，所以我们发现人只需干两件事：推箱子和走到箱子的另一个方向。因此只要记状态：$f(i,j,dir)$ 表示箱子位置为 $(i,j)$，人在箱子的 $dir$ 方向。</p>
+<p>转移就两种：推和人到别的方向。最坏复杂度 $O((NM)^2)$ 。</p>
+<hr>
+<h2 id="P1093-排方阵"><a href="#P1093-排方阵" class="headerlink" title="P1093 排方阵"></a>P1093 排方阵</h2><p><strong>题意</strong></p>
+<p>给定 $N$ 行 $M$ 列网格，每个格子都有一个权值。求一个使得其中权值最大值和最小值之差最小的 $a \times a$ 子正方形。$N,M \le 1000$。</p>
+<p><strong>解法</strong></p>
+<p>静态二维RMQ，可以二维ST表，不过鉴于我懒还是直接二维线段树了。</p>
+<hr>
+<h2 id="P1098-排队"><a href="#P1098-排队" class="headerlink" title="P1098 排队"></a>P1098 排队</h2><p><strong>题意</strong></p>
+<p>给定长度为 $N$ 的序列，问满足以下条件的最长连续子序列：</p>
+<p>子序列首项为该子序列最小值，末项为最大值，且中间项均不等于首尾项。$N \le 5 \times 10^5$。</p>
+<p><strong>解法</strong></p>
+<p>靠，这题一开始就想出来了，后来以为正确性错了。</p>
+<p>考虑某一个数结尾的符合条件的序列最多有多长，</p>
+<p>首先要保证该数是序列最大值，于是即为一直往左延伸直到遇到第一个大等于自己的数。然后又要保证左端点是最小值，因此直接在这个范围查区间最小值即可，注意有个不能相同的条件，所以如果有多个最小值要判一下。</p>
+<p>“往左延伸第一个大等于自己的数”很明显可以用单调栈，区间最小值可以用ST表，所以是线性的。</p>
+<hr>
+<h2 id="P1099-选数字"><a href="#P1099-选数字" class="headerlink" title="P1099 选数字"></a>P1099 选数字</h2><p><strong>题意</strong></p>
+<p>给定长度为 $N$ 的非负整数序列，你可以选择其中若干数，但不能有大于 $M$ 个连续数字被选择，求所选的和最大值。$M \le N \le 10^6$。</p>
+<p><strong>解法</strong></p>
+<p>记 $f_i$ 为考虑到第 $i$ 个数字的答案且第 $i$ 个数字必须选，我们只要考虑最长能选多长，则</p>
+<script type="math/tex; mode=display">
+f_i=\max_{i-m+1 \le j \le i}\{f_{j-2} + sum_{i}-sum_{j-1}\}</script><p>当然这个转移方程并不完全，因为选满后不一定要从 $f_{i-m-1}$ 转移过来，故：</p>
+<script type="math/tex; mode=display">
+f_i=\max_{2 \le j \le i-m}\{f_{j-2} + sum_{i}-sum_{i-m}\}</script><p>对于两个方程我们显然是不好做的，注意有一个常用的想法：如果你设计的状态有“第 $i$ 个必须选” 这样的性质，那可以考虑取前驱max。</p>
+<p>所以我们状态可以改成：记 $f_i$ 为考虑到第 $i$ 个数字的答案。转移方程就变简单了：</p>
+<script type="math/tex; mode=display">
+f_i=\max\{f_{i-1},\max_{i-m+1 \le j \le i}\{f_{j-2} + sum_{i}-sum_{j-1}\}\}</script><p>这种方程都有个特点：从一段区间的min/max转移过来，区间的下界单调增加，并且 $i, j$ 非常好分离，姑且称作<strong>线性min/max递推方程</strong>。这种递推dp用可以采用<strong>单调队列优化</strong>，复杂度 $O(n)$。</p>
+<p>此外这题也可以反着做（所谓正难则反），最后也需要单调队列优化~</p>
+<hr>
+<h2 id="P1100-投资大师"><a href="#P1100-投资大师" class="headerlink" title="P1100 投资大师"></a>P1100 投资大师</h2><p><strong>题意</strong></p>
+<p>共有 $T$ 天，给出每天的股票买入价 $AP_i$、卖出价 $BP_i$以及每天至多购买数量$AS_i$、每天至多卖出数量 $BS_i$。此外如果在某天进行了买入/卖出操作后，接下来的 $W$ 天都不能再交易，且规定任何时刻持股上限为 $MaxP$。求最多能赚多少钱？</p>
+<p>$W \le T \le 2000,\ MaxP \le 2000$。</p>
+<p><strong>解法</strong></p>
+<p>看起来有点背包的感觉，而且持股量和天数都是 $n^2$ 级别的，因此我们记状态 $f(i,j)$ 表示考虑到第 i 天，持股量为 j 的最大收益。（这里取了前缀max，不要求第 i 天必须交易）</p>
+<p>则有转移：</p>
+<ol>
+<li>$f(i,j)=f(i-1,j)$，即第 i 天不进行交易操作</li>
+<li>$f(i,j)=f(i-W-1,j-k)+AP_ik$，即第 i 天买入 k 张股票</li>
+<li>$f(i,j)=f(i-W-1,j+k)+BP_ik$，即第 i 天卖出 k 张股票</li>
+</ol>
+<p>这样转移是 $O(n^3)$ 的，但是我们发现这也是滑动区间的max问题，所以可以上单调队列优化就能变成 $O(n^2)$。</p>
+<hr>
+<h2 id="P1101-特别行动队"><a href="#P1101-特别行动队" class="headerlink" title="P1101 特别行动队"></a>P1101 特别行动队</h2><p><strong>题意</strong></p>
+<p>有一列长度为 $N$ 的正整数序列 $\{a_i\}$，并给定一二次函数 $g(x)=ax^2+bx+c$，先需要你将此序列划分为若干连续段 $\{A_k\}$，使得</p>
+<script type="math/tex; mode=display">
+\sum_{i=1}^k g(\sum_{a_j \in A_i} a_j)</script><p>最大，$N \le 10^6$。</p>
+<p><strong>解法</strong></p>
+<p>仿照上面的思想，还是先想dp怎么转移。设 $f_i$ 为第 i 个位置一定是断点的最大值，则有：（这里这么设计一是转移简单，二是第 n 个位置一定是断点）</p>
+<script type="math/tex; mode=display">
+f_i=\max_{1 \le j < i}\{f_j+g(sum_i-sum_{j})\}</script><p>我们发现这有点类似上一题的转移了，但是这时候后面那一项不再是线性的了（关键在于有一项关于 i 的和一项关于 j 的乘在一起了），单调队列已经无能为力。</p>
+<p>这种问题一般可以抽象成形如以下的式子：</p>
+<script type="math/tex; mode=display">
+b_i={\min or \max}_{j \in window} \{y_j-k_ix_j\}</script><p>可以用<strong>斜率优化</strong>进行处理，用单调队列维护一个凸包，复杂度 $O(N)$。</p>
+<hr>
+<h2 id="后记"><a href="#后记" class="headerlink" title="后记"></a>后记</h2><p>第一次数据结构小作业主要设计树状数组、线段树和平衡树，都是 log 高效数据结构。</p>
+<p>前两个我认为优化之处都在于维护了尽量少的一组“基信息 ($N \log N$ 规模) ”使得对于任意的区间都能通过至多 log 个基组合出来。平衡树则比较多样了，比如Splay它是通过旋转不改变树性质（树性质是查找快速的关键）却能改变树高，进而使得树尽量平衡。</p>
+<p>第二次小作业主要集中于单调栈、单调队列以及它们在优化dp方面的应用。这两个数据结构都十分“残忍”：如果一个数据比另一个数据全方位“有用”，那么没用的数据就会被丢掉。一般来说它们考虑到两个维度：值的大小、时序的先后。如果值和时序都不占优，就会有被丢掉的风险。</p>
+<p>什么时候会用到这两个呢？首先这两个复杂度都是线性，可以对数据范围猜一猜；其次单调栈一般很好处理“离当前最近的比它大的”，或是“向左最长的以它为最大值”这类问题；而单调队列本质就是滑窗，一进一出，具体的dp式出来后就比较明显。如果有i和j乘起来的部分就得考虑斜率优化了。</p>
+
+  </div>
+</article>
+
+
+
+    <div class="blog-post-comments">
+        <div class="vcomment"></div>
+    </div>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+        
+          <li><a href="/">Home</a></li>
+        
+          <li><a href="/about/">About</a></li>
+        
+          <li><a href="/archives/">Articles</a></li>
+        
+          <li><a href="/links/">Links</a></li>
+        
+          <li><a target="_blank" rel="noopener" href="https://siriusneo.top">Personal Page</a></li>
+        
+      </ul>
+    </div>
+
+    
+    
+      <div id="toc-footer" style="display: none">
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%89%8D%E8%A8%80"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#P1088-%E6%98%A5%E6%A8%B1%E5%AF%B9%E5%86%B3"><span class="toc-number">2.</span> <span class="toc-text">P1088 春樱对决</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#P1089-%E8%81%9A%E9%A4%90"><span class="toc-number">3.</span> <span class="toc-text">P1089 聚餐</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#P1090-Bang"><span class="toc-number">4.</span> <span class="toc-text">P1090 Bang</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#P1094-Pyramid"><span class="toc-number">5.</span> <span class="toc-text">P1094 Pyramid</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#P1095-%E6%8E%A8%E7%AE%B1%E5%AD%90"><span class="toc-number">6.</span> <span class="toc-text">P1095 推箱子</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#P1093-%E6%8E%92%E6%96%B9%E9%98%B5"><span class="toc-number">7.</span> <span class="toc-text">P1093 排方阵</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#P1098-%E6%8E%92%E9%98%9F"><span class="toc-number">8.</span> <span class="toc-text">P1098 排队</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#P1099-%E9%80%89%E6%95%B0%E5%AD%97"><span class="toc-number">9.</span> <span class="toc-text">P1099 选数字</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#P1100-%E6%8A%95%E8%B5%84%E5%A4%A7%E5%B8%88"><span class="toc-number">10.</span> <span class="toc-text">P1100 投资大师</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#P1101-%E7%89%B9%E5%88%AB%E8%A1%8C%E5%8A%A8%E9%98%9F"><span class="toc-number">11.</span> <span class="toc-text">P1101 特别行动队</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%90%8E%E8%AE%B0"><span class="toc-number">12.</span> <span class="toc-text">后记</span></a></li></ol>
+      </div>
+    
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://siriusneo.github.io/2021/03/29/acm-ds-homework-spring/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://siriusneo.github.io/2021/03/29/acm-ds-homework-spring/&text=樱花时节，带你做ACM数结小作业"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://siriusneo.github.io/2021/03/29/acm-ds-homework-spring/&title=樱花时节，带你做ACM数结小作业"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://siriusneo.github.io/2021/03/29/acm-ds-homework-spring/&is_video=false&description=樱花时节，带你做ACM数结小作业"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=樱花时节，带你做ACM数结小作业&body=Check out this article: https://siriusneo.github.io/2021/03/29/acm-ds-homework-spring/"><i class="fa-solid fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://siriusneo.github.io/2021/03/29/acm-ds-homework-spring/&title=樱花时节，带你做ACM数结小作业"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://siriusneo.github.io/2021/03/29/acm-ds-homework-spring/&title=樱花时节，带你做ACM数结小作业"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://siriusneo.github.io/2021/03/29/acm-ds-homework-spring/&title=樱花时节，带你做ACM数结小作业"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://siriusneo.github.io/2021/03/29/acm-ds-homework-spring/&title=樱花时节，带你做ACM数结小作业"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://siriusneo.github.io/2021/03/29/acm-ds-homework-spring/&name=樱花时节，带你做ACM数结小作业&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://siriusneo.github.io/2021/03/29/acm-ds-homework-spring/&t=樱花时节，带你做ACM数结小作业"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fa-solid fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        
+          <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fa-solid fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fa-solid fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy;
+    
+    
+    2020-2023
+    Chaofan.
+    Powered by <a target="_blank" rel="noopener" href="https://github.com/probberechts/hexo-theme-cactus">Cactus</a>. <a target="_blank" rel="noopener" href="https://github.com/SiriusNEO/hexo-theme-cactus-customized">Customized</a> by me :).
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/about/">About</a></li><!--
+     --><!--
+       --><li><a href="/archives/">Articles</a></li><!--
+     --><!--
+       --><li><a href="/links/">Links</a></li><!--
+     --><!--
+       --><li><a target="_blank" rel="noopener" href="https://siriusneo.top">Personal Page</a></li><!--
+     -->
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+
+
+  <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" crossorigin="anonymous" onload="this.onload=null;this.rel='stylesheet'"/>
+
+
+    <!-- jquery -->
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" crossorigin="anonymous"></script>
+
+
+
+
+<!-- clipboard -->
+
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.7/clipboard.min.js" crossorigin="anonymous"></script>
+  
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"Copy to clipboard!\">";
+    btn += '<i class="fa-regular fa-clone"></i>';
+    btn += '</span>';
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "Copied!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Baidu Analytics -->
+
+<!-- Cloudflare Analytics -->
+
+<!-- Disqus Comments -->
+
+<!-- utterances Comments -->
+
+<!-- Valine Comments -->
+
+    <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+    <script src="//unpkg.com/valine@latest/dist/Valine.min.js"></script>
+    <script type="text/javascript">
+        var notify = 'false' == true ? true : false;
+        var verify = 'false' == true ? true : false;
+        var GUEST_INFO = ['nick','mail','link'];
+        var guest_info = 'nick,mail,link'.split(',').filter(function(item){
+          return GUEST_INFO.indexOf(item) > -1
+        });
+        guest_info = guest_info.length == 0 ? GUEST_INFO :guest_info;
+        new Valine({
+            el: '.vcomment',
+            notify: notify,
+            verify: verify,
+            appId: "AyDHJHMfyHGtgF5Lc8CG4dpA-gzGzoHsz",
+            appKey: "JZWLrweBHY4Txn5nZuLwFzim",
+            avatar:"identicon",
+            placeholder: "Send a comment for this post!",
+            guest_info:guest_info,
+            pageSize:"10"
+        })
+</script>
+
+
+</body>
+</html>

@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang=en>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+    <meta name="description" content="前言这个其实是最近自己试图在一个 IR 上复现 ResNet 这种模型遇到的问题，进行了一些考察并写下此文权当记录了。 如标题所言，有一类算子（或者说 nn Module，取决于 IR 的粒度和设计）在 Inference 模式和 Training 模式下有着不同的表现。当然有的 IR 可能都没有 Inference &#x2F; Training 的概念，但它也一定要能区分两种情况。大部分框架的解决方式是">
+<meta property="og:type" content="article">
+<meta property="og:title" content="ML 中一些在 Inference Training 下表现不同的算子">
+<meta property="og:url" content="https://siriusneo.github.io/2023/02/27/ml-operators-notes/index.html">
+<meta property="og:site_name" content="Metric Space | 度量空间">
+<meta property="og:description" content="前言这个其实是最近自己试图在一个 IR 上复现 ResNet 这种模型遇到的问题，进行了一些考察并写下此文权当记录了。 如标题所言，有一类算子（或者说 nn Module，取决于 IR 的粒度和设计）在 Inference 模式和 Training 模式下有着不同的表现。当然有的 IR 可能都没有 Inference &#x2F; Training 的概念，但它也一定要能区分两种情况。大部分框架的解决方式是">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2023-02-27T09:27:00.000Z">
+<meta property="article:modified_time" content="2023-12-09T17:46:07.716Z">
+<meta property="article:author" content="Chaofan">
+<meta name="twitter:card" content="summary">
+    
+    
+      
+        
+          <link rel="shortcut icon" href="/images/favicon.ico">
+        
+      
+      
+        
+          <link rel="icon" type="image/png" href="/images/android-chrome-192x192.png" sizes="192x192">
+        
+      
+      
+        
+          <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+        
+      
+    
+    <!-- title -->
+    <title>ML 中一些在 Inference Training 下表现不同的算子</title>
+    <!-- async scripts -->
+    <!-- Google Analytics -->
+
+
+    <!-- Umami Analytics -->
+
+
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+    <!-- rss -->
+    
+    
+	<!-- mathjax -->
+	
+		<script type="text/x-mathjax-config">
+		  MathJax.Hub.Config({
+			tex2jax: {
+			  skipTags: ['script', 'noscript', 'style', 'textarea', 'pre'],
+			  inlineMath: [['$','$']]
+			}
+		  });
+		</script>
+		<script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-MML-AM_CHTML' async></script>
+	
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#" aria-label="Menu"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#" aria-label="Menu"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" aria-label="Top" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fa-solid fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/about/">About</a></li><!--
+     --><!--
+       --><li><a href="/archives/">Articles</a></li><!--
+     --><!--
+       --><li><a href="/links/">Links</a></li><!--
+     --><!--
+       --><li><a target="_blank" rel="noopener" href="https://siriusneo.top">Personal Page</a></li><!--
+     -->
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" aria-label="Previous post" href="/2023/05/30/mcnuggets-diary/"><i class="fa-solid fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" aria-label="Next post" href="/2023/02/25/tvm-te/"><i class="fa-solid fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" aria-label="Back to top" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" aria-label="Share post" href="#"><i class="fa-solid fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://siriusneo.github.io/2023/02/27/ml-operators-notes/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://siriusneo.github.io/2023/02/27/ml-operators-notes/&text=ML 中一些在 Inference Training 下表现不同的算子"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://siriusneo.github.io/2023/02/27/ml-operators-notes/&title=ML 中一些在 Inference Training 下表现不同的算子"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://siriusneo.github.io/2023/02/27/ml-operators-notes/&is_video=false&description=ML 中一些在 Inference Training 下表现不同的算子"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=ML 中一些在 Inference Training 下表现不同的算子&body=Check out this article: https://siriusneo.github.io/2023/02/27/ml-operators-notes/"><i class="fa-solid fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://siriusneo.github.io/2023/02/27/ml-operators-notes/&title=ML 中一些在 Inference Training 下表现不同的算子"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://siriusneo.github.io/2023/02/27/ml-operators-notes/&title=ML 中一些在 Inference Training 下表现不同的算子"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://siriusneo.github.io/2023/02/27/ml-operators-notes/&title=ML 中一些在 Inference Training 下表现不同的算子"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://siriusneo.github.io/2023/02/27/ml-operators-notes/&title=ML 中一些在 Inference Training 下表现不同的算子"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://siriusneo.github.io/2023/02/27/ml-operators-notes/&name=ML 中一些在 Inference Training 下表现不同的算子&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://siriusneo.github.io/2023/02/27/ml-operators-notes/&t=ML 中一些在 Inference Training 下表现不同的算子"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    
+    
+      <div id="toc">
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%89%8D%E8%A8%80"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Batch-Normalization"><span class="toc-number">2.</span> <span class="toc-text">Batch Normalization</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Dropout"><span class="toc-number">3.</span> <span class="toc-text">Dropout</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Randomized-Leaky-ReLU"><span class="toc-number">4.</span> <span class="toc-text">Randomized Leaky ReLU</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Reference"><span class="toc-number">5.</span> <span class="toc-text">Reference</span></a></li></ol>
+      </div>
+    
+  </span>
+</div>
+
+    
+    <div class="content index py4 ">
+        
+        <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+<article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle p-name" itemprop="name headline">
+        ML 中一些在 Inference Training 下表现不同的算子
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author p-author h-card" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span class="p-name" itemprop="name">Chaofan</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2023-02-27T09:27:00.000Z" class="dt-published" itemprop="datePublished">2023-02-27</time>
+        
+      
+    </div>
+
+
+       
+    <div class="article-category">
+        <i class="fa-solid fa-archive"></i>
+        <a class="category-link" href="/categories/learning/">「掌上的纯光」</a>
+    </div>
+
+
+       
+
+      | <i class="fa fa-eye fa-fw post-meta-icon"></i><span style="color: #8c8c8c; font-size: 13.6px;"> Views: </span><span id="busuanzi_value_page_pv"></span>
+      | <i class="far fa-file-word fa-fw post-meta-icon"></i><span style="color: #8c8c8c; font-size: 13.6px;"> Total Words: 5k</span>
+      | <i class="far fa-clock fa-fw post-meta-icon"></i><span style="color: #8c8c8c; font-size: 13.6px;"> Reading Time: 5 mins.</span>
+    </div>
+  </header>
+  
+
+  <div class="content e-content" itemprop="articleBody">
+    <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>这个其实是最近自己试图在一个 IR 上复现 ResNet 这种模型遇到的问题，进行了一些考察并写下此文权当记录了。</p>
+<p>如标题所言，有一类算子（或者说 nn Module，取决于 IR 的粒度和设计）在 Inference 模式和 Training 模式下有着不同的表现。当然有的 IR 可能都没有 Inference / Training 的概念，但它也一定要能区分两种情况。大部分框架的解决方式是在调用其时加一个 bool flag（training: bool），或者在整个 Mod 中用一个 flag 表示整个 Mod 当前处于哪种 Mode。例如，Keras 调用 fit() 就是 Training Mode，调用 evaluate() 或者 predict() 就是 Inference Mode。</p>
+<p>这类算子的这种特性在有些时候会对我们的 IR / Script 的设计带来困难。比如我们有一个静态图 G，这个算子 op 已经被写死在图中了，我们又不希望在全局加个 flag 表示当前状态，那么我们要如何在同一张图 G 中让 op 根据我们的需求在我们 forward / backward 这张图时表现不同呢？有一种方式是，我们可以写一个图 Pass，将这类 op 的 inference / training 状态根据我们的需要 rewrite 掉。</p>
+<p>这里我们就不细讲用什么方法去实现这种 “表现不同” 了，我们来讲讲为什么它们需要有这种不同的表现——从它们后面数学原理的角度。简单地在 torch.nn.functional 下面搜索 training: bool，就可以找到所有有这种特性的算子。具体来讲有三类：</p>
+<ul>
+<li>Batch Normalization</li>
+<li>Dropout</li>
+<li>Randomized Leaky ReLU</li>
+</ul>
+<h2 id="Batch-Normalization"><a href="#Batch-Normalization" class="headerlink" title="Batch Normalization"></a>Batch Normalization</h2><p>大名鼎鼎的 batch norm，膜拜一下原论文：<a target="_blank" rel="noopener" href="https://arxiv.org/abs/1502.03167">Batch Normalization: Accelerating Deep Network Training by Reducing Internal Covariate Shift</a>。</p>
+<p>BatchNorm 的目的当然就是 normalization，由于数据本身的规模不同，且经过不同层的分布也不同（被原论文称为 Internal Covariate Shift 的现象），由此我们必须选择较低的学习率以及精细的参数初始化。Why BN works 其实还是一个很难严谨回答的问题，但是可以确定的是，在 Normalization 过后数据分布的均值和方差相同了，在实验上表现出更快的收敛效果以及更好的稳定性。</p>
+<p>以 BatchNorm2d 为例，对于一个 4D 的 input (N, C, H, W)，它会对 input 求一个经验上的，一个 mini-batch 上的均值和方差（因此叫做 Batch Normalization）。注意，似乎按这个说法，Batch Norm 直接对 batch size N 取平均值就好，但是主流的实现都是对 axis=[N, H, W] 这三维一起取平均值。也就是说，得到的 mean 和 var 都是 (C,) 的 shape。这是因为，对于一个 feature map (H, W) 我们本身也要 normalize 它，这件事可以和对 batch 的 normalize 一起做，因此就这样写了。注意，为了后面方便 broadcast（显然 (N, C, H, W) 是不能和 (C,) broadcast 的），通常会把均值和方差 reshape 成 (1, 1, C, 1) 的样子。</p>
+<p>Normalization 的式子就是这样</p>
+<script type="math/tex; mode=display">
+\frac{x - \mu}{\sqrt{\sigma^2 + \epsilon}} \cdot  \gamma + \beta</script><p>其中多出来的部分可以先不用管。eps 看这个位置显然是为了 numeric stability 的，后面两个是 trainable 的参数，可以在训练过程中不断调整 BN 的效果（详情请见 affine transform）。</p>
+<p>到目前为止貌似还没有涉及到需要 Inference / Training 不同行为的地方。但是我们可以来想一个问题：在 inference 时，通常我们并不会输入一个 mini-batch，可能只有一个 sample。这时候的 Batch Norm 就会显得很怪。自然我们会想到利用 Training 时候收集的数据来代表均值和方差，在假设两者分布是一样的情况下。那我们就有了一个基本的设计：在 BN 中维护两个状态（internal state）表示训练过程中收集到的 mean 和 var，然后在 inference 过程中将其运用于 BN 的正向计算。</p>
+<p>更进一步的，由于训练时候我们是一个 batch 一个 batch 地将数据喂进去，我们并不是事先知道所有的数据，所以我们需要随着时间 t 维护一个滑动的 mean 和 var。在 Torch 中被叫做 running_mean / var，TF 中叫做 moving_mean / var。通常采用 EMA（Exponential Moving Average） 的方式维护。当然也有别的方法，比如 FAIR 这里实现的一个叫 <a target="_blank" rel="noopener" href="https://github.com/facebookresearch/fvcore/blob/main/fvcore/nn/precise_bn.py">precise_bn</a> 的方法。</p>
+<p>所以我们可以看到，batch norm 需要的行为就是：</p>
+<ul>
+<li>Training 时候收集 statistical 相关数据</li>
+<li>Inference 的时候用它来算</li>
+</ul>
+<h2 id="Dropout"><a href="#Dropout" class="headerlink" title="Dropout"></a>Dropout</h2><p>Dropout，NN 中著名的奇技淫巧之一，通过随机把数据给丢掉避免 overfit。我当初刚听到这个东西的时候，感觉很奇妙，但是潜意识里感觉它也是有道理的，理解上就像随机给一个系统来点破坏，这样如果你往 overfit 的方向走了，下轮训练当一些节点被 drop 之后你的 loss 又会很大。</p>
+<p>当然，这个丢弃数据只有在 Training 时候是 make sense 的（在 Inference 的时候，你的网络都训好了，这时候我们只需要稳定的预测结果就好）。因此理论上在 Inference 时候 Dropout 就可以去掉了，或者说退化成 Identity。这就是 Dropout 行为不同的原因。</p>
+<p>不过这里还有个事，就是关于 Drop 之后的 rescaling。我搜索资料发现一般有两种说法，一是在 Training 端 rescale，也就是将数据统一乘上 $\frac{1}{1−p}$ （期望下有 1−$p$ 的数据会留下来）；二是在 Inference 端 rescale，也就是将 Identity 换成一个乘以 1−$p$ 。这两种流派分别被称为 Inverted Dropout 和 Vanilla Dropout（听名字也知道后者是先有的，然后发展到前者）。现在主流框架的实现都是采用前者。</p>
+<h2 id="Randomized-Leaky-ReLU"><a href="#Randomized-Leaky-ReLU" class="headerlink" title="Randomized Leaky ReLU"></a>Randomized Leaky ReLU</h2><p>Leaky ReLU 的提出是为了解决 Dead ReLU Problem——0梯度太多造成反向传播就像 “一潭死水”。而 RReLU 则将 Leaky ReLU 里的那个小线性系数 $\alpha$ 变成了一个随机变量，这被证明是更有效的：<a target="_blank" rel="noopener" href="https://arxiv.org/abs/1505.00853">Empirical Evaluation of Rectified Activations in Convolutional Network</a>。</p>
+<p>这里的 Training 和 Inference 不同行为其实和 Dropout 也有点像，就是希望消去 Inference 时的随机性。因此在 Training 的过程中， $\alpha$ 从一个 uniform distribution sample 出来，而到了 Inference 时则是直接取期望值 $\frac{\text{lower} + \text{upper}}{2}$。</p>
+<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><p><a target="_blank" rel="noopener" href="https://pytorch.org/docs/stable/index.html">Torch 官方文档</a></p>
+<p><a target="_blank" rel="noopener" href="https://tensorflow.google.cn/api_docs">Tensorflow API doc</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.paddlepaddle.org.cn/documentation/docs/zh/api/index_cn.html">PaddlePaddle API 文档</a></p>
+<p><a target="_blank" rel="noopener" href="https://github.com/facebookresearch/fvcore">facebookresearch/fvcore</a></p>
+<p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/380620373">小小将：BatchNorm避坑指南</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.zhihu.com/question/61751133">https://www.zhihu.com/question/61751133</a></p>
+<p><a target="_blank" rel="noopener" href="https://arxiv.org/abs/1502.03167">Batch Normalization: Accelerating Deep Network Training by Reducing Internal Covariate Shift</a></p>
+<p><a target="_blank" rel="noopener" href="https://arxiv.org/abs/1505.00853">Empirical Evaluation of Rectified Activations in Convolutional Network</a></p>
+
+  </div>
+</article>
+
+
+
+    <div class="blog-post-comments">
+        <div class="vcomment"></div>
+    </div>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+        
+          <li><a href="/">Home</a></li>
+        
+          <li><a href="/about/">About</a></li>
+        
+          <li><a href="/archives/">Articles</a></li>
+        
+          <li><a href="/links/">Links</a></li>
+        
+          <li><a target="_blank" rel="noopener" href="https://siriusneo.top">Personal Page</a></li>
+        
+      </ul>
+    </div>
+
+    
+    
+      <div id="toc-footer" style="display: none">
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%89%8D%E8%A8%80"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Batch-Normalization"><span class="toc-number">2.</span> <span class="toc-text">Batch Normalization</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Dropout"><span class="toc-number">3.</span> <span class="toc-text">Dropout</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Randomized-Leaky-ReLU"><span class="toc-number">4.</span> <span class="toc-text">Randomized Leaky ReLU</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Reference"><span class="toc-number">5.</span> <span class="toc-text">Reference</span></a></li></ol>
+      </div>
+    
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://siriusneo.github.io/2023/02/27/ml-operators-notes/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://siriusneo.github.io/2023/02/27/ml-operators-notes/&text=ML 中一些在 Inference Training 下表现不同的算子"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://siriusneo.github.io/2023/02/27/ml-operators-notes/&title=ML 中一些在 Inference Training 下表现不同的算子"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://siriusneo.github.io/2023/02/27/ml-operators-notes/&is_video=false&description=ML 中一些在 Inference Training 下表现不同的算子"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=ML 中一些在 Inference Training 下表现不同的算子&body=Check out this article: https://siriusneo.github.io/2023/02/27/ml-operators-notes/"><i class="fa-solid fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://siriusneo.github.io/2023/02/27/ml-operators-notes/&title=ML 中一些在 Inference Training 下表现不同的算子"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://siriusneo.github.io/2023/02/27/ml-operators-notes/&title=ML 中一些在 Inference Training 下表现不同的算子"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://siriusneo.github.io/2023/02/27/ml-operators-notes/&title=ML 中一些在 Inference Training 下表现不同的算子"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://siriusneo.github.io/2023/02/27/ml-operators-notes/&title=ML 中一些在 Inference Training 下表现不同的算子"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://siriusneo.github.io/2023/02/27/ml-operators-notes/&name=ML 中一些在 Inference Training 下表现不同的算子&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://siriusneo.github.io/2023/02/27/ml-operators-notes/&t=ML 中一些在 Inference Training 下表现不同的算子"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fa-solid fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        
+          <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fa-solid fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fa-solid fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy;
+    
+    
+    2020-2023
+    Chaofan.
+    Powered by <a target="_blank" rel="noopener" href="https://github.com/probberechts/hexo-theme-cactus">Cactus</a>. <a target="_blank" rel="noopener" href="https://github.com/SiriusNEO/hexo-theme-cactus-customized">Customized</a> by me :).
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/about/">About</a></li><!--
+     --><!--
+       --><li><a href="/archives/">Articles</a></li><!--
+     --><!--
+       --><li><a href="/links/">Links</a></li><!--
+     --><!--
+       --><li><a target="_blank" rel="noopener" href="https://siriusneo.top">Personal Page</a></li><!--
+     -->
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+
+
+  <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" crossorigin="anonymous" onload="this.onload=null;this.rel='stylesheet'"/>
+
+
+    <!-- jquery -->
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" crossorigin="anonymous"></script>
+
+
+
+
+<!-- clipboard -->
+
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.7/clipboard.min.js" crossorigin="anonymous"></script>
+  
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"Copy to clipboard!\">";
+    btn += '<i class="fa-regular fa-clone"></i>';
+    btn += '</span>';
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "Copied!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Baidu Analytics -->
+
+<!-- Cloudflare Analytics -->
+
+<!-- Disqus Comments -->
+
+<!-- utterances Comments -->
+
+<!-- Valine Comments -->
+
+    <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+    <script src="//unpkg.com/valine@latest/dist/Valine.min.js"></script>
+    <script type="text/javascript">
+        var notify = 'false' == true ? true : false;
+        var verify = 'false' == true ? true : false;
+        var GUEST_INFO = ['nick','mail','link'];
+        var guest_info = 'nick,mail,link'.split(',').filter(function(item){
+          return GUEST_INFO.indexOf(item) > -1
+        });
+        guest_info = guest_info.length == 0 ? GUEST_INFO :guest_info;
+        new Valine({
+            el: '.vcomment',
+            notify: notify,
+            verify: verify,
+            appId: "AyDHJHMfyHGtgF5Lc8CG4dpA-gzGzoHsz",
+            appKey: "JZWLrweBHY4Txn5nZuLwFzim",
+            avatar:"identicon",
+            placeholder: "Send a comment for this post!",
+            guest_info:guest_info,
+            pageSize:"10"
+        })
+</script>
+
+
+</body>
+</html>

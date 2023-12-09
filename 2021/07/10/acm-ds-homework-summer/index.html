@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html lang=en>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+    <meta name="description" content="前言离上一篇博客的时间算来已经有3个月了，趁着现在期末周结束的闲暇时光总结一下本学期数据结构的小作业，以及涉及到的算法。 以及不得不说，PPCA真的很累。  P1113 Travel题意 给定 M 叉树的前序遍历和后序遍历，求树可能的形态总数。 解法 我们知道给定前序遍历（或者后序遍历）+ 中序遍历可以确定一棵二叉树，而前序和后序不能。原因在于前序遍历是：根 左 右，后序遍历是：左 右 根，我们发">
+<meta property="og:type" content="article">
+<meta property="og:title" content="盛夏时分，数据结构小作业总结">
+<meta property="og:url" content="https://siriusneo.github.io/2021/07/10/acm-ds-homework-summer/index.html">
+<meta property="og:site_name" content="Metric Space | 度量空间">
+<meta property="og:description" content="前言离上一篇博客的时间算来已经有3个月了，趁着现在期末周结束的闲暇时光总结一下本学期数据结构的小作业，以及涉及到的算法。 以及不得不说，PPCA真的很累。  P1113 Travel题意 给定 M 叉树的前序遍历和后序遍历，求树可能的形态总数。 解法 我们知道给定前序遍历（或者后序遍历）+ 中序遍历可以确定一棵二叉树，而前序和后序不能。原因在于前序遍历是：根 左 右，后序遍历是：左 右 根，我们发">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2021-07-10T07:42:52.000Z">
+<meta property="article:modified_time" content="2023-12-09T17:48:50.520Z">
+<meta property="article:author" content="Chaofan">
+<meta name="twitter:card" content="summary">
+    
+    
+      
+        
+          <link rel="shortcut icon" href="/images/favicon.ico">
+        
+      
+      
+        
+          <link rel="icon" type="image/png" href="/images/android-chrome-192x192.png" sizes="192x192">
+        
+      
+      
+        
+          <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+        
+      
+    
+    <!-- title -->
+    <title>盛夏时分，数据结构小作业总结</title>
+    <!-- async scripts -->
+    <!-- Google Analytics -->
+
+
+    <!-- Umami Analytics -->
+
+
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+    <!-- rss -->
+    
+    
+	<!-- mathjax -->
+	
+		<script type="text/x-mathjax-config">
+		  MathJax.Hub.Config({
+			tex2jax: {
+			  skipTags: ['script', 'noscript', 'style', 'textarea', 'pre'],
+			  inlineMath: [['$','$']]
+			}
+		  });
+		</script>
+		<script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-MML-AM_CHTML' async></script>
+	
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#" aria-label="Menu"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#" aria-label="Menu"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" aria-label="Top" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fa-solid fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/about/">About</a></li><!--
+     --><!--
+       --><li><a href="/archives/">Articles</a></li><!--
+     --><!--
+       --><li><a href="/links/">Links</a></li><!--
+     --><!--
+       --><li><a target="_blank" rel="noopener" href="https://siriusneo.top">Personal Page</a></li><!--
+     -->
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" aria-label="Previous post" href="/2021/08/13/touhou-party-2/"><i class="fa-solid fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" aria-label="Next post" href="/2021/04/06/qingming/"><i class="fa-solid fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" aria-label="Back to top" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" aria-label="Share post" href="#"><i class="fa-solid fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://siriusneo.github.io/2021/07/10/acm-ds-homework-summer/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://siriusneo.github.io/2021/07/10/acm-ds-homework-summer/&text=盛夏时分，数据结构小作业总结"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://siriusneo.github.io/2021/07/10/acm-ds-homework-summer/&title=盛夏时分，数据结构小作业总结"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://siriusneo.github.io/2021/07/10/acm-ds-homework-summer/&is_video=false&description=盛夏时分，数据结构小作业总结"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=盛夏时分，数据结构小作业总结&body=Check out this article: https://siriusneo.github.io/2021/07/10/acm-ds-homework-summer/"><i class="fa-solid fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://siriusneo.github.io/2021/07/10/acm-ds-homework-summer/&title=盛夏时分，数据结构小作业总结"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://siriusneo.github.io/2021/07/10/acm-ds-homework-summer/&title=盛夏时分，数据结构小作业总结"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://siriusneo.github.io/2021/07/10/acm-ds-homework-summer/&title=盛夏时分，数据结构小作业总结"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://siriusneo.github.io/2021/07/10/acm-ds-homework-summer/&title=盛夏时分，数据结构小作业总结"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://siriusneo.github.io/2021/07/10/acm-ds-homework-summer/&name=盛夏时分，数据结构小作业总结&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://siriusneo.github.io/2021/07/10/acm-ds-homework-summer/&t=盛夏时分，数据结构小作业总结"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    
+    
+      <div id="toc">
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%89%8D%E8%A8%80"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#P1113-Travel"><span class="toc-number">2.</span> <span class="toc-text">P1113 Travel</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#P1114-String"><span class="toc-number">3.</span> <span class="toc-text">P1114 String</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#P1115-Interesting-Knapsack"><span class="toc-number">4.</span> <span class="toc-text">P1115 Interesting Knapsack</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#P1116-Forest"><span class="toc-number">5.</span> <span class="toc-text">P1116 Forest</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#P1117-Query-on-a-path"><span class="toc-number">6.</span> <span class="toc-text">P1117 Query on a path</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#P1129-%E6%8B%89%E4%B8%81%E8%88%9E%E9%85%8D%E5%AF%B9%E8%AF%BE"><span class="toc-number">7.</span> <span class="toc-text">P1129 拉丁舞配对课</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#P1130-%E5%88%A0%E9%99%A4%E6%95%B0%E5%AD%97"><span class="toc-number">8.</span> <span class="toc-text">P1130 删除数字</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#P1131-%E5%8A%A0%E5%88%86%E4%BA%8C%E5%8F%89%E6%A0%91"><span class="toc-number">9.</span> <span class="toc-text">P1131 加分二叉树</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#P1133-%E4%BA%8C%E5%93%A5%E5%90%83%E7%B3%96"><span class="toc-number">10.</span> <span class="toc-text">P1133 二哥吃糖</span></a></li></ol>
+      </div>
+    
+  </span>
+</div>
+
+    
+    <div class="content index py4 ">
+        
+        <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+<article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle p-name" itemprop="name headline">
+        盛夏时分，数据结构小作业总结
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author p-author h-card" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span class="p-name" itemprop="name">Chaofan</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2021-07-10T07:42:52.000Z" class="dt-published" itemprop="datePublished">2021-07-10</time>
+        
+      
+    </div>
+
+
+       
+    <div class="article-category">
+        <i class="fa-solid fa-archive"></i>
+        <a class="category-link" href="/categories/learning/">「掌上的纯光」</a>
+    </div>
+
+
+       
+
+      | <i class="fa fa-eye fa-fw post-meta-icon"></i><span style="color: #8c8c8c; font-size: 13.6px;"> Views: </span><span id="busuanzi_value_page_pv"></span>
+      | <i class="far fa-file-word fa-fw post-meta-icon"></i><span style="color: #8c8c8c; font-size: 13.6px;"> Total Words: 4.2k</span>
+      | <i class="far fa-clock fa-fw post-meta-icon"></i><span style="color: #8c8c8c; font-size: 13.6px;"> Reading Time: 4 mins.</span>
+    </div>
+  </header>
+  
+
+  <div class="content e-content" itemprop="articleBody">
+    <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>离上一篇博客的时间算来已经有3个月了，趁着现在期末周结束的闲暇时光总结一下本学期数据结构的小作业，以及涉及到的算法。</p>
+<p>以及不得不说，PPCA真的很累。</p>
+<hr>
+<h2 id="P1113-Travel"><a href="#P1113-Travel" class="headerlink" title="P1113 Travel"></a>P1113 Travel</h2><p><strong>题意</strong></p>
+<p>给定 M 叉树的前序遍历和后序遍历，求树可能的形态总数。</p>
+<p><strong>解法</strong></p>
+<p>我们知道给定前序遍历（或者后序遍历）+ 中序遍历可以确定一棵二叉树，而前序和后序不能。原因在于前序遍历是：根 左 右，后序遍历是：左 右 根，我们发现它们对于左右儿子是不做区分的。因此给定前序和后序只能确定父子关系。</p>
+<p>知道这件事后这道题就很好解决：只要把父子关系都确定出来，再统计可能的排列数就好。</p>
+<hr>
+<h2 id="P1114-String"><a href="#P1114-String" class="headerlink" title="P1114 String"></a>P1114 String</h2><p><strong>题意</strong></p>
+<p>维护一个小写字母组成的字符串，有 $M$ 次操作，每次将一段区间按升序或降序排列。最后输出操作后的字符串。$M \le 1e6$</p>
+<p><strong>解法</strong></p>
+<p>考虑字符集如果只有0和1，每次排列实际上就是将一段赋值为0，另一段赋值为1。因此我们考虑维护一棵 “赋值线段树”。对于此题，由于字符集不大，因此维护27棵线段树即可解决问题。</p>
+<p>具体来讲，对于一个操作，按字母顺序以及这个区间内的字母个数（这是可以区间查询的）一段段赋值。</p>
+<hr>
+<h2 id="P1115-Interesting-Knapsack"><a href="#P1115-Interesting-Knapsack" class="headerlink" title="P1115 Interesting Knapsack"></a>P1115 Interesting Knapsack</h2><p><strong>题意</strong></p>
+<p>确实很 Interestring，而且也很经典。</p>
+<p>树形背包问题。$N$ 个物品，每个物品有价值 $v_i$ 以及重量 $w_i$，以及可能有一个依赖关系，即购买第 $j$ 件物品前必须先购买第 $i$ 件物品。保证依赖关系为拓扑图。$N \le 5000$</p>
+<p><strong>解法</strong></p>
+<p>常规的树形背包复杂度是 $O(N^3)$ 的，转移方程考虑树形 DP 的经典设计，$f[u][i]$ 表示在 u 的子树（包括自己）中已使用空间为 i 的最优价值（即对树上每个节点做一次背包，假设每个节点容量都是 1）</p>
+<script type="math/tex; mode=display">
+f[u][i] = \max(f[u][j] + f[v][i-j] + v[v])</script><p>对于一个子树节点，需要枚举两层循环。</p>
+<p>而这题数据范围是 $O(N^2)$ 的，我们考虑复杂度的瓶颈：我们枚举了要选择的节点个数，而实际上子树我们也枚举过一遍，这里面重复做了事情。</p>
+<p>因此我们考虑使用前面已经搜过的信息，考虑按 dfs 序转移。设 $f[i][j]$ 表示 dp 到 dfs 序为 i 的节点，已经选了 j 个节点，则选 or 不选转移如下</p>
+<script type="math/tex; mode=display">
+f[i][j] = max(f[i+siz[dfnToPos[i]]][j], f[i+1][j-w[dfnToPos[i]]]+v[dfnToPos[i]])</script><hr>
+<h2 id="P1116-Forest"><a href="#P1116-Forest" class="headerlink" title="P1116 Forest"></a>P1116 Forest</h2><p><strong>题意</strong></p>
+<p>一棵树不断删边，每删一次边询问一次所有树直径的乘积。$N \le 10^5$</p>
+<p><strong>解法</strong></p>
+<p>有点难，看了题解才会。首先遇到这种不断维护的问题都可以想想能否离线，这题就可以倒着做（也是一种离线）</p>
+<p>考虑树的合并，有一个结论：新树的直径两端点一定在原树直径两端点中。</p>
+<hr>
+<h2 id="P1117-Query-on-a-path"><a href="#P1117-Query-on-a-path" class="headerlink" title="P1117 Query on a path"></a>P1117 Query on a path</h2><p><strong>题意</strong></p>
+<p>一条链上连有另外 $M$ 条边，规定至多经过一次这种边，$Q$ 次询问求途中两点最短路。（都有权值）</p>
+<p><strong>解法</strong></p>
+<p>先将链上的边权记前缀和，则只走第一类边代价就是 $sum[v] - sum[u]$，考虑走第二类边 $a, b, w$，代价就是 $sum[a]-sum[u]+sum[v]-sum[b]+w$，也就是说只要最小化 $sum[a]-sum[b]+w$</p>
+<p>于是问题抽象为有若干个带权区间，每次询问落在固定区间内的最小值。二维约束问题按惯例仍然是一维排序一维树状数组。</p>
+<hr>
+<h2 id="P1129-拉丁舞配对课"><a href="#P1129-拉丁舞配对课" class="headerlink" title="P1129 拉丁舞配对课"></a>P1129 拉丁舞配对课</h2><p><strong>题意</strong></p>
+<p>n 名同学排成一排，每个同学都有一个拉丁舞水平值和一个性别。每次都会请一堆相邻的、水平差最小的异性出列，出列后两边往中间靠拢，即 ABCD ，BC 出列后变成 AD，AD 相邻。</p>
+<p><strong>解法</strong></p>
+<p>用堆模拟即可。</p>
+<hr>
+<h2 id="P1130-删除数字"><a href="#P1130-删除数字" class="headerlink" title="P1130 删除数字"></a>P1130 删除数字</h2><p><strong>题意</strong></p>
+<p>定义这样一个集合：</p>
+<ul>
+<li>1 是集合元素。</li>
+<li>若 P 是集合元素，则 2P+1、4P+5 也是集合元素。</li>
+</ul>
+<p>现在将这个集合的前 k 个数字并成一个数字串 （e.g. 137915…），然后删除数字串中 m 个位置的数字，使得剩下的数最大，问删除后的数字是多少。</p>
+<p><strong>解法</strong></p>
+<p>集合的定义是幌子，只要确信数字串长度不会太大就好了，考虑删除数字。</p>
+<p>1379… 如果当前数字的后一个数字比自己大，那么删掉当前数字一定更优，因此一直这样直到用完 m 次机会即可。</p>
+<hr>
+<h2 id="P1131-加分二叉树"><a href="#P1131-加分二叉树" class="headerlink" title="P1131 加分二叉树"></a>P1131 加分二叉树</h2><p><strong>题意</strong></p>
+<p>对于一个每个点有权值 $d[i]$ 的二叉树，定义子树 u 的分数为：</p>
+<script type="math/tex; mode=display">f[u] = f[left] \cdot f[right] + d[u]</script><p>且规定只有一边子树，另一侧空树的分数算作 1；叶子节点，分数即为 $d[i]$</p>
+<p>试求一个中序遍历为 1, 2, 3, … n 且根节点分数最高的二叉树。</p>
+<p><strong>解法</strong></p>
+<p>中序遍历可以看作是投影，对于一个既定的中序遍历，我们可以选择其中任意一个位置 pos 作为根节点，那么左子树中序遍历就是 $[l, pos-1]$，右子树就是 $[pos+1, r]$，我们记 $f[l][r]$ 为加分值，那么</p>
+<script type="math/tex; mode=display">
+f[l][r]=\max(f[l][k-1] \cdot f[k+1][r] + d[k])</script><hr>
+<h2 id="P1133-二哥吃糖"><a href="#P1133-二哥吃糖" class="headerlink" title="P1133 二哥吃糖"></a>P1133 二哥吃糖</h2><p><strong>题意</strong></p>
+<p>初始状态所有盒子里都有一颗糖，有三种类型的操作：</p>
+<ul>
+<li>合并两个盒子</li>
+<li>吃掉一个盒子里的所有糖</li>
+<li>询问当前糖果数第 P 多的盒子有多少糖， $1 \le P \le 10$</li>
+</ul>
+<p><strong>解法</strong></p>
+<p>并查集，删除打标记。P 范围这么小的话直接用堆就可以，再大可以考虑用平衡树维护。</p>
+
+  </div>
+</article>
+
+
+
+    <div class="blog-post-comments">
+        <div class="vcomment"></div>
+    </div>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+        
+          <li><a href="/">Home</a></li>
+        
+          <li><a href="/about/">About</a></li>
+        
+          <li><a href="/archives/">Articles</a></li>
+        
+          <li><a href="/links/">Links</a></li>
+        
+          <li><a target="_blank" rel="noopener" href="https://siriusneo.top">Personal Page</a></li>
+        
+      </ul>
+    </div>
+
+    
+    
+      <div id="toc-footer" style="display: none">
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%89%8D%E8%A8%80"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#P1113-Travel"><span class="toc-number">2.</span> <span class="toc-text">P1113 Travel</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#P1114-String"><span class="toc-number">3.</span> <span class="toc-text">P1114 String</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#P1115-Interesting-Knapsack"><span class="toc-number">4.</span> <span class="toc-text">P1115 Interesting Knapsack</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#P1116-Forest"><span class="toc-number">5.</span> <span class="toc-text">P1116 Forest</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#P1117-Query-on-a-path"><span class="toc-number">6.</span> <span class="toc-text">P1117 Query on a path</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#P1129-%E6%8B%89%E4%B8%81%E8%88%9E%E9%85%8D%E5%AF%B9%E8%AF%BE"><span class="toc-number">7.</span> <span class="toc-text">P1129 拉丁舞配对课</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#P1130-%E5%88%A0%E9%99%A4%E6%95%B0%E5%AD%97"><span class="toc-number">8.</span> <span class="toc-text">P1130 删除数字</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#P1131-%E5%8A%A0%E5%88%86%E4%BA%8C%E5%8F%89%E6%A0%91"><span class="toc-number">9.</span> <span class="toc-text">P1131 加分二叉树</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#P1133-%E4%BA%8C%E5%93%A5%E5%90%83%E7%B3%96"><span class="toc-number">10.</span> <span class="toc-text">P1133 二哥吃糖</span></a></li></ol>
+      </div>
+    
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://siriusneo.github.io/2021/07/10/acm-ds-homework-summer/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://siriusneo.github.io/2021/07/10/acm-ds-homework-summer/&text=盛夏时分，数据结构小作业总结"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://siriusneo.github.io/2021/07/10/acm-ds-homework-summer/&title=盛夏时分，数据结构小作业总结"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://siriusneo.github.io/2021/07/10/acm-ds-homework-summer/&is_video=false&description=盛夏时分，数据结构小作业总结"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=盛夏时分，数据结构小作业总结&body=Check out this article: https://siriusneo.github.io/2021/07/10/acm-ds-homework-summer/"><i class="fa-solid fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://siriusneo.github.io/2021/07/10/acm-ds-homework-summer/&title=盛夏时分，数据结构小作业总结"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://siriusneo.github.io/2021/07/10/acm-ds-homework-summer/&title=盛夏时分，数据结构小作业总结"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://siriusneo.github.io/2021/07/10/acm-ds-homework-summer/&title=盛夏时分，数据结构小作业总结"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://siriusneo.github.io/2021/07/10/acm-ds-homework-summer/&title=盛夏时分，数据结构小作业总结"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://siriusneo.github.io/2021/07/10/acm-ds-homework-summer/&name=盛夏时分，数据结构小作业总结&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://siriusneo.github.io/2021/07/10/acm-ds-homework-summer/&t=盛夏时分，数据结构小作业总结"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fa-solid fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        
+          <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fa-solid fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fa-solid fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy;
+    
+    
+    2020-2023
+    Chaofan.
+    Powered by <a target="_blank" rel="noopener" href="https://github.com/probberechts/hexo-theme-cactus">Cactus</a>. <a target="_blank" rel="noopener" href="https://github.com/SiriusNEO/hexo-theme-cactus-customized">Customized</a> by me :).
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/about/">About</a></li><!--
+     --><!--
+       --><li><a href="/archives/">Articles</a></li><!--
+     --><!--
+       --><li><a href="/links/">Links</a></li><!--
+     --><!--
+       --><li><a target="_blank" rel="noopener" href="https://siriusneo.top">Personal Page</a></li><!--
+     -->
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+
+
+  <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" crossorigin="anonymous" onload="this.onload=null;this.rel='stylesheet'"/>
+
+
+    <!-- jquery -->
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" crossorigin="anonymous"></script>
+
+
+
+
+<!-- clipboard -->
+
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.7/clipboard.min.js" crossorigin="anonymous"></script>
+  
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"Copy to clipboard!\">";
+    btn += '<i class="fa-regular fa-clone"></i>';
+    btn += '</span>';
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "Copied!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Baidu Analytics -->
+
+<!-- Cloudflare Analytics -->
+
+<!-- Disqus Comments -->
+
+<!-- utterances Comments -->
+
+<!-- Valine Comments -->
+
+    <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+    <script src="//unpkg.com/valine@latest/dist/Valine.min.js"></script>
+    <script type="text/javascript">
+        var notify = 'false' == true ? true : false;
+        var verify = 'false' == true ? true : false;
+        var GUEST_INFO = ['nick','mail','link'];
+        var guest_info = 'nick,mail,link'.split(',').filter(function(item){
+          return GUEST_INFO.indexOf(item) > -1
+        });
+        guest_info = guest_info.length == 0 ? GUEST_INFO :guest_info;
+        new Valine({
+            el: '.vcomment',
+            notify: notify,
+            verify: verify,
+            appId: "AyDHJHMfyHGtgF5Lc8CG4dpA-gzGzoHsz",
+            appKey: "JZWLrweBHY4Txn5nZuLwFzim",
+            avatar:"identicon",
+            placeholder: "Send a comment for this post!",
+            guest_info:guest_info,
+            pageSize:"10"
+        })
+</script>
+
+
+</body>
+</html>

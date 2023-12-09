@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html lang=en>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+    <meta name="description" content="前言这个东西算是数学分析里的常客了，算算到目前为止也出现了3次。但是总感觉这一套听起来有点不是那么自然（相比于 Cauchy 和 d’Alembert 等这些证明过程直接、思路流畅的），这直接导致的后果就是让初见者对它印象不深、容易遗忘等。 但AD审敛法说穿了也就是一种相乘求和式的收敛规则，再怎么讲也没办法转化为多么直观的东西，所以此博客一是为了我自己加深印象，二是希望能让看博客的你有那么一点点新">
+<meta property="og:type" content="article">
+<meta property="og:title" content="不是钙奶，是判别法  AD审敛">
+<meta property="og:url" content="https://siriusneo.github.io/2021/02/25/abel-dirichlet/index.html">
+<meta property="og:site_name" content="Metric Space | 度量空间">
+<meta property="og:description" content="前言这个东西算是数学分析里的常客了，算算到目前为止也出现了3次。但是总感觉这一套听起来有点不是那么自然（相比于 Cauchy 和 d’Alembert 等这些证明过程直接、思路流畅的），这直接导致的后果就是让初见者对它印象不深、容易遗忘等。 但AD审敛法说穿了也就是一种相乘求和式的收敛规则，再怎么讲也没办法转化为多么直观的东西，所以此博客一是为了我自己加深印象，二是希望能让看博客的你有那么一点点新">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://siriusneo.github.io/2021/02/25/abel-dirichlet/1.jpg">
+<meta property="article:published_time" content="2021-02-25T13:17:06.000Z">
+<meta property="article:modified_time" content="2023-12-09T17:49:00.876Z">
+<meta property="article:author" content="Chaofan">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://siriusneo.github.io/2021/02/25/abel-dirichlet/1.jpg">
+    
+    
+      
+        
+          <link rel="shortcut icon" href="/images/favicon.ico">
+        
+      
+      
+        
+          <link rel="icon" type="image/png" href="/images/android-chrome-192x192.png" sizes="192x192">
+        
+      
+      
+        
+          <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+        
+      
+    
+    <!-- title -->
+    <title>不是钙奶，是判别法  AD审敛</title>
+    <!-- async scripts -->
+    <!-- Google Analytics -->
+
+
+    <!-- Umami Analytics -->
+
+
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+    <!-- rss -->
+    
+    
+	<!-- mathjax -->
+	
+		<script type="text/x-mathjax-config">
+		  MathJax.Hub.Config({
+			tex2jax: {
+			  skipTags: ['script', 'noscript', 'style', 'textarea', 'pre'],
+			  inlineMath: [['$','$']]
+			}
+		  });
+		</script>
+		<script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-MML-AM_CHTML' async></script>
+	
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#" aria-label="Menu"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#" aria-label="Menu"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" aria-label="Top" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fa-solid fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/about/">About</a></li><!--
+     --><!--
+       --><li><a href="/archives/">Articles</a></li><!--
+     --><!--
+       --><li><a href="/links/">Links</a></li><!--
+     --><!--
+       --><li><a target="_blank" rel="noopener" href="https://siriusneo.top">Personal Page</a></li><!--
+     -->
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" aria-label="Previous post" href="/2021/03/29/acm-ds-homework-spring/"><i class="fa-solid fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" aria-label="Next post" href="/2021/02/22/leftist-tree/"><i class="fa-solid fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" aria-label="Back to top" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" aria-label="Share post" href="#"><i class="fa-solid fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://siriusneo.github.io/2021/02/25/abel-dirichlet/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://siriusneo.github.io/2021/02/25/abel-dirichlet/&text=不是钙奶，是判别法  AD审敛"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://siriusneo.github.io/2021/02/25/abel-dirichlet/&title=不是钙奶，是判别法  AD审敛"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://siriusneo.github.io/2021/02/25/abel-dirichlet/&is_video=false&description=不是钙奶，是判别法  AD审敛"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=不是钙奶，是判别法  AD审敛&body=Check out this article: https://siriusneo.github.io/2021/02/25/abel-dirichlet/"><i class="fa-solid fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://siriusneo.github.io/2021/02/25/abel-dirichlet/&title=不是钙奶，是判别法  AD审敛"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://siriusneo.github.io/2021/02/25/abel-dirichlet/&title=不是钙奶，是判别法  AD审敛"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://siriusneo.github.io/2021/02/25/abel-dirichlet/&title=不是钙奶，是判别法  AD审敛"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://siriusneo.github.io/2021/02/25/abel-dirichlet/&title=不是钙奶，是判别法  AD审敛"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://siriusneo.github.io/2021/02/25/abel-dirichlet/&name=不是钙奶，是判别法  AD审敛&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://siriusneo.github.io/2021/02/25/abel-dirichlet/&t=不是钙奶，是判别法  AD审敛"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    
+    
+      <div id="toc">
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%89%8D%E8%A8%80"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AE%80%E4%BB%8B"><span class="toc-number">2.</span> <span class="toc-text">简介</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%8E%A8%E5%AF%BC"><span class="toc-number">3.</span> <span class="toc-text">推导</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%B8%BA%E4%BB%80%E4%B9%88%E8%A6%81%E6%9C%89%E9%82%A3%E4%B8%A4%E4%B8%AA%E5%89%8D%E7%BD%AE%E6%9D%A1%E4%BB%B6%EF%BC%9F"><span class="toc-number">3.0.1.</span> <span class="toc-text">为什么要有那两个前置条件？</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%B6%E5%AE%83"><span class="toc-number">4.</span> <span class="toc-text">其它</span></a></li></ol>
+      </div>
+    
+  </span>
+</div>
+
+    
+    <div class="content index py4 ">
+        
+        <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+<article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle p-name" itemprop="name headline">
+        不是钙奶，是判别法  AD审敛
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author p-author h-card" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span class="p-name" itemprop="name">Chaofan</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2021-02-25T13:17:06.000Z" class="dt-published" itemprop="datePublished">2021-02-25</time>
+        
+      
+    </div>
+
+
+       
+    <div class="article-category">
+        <i class="fa-solid fa-archive"></i>
+        <a class="category-link" href="/categories/learning/">「掌上的纯光」</a>
+    </div>
+
+
+       
+
+      | <i class="fa fa-eye fa-fw post-meta-icon"></i><span style="color: #8c8c8c; font-size: 13.6px;"> Views: </span><span id="busuanzi_value_page_pv"></span>
+      | <i class="far fa-file-word fa-fw post-meta-icon"></i><span style="color: #8c8c8c; font-size: 13.6px;"> Total Words: 4.2k</span>
+      | <i class="far fa-clock fa-fw post-meta-icon"></i><span style="color: #8c8c8c; font-size: 13.6px;"> Reading Time: 4 mins.</span>
+    </div>
+  </header>
+  
+
+  <div class="content e-content" itemprop="articleBody">
+    <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>这个东西算是数学分析里的常客了，算算到目前为止也出现了3次。但是总感觉这一套听起来有点不是那么自然（相比于 Cauchy 和 d’Alembert 等这些证明过程直接、思路流畅的），这直接导致的后果就是让初见者对它印象不深、容易遗忘等。</p>
+<p>但AD审敛法说穿了也就是一种相乘求和式的收敛规则，再怎么讲也没办法转化为多么直观的东西，所以此博客一是为了我自己加深印象，二是希望能让看博客的你有那么一点点新感触，仅此而已。</p>
+<hr>
+<h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><p>Abel-Dirichlet 判别法在数学分析的三个地方出现过：反常积分收敛判断、数项级数收敛判断、函数项级数一致收敛判断。这里以<strong>数项级数</strong>为例来详细讲讲，其它两种其实都可以看成自然而然的推广形式。</p>
+<p>数项级数中它的定义如下：</p>
+<blockquote>
+<p>$\{a_n\}$ 单调有界，$\{\sum\limits_{i=1}^nb_n\}$ 有界. 再添加如下条件之一都可得到 $\{\sum\limits_{i=1}^na_ib_i\}$ 收敛.</p>
+<p>$1.\ \textbf{(Abel)}\ \sum\limits_{i=1}^{\infty}b_i\ 收敛.$</p>
+<p>$2. \ \textbf{(Dirichlet)}\ \lim\limits_{n\rightarrow\infty}a_n=0.$</p>
+</blockquote>
+<p>这里我为了下面的解释方便所以稍微整理了一下定理的形式，所以和教科书上有点不一样。</p>
+<p>当然干看这个肯定还是比较难受的，下面我们在推导过程中详细剖析一下它的道理。</p>
+<hr>
+<h2 id="推导"><a href="#推导" class="headerlink" title="推导"></a>推导</h2><h4 id="为什么要有那两个前置条件？"><a href="#为什么要有那两个前置条件？" class="headerlink" title="为什么要有那两个前置条件？"></a>为什么要有那两个前置条件？</h4><p>其实这个前置条件是我整理得到的，也就是 Abel 和 Dirichlet 它们共同要求的性质。</p>
+<p>那么它们为什么不约而同都会需要这些呢？有界可能好理解，因为可以进行放缩；那单调又算怎么回事？</p>
+<p>我们首先要弄清楚AD判别法是为了干什么。既然叫判别法，肯定是为了判断——判断数列是否收敛。更准确地，AD专门判断形如两个数列对应项乘起来得到的级数的收敛情况，即如下的<strong>乘积形式</strong>：<script type="math/tex">\sum_{i=1}^na_ib_i</script></p>
+<p>由于我们只关心它收不收敛，不关心它收敛到哪（至少在这个问题上我们是不关心的），所以我们直接采用<strong>柯西收敛原理</strong>。这个定理的好处在于我们可以仅通过级数本身判断其收敛情况，而不用关心极限点。</p>
+<p>也就是说，我们要得到如下形式的不等式：</p>
+<script type="math/tex; mode=display">\sum_{i=n+1}^ma_ib_i \le \varepsilon</script><p>我们的目标就是给这两个数列加上一定的条件，使得它满足柯西条件，进而能判断它收敛。不过只是这个形式并不好操作——<strong>求和号</strong>的存在极大限制了我们进行分析，大神Abel提供了一种很棒的变形思路，能帮助我们处理这个式子：</p>
+<blockquote>
+<p><strong>(定理) Abel变换:</strong></p>
+<script type="math/tex; mode=display">\sum_{i=1}^na_ib_i = a_nB_n-\sum_{i=1}^{n-1}(a_{i+1}-a_i)B_i</script><p>其中 <script type="math/tex">B_i=\sum_{j=1}^i b_j</script> 即 b 的前 n 项和。</p>
+</blockquote>
+<p>你可能会觉得这样变换反而增加了复杂度，能有什么好处？但事实上，观察后面那一项式子，我们发现出现了 $a_{i+1}-a_i$ 这样的<strong>差分形式</strong>，这种东西在求和时很有希望能<strong>临项相消</strong>掉，有助于我们<strong>去掉求和符号</strong>。</p>
+<p>这个变换其实是个很初等的变换，只是写成了这样的形式不太好看出来。事实上它可以理解成“离散分部积分公式”——只要把求前 n 项和当成积分，差分形式当成微分就好。</p>
+<p>此外还有个很直观的理解，可以看下面这张图。</p>
+<p><img src="1.jpg" alt=""></p>
+<p>然后为了让 $\sum_{i=1}^{n-1}(a_{i+1}-a_i)B_i$ 能够临项相消，我们需要想办法去掉 B 。这里我们添加条件：<strong>数列 $\{B_i\}$ 有界</strong>，使得我们可以直接放掉。</p>
+<p>有界除了有“把数列放缩成常数”这种作用外，还起到限制规模的效果——也就是说界永远是确定的数，这样如果能产生 $M\varepsilon$ 这种式子，我们的目的也达到了（其中 M 是界，也就是我们常说的 $ \varepsilon$ 可以乘上一个倍数这个道理）</p>
+<p>假设 $\exists M &gt; 0,\ \forall n,\ B_n \le M$，那么</p>
+<script type="math/tex; mode=display">
+\sum_{i=1}^na_ib_i = a_nB_n-\sum_{i=1}^{n-1}(a_{i+1}-a_i)B_i \le a_nB_n+\sum_{i=1}^{n-1}a_{i+1}-a_iB_i \le M(a_n+\sum_{i=1}^{n-1}a_{i+1}-a_i)</script><p>然后我们发现加了加了绝对值后出现了一个尴尬的事：$a_{i+1}-a_i$ 邻项是消不掉的。怎样去掉绝对值号呢？我们添加条件：<strong>数列 $a_i$ 单调</strong>，这样就使得</p>
+<script type="math/tex; mode=display">
+\sum_{i=1}^{n-1}a_{i+1}-a_i=\sum_{i=1}^{n-1}(a_{i+1}-a_i)=a_n-a_1</script><p>这样原式就可以放缩为</p>
+<script type="math/tex; mode=display">
+\sum_{i=1}^na_ib_i \le M(a_n+a_n-a_1) \le M(a_1+2a_n)</script><p>考虑我们使用的是柯西收敛原理，所以应该是</p>
+<script type="math/tex; mode=display">
+\sum_{i=n+1}^{n+p}a_ib_i \le M(a_{n+p}+a_{n+p}-a_{n+1}) \le M(a_{n+1}+2a_{n+p})</script><p>注意此时起点变到了 n+1，因此 B 的定义也要改写一下</p>
+<script type="math/tex; mode=display">
+B_i=\sum_{j=n+1}^{n+i}b_j</script><p>同时新的 B 的界也会改变</p>
+<script type="math/tex; mode=display">
+B_i=\sum_{j=n+1}^{n+i}b_j=\sum_{j=1}^{n+i}b_j-\sum_{j=1}^{n}b_j \le 2M</script><p>这下就方便我们继续添加约束了。此时 B 已经被我们放缩成有界量，而我们肯定不希望 $a_{n+1}$ 和 $a_{n+p}$ 无界，因此我们再添加条件：<strong>数列 $a_i$ 有界</strong>，为了区分两个界，分别记为 $M_a,\ M_B$，放缩结果就是</p>
+<script type="math/tex; mode=display">
+\sum_{i={n+1}}^{n+p}a_ib_i \le 6M_aM_B</script><p>接下来为了达成柯西列条件，我们只需要让 $M_a$ 或者 $M_B$ “变成” $\varepsilon$。</p>
+<p>如果想让 $M_a$ 变，就需要添加条件：$\lim\limits_{n\rightarrow\infty}a_n=0$，也即 Dirichlet 收敛准则，这是因为只要 n 足够大，$a_{n+1},\ a_{n+p}$ 都能小于 $\varepsilon$；</p>
+<p>如果想让 $M_B$ 变，就需要添加条件：$\sum\limits_{i=1}^{\infty}b_i$ 收敛，也即 Abel 收敛准则，这是因为此时根据柯西收敛原理，当 n 足够大时可以有 $ B_i &lt; \varepsilon $。</p>
+<p>至此，我们相对自然地引入了A-D判别法。</p>
+<hr>
+<h2 id="其它"><a href="#其它" class="headerlink" title="其它"></a>其它</h2><p>都是一家之言，大家选择性吸收就好，笔误欢迎指正！</p>
+
+  </div>
+</article>
+
+
+
+    <div class="blog-post-comments">
+        <div class="vcomment"></div>
+    </div>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+        
+          <li><a href="/">Home</a></li>
+        
+          <li><a href="/about/">About</a></li>
+        
+          <li><a href="/archives/">Articles</a></li>
+        
+          <li><a href="/links/">Links</a></li>
+        
+          <li><a target="_blank" rel="noopener" href="https://siriusneo.top">Personal Page</a></li>
+        
+      </ul>
+    </div>
+
+    
+    
+      <div id="toc-footer" style="display: none">
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%89%8D%E8%A8%80"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AE%80%E4%BB%8B"><span class="toc-number">2.</span> <span class="toc-text">简介</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%8E%A8%E5%AF%BC"><span class="toc-number">3.</span> <span class="toc-text">推导</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%B8%BA%E4%BB%80%E4%B9%88%E8%A6%81%E6%9C%89%E9%82%A3%E4%B8%A4%E4%B8%AA%E5%89%8D%E7%BD%AE%E6%9D%A1%E4%BB%B6%EF%BC%9F"><span class="toc-number">3.0.1.</span> <span class="toc-text">为什么要有那两个前置条件？</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%B6%E5%AE%83"><span class="toc-number">4.</span> <span class="toc-text">其它</span></a></li></ol>
+      </div>
+    
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://siriusneo.github.io/2021/02/25/abel-dirichlet/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://siriusneo.github.io/2021/02/25/abel-dirichlet/&text=不是钙奶，是判别法  AD审敛"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://siriusneo.github.io/2021/02/25/abel-dirichlet/&title=不是钙奶，是判别法  AD审敛"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://siriusneo.github.io/2021/02/25/abel-dirichlet/&is_video=false&description=不是钙奶，是判别法  AD审敛"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=不是钙奶，是判别法  AD审敛&body=Check out this article: https://siriusneo.github.io/2021/02/25/abel-dirichlet/"><i class="fa-solid fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://siriusneo.github.io/2021/02/25/abel-dirichlet/&title=不是钙奶，是判别法  AD审敛"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://siriusneo.github.io/2021/02/25/abel-dirichlet/&title=不是钙奶，是判别法  AD审敛"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://siriusneo.github.io/2021/02/25/abel-dirichlet/&title=不是钙奶，是判别法  AD审敛"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://siriusneo.github.io/2021/02/25/abel-dirichlet/&title=不是钙奶，是判别法  AD审敛"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://siriusneo.github.io/2021/02/25/abel-dirichlet/&name=不是钙奶，是判别法  AD审敛&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://siriusneo.github.io/2021/02/25/abel-dirichlet/&t=不是钙奶，是判别法  AD审敛"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fa-solid fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        
+          <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fa-solid fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fa-solid fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy;
+    
+    
+    2020-2023
+    Chaofan.
+    Powered by <a target="_blank" rel="noopener" href="https://github.com/probberechts/hexo-theme-cactus">Cactus</a>. <a target="_blank" rel="noopener" href="https://github.com/SiriusNEO/hexo-theme-cactus-customized">Customized</a> by me :).
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/about/">About</a></li><!--
+     --><!--
+       --><li><a href="/archives/">Articles</a></li><!--
+     --><!--
+       --><li><a href="/links/">Links</a></li><!--
+     --><!--
+       --><li><a target="_blank" rel="noopener" href="https://siriusneo.top">Personal Page</a></li><!--
+     -->
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+
+
+  <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" crossorigin="anonymous" onload="this.onload=null;this.rel='stylesheet'"/>
+
+
+    <!-- jquery -->
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" crossorigin="anonymous"></script>
+
+
+
+
+<!-- clipboard -->
+
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.7/clipboard.min.js" crossorigin="anonymous"></script>
+  
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"Copy to clipboard!\">";
+    btn += '<i class="fa-regular fa-clone"></i>';
+    btn += '</span>';
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "Copied!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Baidu Analytics -->
+
+<!-- Cloudflare Analytics -->
+
+<!-- Disqus Comments -->
+
+<!-- utterances Comments -->
+
+<!-- Valine Comments -->
+
+    <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+    <script src="//unpkg.com/valine@latest/dist/Valine.min.js"></script>
+    <script type="text/javascript">
+        var notify = 'false' == true ? true : false;
+        var verify = 'false' == true ? true : false;
+        var GUEST_INFO = ['nick','mail','link'];
+        var guest_info = 'nick,mail,link'.split(',').filter(function(item){
+          return GUEST_INFO.indexOf(item) > -1
+        });
+        guest_info = guest_info.length == 0 ? GUEST_INFO :guest_info;
+        new Valine({
+            el: '.vcomment',
+            notify: notify,
+            verify: verify,
+            appId: "AyDHJHMfyHGtgF5Lc8CG4dpA-gzGzoHsz",
+            appKey: "JZWLrweBHY4Txn5nZuLwFzim",
+            avatar:"identicon",
+            placeholder: "Send a comment for this post!",
+            guest_info:guest_info,
+            pageSize:"10"
+        })
+</script>
+
+
+</body>
+</html>

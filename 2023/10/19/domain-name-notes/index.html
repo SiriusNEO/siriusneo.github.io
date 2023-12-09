@@ -1,0 +1,458 @@
+<!DOCTYPE html>
+<html lang=en>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+    <meta name="description" content="前言在百忙之中抽空更新！ 这篇博客主要来总结分享一下关于“域名”这个东西的一些概念和机制。起因其实是承接着我给博客搬家的那个故事，在搬家日记那篇博客中，我提到了我新买了几个域名，并且把它指到了不同的站点。 作为普通的互联网用户，我们用到域名时一般需要接触以下过程：  在注册商那里购买域名。 配置 DNS 解析，如果在国内的话可能还有备案等问题。 如果把域名解析到了自己的服务器上，可能还要配置服务">
+<meta property="og:type" content="article">
+<meta property="og:title" content="君の名前は？——漫谈域名">
+<meta property="og:url" content="https://siriusneo.github.io/2023/10/19/domain-name-notes/index.html">
+<meta property="og:site_name" content="Metric Space | 度量空间">
+<meta property="og:description" content="前言在百忙之中抽空更新！ 这篇博客主要来总结分享一下关于“域名”这个东西的一些概念和机制。起因其实是承接着我给博客搬家的那个故事，在搬家日记那篇博客中，我提到了我新买了几个域名，并且把它指到了不同的站点。 作为普通的互联网用户，我们用到域名时一般需要接触以下过程：  在注册商那里购买域名。 配置 DNS 解析，如果在国内的话可能还有备案等问题。 如果把域名解析到了自己的服务器上，可能还要配置服务">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://siriusneo.github.io/2023/10/19/domain-name-notes/1.jpg">
+<meta property="article:published_time" content="2023-10-19T14:16:37.000Z">
+<meta property="article:modified_time" content="2023-12-09T17:47:17.395Z">
+<meta property="article:author" content="Chaofan">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://siriusneo.github.io/2023/10/19/domain-name-notes/1.jpg">
+    
+    
+      
+        
+          <link rel="shortcut icon" href="/images/favicon.ico">
+        
+      
+      
+        
+          <link rel="icon" type="image/png" href="/images/android-chrome-192x192.png" sizes="192x192">
+        
+      
+      
+        
+          <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+        
+      
+    
+    <!-- title -->
+    <title>君の名前は？——漫谈域名</title>
+    <!-- async scripts -->
+    <!-- Google Analytics -->
+
+
+    <!-- Umami Analytics -->
+
+
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+    <!-- rss -->
+    
+    
+	<!-- mathjax -->
+	
+		<script type="text/x-mathjax-config">
+		  MathJax.Hub.Config({
+			tex2jax: {
+			  skipTags: ['script', 'noscript', 'style', 'textarea', 'pre'],
+			  inlineMath: [['$','$']]
+			}
+		  });
+		</script>
+		<script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-MML-AM_CHTML' async></script>
+	
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#" aria-label="Menu"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#" aria-label="Menu"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" aria-label="Top" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fa-solid fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/about/">About</a></li><!--
+     --><!--
+       --><li><a href="/archives/">Articles</a></li><!--
+     --><!--
+       --><li><a href="/links/">Links</a></li><!--
+     --><!--
+       --><li><a target="_blank" rel="noopener" href="https://siriusneo.top">Personal Page</a></li><!--
+     -->
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" aria-label="Previous post" href="/2023/11/26/beautify-blog/"><i class="fa-solid fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" aria-label="Next post" href="/2023/10/09/blog-migration/"><i class="fa-solid fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" aria-label="Back to top" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" aria-label="Share post" href="#"><i class="fa-solid fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://siriusneo.github.io/2023/10/19/domain-name-notes/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://siriusneo.github.io/2023/10/19/domain-name-notes/&text=君の名前は？——漫谈域名"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://siriusneo.github.io/2023/10/19/domain-name-notes/&title=君の名前は？——漫谈域名"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://siriusneo.github.io/2023/10/19/domain-name-notes/&is_video=false&description=君の名前は？——漫谈域名"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=君の名前は？——漫谈域名&body=Check out this article: https://siriusneo.github.io/2023/10/19/domain-name-notes/"><i class="fa-solid fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://siriusneo.github.io/2023/10/19/domain-name-notes/&title=君の名前は？——漫谈域名"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://siriusneo.github.io/2023/10/19/domain-name-notes/&title=君の名前は？——漫谈域名"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://siriusneo.github.io/2023/10/19/domain-name-notes/&title=君の名前は？——漫谈域名"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://siriusneo.github.io/2023/10/19/domain-name-notes/&title=君の名前は？——漫谈域名"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://siriusneo.github.io/2023/10/19/domain-name-notes/&name=君の名前は？——漫谈域名&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://siriusneo.github.io/2023/10/19/domain-name-notes/&t=君の名前は？——漫谈域名"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    
+    
+      <div id="toc">
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%89%8D%E8%A8%80"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#IP-%E5%9C%B0%E5%9D%80"><span class="toc-number">2.</span> <span class="toc-text">IP 地址</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9F%9F%E5%90%8D"><span class="toc-number">3.</span> <span class="toc-text">域名</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9F%9F%E5%90%8D%E7%BB%93%E6%9E%84"><span class="toc-number">3.1.</span> <span class="toc-text">域名结构</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%A1%B6%E7%BA%A7%E5%9F%9F%E5%90%8D"><span class="toc-number">3.2.</span> <span class="toc-text">顶级域名</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AD%90%E5%9F%9F%E5%90%8D"><span class="toc-number">3.3.</span> <span class="toc-text">子域名</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#WWW"><span class="toc-number">3.4.</span> <span class="toc-text">WWW</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%A0%B9%E5%9F%9F%E5%90%8D"><span class="toc-number">3.5.</span> <span class="toc-text">根域名</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9F%9F%E5%90%8D%E8%A7%A3%E6%9E%90"><span class="toc-number">4.</span> <span class="toc-text">域名解析</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#DNS"><span class="toc-number">4.1.</span> <span class="toc-text">DNS</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#DNS-%E8%AE%B0%E5%BD%95"><span class="toc-number">4.2.</span> <span class="toc-text">DNS 记录</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#DNS-%E5%88%86%E7%BA%A7%E6%9F%A5%E8%AF%A2"><span class="toc-number">4.3.</span> <span class="toc-text">DNS 分级查询</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%85%B3%E4%BA%8E%E6%A0%B9%E6%9C%8D%E5%8A%A1%E5%99%A8"><span class="toc-number">4.4.</span> <span class="toc-text">关于根服务器</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9F%9F%E5%90%8D%E9%80%89%E8%B4%AD"><span class="toc-number">5.</span> <span class="toc-text">域名选购</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9F%9F%E5%90%8D%E6%B3%A8%E5%86%8C%E6%9C%8D%E5%8A%A1%E5%95%86"><span class="toc-number">5.1.</span> <span class="toc-text">域名注册服务商</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%85%B3%E4%BA%8E%E4%BB%B7%E6%A0%BC"><span class="toc-number">5.2.</span> <span class="toc-text">关于价格</span></a></li></ol></li></ol>
+      </div>
+    
+  </span>
+</div>
+
+    
+    <div class="content index py4 ">
+        
+        <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+<article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle p-name" itemprop="name headline">
+        君の名前は？——漫谈域名
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author p-author h-card" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span class="p-name" itemprop="name">Chaofan</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2023-10-19T14:16:37.000Z" class="dt-published" itemprop="datePublished">2023-10-19</time>
+        
+      
+    </div>
+
+
+       
+    <div class="article-category">
+        <i class="fa-solid fa-archive"></i>
+        <a class="category-link" href="/categories/learning/">「掌上的纯光」</a>
+    </div>
+
+
+       
+
+      | <i class="fa fa-eye fa-fw post-meta-icon"></i><span style="color: #8c8c8c; font-size: 13.6px;"> Views: </span><span id="busuanzi_value_page_pv"></span>
+      | <i class="far fa-file-word fa-fw post-meta-icon"></i><span style="color: #8c8c8c; font-size: 13.6px;"> Total Words: 9.2k</span>
+      | <i class="far fa-clock fa-fw post-meta-icon"></i><span style="color: #8c8c8c; font-size: 13.6px;"> Reading Time: 8 mins.</span>
+    </div>
+  </header>
+  
+
+  <div class="content e-content" itemprop="articleBody">
+    <p><img src="1.jpg" alt=""></p>
+<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>在百忙之中抽空更新！</p>
+<p>这篇博客主要来总结分享一下关于“域名”这个东西的一些概念和机制。起因其实是承接着我给博客搬家的那个故事，在搬家日记那篇博客中，我提到了我新买了几个域名，并且把它指到了不同的站点。</p>
+<p>作为普通的互联网用户，我们用到域名时一般需要接触以下过程：</p>
+<ul>
+<li>在注册商那里购买域名。</li>
+<li>配置 DNS 解析，如果在国内的话可能还有备案等问题。</li>
+<li>如果把域名解析到了自己的服务器上，可能还要配置服务器上反向代理服务器（比如 Nginx）针对不同域名的分发。</li>
+</ul>
+<p>下面我们来一步步科普这个过程中的知识。</p>
+<hr>
+<h2 id="IP-地址"><a href="#IP-地址" class="headerlink" title="IP 地址"></a>IP 地址</h2><p>在讲域名之前，一定绕不过的一个话题就是 IP 地址。IP 地址相当于互联网中的”身份证“，在互联网协议中给每个设备规定了一个唯一地址。这种唯一标识符在网络通信中是必要的（不然你怎么指代你想要发送的地方呢）。</p>
+<p>IP 地址不论是 V4 还是 V6，都是一串用点号分隔无规律数字，例如常见的路由器管理界面的本地 IP 地址：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">192.168.1.1</span><br></pre></td></tr></table></figure>
+<p>但这并不方便我们去记忆它们，因此我们需要给他们起一些有意义的名称，这种手法在计算机科学中其实很常见的，最简单的例子就是枚举类型（Enum），使用有意义的符号来指代 0，1，… 等数字。</p>
+<p>我们为了额外加上一层”有意义的名字“，要做的关键的事情其实就在于建立好”有意义名字“到”无意义代号“的<strong>映射</strong>，在枚举类型中这个映射是平凡的。而在网络中，我们也需要域名到 IP 地址的映射，因为真正用来在网络层进行寻址的是 IP 地址。这个映射过程被称作<strong>域名解析</strong>。</p>
+<hr>
+<h2 id="域名"><a href="#域名" class="headerlink" title="域名"></a>域名</h2><h3 id="域名结构"><a href="#域名结构" class="headerlink" title="域名结构"></a>域名结构</h3><p>域名本身是一段由字母和点构成的字符串。比如：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">www.baidu.com</span><br></pre></td></tr></table></figure>
+<p>这就是一段域名。而这种</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http://www.baidu.com</span><br></pre></td></tr></table></figure>
+<p>一般称为<strong>统一资源定位（Uniform Resource Locator，URL）</strong>，即比域名更大的概念。一个 URL 除了域名以外，还包含：</p>
+<ul>
+<li><p>开头的协议部分</p>
+</li>
+<li><p>主机名+端口号（<code>localhost:8000</code>），或者域名，或者IP地址</p>
+</li>
+<li><p>虚拟路径，即第一个 <code>/</code> 开始的部分，这部分的语法和文件系统的目录路径是一致的，在语义上也相当于去访问相对于这个地址的“根”的相对路径。</p>
+</li>
+<li><p>URL参数，即用 <code>?</code> 开头，若干 <code>key=value</code> 形式的串。比如 <code>?tag=xxx</code>，得到的就是经过 <code>tag=xxx</code> 过滤后的结果。</p>
+</li>
+</ul>
+<p>这里我们不展开讲 URL 了，我们着重还是讲域名部分。</p>
+<p>对于一个域名 <code>www.baidu.com</code>，我们发现它按点号被分为三段；但有的域名也不出现 <code>www</code>。这究竟是怎么回事呢？其实，这些域名按照从后往前的顺序，逐渐“降级”。让我们先从 <code>.com</code> 开始。</p>
+<h3 id="顶级域名"><a href="#顶级域名" class="headerlink" title="顶级域名"></a>顶级域名</h3><p>我们常见的“后缀”其实也是域名，比如 <code>com</code> 本身，不过这些域名一般不用来解析到具体的页面。</p>
+<p>这其实很合理，试想在域名刚提出的时候，由于它是一个“名字”，自然不需要引入什么分隔符——一个字符串本身就是名字啊。因此这些域名被称作<strong>顶级域名（Top-Level Domain，TLD）</strong>。</p>
+<p>域名的管理由“<a target="_blank" rel="noopener" href="https://www.icann.org/zh">互联网名称与数字地址分配机构（ICANN）</a>”负责。一开始，ICANN 并不对外开放顶级域的注册，用户只能在现有的顶级域下（如 .com）申请自己的一级域名（有的地方叫做二级域名，而把顶级域名称作一级，不重要）。</p>
+<p>不过在 2012 年 5 月，ICANN 开放了顶级域名的申请。但是这个申请的成本很高，而且我怀疑申请的审核也有一些门槛，导致基本上现在只有一些公司申请了自己的顶级域名，比如 <code>.google</code> ，<code>.bing</code> 等。（冷知识， <code>www.bing</code> 是可以访问的，它会被重定向到必应首页）。这其实一定程度上也是件好事，毕竟如果顶级域名太过泛滥，那么抢注现象肯定会非常严重。</p>
+<h3 id="子域名"><a href="#子域名" class="headerlink" title="子域名"></a>子域名</h3><p>说完了顶级域名，我们来讲子域名。众所周知，一根链由它的头部（head）和“下一个指针”（next）构成。对域名来说，头部就是上文说的顶级域名，而“next”则是这个子域名的概念，通常我们用 <code>.</code> 符号来分隔子域名和父域名。</p>
+<p>我们上面提到过，普通用户一般申请不到顶级域名，取而代之的是不同顶级域名下的一级域名，即：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;一级域名&gt;.&lt;顶级域名&gt;</span><br></pre></td></tr></table></figure>
+<p>比如我现在想要注册一个个人站，那么根据这个特点，我可能偏向选择 <code>.me</code> 顶级域名作为后缀，然后对于一级域名部分，我会偏向加上带有自己特色的字符串，比如直接用自己的 ID。那么我就会去注册 <code>siriusneo.me</code> 。</p>
+<p>而在一级域名之下，我们还会有二级域名，三级域名等等。太多级就没啥意义了，不过二级域名相对于一级域名，还是很有意义的——它能标识不同的功能，比如说：</p>
+<ul>
+<li>我会把博客放在 <code>blog.siriusneo.me</code> 下；</li>
+<li>然后把自己部署的网盘放在 <code>pan.siriusneo.me</code> 下；</li>
+<li>…</li>
+</ul>
+<p>（不过实际上，我并没有买 <code>.me</code>，而是买了 <code>.top</code>。一个原因当然是便宜，不过另一个原因是这个域名的寓意也好。）</p>
+<h3 id="WWW"><a href="#WWW" class="headerlink" title="WWW"></a>WWW</h3><p>大家经常上网时，会发现自己输入域名的时候常常会要在前面加上 <code>www.</code>。其实，这也是一种子域名——按照格式来看就知道了。</p>
+<p>那么为什么需要特地加一个这个呢？这里其实是一个命名习惯。上面说过，我们会用不同的子域名代表不同的功能，比如 <code>blog.</code> 代表博客，<code>mail.</code> 代表邮箱。这些功能很多其实并不是给浏览器访问的（也就是说没有“网页”），而只有少数域名是有一个面向浏览器的页面。对于这个“网页”，按照i管理我们就会将其命名为 <code>www.</code> 。所以这里的 <code>www.</code> 其实就是表示，这是一个网站服务器的域名。如果你不喜欢，也可以用 <code>page.</code> 或者 <code>site.</code> ，但是这是一个“大多数人”的惯例。</p>
+<p>关于这个惯例到底是怎么来的呢？我们都知道，WWW 全称是 World Wide Web，即万维网。万维网指的就是通过浏览器和 HTML 网页建立起的网络——注意，这也就是说，万维网只是因特网提供的一项服务。提供了什么服务呢？说直白点，就是“网上冲浪”。而对于像 <code>mail.xxx.com</code> 这种邮箱服务器，我们直接用浏览器打开是没有意义的（这个服务器并不理会 HTTP 的 GET 和 POST 指令），这也就不在万维网的服务范畴里。</p>
+<p>我小时候就经常搞混因特网和万维网，其实现在就非常清楚了。因特网是 Internet 的音译，即互联网，它提出了计算机网络的概念并把全世界的计算机连在一起。万维网是基于互联网建立起的一种服务，它让人们可以通过浏览器来访问各种网页。所以 <code>www.</code> 确实就是一个指代某种功能的二级域名。</p>
+<p>不过现在大家都习惯不加 <code>www.</code> 了，因为默认的网站就是给人看的。作为一种兼容，大家都会把 <code>www.</code> 指向不带 <code>www.</code> 的域名。</p>
+<h3 id="根域名"><a href="#根域名" class="headerlink" title="根域名"></a>根域名</h3><p>这里补充一个小知识。一般来说，我们会把顶级域名当成最开始的一级域名。但其实，还有一层在其之上的最高层域名，我们一般叫做<strong>根域名</strong>。我们上述写的任何域名其实都要在后面加一个 <code>.root</code>。这一层在 DNS 分级解析的时候会体现出来。</p>
+<hr>
+<h2 id="域名解析"><a href="#域名解析" class="headerlink" title="域名解析"></a>域名解析</h2><h3 id="DNS"><a href="#DNS" class="headerlink" title="DNS"></a>DNS</h3><p>域名解析说到底，只需要维护一个从域名到 IP 地址的 Map 就可以了。这里 Map 里的每一条数据被称为一条<strong>记录</strong>。</p>
+<p>那么这个 Map 应该放在哪里呢？在实践中，我们用一个（或者说一类）服务器专门来做这件事，它们被称为<strong>域名系统（Domain Name System，DNS）</strong>。当然实际 DNS 有很多级缓存：高速缓存，浏览器缓存，操作系统缓存等等。</p>
+<p>在真实世界里，有专门的服务商提供域名解析的服务，我们只需要给它们提供的域名服务器发请求就可以了，这种域名解析服务有免费的，也有付费的。</p>
+<h3 id="DNS-记录"><a href="#DNS-记录" class="headerlink" title="DNS 记录"></a>DNS 记录</h3><p>上面为了好理解，简单地把记录定义为一个 Map 的 KV 键值对。不过实际上，一条记录还需要记很多格外信息，比如：</p>
+<ul>
+<li>TTL：生存周期</li>
+<li>Class：协议类型</li>
+<li>Type：记录类型</li>
+</ul>
+<p>等等。</p>
+<p>关于记录类型，常用的有这么几种：</p>
+<ul>
+<li>A：Address，将域名解析到一个 IPv4 的 IP 地址。</li>
+<li>AAAA：同上，不过是 IPv6。</li>
+<li>NS：Name Server，域名服务器记录，用于指定域名应该由什么 DNS 服务器解析。</li>
+<li>MX：Mail eXchange，专为邮件设计的解析类型，返回接受邮件的服务器地址。</li>
+<li>CNAME：Canonical Name，用于将一个域名跳转到另一个域名。</li>
+<li>PTR：Pointer Record，逆向查询，即从 IP 地址查域名。</li>
+</ul>
+<h3 id="DNS-分级查询"><a href="#DNS-分级查询" class="headerlink" title="DNS 分级查询"></a>DNS 分级查询</h3><p>这里多提一句关于 DNS 查询的机制，虽然对我们用户来说可能不用太关心，但还是蛮经典的一个知识，即 DNS 查询域名是分级进行的。</p>
+<p>比如有如下域名：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">aaa.bbb.ccc</span><br></pre></td></tr></table></figure>
+<p>它总共有四级，每一级（即 <code>.ccc</code>，<code>bbb.ccc</code>，<code>aaa.bbb.ccc</code>，当然还有一个 <code>.root</code>）都有自己的 NS 记录，这个记录指向这一级域名的域名服务器。而当前这级的服务器需要知道下一级域名的各种记录。</p>
+<p>比如这个域名的解析过程是这样的：</p>
+<ul>
+<li>解析器获取根域名的 13 条 NS 记录。</li>
+<li>向所有根域名服务器查询顶级域名 <code>.ccc</code>  的 NS 记录。</li>
+<li>向这些顶级域名服务器发送请求，寻找 <code>bbb.ccc</code> 的 NS 记录。</li>
+<li>向上一步得到的 NS 记录里发请求，最后查询到可行的 A 记录。</li>
+</ul>
+<h3 id="关于根服务器"><a href="#关于根服务器" class="headerlink" title="关于根服务器"></a>关于根服务器</h3><p>上面说了，任何 DNS 一开始都是从 13 条根域名的 NS 记录出发的，也即只有 13 个不同的 IP 地址用来查询根服务器网络（注意，并不是只有 13 台根服务器！）。</p>
+<p>这 13 个地址一般都被写死在了任何一个 DNS 解析器的代码里。大概是长这样的：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">NS	m.root-servers.net.</span><br><span class="line">NS	a.root-servers.net.</span><br><span class="line">NS	b.root-servers.net.</span><br><span class="line">NS	c.root-servers.net.</span><br><span class="line">NS	d.root-servers.net.</span><br><span class="line">NS	e.root-servers.net.</span><br><span class="line">NS	f.root-servers.net.</span><br><span class="line">NS	g.root-servers.net.</span><br><span class="line">NS	h.root-servers.net.</span><br><span class="line">NS	i.root-servers.net.</span><br><span class="line">NS	j.root-servers.net.</span><br><span class="line">NS	k.root-servers.net.</span><br><span class="line">NS	l.root-servers.net.</span><br></pre></td></tr></table></figure>
+<hr>
+<h2 id="域名选购"><a href="#域名选购" class="headerlink" title="域名选购"></a>域名选购</h2><h3 id="域名注册服务商"><a href="#域名注册服务商" class="headerlink" title="域名注册服务商"></a>域名注册服务商</h3><p>我们在购买域名时，都需要从域名注册服务商处购买，这些服务商会帮我们完成注册域名的过程，往往还会配套提供解析服务。由于它们也要赚钱，所以这个注册服务也是要一定手续费用的，这导致不同平台的域名售价可能会不一样。几个比较出名的注册商有：</p>
+<ul>
+<li>Godaddy，这是世界上最大的域名注册服务商。</li>
+<li>Namecheap，价格相对比较便宜</li>
+</ul>
+<p>博主的域名几乎都是在腾讯云买的，之前也是不懂事入了坑，后面后悔了也没办法了（只能等域名过期了再到别处买了）。国内的这些服务商也有好处，就是他们往往一整套服务都有提供，从域名购买到解析服务，再到 SSL 证书等等。最大的坏处就是需要把域名注册在国内，这确实会有一些麻烦。</p>
+<h3 id="关于价格"><a href="#关于价格" class="headerlink" title="关于价格"></a>关于价格</h3><p>不同域名的价格波动很大。一般来说，越短越贵，有些有特殊含义的域名甚至具备一定的投资价值。</p>
+<p>对于我们这些普通用户来说，如果一级域名比较生僻（比如我的 ID <code>siriusneo</code>，基本不会重名），那么价格当然也会很低。这样的话主要价格差异其实就取决于你选择的顶级域名了。像 <code>.com</code> 是很贵的，而 <code>.me</code> ，<code>.top</code> 这种的就相对便宜很多。</p>
+<hr>
+<p>以上就是本篇博文的全部内容啦，希望对你有帮助！</p>
+
+  </div>
+</article>
+
+
+
+    <div class="blog-post-comments">
+        <div class="vcomment"></div>
+    </div>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+        
+          <li><a href="/">Home</a></li>
+        
+          <li><a href="/about/">About</a></li>
+        
+          <li><a href="/archives/">Articles</a></li>
+        
+          <li><a href="/links/">Links</a></li>
+        
+          <li><a target="_blank" rel="noopener" href="https://siriusneo.top">Personal Page</a></li>
+        
+      </ul>
+    </div>
+
+    
+    
+      <div id="toc-footer" style="display: none">
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%89%8D%E8%A8%80"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#IP-%E5%9C%B0%E5%9D%80"><span class="toc-number">2.</span> <span class="toc-text">IP 地址</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9F%9F%E5%90%8D"><span class="toc-number">3.</span> <span class="toc-text">域名</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9F%9F%E5%90%8D%E7%BB%93%E6%9E%84"><span class="toc-number">3.1.</span> <span class="toc-text">域名结构</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%A1%B6%E7%BA%A7%E5%9F%9F%E5%90%8D"><span class="toc-number">3.2.</span> <span class="toc-text">顶级域名</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AD%90%E5%9F%9F%E5%90%8D"><span class="toc-number">3.3.</span> <span class="toc-text">子域名</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#WWW"><span class="toc-number">3.4.</span> <span class="toc-text">WWW</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%A0%B9%E5%9F%9F%E5%90%8D"><span class="toc-number">3.5.</span> <span class="toc-text">根域名</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9F%9F%E5%90%8D%E8%A7%A3%E6%9E%90"><span class="toc-number">4.</span> <span class="toc-text">域名解析</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#DNS"><span class="toc-number">4.1.</span> <span class="toc-text">DNS</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#DNS-%E8%AE%B0%E5%BD%95"><span class="toc-number">4.2.</span> <span class="toc-text">DNS 记录</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#DNS-%E5%88%86%E7%BA%A7%E6%9F%A5%E8%AF%A2"><span class="toc-number">4.3.</span> <span class="toc-text">DNS 分级查询</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%85%B3%E4%BA%8E%E6%A0%B9%E6%9C%8D%E5%8A%A1%E5%99%A8"><span class="toc-number">4.4.</span> <span class="toc-text">关于根服务器</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9F%9F%E5%90%8D%E9%80%89%E8%B4%AD"><span class="toc-number">5.</span> <span class="toc-text">域名选购</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9F%9F%E5%90%8D%E6%B3%A8%E5%86%8C%E6%9C%8D%E5%8A%A1%E5%95%86"><span class="toc-number">5.1.</span> <span class="toc-text">域名注册服务商</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%85%B3%E4%BA%8E%E4%BB%B7%E6%A0%BC"><span class="toc-number">5.2.</span> <span class="toc-text">关于价格</span></a></li></ol></li></ol>
+      </div>
+    
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://siriusneo.github.io/2023/10/19/domain-name-notes/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://siriusneo.github.io/2023/10/19/domain-name-notes/&text=君の名前は？——漫谈域名"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://siriusneo.github.io/2023/10/19/domain-name-notes/&title=君の名前は？——漫谈域名"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://siriusneo.github.io/2023/10/19/domain-name-notes/&is_video=false&description=君の名前は？——漫谈域名"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=君の名前は？——漫谈域名&body=Check out this article: https://siriusneo.github.io/2023/10/19/domain-name-notes/"><i class="fa-solid fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://siriusneo.github.io/2023/10/19/domain-name-notes/&title=君の名前は？——漫谈域名"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://siriusneo.github.io/2023/10/19/domain-name-notes/&title=君の名前は？——漫谈域名"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://siriusneo.github.io/2023/10/19/domain-name-notes/&title=君の名前は？——漫谈域名"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://siriusneo.github.io/2023/10/19/domain-name-notes/&title=君の名前は？——漫谈域名"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://siriusneo.github.io/2023/10/19/domain-name-notes/&name=君の名前は？——漫谈域名&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://siriusneo.github.io/2023/10/19/domain-name-notes/&t=君の名前は？——漫谈域名"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fa-solid fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        
+          <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fa-solid fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fa-solid fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy;
+    
+    
+    2020-2023
+    Chaofan.
+    Powered by <a target="_blank" rel="noopener" href="https://github.com/probberechts/hexo-theme-cactus">Cactus</a>. <a target="_blank" rel="noopener" href="https://github.com/SiriusNEO/hexo-theme-cactus-customized">Customized</a> by me :).
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/about/">About</a></li><!--
+     --><!--
+       --><li><a href="/archives/">Articles</a></li><!--
+     --><!--
+       --><li><a href="/links/">Links</a></li><!--
+     --><!--
+       --><li><a target="_blank" rel="noopener" href="https://siriusneo.top">Personal Page</a></li><!--
+     -->
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+
+
+  <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" crossorigin="anonymous" onload="this.onload=null;this.rel='stylesheet'"/>
+
+
+    <!-- jquery -->
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" crossorigin="anonymous"></script>
+
+
+
+
+<!-- clipboard -->
+
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.7/clipboard.min.js" crossorigin="anonymous"></script>
+  
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"Copy to clipboard!\">";
+    btn += '<i class="fa-regular fa-clone"></i>';
+    btn += '</span>';
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "Copied!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Baidu Analytics -->
+
+<!-- Cloudflare Analytics -->
+
+<!-- Disqus Comments -->
+
+<!-- utterances Comments -->
+
+<!-- Valine Comments -->
+
+    <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+    <script src="//unpkg.com/valine@latest/dist/Valine.min.js"></script>
+    <script type="text/javascript">
+        var notify = 'false' == true ? true : false;
+        var verify = 'false' == true ? true : false;
+        var GUEST_INFO = ['nick','mail','link'];
+        var guest_info = 'nick,mail,link'.split(',').filter(function(item){
+          return GUEST_INFO.indexOf(item) > -1
+        });
+        guest_info = guest_info.length == 0 ? GUEST_INFO :guest_info;
+        new Valine({
+            el: '.vcomment',
+            notify: notify,
+            verify: verify,
+            appId: "AyDHJHMfyHGtgF5Lc8CG4dpA-gzGzoHsz",
+            appKey: "JZWLrweBHY4Txn5nZuLwFzim",
+            avatar:"identicon",
+            placeholder: "Send a comment for this post!",
+            guest_info:guest_info,
+            pageSize:"10"
+        })
+</script>
+
+
+</body>
+</html>

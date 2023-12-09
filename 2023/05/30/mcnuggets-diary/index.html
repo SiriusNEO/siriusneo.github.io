@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang=en>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+    <meta name="description" content="距离上一次写博客又有几个月了。今天突然心血来潮想把近况在这个积灰的小站update一下。标题是模仿之前的随记的格式的，为什么是麦乐鸡味呢，答案是最近麦当劳有10R 10块&#x2F;20R 20块的麦乐鸡优惠活动，导致我这段时间食用了大量麦乐鸡。姑且让最近一段时间飘着麦乐鸡的味道了。（其实麦乐鸡好像是没有味道的啦，吃起来就是白白干干的，给它上味道的是麦乐鸡的几款酱料。最近麦当劳又推出了两款新的比较具有中国特">
+<meta property="og:type" content="article">
+<meta property="og:title" content="麦乐鸡味的近况随记">
+<meta property="og:url" content="https://siriusneo.github.io/2023/05/30/mcnuggets-diary/index.html">
+<meta property="og:site_name" content="Metric Space | 度量空间">
+<meta property="og:description" content="距离上一次写博客又有几个月了。今天突然心血来潮想把近况在这个积灰的小站update一下。标题是模仿之前的随记的格式的，为什么是麦乐鸡味呢，答案是最近麦当劳有10R 10块&#x2F;20R 20块的麦乐鸡优惠活动，导致我这段时间食用了大量麦乐鸡。姑且让最近一段时间飘着麦乐鸡的味道了。（其实麦乐鸡好像是没有味道的啦，吃起来就是白白干干的，给它上味道的是麦乐鸡的几款酱料。最近麦当劳又推出了两款新的比较具有中国特">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2023-05-29T17:26:55.000Z">
+<meta property="article:modified_time" content="2023-12-09T17:49:41.343Z">
+<meta property="article:author" content="Chaofan">
+<meta name="twitter:card" content="summary">
+    
+    
+      
+        
+          <link rel="shortcut icon" href="/images/favicon.ico">
+        
+      
+      
+        
+          <link rel="icon" type="image/png" href="/images/android-chrome-192x192.png" sizes="192x192">
+        
+      
+      
+        
+          <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+        
+      
+    
+    <!-- title -->
+    <title>麦乐鸡味的近况随记</title>
+    <!-- async scripts -->
+    <!-- Google Analytics -->
+
+
+    <!-- Umami Analytics -->
+
+
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+    <!-- rss -->
+    
+    
+	<!-- mathjax -->
+	
+		<script type="text/x-mathjax-config">
+		  MathJax.Hub.Config({
+			tex2jax: {
+			  skipTags: ['script', 'noscript', 'style', 'textarea', 'pre'],
+			  inlineMath: [['$','$']]
+			}
+		  });
+		</script>
+		<script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-MML-AM_CHTML' async></script>
+	
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#" aria-label="Menu"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#" aria-label="Menu"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" aria-label="Top" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fa-solid fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/about/">About</a></li><!--
+     --><!--
+       --><li><a href="/archives/">Articles</a></li><!--
+     --><!--
+       --><li><a href="/links/">Links</a></li><!--
+     --><!--
+       --><li><a target="_blank" rel="noopener" href="https://siriusneo.top">Personal Page</a></li><!--
+     -->
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" aria-label="Previous post" href="/2023/06/20/confession-of-a-bad-decision-maker/"><i class="fa-solid fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" aria-label="Next post" href="/2023/02/27/ml-operators-notes/"><i class="fa-solid fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" aria-label="Back to top" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" aria-label="Share post" href="#"><i class="fa-solid fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://siriusneo.github.io/2023/05/30/mcnuggets-diary/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://siriusneo.github.io/2023/05/30/mcnuggets-diary/&text=麦乐鸡味的近况随记"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://siriusneo.github.io/2023/05/30/mcnuggets-diary/&title=麦乐鸡味的近况随记"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://siriusneo.github.io/2023/05/30/mcnuggets-diary/&is_video=false&description=麦乐鸡味的近况随记"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=麦乐鸡味的近况随记&body=Check out this article: https://siriusneo.github.io/2023/05/30/mcnuggets-diary/"><i class="fa-solid fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://siriusneo.github.io/2023/05/30/mcnuggets-diary/&title=麦乐鸡味的近况随记"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://siriusneo.github.io/2023/05/30/mcnuggets-diary/&title=麦乐鸡味的近况随记"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://siriusneo.github.io/2023/05/30/mcnuggets-diary/&title=麦乐鸡味的近况随记"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://siriusneo.github.io/2023/05/30/mcnuggets-diary/&title=麦乐鸡味的近况随记"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://siriusneo.github.io/2023/05/30/mcnuggets-diary/&name=麦乐鸡味的近况随记&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://siriusneo.github.io/2023/05/30/mcnuggets-diary/&t=麦乐鸡味的近况随记"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    
+    
+      <div id="toc">
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%AE%A8%E5%8E%8C%E7%9A%84%E5%A4%A7%E4%B8%89%E4%B8%8B"><span class="toc-number">1.</span> <span class="toc-text">讨厌的大三下</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E4%B9%8B%E9%85%8D%E7%8E%AF%E5%A2%83"><span class="toc-number">2.</span> <span class="toc-text">强化学习之配环境</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E6%A1%86%E6%9E%B6%E6%BC%AB%E6%B8%B8"><span class="toc-number">3.</span> <span class="toc-text">强化学习框架漫游</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%A8%A1%E5%9E%8B%E6%A3%80%E9%AA%8C"><span class="toc-number">4.</span> <span class="toc-text">模型检验</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%80%E4%BA%9B%E9%9D%A2%E8%AF%95"><span class="toc-number">5.</span> <span class="toc-text">一些面试</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%8E%A9%EF%BC%81"><span class="toc-number">6.</span> <span class="toc-text">玩！</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%B6%E5%AE%83"><span class="toc-number">7.</span> <span class="toc-text">其它</span></a></li></ol>
+      </div>
+    
+  </span>
+</div>
+
+    
+    <div class="content index py4 ">
+        
+        <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+<article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle p-name" itemprop="name headline">
+        麦乐鸡味的近况随记
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author p-author h-card" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span class="p-name" itemprop="name">Chaofan</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2023-05-29T17:26:55.000Z" class="dt-published" itemprop="datePublished">2023-05-30</time>
+        
+      
+    </div>
+
+
+       
+    <div class="article-category">
+        <i class="fa-solid fa-archive"></i>
+        <a class="category-link" href="/categories/life/">「杀意的百合」</a>
+    </div>
+
+
+       
+
+      | <i class="fa fa-eye fa-fw post-meta-icon"></i><span style="color: #8c8c8c; font-size: 13.6px;"> Views: </span><span id="busuanzi_value_page_pv"></span>
+      | <i class="far fa-file-word fa-fw post-meta-icon"></i><span style="color: #8c8c8c; font-size: 13.6px;"> Total Words: 4.4k</span>
+      | <i class="far fa-clock fa-fw post-meta-icon"></i><span style="color: #8c8c8c; font-size: 13.6px;"> Reading Time: 4 mins.</span>
+    </div>
+  </header>
+  
+
+  <div class="content e-content" itemprop="articleBody">
+    <p>距离上一次写博客又有几个月了。今天突然心血来潮想把近况在这个积灰的小站update一下。标题是模仿之前的随记的格式的，为什么是麦乐鸡味呢，答案是最近麦当劳有10R 10块/20R 20块的麦乐鸡优惠活动，导致我这段时间食用了大量麦乐鸡。姑且让最近一段时间飘着麦乐鸡的味道了。（其实麦乐鸡好像是没有味道的啦，吃起来就是白白干干的，给它上味道的是麦乐鸡的几款酱料。最近麦当劳又推出了两款新的比较具有中国特色的酱料，可以说很不错了）。</p>
+<h2 id="讨厌的大三下"><a href="#讨厌的大三下" class="headerlink" title="讨厌的大三下"></a>讨厌的大三下</h2><p>首先是关于这段时间都在干什么。大三下，一个奇妙的学期。在我差不多将它过完之后，我决定将它列为“大学本科最讨厌的学期”的top1。在这个学期，你有很多课要上，但是你又有譬如实习、暑研（指暑研的提前干活）的事情要忙，然后你又需要为自己的未来纠结，比如是要出国啊，还是要留国内啊，这样那样的事。你会把大量的时间花在这种无意义的精神内耗上，往往想了半天最终也没有得出什么实质性结论。而且在我自己做了我自己的决定后，还要面临一些social方面的难题，例如一些不能说的秘密，还有诸如套磁、夏令营报名材料整理、要推荐信这样的事。我感觉这学期我几乎没有什么时间是真正静下心来在忙自己的事的。关于peer pressure，也有一些吧，不过我暂时是拿“system就是不好发paper啊”这样的借口安慰自己。不过看到同学们一个个都拿到了顶会的一二三作，有机会去国外开会，还是比较羡慕的。总得来说，就是这样一个混乱且躁动的心态。</p>
+<p> 瞥开这些烦心事不谈好了。这学期大概有三门主要的课程，分别是模型检验、强化学习还有数据库。仅有三门课，可以说是很少了。不过我不知道是我以前精力充沛，现在大不如前了，还是说课程难度本身提高了，我觉得这学期我还是有点累的。三门课都是有大作业的。</p>
+<h2 id="强化学习之配环境"><a href="#强化学习之配环境" class="headerlink" title="强化学习之配环境"></a>强化学习之配环境</h2><p>强化学习的大作业是我之前一直在担心的，不过最近也是比较顺利地完成了。不过这里要吐槽一下：你们搞RL的都是用带着显示器的Linux设备搞的吗！我选的project的题目是基于NVIDIA搞的一个RL Physics Simulator，Isaac Gym。它在我用的时候还处于Preview Release 4版本。我最想吐槽的一点是这个Isaac Gym，作为一个类似物理引擎的东西（它最大的优势是通过GPU模拟强化学习环境中的物理过程，基于PhysX），它需要渲染出一个界面。当然训练时候是可以headless的。但是如果你要展示效果（比如录一段训练后的agent表现效果），就需要看着那个渲染窗口。这让我一个去autodl上租无头服务器的人可犯了难。 </p>
+<p>我先是在WSL和docker上尝试了，不出意外地炸了。然后我又在虚拟机上试了一下，也还是不行。至此我就放弃用我的windows游戏本训练了。Isaac Gym的官方文档里说只支持Ubuntu 18.04/20.04，嗯好，那我就去租一台。接下来怎么把渲染页面给投到我的电脑上呢？我自然想到了X11 forwarding，于是配了个PuTTY来试试效果——结果是，它可以以一种很模糊的方式投过来，但是几秒之后窗口就关闭了（和我在docker里的情况一模一样）。我查了半天，结果发现是它用到了vulkan，但是由于一个device.json的路径设置不对，导致它其实用的是llvm（也就是cpu）在模拟这个渲染，并没有在GPU上跑。所以我按服务器上的显卡驱动型号去NVIDIA官方那里下了驱动文件包，然后抽出里面的这个配置文件放到vulkan目录下面。嗯，它成功识别了，但是通过X11 forwarding到我电脑上的却是一块黑屏！ </p>
+<p>至此我道心破碎，最后还是把我的小破windows游戏本刷成了双系统（由于空间不够，我还是划了移动硬盘上的空间来作为Ubuntu的存放处），终于成功地跑起了example。不过后来和同学聊过后发现黑屏其实已经是配好了的，只是配置太低导致渲染出来是黑屏。唉。</p>
+<h2 id="强化学习框架漫游"><a href="#强化学习框架漫游" class="headerlink" title="强化学习框架漫游"></a>强化学习框架漫游</h2><p>借着做这个强化学习大作业的机会，我也了解到了许多强化学习框架。其实不该叫框架的，严格来讲应该是强化学习的算法库，或者说训练平台。我印象比较深的有两个，一个是ElegantRL（小雅），因为它的作者在知乎上写了很多东西。我看了之后感觉这位作者还是很有想法的，虽然他刚开始写这个的时候似乎对这方面并没有什么经验，但是却很快吸收许多其它库的长处自己实现了比较简单的版本。还有一个就是THU的tianshou，我其实很久以前就看到过，不过我那时候还不明白这是个什么东西。我注意到它主要因为我的一个高中学长Trinkle/n+e（现在应该已经在openai训练ChatGPT了）。 </p>
+<p>看了一圈下来，其实我对一个强化学习库要实现什么大概心里有个数了，也感觉到强化学习这个方向确实还算新，似乎还并没有一个像PyTorch一样的东西起到那种压倒性的垄断效果（当然，PyTorch也没有那么垄断，只是在学界可能比tensorflow要普及）。不过最后由于时间紧张，我的“手搓强化学习库”的梦也没来得及实现，只是写了一个简单的PPO算法来训一些tasks。</p>
+<h2 id="模型检验"><a href="#模型检验" class="headerlink" title="模型检验"></a>模型检验</h2><p>这门课其实我很早就开始不听课了，也不是我想不听，但是确实是越来越听不懂了。感觉我不是一个适合在课堂上跟着老师学习的人，因为这些东西在我做作业的时候自己看着课件也能弄懂。大作业呢，是实现一个LTL formulas的检验算法，简单来说就是输入一个transition system，然后输入若干LTL formulas，你需要输出这个TS是否满足这些formulas。首先就是要写一个LTL formulas的parser。本来其实用antlr就好了，但是我的sys人之魂燃烧了，我想试试别的lexer/parser组合，于是尝试了一下大名鼎鼎的flex/bison。在捣鼓了两个下午之后，总算是跑通了（虽然因为奇怪的原因有memory leak，但是我觉得是flex本身的问题）。后面还有一些算法没有实现，我现在还在考虑是先搓完还是夏令营回来再搞。不过成功用新工具实现这个parser后还是蛮有成就感的。平时的理论作业最近刚刚交上了最后一次，并不是很耗时，整体上下来体验还是不错的。</p>
+<h2 id="一些面试"><a href="#一些面试" class="headerlink" title="一些面试"></a>一些面试</h2><p>我这学期大概经历了三场面试（包括像面试一样的事情）。第一次是MSRA实习的面试，我的mentor还迟到了。他简单问了问我之前做啥，然后说这个组里有一些活给我做之类的。总体来讲没啥波澜。然后是THU那边老师的套磁，他拉我开了个腾讯会议，大概介绍了一下他们组主要在搞的几个方向，包括AI system（硬、软件），可信执行环境（TEE）相关，以及数据存储的一些工作。总体来讲我还是比较感兴趣的，感觉也挺match。最后是我校IPADS系统组的面试，我其实原来只是想发个套磁邮件，但是他们直接很正式地回了我一个“Thank you for your application to IPADS！”，然后给我介绍了一下IPADS的面试流程。主要就是要读两篇论文。在几天的准备下（基本就是论文完整看了一遍，然后揪了些细节），最后面试好像也没啥大压力，不过两个老师的面试风格不太一样，一个老师问的比较多，也比较泛，另一个老师是让我先讲，直到讲到他觉得关键的部分就停下来，让我解释这个问题。</p>
+<h2 id="玩！"><a href="#玩！" class="headerlink" title="玩！"></a>玩！</h2><p>去了溧阳玩。总体体验还可以，感觉更像一次“逃离式”的歇息，而不是特种兵式的打卡旅游。那里的特产有溧阳鱼头汤，但是我喝过一次之后就不想喝了。也不是不好喝吧，只不过你到景区，周围的饭店卖的都是那几种东西，有点怪腻的。 </p>
+<p>又捡起了许久以前买的塞尔达（当然是野炊啦，王国之泪是不可能抢首发的，以后再说吧）。以及最近因为某人的影响还玩了玩原神（玩原神玩的）。感觉最近的心态实在比较浮躁，也不太玩的下去游戏。希望offer到手之后可以找时间玩玩游戏。 </p>
+<p>还有就是一个读美本的高中同学来找我玩了，给我看了看他今年的一些照片/见闻。给我的感受就是，他最近的生活确实很丰富，相比之下大三下的我整天闷在学校里不说，心态上也非常差劲。希望今年暑假能有机会去四处走走，带着我新买的相机。</p>
+<h2 id="其它"><a href="#其它" class="headerlink" title="其它"></a>其它</h2><p>我其实有点想重构一下这个博客了。怎么说呢，感觉这个网站的装修在现在的我看来，有点不够喜欢了，我还是比较喜欢那种简明（没有很多动画效果、配色简单的）网站风格。也许换个黑白的Wordpress主题会好点。以及这个站其实对我来说，更像是一个记录生活的地方，而不是一个tech blog的这种定位。虽然我也会发一些读书笔记和数学内容，但是并没有太多CS意义上的那种技术文章。更像个情绪垃圾站吧。以及我发现我的文风相比别人（指一些我看过的其它和我年龄差不多人的博客）要更不正经一点，我似乎不太喜欢讨论一些比较深的问题，或者说至少在写博客的时候不喜欢想这些事。不过我的朋友圈往往都会比较带有一些思考成分。还有就是，有些读书笔记其实是我用 markdown 插件直接搬过去的，格式有点问题。也该修修了。 </p>
+<p>不过最近没太有精力搞这个。有空的话，我决定给我的站重新起个名字（现在这个名字也不太喜欢了，感觉有点不明所以），然后remake一下。博客嘛，总是要经历几次重构的。</p>
+
+  </div>
+</article>
+
+
+
+    <div class="blog-post-comments">
+        <div class="vcomment"></div>
+    </div>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+        
+          <li><a href="/">Home</a></li>
+        
+          <li><a href="/about/">About</a></li>
+        
+          <li><a href="/archives/">Articles</a></li>
+        
+          <li><a href="/links/">Links</a></li>
+        
+          <li><a target="_blank" rel="noopener" href="https://siriusneo.top">Personal Page</a></li>
+        
+      </ul>
+    </div>
+
+    
+    
+      <div id="toc-footer" style="display: none">
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%AE%A8%E5%8E%8C%E7%9A%84%E5%A4%A7%E4%B8%89%E4%B8%8B"><span class="toc-number">1.</span> <span class="toc-text">讨厌的大三下</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E4%B9%8B%E9%85%8D%E7%8E%AF%E5%A2%83"><span class="toc-number">2.</span> <span class="toc-text">强化学习之配环境</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E6%A1%86%E6%9E%B6%E6%BC%AB%E6%B8%B8"><span class="toc-number">3.</span> <span class="toc-text">强化学习框架漫游</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%A8%A1%E5%9E%8B%E6%A3%80%E9%AA%8C"><span class="toc-number">4.</span> <span class="toc-text">模型检验</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%80%E4%BA%9B%E9%9D%A2%E8%AF%95"><span class="toc-number">5.</span> <span class="toc-text">一些面试</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%8E%A9%EF%BC%81"><span class="toc-number">6.</span> <span class="toc-text">玩！</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%B6%E5%AE%83"><span class="toc-number">7.</span> <span class="toc-text">其它</span></a></li></ol>
+      </div>
+    
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://siriusneo.github.io/2023/05/30/mcnuggets-diary/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://siriusneo.github.io/2023/05/30/mcnuggets-diary/&text=麦乐鸡味的近况随记"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://siriusneo.github.io/2023/05/30/mcnuggets-diary/&title=麦乐鸡味的近况随记"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://siriusneo.github.io/2023/05/30/mcnuggets-diary/&is_video=false&description=麦乐鸡味的近况随记"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=麦乐鸡味的近况随记&body=Check out this article: https://siriusneo.github.io/2023/05/30/mcnuggets-diary/"><i class="fa-solid fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://siriusneo.github.io/2023/05/30/mcnuggets-diary/&title=麦乐鸡味的近况随记"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://siriusneo.github.io/2023/05/30/mcnuggets-diary/&title=麦乐鸡味的近况随记"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://siriusneo.github.io/2023/05/30/mcnuggets-diary/&title=麦乐鸡味的近况随记"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://siriusneo.github.io/2023/05/30/mcnuggets-diary/&title=麦乐鸡味的近况随记"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://siriusneo.github.io/2023/05/30/mcnuggets-diary/&name=麦乐鸡味的近况随记&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://siriusneo.github.io/2023/05/30/mcnuggets-diary/&t=麦乐鸡味的近况随记"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fa-solid fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        
+          <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fa-solid fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fa-solid fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy;
+    
+    
+    2020-2023
+    Chaofan.
+    Powered by <a target="_blank" rel="noopener" href="https://github.com/probberechts/hexo-theme-cactus">Cactus</a>. <a target="_blank" rel="noopener" href="https://github.com/SiriusNEO/hexo-theme-cactus-customized">Customized</a> by me :).
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/about/">About</a></li><!--
+     --><!--
+       --><li><a href="/archives/">Articles</a></li><!--
+     --><!--
+       --><li><a href="/links/">Links</a></li><!--
+     --><!--
+       --><li><a target="_blank" rel="noopener" href="https://siriusneo.top">Personal Page</a></li><!--
+     -->
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+
+
+  <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" crossorigin="anonymous" onload="this.onload=null;this.rel='stylesheet'"/>
+
+
+    <!-- jquery -->
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" crossorigin="anonymous"></script>
+
+
+
+
+<!-- clipboard -->
+
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.7/clipboard.min.js" crossorigin="anonymous"></script>
+  
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"Copy to clipboard!\">";
+    btn += '<i class="fa-regular fa-clone"></i>';
+    btn += '</span>';
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "Copied!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Baidu Analytics -->
+
+<!-- Cloudflare Analytics -->
+
+<!-- Disqus Comments -->
+
+<!-- utterances Comments -->
+
+<!-- Valine Comments -->
+
+    <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+    <script src="//unpkg.com/valine@latest/dist/Valine.min.js"></script>
+    <script type="text/javascript">
+        var notify = 'false' == true ? true : false;
+        var verify = 'false' == true ? true : false;
+        var GUEST_INFO = ['nick','mail','link'];
+        var guest_info = 'nick,mail,link'.split(',').filter(function(item){
+          return GUEST_INFO.indexOf(item) > -1
+        });
+        guest_info = guest_info.length == 0 ? GUEST_INFO :guest_info;
+        new Valine({
+            el: '.vcomment',
+            notify: notify,
+            verify: verify,
+            appId: "AyDHJHMfyHGtgF5Lc8CG4dpA-gzGzoHsz",
+            appKey: "JZWLrweBHY4Txn5nZuLwFzim",
+            avatar:"identicon",
+            placeholder: "Send a comment for this post!",
+            guest_info:guest_info,
+            pageSize:"10"
+        })
+</script>
+
+
+</body>
+</html>
