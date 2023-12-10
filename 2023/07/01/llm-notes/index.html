@@ -6,20 +6,21 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="HandheldFriendly" content="True">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
-    <meta name="description" content="故事线 语言模型  语言模型（Language Model）的主要任务目标是：给定单词序列（句子）$w_1,\dots,w_n$ ，预测这个单词序列的概率 $p(w_1,\dots,w_n)$。这个概率的意义根据任务的不同而不同，最常见的比如“一个句子是人话”的概率，再比如是一句话不同翻译结果的概率。 应用链式法则，我们可以将问题转化成求 $p(w_i \vert w_1,\dots,w_{i-1">
+    <meta name="description" content="故事线 语言模型  语言模型（Language Model）的主要任务目标是：给定单词序列（句子）$w_1,\dots,w_n$ ，预测这个单词序列的概率 $p(w_1,\dots,w_n)$。这个概率的意义根据任务的不同而不同，最常见的比如“一个句子是人话”的概率，再比如是一句话不同翻译结果的概率。 应用链式法则，我们可以将问题转化成求 $p(w_i \vert w_1,\dots,w_{i-">
 <meta property="og:type" content="article">
 <meta property="og:title" content="LLM 手记 🤗">
 <meta property="og:url" content="https://siriusneo.github.io/2023/07/01/llm-notes/index.html">
 <meta property="og:site_name" content="Metric Space | 度量空间">
-<meta property="og:description" content="故事线 语言模型  语言模型（Language Model）的主要任务目标是：给定单词序列（句子）$w_1,\dots,w_n$ ，预测这个单词序列的概率 $p(w_1,\dots,w_n)$。这个概率的意义根据任务的不同而不同，最常见的比如“一个句子是人话”的概率，再比如是一句话不同翻译结果的概率。 应用链式法则，我们可以将问题转化成求 $p(w_i \vert w_1,\dots,w_{i-1">
+<meta property="og:description" content="故事线 语言模型  语言模型（Language Model）的主要任务目标是：给定单词序列（句子）$w_1,\dots,w_n$ ，预测这个单词序列的概率 $p(w_1,\dots,w_n)$。这个概率的意义根据任务的不同而不同，最常见的比如“一个句子是人话”的概率，再比如是一句话不同翻译结果的概率。 应用链式法则，我们可以将问题转化成求 $p(w_i \vert w_1,\dots,w_{i-">
 <meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://siriusneo.github.io/2023/07/01/llm-notes/3.png">
 <meta property="og:image" content="https://siriusneo.github.io/2023/07/01/llm-notes/1.png">
 <meta property="og:image" content="https://siriusneo.github.io/2023/07/01/llm-notes/2.png">
 <meta property="article:published_time" content="2023-07-01T08:55:00.000Z">
-<meta property="article:modified_time" content="2023-12-09T17:46:37.307Z">
+<meta property="article:modified_time" content="2023-12-09T18:30:26.539Z">
 <meta property="article:author" content="Chaofan">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://siriusneo.github.io/2023/07/01/llm-notes/1.png">
+<meta name="twitter:image" content="https://siriusneo.github.io/2023/07/01/llm-notes/3.png">
     
     
       
@@ -179,7 +180,8 @@
   
 
   <div class="content e-content" itemprop="articleBody">
-    <h2 id="故事线"><a href="#故事线" class="headerlink" title="故事线"></a>故事线</h2><ul>
+    <p><img src="3.png" alt=""></p>
+<h2 id="故事线"><a href="#故事线" class="headerlink" title="故事线"></a>故事线</h2><ul>
 <li><strong>语言模型</strong></li>
 </ul>
 <p>语言模型（Language Model）的主要任务目标是：给定单词序列（句子）$w_1,\dots,w_n$ ，预测这个单词序列的概率 $p(w_1,\dots,w_n)$。这个概率的意义根据任务的不同而不同，最常见的比如“一个句子是人话”的概率，再比如是一句话不同翻译结果的概率。</p>
