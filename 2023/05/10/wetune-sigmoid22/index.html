@@ -1,0 +1,575 @@
+<!DOCTYPE html>
+<html lang=en>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+    <meta name="description" content="这篇论文是我在面试 IPADS 实验室时选读的第二篇论文，主要内容是数据库 SQL 语句优化。论文用到了类似 Zhihao Jia 老师的计算图自动优化器 TASO 一样的思路，爆搜 + 形式化验证。读完可以看出作者很强的数学功底。论文地址：WeTune: Automatic Discovery and Verification of Query Rewrite Rules，发表于 SIGMOD’">
+<meta property="og:type" content="article">
+<meta property="og:title" content="[Paper Reading] IPADS: SQL 语句自动优化 WeTune">
+<meta property="og:url" content="https://siriusneo.github.io/2023/05/10/wetune-sigmoid22/index.html">
+<meta property="og:site_name" content="Metric Space | 度量空间">
+<meta property="og:description" content="这篇论文是我在面试 IPADS 实验室时选读的第二篇论文，主要内容是数据库 SQL 语句优化。论文用到了类似 Zhihao Jia 老师的计算图自动优化器 TASO 一样的思路，爆搜 + 形式化验证。读完可以看出作者很强的数学功底。论文地址：WeTune: Automatic Discovery and Verification of Query Rewrite Rules，发表于 SIGMOD’">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://siriusneo.github.io/2023/05/10/wetune-sigmoid22/wt-fig1.png">
+<meta property="article:published_time" content="2023-05-09T18:06:00.000Z">
+<meta property="article:modified_time" content="2023-12-10T17:54:14.117Z">
+<meta property="article:author" content="Chaofan">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://siriusneo.github.io/2023/05/10/wetune-sigmoid22/wt-fig1.png">
+    
+    
+      
+        
+          <link rel="shortcut icon" href="/images/favicon.ico">
+        
+      
+      
+        
+          <link rel="icon" type="image/png" href="/images/android-chrome-192x192.png" sizes="192x192">
+        
+      
+      
+        
+          <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+        
+      
+    
+    <!-- title -->
+    <title>[Paper Reading] IPADS: SQL 语句自动优化 WeTune</title>
+    <!-- async scripts -->
+    <!-- Google Analytics -->
+
+
+    <!-- Umami Analytics -->
+
+
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+    <!-- rss -->
+    
+    
+	<!-- mathjax -->
+	
+		<script type="text/x-mathjax-config">
+		  MathJax.Hub.Config({
+			tex2jax: {
+			  skipTags: ['script', 'noscript', 'style', 'textarea', 'pre'],
+			  inlineMath: [['$','$']]
+			}
+		  });
+		</script>
+		<script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-MML-AM_CHTML' async></script>
+	
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#" aria-label="Menu"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#" aria-label="Menu"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" aria-label="Top" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fa-solid fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/about/">About</a></li><!--
+     --><!--
+       --><li><a href="/archives/">Articles</a></li><!--
+     --><!--
+       --><li><a href="/links/">Links</a></li><!--
+     --><!--
+       --><li><a target="_blank" rel="noopener" href="https://siriusneo.top">Personal Page</a></li><!--
+     -->
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" aria-label="Previous post" href="/2023/05/30/mcnuggets-diary/"><i class="fa-solid fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" aria-label="Next post" href="/2023/05/10/osdi22-han/"><i class="fa-solid fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" aria-label="Back to top" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" aria-label="Share post" href="#"><i class="fa-solid fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://siriusneo.github.io/2023/05/10/wetune-sigmoid22/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://siriusneo.github.io/2023/05/10/wetune-sigmoid22/&text=[Paper Reading] IPADS: SQL 语句自动优化 WeTune"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://siriusneo.github.io/2023/05/10/wetune-sigmoid22/&title=[Paper Reading] IPADS: SQL 语句自动优化 WeTune"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://siriusneo.github.io/2023/05/10/wetune-sigmoid22/&is_video=false&description=[Paper Reading] IPADS: SQL 语句自动优化 WeTune"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=[Paper Reading] IPADS: SQL 语句自动优化 WeTune&body=Check out this article: https://siriusneo.github.io/2023/05/10/wetune-sigmoid22/"><i class="fa-solid fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://siriusneo.github.io/2023/05/10/wetune-sigmoid22/&title=[Paper Reading] IPADS: SQL 语句自动优化 WeTune"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://siriusneo.github.io/2023/05/10/wetune-sigmoid22/&title=[Paper Reading] IPADS: SQL 语句自动优化 WeTune"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://siriusneo.github.io/2023/05/10/wetune-sigmoid22/&title=[Paper Reading] IPADS: SQL 语句自动优化 WeTune"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://siriusneo.github.io/2023/05/10/wetune-sigmoid22/&title=[Paper Reading] IPADS: SQL 语句自动优化 WeTune"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://siriusneo.github.io/2023/05/10/wetune-sigmoid22/&name=[Paper Reading] IPADS: SQL 语句自动优化 WeTune&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://siriusneo.github.io/2023/05/10/wetune-sigmoid22/&t=[Paper Reading] IPADS: SQL 语句自动优化 WeTune"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    
+    
+      <div id="toc">
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Intro"><span class="toc-number">1.</span> <span class="toc-text">Intro</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Motivation"><span class="toc-number">2.</span> <span class="toc-text">Motivation</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#2-1-Insufficiency-of-Existing-Rewrites"><span class="toc-number">2.1.</span> <span class="toc-text">2.1 Insufficiency of Existing Rewrites</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-2-Impact-and-Scope-of-Missed-Rewrites"><span class="toc-number">2.2.</span> <span class="toc-text">2.2 Impact and Scope of Missed Rewrites</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-Our-Approach"><span class="toc-number">3.</span> <span class="toc-text">3 Our Approach</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-Rule-Enumerator"><span class="toc-number">4.</span> <span class="toc-text">4 Rule Enumerator</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#4-1-Plan-Template-Enumerator"><span class="toc-number">4.1.</span> <span class="toc-text">4.1 Plan Template Enumerator</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-2-Constraint-Enumerator"><span class="toc-number">4.2.</span> <span class="toc-text">4.2 Constraint Enumerator</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-3-Searching-for-Promising-Rules"><span class="toc-number">4.3.</span> <span class="toc-text">4.3 Searching for Promising Rules</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5-Rule-Verifier"><span class="toc-number">5.</span> <span class="toc-text">5 Rule Verifier</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#5-1-Built-in-Rule-Verifier"><span class="toc-number">5.1.</span> <span class="toc-text">5.1 Built-in Rule Verifier</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#5-1-1-Formal-Representation-of-Rules"><span class="toc-number">5.1.1.</span> <span class="toc-text">5.1.1 Formal Representation of Rules</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#5-1-2-Verification-of-the-Rule-Correctness"><span class="toc-number">5.1.2.</span> <span class="toc-text">5.1.2 Verification of the Rule Correctness</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-2-Integrating-SPES"><span class="toc-number">5.2.</span> <span class="toc-text">5.2 Integrating SPES</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#6-Selecting-Useful-Rules"><span class="toc-number">6.</span> <span class="toc-text">6 Selecting Useful Rules</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#7-Additional-Optimization"><span class="toc-number">7.</span> <span class="toc-text">7 Additional Optimization</span></a></li></ol>
+      </div>
+    
+  </span>
+</div>
+
+    
+    <div class="content index py4 ">
+        
+        <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+<article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle p-name" itemprop="name headline">
+        [Paper Reading] IPADS: SQL 语句自动优化 WeTune
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author p-author h-card" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span class="p-name" itemprop="name">Chaofan</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2023-05-09T18:06:00.000Z" class="dt-published" itemprop="datePublished">2023-05-10</time>
+        
+      
+    </div>
+
+
+       
+    <div class="article-category">
+        <i class="fa-solid fa-archive"></i>
+        <a class="category-link" href="/categories/paper-reading/">「战栗的寒冷之星」</a>
+    </div>
+
+
+       
+
+      | <i class="fa fa-eye fa-fw post-meta-icon"></i><span style="color: #8c8c8c; font-size: 13.6px;"> Views: </span><span id="busuanzi_value_page_pv"></span>
+      | <i class="far fa-file-word fa-fw post-meta-icon"></i><span style="color: #8c8c8c; font-size: 13.6px;"> Total Words: 25k</span>
+      | <i class="far fa-clock fa-fw post-meta-icon"></i><span style="color: #8c8c8c; font-size: 13.6px;"> Reading Time: 23 mins.</span>
+    </div>
+  </header>
+  
+
+  <div class="content e-content" itemprop="articleBody">
+    <p>这篇论文是我在面试 IPADS 实验室时选读的第二篇论文，主要内容是数据库 SQL 语句优化。论文用到了类似 Zhihao Jia 老师的计算图自动优化器 TASO 一样的思路，爆搜 + 形式化验证。读完可以看出作者很强的数学功底。论文地址：<a target="_blank" rel="noopener" href="https://ipads.se.sjtu.edu.cn/_media/publications/wetune_final.pdf">WeTune: Automatic Discovery and Verification of Query Rewrite Rules</a>，发表于 SIGMOD’22。</p>
+<h2 id="Intro"><a href="#Intro" class="headerlink" title="Intro"></a>Intro</h2><p>对于许多 web 应用来说，database query latency 对于 ux 来说是很重要的。</p>
+<p>query rewriting 是一种将 original query 转换成一个 semantically equivalent 的 alternative query 的技术。rewriting 依赖于 rules，这些 rules 指定了 queries 之间的等价关系。现有的 rules 通常是被 human experts 手工制作，并且需要花费数十年的时间手工积攒。</p>
+<p>然而，只依靠人力来发现 rewrite rules 是远远不够的。query language 的丰富的特征和微妙的语法使得保持 equivalence 是很难的一件事。所以 hand-written rewrite rules 的增速是非常缓慢的。</p>
+<p>这个情况因为 ORM 的广泛使用而变得更糟。ORM 可能会生成一些违反直觉的 SQL 语句。</p>
+<p>我们研究了 50 个真实世界的 Github 上开源的 web app 中的 queries（被 developer 手工加速），最新版的 SQL server 没能 rewrite 其中的 27 个。其中有一个查询的原始版本需要 37s，而 rewrite 版本只需要 0.3s。</p>
+<p>在这篇文章中，我们提出了 WeTune，一个 rule 生成器可以自动发现新的 rewrite rules。从 compiler superoptimization （通过穷尽式的搜索来来获取一个 optimal code）中获取了灵感，WeTune 也是通过 brute-force 的枚举所有潜在的 rules + 一个 correctness check 来自动发现所有的 rewrite rules。</p>
+<p>即使高层的方法是简单的，这里还有一些挑战。首先，怎样用一个 general form 来表示 rewrite rules 并且允许 enumeration？其次，如何自动验证枚举的 rules 的正确性？为了解决这些挑战，WeTune 将一个 rewrite rule 表示成一对 query plan templates，以及一系列 constraints 将 templates 联系起来。它枚举所有可能的 query plan templates（以一个 threshold number 个数的算子为上界）。一个 query plan template 是 generic 的，它使用 symbols 而不是具体的名字来表示 tables，columns 和 predicates。WeTune 进一步枚举所有的 constraints，即那些可以潜在使得一队枚举的 plan templates 语义等价的 conditions。例如，特定的两个 queries 里的 input 关系可以被约束成一样的，或者一个 projection 的 attributes 被约束成另一个的子集。WeTune 使用 SQL verifiers 来验证每个 rewrite rule 的正确性。它包含一个 built-in 的 verifier，提供了一个形式化的方式来将 rewrite rules 建模成 SMT formulas。然后正确性问题就可以自动用一个 SMT solver 来解决。WeTune 同时也可以支持使用现有的 SQL verifiers 例如 SPES 来证明正确性。</p>
+<blockquote>
+<p>SMT（Satisfiability modulo theories），它推广了 SAT 问题：引入了实数、整数以及多种 data structures 例如 lists，arrays，bit vectors 和 strings。</p>
+<p>我们将 WeTune 用在了现实世界的 database-backed 的应用上然后发现效果很好。</p>
+</blockquote>
+<h2 id="Motivation"><a href="#Motivation" class="headerlink" title="Motivation"></a>Motivation</h2><h3 id="2-1-Insufficiency-of-Existing-Rewrites"><a href="#2-1-Insufficiency-of-Existing-Rewrites" class="headerlink" title="2.1 Insufficiency of Existing Rewrites"></a>2.1 Insufficiency of Existing Rewrites</h3><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> <span class="operator">*</span> <span class="keyword">FROM</span> labels <span class="keyword">WHERE</span> id <span class="keyword">IN</span> (</span><br><span class="line">  <span class="keyword">SELECT</span> id <span class="keyword">FROM</span> labels <span class="keyword">WHERE</span> id <span class="keyword">IN</span> (</span><br><span class="line">    <span class="keyword">SELECT</span> id <span class="keyword">FROM</span> labels <span class="keyword">WHERE</span> project_id <span class="operator">=</span> <span class="number">10</span></span><br><span class="line">  ) <span class="keyword">ORDER</span> <span class="keyword">BY</span> tile <span class="keyword">ASC</span></span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+<p>这个查询有两处地方。首先，最外层和次外层的 subquery 几乎是一样的。其次，ORDER BY clause 是没用的，因为最外层的 IN operator 把 subquery 看成一个无序列表。</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> <span class="operator">*</span> <span class="keyword">FROM</span> labels <span class="keyword">WHERE</span> project_id <span class="operator">=</span> <span class="number">10</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> id <span class="keyword">FROM</span> notes <span class="keyword">WHERE</span> type<span class="operator">=</span><span class="string">&#x27;D&#x27;</span> <span class="keyword">AND</span> id <span class="keyword">IN</span> (</span><br><span class="line">  <span class="keyword">SELECT</span> id <span class="keyword">FROM</span> notes <span class="keyword">WHERE</span> commit_id <span class="operator">=</span> <span class="number">7</span></span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+<p>这个查询的 IN 是多余的。</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> id <span class="keyword">FROM</span> notes <span class="keyword">WHERE</span> type<span class="operator">=</span><span class="string">&#x27;D&#x27;</span> <span class="keyword">AND</span> commit_id <span class="operator">=</span> <span class="number">7</span></span><br></pre></td></tr></table></figure>
+<h3 id="2-2-Impact-and-Scope-of-Missed-Rewrites"><a href="#2-2-Impact-and-Scope-of-Missed-Rewrites" class="headerlink" title="2.2 Impact and Scope of Missed Rewrites"></a>2.2 Impact and Scope of Missed Rewrites</h3><p>…</p>
+<h2 id="3-Our-Approach"><a href="#3-Our-Approach" class="headerlink" title="3 Our Approach"></a>3 Our Approach</h2><p>WeTune 搜索 useful rewrite rules 分为两个 stages。在第一个阶段，它使用 Rule Enumerator 来枚举潜在的 rewrite rules 从而发现 promising rules，并且通过 Rule Verifier 来验证它们的正确性。在这个阶段，WeTune 使用简单的启发式来筛选出那些不太可能带来性能提升的 rules。然后到下个阶段，WeTune 实证地去确定 promising rules 的可用性（通过用它们来重写真实世界的 queries）然后来衡量它们的 performance。</p>
+<p>在 rule enumeration 和 verification 中，我们会遇到一些 challenges——这些挑战是 query rewriting 中独有的，不会在 compiler optimization 中出现的。</p>
+<ul>
+<li>如何表示一个 rewrite rule 来让它对 enumeration 友好？</li>
+<li>如何决定一个 enumerated rewrite rule 是正确的？</li>
+</ul>
+<p><img src="wt-fig1.png" alt=""></p>
+<h2 id="4-Rule-Enumerator"><a href="#4-Rule-Enumerator" class="headerlink" title="4 Rule Enumerator"></a>4 Rule Enumerator</h2><p>WeTune 将一个 rewrite rule 建模成一个三元组：<code>&lt;q_src, q_dest, C&gt;</code>。这里 <code>q_src</code> 是 source query plan template，<code>q_dest</code> 是 destination query plan template，<code>C</code> 是一系列 constraints。一个 query plan template 是 logical query plan tree 的片段，算子包括 selection，projection 等等。与具体 query 不同，table names，attributes 和 predicates 都是 symbolic 的。constraint set <code>C</code> 包含一系列 predicates，其中每个都描述了一些 source 和 destination query plan templates 之间的 symbols 的关系。这个 rule 规定了，如果 <code>C</code> 中所有的 constraints 都满足了，那么 <code>q_src</code> 和 <code>q_dest</code> 语义上是等价的。给定一个 SQL query q，如果某些 q 中的 fragment match <code>q_src</code>，matched fragment 可以被相应的 fragment（match <code>q_dest</code> 并且满足 C 的 fragment）替换。</p>
+<p>下面是一个由 WeTune 发现的 rule 的例子。</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">q5: ... <span class="keyword">FROM</span> T <span class="keyword">WHERE</span> T.x <span class="keyword">IN</span> (<span class="keyword">SELECT</span> R.y <span class="keyword">FROM</span> R)</span><br><span class="line">    <span class="keyword">AND</span> T.x <span class="keyword">IN</span> (<span class="keyword">SELECT</span> R.y <span class="keyword">FROM</span> R)</span><br><span class="line"></span><br><span class="line">q6: ... <span class="keyword">FROM</span> T <span class="keyword">WHERE</span> T.x <span class="keyword">IN</span> (<span class="keyword">SELECT</span> R.y <span class="keyword">FROM</span> R)</span><br></pre></td></tr></table></figure>
+<p>Rule Enumerator 会枚举所有潜在的 rewrite rules。首先它会枚举所有可能的 plan templates。为了限制搜索空间，它 bound 了 template size 这样一个 template 里的 operators 数量可以在一个小 threshold 以内。然后，对于每对 plan templates，它枚举所有可能的 constraints。最后，它选择比较 promising 的 rules。</p>
+<h3 id="4-1-Plan-Template-Enumerator"><a href="#4-1-Plan-Template-Enumerator" class="headerlink" title="4.1 Plan Template Enumerator"></a>4.1 Plan Template Enumerator</h3><p>query plan template 是一棵树，nodes 是关系代数 operators（带有 symbolic inputs 或 parameters）。</p>
+<p><strong>Operator.</strong> 每个 operator 接受一到两个 relations 作为 input（除了 Input operator），根据它的 semantic 进行 algebraic computation，然后输出一个 single relation。现在，WeTune 只支持一部分 operators。</p>
+<p><strong>Symbol.</strong> 在一个具体的 query plan 中，operators 可以被具体的 schema 信息 parameterize，例如 column names。在一个 query plan template，这些具体的 parameters 被 symbolic 所替代。</p>
+<ul>
+<li>Relation Symbol。一个 relation symbol (r for short) 代表了一个 relation。也就是关系（或者叫 table）。作为一个 query 的 input。</li>
+<li>Attribute list Symbol。一个 attribute list symbol (a for short) 代表了一列 attributes。此外，所有的 relation symbol r 都和一个 attribute list symbol <code>a_r</code> 相关联，代表 r 中所有的 attributes。</li>
+<li>Predicate Symbol。一个 predicate symbol (p for short) 代表了一个 predicate，以 0 个或多个 values 作为输入，然后返回一个 boolean value。它被用来 parameterize 一个 selection operator 的 predicate expression。</li>
+</ul>
+<p>WeTune 的 enumeration 策略先枚举一个 query plan 的树的结构，然后再枚举每个 tree node 的 operator type。更准确地说，enumeration 由三步组成：首先，WeTune 构造所有可能的 tree structures，包括两种可能的 internal tree nodes：1 child node 和 2 children node。其次，对于每个 tree structure，它对每个 node 赋予 Table 2 里的 operators 来枚举具体的 trees。operator 的输入个数应该与 node 的 children 个数匹配。最后，它给每个叶子位置加上 Input nodes。WeTune 最多枚举 不超过 4 个 operators 的 templates（不含 Input）。此外，它还会筛掉一些 invalid SQL query，例如位置不对的 Deduplicaiton。</p>
+<p>注意这里并不需要枚举 symbols。因为 template 都是 generic 的，所以这些东西直接编号就好，具体限制见 constraints。</p>
+<h3 id="4-2-Constraint-Enumerator"><a href="#4-2-Constraint-Enumerator" class="headerlink" title="4.2 Constraint Enumerator"></a>4.2 Constraint Enumerator</h3><p>WeTune 将枚举好的 templates pair 成一对，然后枚举它们之间的 constraint set。一个 constraint 是一个 specify <code>q_src</code> 和 <code>q_dest</code> 之间 symbols 关系的 predicate。为了限制搜索空间，我们只考虑如下的 constraints（从我们研究现有 rewrite rules ，考察 developer 手写 query rewrites 的经验中总结出来）：</p>
+<ul>
+<li><code>RelEq(rel1, rel2)</code> 这个限制表示 rel1 和 rel2 两个 relation symbol 等价（包含完全相同的 tuples）。</li>
+<li><code>AttrsEq(attrs1, attrs2)</code> 这个限制表示 attrs1 attrs2 两个 attribute list symbols 等价，即含有相同的 attributes。</li>
+<li><code>PredEq(pred1, pred2)</code> 这个限制表示两个 predicate symbol 等价，即互相蕴含。</li>
+<li><code>SubAttrs(attrs1, attrs2)</code> 这个限制表示 attrs1 含于 attrs2。它可以用来表示一个 attribute list 来自哪个 relation。</li>
+<li><code>RefAttrs(rel1, attrs1, rel2, attrs2)</code> 这个限制表示，rel1.attrs1 的值都在 rel2.attrs2 里。</li>
+<li><code>Unique(rel, attrs)</code> 这个限制表示 rel 在 attrs 上的值都是 unique 的。</li>
+<li><code>NotNull(rel, attrs)</code> 这个限制表示 rel 在 attrs 上的值不是 NULL</li>
+</ul>
+<p>给定 <code>&lt;q_src, q_dest&gt;</code>，constraint enumeration 会生成集合 $C^*$：它包含所有可能的和 <code>q_src</code> 与 <code>q_dest</code> 有关的 constraints。</p>
+<p>这是通过往上述的 constraints 里传入这俩 template 里有的 symbols 来实现的。</p>
+<h3 id="4-3-Searching-for-Promising-Rules"><a href="#4-3-Searching-for-Promising-Rules" class="headerlink" title="4.3 Searching for Promising Rules"></a>4.3 Searching for Promising Rules</h3><p>WeTune 需要找到 $C^*$ 的一个子集 $C$ 使得其能让 <code>q_src</code> 和 <code>q_dest</code> 语义等价。</p>
+<p>一个 rule 是 promising 的，如果它满足如下两个要求：</p>
+<ul>
+<li>首先，C 是最 relaxed 的 constraint set 使得去掉任何一个 constraint 都会使得 <code>q_src</code> 和 <code>q_dest</code> 的等价关系不成立。</li>
+<li>其次，<code>q_dest</code> 的 operators 个数 &lt;= <code>q_src</code> 的。在这个 heuristic 下，rewrite rules 会倾向于简化而不是增加 source query 的复杂度，更可能会提高 performance。 </li>
+</ul>
+<p>搜索算法大致如下：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">EnumerateRules(k):</span><br><span class="line">  T := EnumerateTemplates(k)   # 枚举所有templates</span><br><span class="line">  R := \emptyset</span><br><span class="line">  foreach &lt;q_src, q_dest&gt; \in T x T do:</span><br><span class="line">    if q_dest is not simpler than q_src then continue</span><br><span class="line">    C* := EnumerateConstraints(q_src, q_dest)</span><br><span class="line">    \mathbb&#123;C&#125; := SearchRelaxed(q_src, q_dest, C*)</span><br><span class="line">    R := R U &#123;&lt;q_src, q_dest, C&gt; | C \in \mathbb&#123;C&#125;&#125;</span><br><span class="line">  return R</span><br><span class="line"></span><br><span class="line">SearchRelaxed(q_src, q_dest, C*):</span><br><span class="line">  if not ProveEq(q_src, q_dest, C*) then return \emptyset</span><br><span class="line">  \mathbb&#123;C&#125; := \emptyset</span><br><span class="line">  foreach c \in C* do</span><br><span class="line">    \mathbb&#123;C&#125; := \mathbb&#123;C&#125; U SearchRelaxed(q_src, q_dest, C* - &#123;c&#125;)</span><br><span class="line">  if \mathbb&#123;C&#125; = \emptyset then return &#123;C*&#125;</span><br><span class="line">  else return \mathbb&#123;C&#125;</span><br></pre></td></tr></table></figure>
+<p>这个算法首先枚举所有的 templates，然后将它们 pair 起来，忽略掉那些 q_dest 比 q_src 复杂的 pair（operator 个数）。然后生成 C*（即所有可能的 constraints 的集合）。然后搜索 C* 的那些 promising 子集（通过 SearchRelaxed）。</p>
+<p>这个 dfs 会不断 relax 这个 constraint set，并且只返回最 relax 的那些。它返回的是 a set of sets，其中每个都是最 relax 的 set。</p>
+<p>为了减少 search cost，WeTune 采用了如下方法：首先，它排除了 C* 中的 useless constraints：useless 定义为如果它只包含 q_dest 里的 symbols 或者对应一个 illegal 的 query plan。其次，它不会 check C* 的每一个 subset，而只 check 那些是 closure 的并且 non-conflicting 的。（closure 意思是，它们不 imply 任何不在 set 里的其它 constraint）。两个 constraints 是 conflict 的，如果它们共存会导致一个 illegal plan。最后，如果 C’ imply C，并且 q_src, q_dest, C’ 是一个合法 rule，那 WeTune 会跳过 check C。</p>
+<h2 id="5-Rule-Verifier"><a href="#5-Rule-Verifier" class="headerlink" title="5 Rule Verifier"></a>5 Rule Verifier</h2><p>我们基于 FOL 设计了一个 rule verifier。WeTune 也可以用 SPES 来 verify rules。</p>
+<h3 id="5-1-Built-in-Rule-Verifier"><a href="#5-1-Built-in-Rule-Verifier" class="headerlink" title="5.1 Built-in Rule Verifier"></a>5.1 Built-in Rule Verifier</h3><p>built-in verifier 首先将一个 rule 表示为一个 U-semiring expression，然后将 expression 转化为 FOL formulas。最后，FOL formulas 被使用一个 SMT solver 验证。</p>
+<h4 id="5-1-1-Formal-Representation-of-Rules"><a href="#5-1-1-Formal-Representation-of-Rules" class="headerlink" title="5.1.1 Formal Representation of Rules"></a>5.1.1 Formal Representation of Rules</h4><p>我们用 U-expression 来表示 <code>q_src</code> 和 <code>q_dest</code>，然后使用 FOL formulas 来表示 constraint set C。</p>
+<ul>
+<li><code>【R】(x)</code> 返回 tuple x 在 relation R 里的出现次数（multiplicity）</li>
+<li><code>[b] = if b then 1 else 0</code> 即 bool 转 integer。它可以被用来将一个 predicate 转为一个 U-expression。</li>
+<li><code>||b|| = if e &gt; 0 then 1 else 0</code> 即 deduplication。这里 e 是一个 U-expression。</li>
+<li><code>not(e) = if e &gt; 0 then 0 else 1</code> 这里 e 是一个 U-expression。它用来 model 一个 predicate 的 negation。</li>
+<li>$\sum_{t \in D} f(t) = f(t_0) + f(t_1) + \dots$  for all $t_i \in D$，这里 D 一个 tuple set（叫做 summation domain）。 $f$ 是一个从 $D \rightarrow N$ 的函数。默认 $D$ 是包含所有可能 tuples。</li>
+</ul>
+<p>WeTune 将 symbolic query templates 翻译成 U-expression。它分为如下几个步骤：</p>
+<p>Step 1. 翻译 query template 中 symbols。</p>
+<ul>
+<li>每个 relation symbol <code>rel</code> 对应着一个函数 <code>【r】(t): Tuple -&gt; N</code>，接受 tuple t 作为输入，返回它的 multiplicity。</li>
+<li>每个 attribute list symbol <code>attrs</code> 对应着一个函数 <code>【a】(t): Tuple -&gt; Tuple</code> ，接受一个 tuple t，将其投影到 attrs 上然后返回投影后的 tuple。</li>
+<li>每个 predicate symbol <code>pred</code> 对应一个函数 <code>【p】(t): Tuple -&gt; Bool</code> 接受一个 tuple t，返回 t 是否满足 pred。</li>
+</ul>
+<p>为了简单，我们在没有歧义时会省掉 <code>【】</code></p>
+<p>Step 2. 翻译 plan structure。这是通过对 tree structure 递归来完成。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">ToUExpr(q):</span><br><span class="line">  &lt;fl, tl&gt; := ToUExpr(q.child[0]) // None if no child</span><br><span class="line">  &lt;fr, tr&gt; := ToUExpr(q.child[1]) // None if no child</span><br><span class="line">  return TranslateByTable3(q, fl, tl, fr, tr)</span><br></pre></td></tr></table></figure>
+<p>其中 Table 3 负责翻译 plan 的各个节点。</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>Operator</th>
+<th>Expression</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>$Input_r$</td>
+<td>$f(t) := r(t)$</td>
+</tr>
+<tr>
+<td>$Proj_a$</td>
+<td>$f(t) := \sum_{t_l} f_l(t_l) \times [t = a(t_l)] $</td>
+</tr>
+<tr>
+<td>$Sel_{p, a}$</td>
+<td>$f(t) := f_l(t) \times [p(a(t))]$</td>
+</tr>
+<tr>
+<td>$InSubSel_a$</td>
+<td>$f(t) := f_l(t) \times \Vert f_r(a(t)) \Vert \times not([IsNull(a(t))])$</td>
+</tr>
+<tr>
+<td>$IJoin_{a_l, a_r}$</td>
+<td>$f(t) := \sum_{t_l, t_r} [t = t_l \cdot t_r] \times f_l(t_l) \times f_r(t_r) \times [a_l(t_l) = a_r(t_r)] \times not([IsNull(a_l(t_l))])$</td>
+</tr>
+<tr>
+<td>$LJoin_{a_l, a_r}$</td>
+<td>$f(t) := (\text{IJoin Expr.}) + \sum_{t_l, t_r} ([t = t_l \cdot t_r] \times f_l(t_l) \times [IsNull(t_r)]) \times not(E)$，其中 $E := \sum_{t_r’} (f_r(t_r’) \times [a_l(t_l) = a_r(t_r’)] \times not(IsNull(a_l(t_l))))$</td>
+</tr>
+<tr>
+<td>$RJoin_{a_l, a_r}$</td>
+<td></td>
+</tr>
+<tr>
+<td>$Dedup$</td>
+<td>$f(t) := \Vert f_l(t) \Vert$</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>备注：这个 LJoin 实现的意思是，分两种情况讨论：如果右表有，则算在 IJoin 里；否则要求右表没有，然后和 Null 配对。（$not(E)$ 就是要求右表没有）</p>
+<p><strong>Handling Null</strong> 一个 UDP 的重要局限就是它假设 attributes 都不会是 NULL。因此 UDP 无法支持 OUTER JOIN。为了处理 NULL 和 OUTER JOIN，WeTune 支持了它们。其它 operators（例如 aggregation）比较 trickier，作为 future work。</p>
+<p>对于 $Input_r$，$r(NULL)$ 返回 input relation 里的 NULL tuples 的个数（A tuple is NULL if all its attributes are NULL. A NULL attribute can be considered as a NULL tuple with only one attribute）。</p>
+<p>对于 $Proj_a$，$f(NULL)$ 返回在 a 这些 attributes 投影上是 NULL 的个数。</p>
+<p>对于 $Sel_{p, a}$，一些 predicate 例如 &gt; 或 &lt; 会在 evaluating NULL 时候返回 unknown，那么 [p(a(t))] 会返回 0。这里我们可以把 unknown （在 three-valued logic 里）当作 false（two-valued logic 里）。</p>
+<p>对于 $Dedup$，如果至少有一个 NULL tuple 在 relation 里，返回 1；否则 0。</p>
+<p>为了 model NULL 对 Table 3 里的其它 operators 的影响，WeTune 往 U-expression 里引入了一个新的 predicate $IsNull(x)$。使用它 WeTune 可以 filter out NULL tuples。</p>
+<p>例如，对于 IN-subquery，我们使用它来 filter outer query 的 NULL tuple；对于 INNER JOIN，我们使用它来 filter out 左右 relation 有 NULL tuples 的情况。</p>
+<p><strong>Supporting Outer Join operators.</strong> OUTER JOIN 在不 match 的时候也会保留这个 row，然后给另一边 fill 上 NULL。例如 <code>x LEFT JOIN y ON x.a=y.b</code> 保存了 left table x 的所有 rows。对于 x 里不 match 任何 right row 的那些 row，NULL 被 appended 作为 right row。</p>
+<p>所以 LEFT JOIN 包含两部分：(1) INNER JOIN. (2) non-matched rows。 其中 $[IsNull(t_r)]$ 表示 NULL 被 append 到右边；$not(E)$ 描述了 non-matching condition。</p>
+<p><strong>Representing constraints with FOL formulas.</strong> 每个 constraint 直接根据 Table 4 翻译为一个 FOL formula。</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>Constraint</th>
+<th>Expression</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>$RelEq(r_1, r_2)$</td>
+<td>$\forall t. r_1(t) = r_2(t)$</td>
+</tr>
+<tr>
+<td>$AttrsEq(a_1, a_2)$</td>
+<td>$\forall t. a_1(t) = a_2(t)$</td>
+</tr>
+<tr>
+<td>$PredEq(p_1, p_2)$</td>
+<td>$\forall t. p_1(t) = p_2(t)$</td>
+</tr>
+<tr>
+<td>$SubAttrs(a_1, a_2)$</td>
+<td>$\forall t. a_1(t) = a_1(a_2(t))$</td>
+</tr>
+<tr>
+<td>$RefAttrs(r_1, a_1, r_2, a_2)$</td>
+<td>$\forall t_1. ((r_1(t_1) &gt; 0 \land \neg (IsNull(a_1(t_1)))) \Rightarrow \exists t_2. (r_2(t_2) &gt; 0 \land \neg (IsNull(a_2(t_2))) \land [a_1(t_1) = a_2(t_2)])$</td>
+</tr>
+<tr>
+<td>$Unique(r, a)$</td>
+<td>$(\forall t, t’. r(t) &gt; 0 \land r(t’) &gt; 0 \land a(t)=a(t’) \Rightarrow t=t’) \land (\forall t. r(t) \le 1)$</td>
+</tr>
+<tr>
+<td>$NotNull(r, a)$</td>
+<td>$\forall t. r(t) &gt; 0 \Rightarrow \neg IsNull(a(t))$</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>然后全部 conjunction 起来就好了。</p>
+<h4 id="5-1-2-Verification-of-the-Rule-Correctness"><a href="#5-1-2-Verification-of-the-Rule-Correctness" class="headerlink" title="5.1.2 Verification of the Rule Correctness"></a>5.1.2 Verification of the Rule Correctness</h4><p>在使用 U-expressions 形式化 query templates 和使用 FOL formulas 形式化 constraints 之后，rule verifier 会使用 SMT solver 来 check 一个 rule 的 correctness。我们需要使用 FOL formulas 来形式化 rule 的 correctness。</p>
+<p><strong>Definition 1</strong> (Interpretation). 给定一个 query plan template q（以 U-expression 形式表示），一个 interpretation 是 q 里所有 symbols 的一个 assignment of meaning。我们将这个具体 query plans 记为 $q^{I}$. 相似地我们对 constraint set 有 $C^I$.</p>
+<p><strong>Definition 2</strong> (Correctness of a rewrite rule). 给定一个 query plan templates pair <code>&lt;q_src, q_dest&gt;</code> 和一个 constraint set C，</p>
+<script type="math/tex; mode=display">
+\forall I. C^I \Rightarrow \forall t. q_{src}^I(t) = q_{dest}^I(t)</script><p>这一定义与 bag equivalence 一致：两个 bags 是 equivalent 的 iff 每个 tuple 在两边都含有相同的 multiplicity。 </p>
+<p>为了证明 query equivalence，UDP 依靠将两个 U-exp 转换成 normalized forms，然后在它们之间建立起 syntactic isomorphism。然而，这样的 syntactic isomorphism 要求在 U-exp 的 summations 里建立起一对一的等价关系，像 OUTER JOIN 这样的算符不能保证这一点（即 sum 数量相同）。</p>
+<p><strong>Logic-based decision procedure.</strong> 和 UDP 不同，WeTune 使用一个 logic-based 的 decision procedure——将 Def 2 转换成一个 FOL formula 然后使用 SMT solver 来 verify 它。</p>
+<p>实现它有两个 challenges。首先是怎样将 U-expression 转换为 FOL。这些 FOL 能满足充分条件：即满足 FOL 一定满足 U-exp。</p>
+<p>在 encoding FOL formulas 到 SMT solver 时，我们将 tuple 作为一个带有 SMTLIB uninterpreted sort 的 object，然后将 relation（Tuple -&gt; N），predicate（Tuple -&gt; Bool）都 encode 为 uninterpreted function。</p>
+<p>最难的部分在于 summation（表 5 的最后两行）。unbounded summation domain 使得它的 value 很难用 FOL formula 表示。我们通过一个 insight 来解决这个问题。因为最关键的是等价关系，所以没必要显式地表示出一个 summation 的 value。</p>
+<p>WeTune 的方法是 “放松条件”，即找到一个 $P$ 满足 $P \Rightarrow \text{our formula}$. 对于第一个式子</p>
+<script type="math/tex; mode=display">
+\sum_t r(t) \times f(t) = \sum_t r(t) \times g(t)</script><p>（aligned summations），我们将其放松为（Theorem 5.1）</p>
+<script type="math/tex; mode=display">
+\forall t. r(t) \times f(t) = r(t) \times g(t)</script><p>所以 FOL 下去就是</p>
+<script type="math/tex; mode=display">
+\forall t. r(t) \times Tr(f(t)) = r(t) \times Tr(g(t))</script><p>（Theorem 5.2）是对 5.1 的推广，即不 aligned 的情况</p>
+<script type="math/tex; mode=display">
+\sum_t r(t) \times f(t) = \sum_{t,s} r(t) \times g(t) \times h(t, s)</script><p>我们把它放松为对于每一项，或者 $r(t) \times f(t)$ 和 $\sum_{s} h(t, s)$ 同时为 0，或者 $r(t) \times f(t) = r(t) \times g(t)$ 且 $\sum_s h(t, s) = 1$。注意 $\sum_s h(t,s) = 0/1$ 的 translate 是前文有定义的。</p>
+<h3 id="5-2-Integrating-SPES"><a href="#5-2-Integrating-SPES" class="headerlink" title="5.2 Integrating SPES"></a>5.2 Integrating SPES</h3><p>SPES 额外支持了 UNION 和 Aggregation 算子。Aggregation 算子包含四个 symbols：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">SELECT a_group, f(a_agg) FROM ... GROUP BY a_group HAVING p(a_group)</span><br></pre></td></tr></table></figure>
+<p>a_group: GROUP BY 子句后面的 attributes</p>
+<p>a_agg：用于 aggregate function 计算的 attributes</p>
+<p>f：aggregate function</p>
+<p>p：用于 HAVING clause 的 predicate symbol</p>
+<p>由于 SPES 只能接受 concrete 的 SQL queries，而且无法识别 constraint set C，WeTune 会将 <code>q_src</code> 和 <code>q_dest</code> concretize。主要分为以下两步：</p>
+<ul>
+<li>首先，给每个 symbol 分配 name（根据那些 equivalence constraints，包括 RelEq，AttrsEq，PredEq 和 AggrEq），用等价类的思想。</li>
+<li>然后，对于每个 attribute，我们根据 SubAttrs constraints 找到它属于的 relation。如果一个 attribute c 属于一个 relation t，我们会将其改写成 <code>t.c</code>。</li>
+<li>最后，我们根据上述来构建 schema。</li>
+</ul>
+<h2 id="6-Selecting-Useful-Rules"><a href="#6-Selecting-Useful-Rules" class="headerlink" title="6 Selecting Useful Rules"></a>6 Selecting Useful Rules</h2><p>在生成 promising rules 之后，WeTune 会实际地去 evaluate 他们的 usefulness。Basic idea 是从 real-world applications 收集一些 queries，然后衡量 rules 是否能 rewrite 它们到一个更有效的 form。理想地，rewrite 由 database optimizer 进行（使用现有的 rewriting techniques）。然而，为了和 non-open-source databases 协作，WeTune 在 database 之外进行 rewrite。</p>
+<p>WeTune 的 rewriting logic 是基于简单的贪心搜索。给定一个 query，它会 iteratively 地 apply rules 直到没有 rule 可以使用。WeTune 使用现有的 database 中的 cost estimator 来衡量 cost。</p>
+<h2 id="7-Additional-Optimization"><a href="#7-Additional-Optimization" class="headerlink" title="7 Additional Optimization"></a>7 Additional Optimization</h2><p>WeTune 还提出了两种额外的 optimization strategies 来减少 redundant rules，以及消除 SQL 语句中的 ORDER BY。</p>
+<p><strong>Reducing redundant rules.</strong> 我们可以应用多个 rules 来 rewrite 一个 query，但是有的 rules 可能是 redundant 的：例如 R3 可以由 R1 和 R2 共同应用得到。 形式化地，给定一个 rules 集合 $\mathbb{R}$，以及其中的一个 rule $R \in \mathbb{R}$，我们称 $R$ 在 $\mathbb{R}$ 中是 reducible 的如果</p>
+<script type="math/tex; mode=display">
+\forall q. (Rewrite(\mathbb{R}, q) = Rewrtie(\mathbb{R} - \{R\}, q))</script><p>但是我们不可能 check 所有的 queries。实际上我们只需要找到 minimal pattern that $R$ is applicable，也就是任何 R 能 apply 的 query 都包含 $\hat{q}$ ，然后只要对 $\hat{q}$ check 这个条件就可以。</p>
+
+  </div>
+</article>
+
+
+
+    <div class="blog-post-comments">
+        <div class="vcomment"></div>
+    </div>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+        
+          <li><a href="/">Home</a></li>
+        
+          <li><a href="/about/">About</a></li>
+        
+          <li><a href="/archives/">Articles</a></li>
+        
+          <li><a href="/links/">Links</a></li>
+        
+          <li><a target="_blank" rel="noopener" href="https://siriusneo.top">Personal Page</a></li>
+        
+      </ul>
+    </div>
+
+    
+    
+      <div id="toc-footer" style="display: none">
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Intro"><span class="toc-number">1.</span> <span class="toc-text">Intro</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Motivation"><span class="toc-number">2.</span> <span class="toc-text">Motivation</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#2-1-Insufficiency-of-Existing-Rewrites"><span class="toc-number">2.1.</span> <span class="toc-text">2.1 Insufficiency of Existing Rewrites</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-2-Impact-and-Scope-of-Missed-Rewrites"><span class="toc-number">2.2.</span> <span class="toc-text">2.2 Impact and Scope of Missed Rewrites</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-Our-Approach"><span class="toc-number">3.</span> <span class="toc-text">3 Our Approach</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-Rule-Enumerator"><span class="toc-number">4.</span> <span class="toc-text">4 Rule Enumerator</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#4-1-Plan-Template-Enumerator"><span class="toc-number">4.1.</span> <span class="toc-text">4.1 Plan Template Enumerator</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-2-Constraint-Enumerator"><span class="toc-number">4.2.</span> <span class="toc-text">4.2 Constraint Enumerator</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-3-Searching-for-Promising-Rules"><span class="toc-number">4.3.</span> <span class="toc-text">4.3 Searching for Promising Rules</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5-Rule-Verifier"><span class="toc-number">5.</span> <span class="toc-text">5 Rule Verifier</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#5-1-Built-in-Rule-Verifier"><span class="toc-number">5.1.</span> <span class="toc-text">5.1 Built-in Rule Verifier</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#5-1-1-Formal-Representation-of-Rules"><span class="toc-number">5.1.1.</span> <span class="toc-text">5.1.1 Formal Representation of Rules</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#5-1-2-Verification-of-the-Rule-Correctness"><span class="toc-number">5.1.2.</span> <span class="toc-text">5.1.2 Verification of the Rule Correctness</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-2-Integrating-SPES"><span class="toc-number">5.2.</span> <span class="toc-text">5.2 Integrating SPES</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#6-Selecting-Useful-Rules"><span class="toc-number">6.</span> <span class="toc-text">6 Selecting Useful Rules</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#7-Additional-Optimization"><span class="toc-number">7.</span> <span class="toc-text">7 Additional Optimization</span></a></li></ol>
+      </div>
+    
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://siriusneo.github.io/2023/05/10/wetune-sigmoid22/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://siriusneo.github.io/2023/05/10/wetune-sigmoid22/&text=[Paper Reading] IPADS: SQL 语句自动优化 WeTune"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://siriusneo.github.io/2023/05/10/wetune-sigmoid22/&title=[Paper Reading] IPADS: SQL 语句自动优化 WeTune"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://siriusneo.github.io/2023/05/10/wetune-sigmoid22/&is_video=false&description=[Paper Reading] IPADS: SQL 语句自动优化 WeTune"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=[Paper Reading] IPADS: SQL 语句自动优化 WeTune&body=Check out this article: https://siriusneo.github.io/2023/05/10/wetune-sigmoid22/"><i class="fa-solid fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://siriusneo.github.io/2023/05/10/wetune-sigmoid22/&title=[Paper Reading] IPADS: SQL 语句自动优化 WeTune"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://siriusneo.github.io/2023/05/10/wetune-sigmoid22/&title=[Paper Reading] IPADS: SQL 语句自动优化 WeTune"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://siriusneo.github.io/2023/05/10/wetune-sigmoid22/&title=[Paper Reading] IPADS: SQL 语句自动优化 WeTune"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://siriusneo.github.io/2023/05/10/wetune-sigmoid22/&title=[Paper Reading] IPADS: SQL 语句自动优化 WeTune"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://siriusneo.github.io/2023/05/10/wetune-sigmoid22/&name=[Paper Reading] IPADS: SQL 语句自动优化 WeTune&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://siriusneo.github.io/2023/05/10/wetune-sigmoid22/&t=[Paper Reading] IPADS: SQL 语句自动优化 WeTune"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fa-solid fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        
+          <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fa-solid fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fa-solid fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy;
+    
+    
+    2020-2023
+    Chaofan.
+    Powered by <a target="_blank" rel="noopener" href="https://github.com/probberechts/hexo-theme-cactus">Cactus</a>. <a target="_blank" rel="noopener" href="https://github.com/SiriusNEO/hexo-theme-cactus-customized">Customized</a> by me :).
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/about/">About</a></li><!--
+     --><!--
+       --><li><a href="/archives/">Articles</a></li><!--
+     --><!--
+       --><li><a href="/links/">Links</a></li><!--
+     --><!--
+       --><li><a target="_blank" rel="noopener" href="https://siriusneo.top">Personal Page</a></li><!--
+     -->
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+
+
+  <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" crossorigin="anonymous" onload="this.onload=null;this.rel='stylesheet'"/>
+
+
+    <!-- jquery -->
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" crossorigin="anonymous"></script>
+
+
+
+
+<!-- clipboard -->
+
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.7/clipboard.min.js" crossorigin="anonymous"></script>
+  
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"Copy to clipboard!\">";
+    btn += '<i class="fa-regular fa-clone"></i>';
+    btn += '</span>';
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "Copied!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Baidu Analytics -->
+
+<!-- Cloudflare Analytics -->
+
+<!-- Disqus Comments -->
+
+<!-- utterances Comments -->
+
+<!-- Valine Comments -->
+
+    <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+    <script src="//unpkg.com/valine@latest/dist/Valine.min.js"></script>
+    <script type="text/javascript">
+        var notify = 'false' == true ? true : false;
+        var verify = 'false' == true ? true : false;
+        var GUEST_INFO = ['nick','mail','link'];
+        var guest_info = 'nick,mail,link'.split(',').filter(function(item){
+          return GUEST_INFO.indexOf(item) > -1
+        });
+        guest_info = guest_info.length == 0 ? GUEST_INFO :guest_info;
+        new Valine({
+            el: '.vcomment',
+            notify: notify,
+            verify: verify,
+            appId: "AyDHJHMfyHGtgF5Lc8CG4dpA-gzGzoHsz",
+            appKey: "JZWLrweBHY4Txn5nZuLwFzim",
+            avatar:"identicon",
+            placeholder: "Send a comment for this post!",
+            guest_info:guest_info,
+            pageSize:"10"
+        })
+</script>
+
+
+</body>
+</html>
