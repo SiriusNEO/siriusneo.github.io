@@ -8,7 +8,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
     <meta name="description" content="这篇论文是我在面试 IPADS 实验室时选读的第一篇论文，主要内容是 GPU 上的任务调度，做的还是非常有意思的。论文地址：Microsecond-scale Preemption for Concurrent GPU-accelerated DNN Inferences，发表于 OSDI’22。 1 Intro这篇文章把 DNN inferences task 分成两种类型：  real-tim">
 <meta property="og:type" content="article">
-<meta property="og:title" content="[Paper Reading] IPADS: GPU 调度 REEF">
+<meta property="og:title" content="[Paper Reading] 细粒度 GPU 任务调度系统 REEF">
 <meta property="og:url" content="https://siriusneo.github.io/2023/05/10/osdi22-han/index.html">
 <meta property="og:site_name" content="Metric Space | 度量空间">
 <meta property="og:description" content="这篇论文是我在面试 IPADS 实验室时选读的第一篇论文，主要内容是 GPU 上的任务调度，做的还是非常有意思的。论文地址：Microsecond-scale Preemption for Concurrent GPU-accelerated DNN Inferences，发表于 OSDI’22。 1 Intro这篇文章把 DNN inferences task 分成两种类型：  real-tim">
@@ -17,7 +17,7 @@
 <meta property="og:image" content="https://siriusneo.github.io/2023/05/10/osdi22-han/fig5.png">
 <meta property="og:image" content="https://siriusneo.github.io/2023/05/10/osdi22-han/fig7.png">
 <meta property="article:published_time" content="2023-05-09T16:00:00.000Z">
-<meta property="article:modified_time" content="2023-12-10T17:54:08.704Z">
+<meta property="article:modified_time" content="2023-12-10T18:03:07.360Z">
 <meta property="article:author" content="Chaofan">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https://siriusneo.github.io/2023/05/10/osdi22-han/fig4.png">
@@ -40,7 +40,7 @@
       
     
     <!-- title -->
-    <title>[Paper Reading] IPADS: GPU 调度 REEF</title>
+    <title>[Paper Reading] 细粒度 GPU 任务调度系统 REEF</title>
     <!-- async scripts -->
     <!-- Google Analytics -->
 
@@ -114,16 +114,16 @@
     <div id="share" style="display: none">
       <ul>
   <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://siriusneo.github.io/2023/05/10/osdi22-han/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://siriusneo.github.io/2023/05/10/osdi22-han/&text=[Paper Reading] IPADS: GPU 调度 REEF"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://siriusneo.github.io/2023/05/10/osdi22-han/&title=[Paper Reading] IPADS: GPU 调度 REEF"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://siriusneo.github.io/2023/05/10/osdi22-han/&is_video=false&description=[Paper Reading] IPADS: GPU 调度 REEF"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="mailto:?subject=[Paper Reading] IPADS: GPU 调度 REEF&body=Check out this article: https://siriusneo.github.io/2023/05/10/osdi22-han/"><i class="fa-solid fa-envelope " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://siriusneo.github.io/2023/05/10/osdi22-han/&title=[Paper Reading] IPADS: GPU 调度 REEF"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://siriusneo.github.io/2023/05/10/osdi22-han/&title=[Paper Reading] IPADS: GPU 调度 REEF"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://siriusneo.github.io/2023/05/10/osdi22-han/&title=[Paper Reading] IPADS: GPU 调度 REEF"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://siriusneo.github.io/2023/05/10/osdi22-han/&title=[Paper Reading] IPADS: GPU 调度 REEF"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://siriusneo.github.io/2023/05/10/osdi22-han/&name=[Paper Reading] IPADS: GPU 调度 REEF&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://siriusneo.github.io/2023/05/10/osdi22-han/&t=[Paper Reading] IPADS: GPU 调度 REEF"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://siriusneo.github.io/2023/05/10/osdi22-han/&text=[Paper Reading] 细粒度 GPU 任务调度系统 REEF"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://siriusneo.github.io/2023/05/10/osdi22-han/&title=[Paper Reading] 细粒度 GPU 任务调度系统 REEF"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://siriusneo.github.io/2023/05/10/osdi22-han/&is_video=false&description=[Paper Reading] 细粒度 GPU 任务调度系统 REEF"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=[Paper Reading] 细粒度 GPU 任务调度系统 REEF&body=Check out this article: https://siriusneo.github.io/2023/05/10/osdi22-han/"><i class="fa-solid fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://siriusneo.github.io/2023/05/10/osdi22-han/&title=[Paper Reading] 细粒度 GPU 任务调度系统 REEF"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://siriusneo.github.io/2023/05/10/osdi22-han/&title=[Paper Reading] 细粒度 GPU 任务调度系统 REEF"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://siriusneo.github.io/2023/05/10/osdi22-han/&title=[Paper Reading] 细粒度 GPU 任务调度系统 REEF"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://siriusneo.github.io/2023/05/10/osdi22-han/&title=[Paper Reading] 细粒度 GPU 任务调度系统 REEF"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://siriusneo.github.io/2023/05/10/osdi22-han/&name=[Paper Reading] 细粒度 GPU 任务调度系统 REEF&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://siriusneo.github.io/2023/05/10/osdi22-han/&t=[Paper Reading] 细粒度 GPU 任务调度系统 REEF"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
 </ul>
 
     </div>
@@ -145,7 +145,7 @@
   <header>
     
     <h1 class="posttitle p-name" itemprop="name headline">
-        [Paper Reading] IPADS: GPU 调度 REEF
+        [Paper Reading] 细粒度 GPU 任务调度系统 REEF
     </h1>
 
 
@@ -328,16 +328,16 @@
     <div id="share-footer" style="display: none">
       <ul>
   <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://siriusneo.github.io/2023/05/10/osdi22-han/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://siriusneo.github.io/2023/05/10/osdi22-han/&text=[Paper Reading] IPADS: GPU 调度 REEF"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://siriusneo.github.io/2023/05/10/osdi22-han/&title=[Paper Reading] IPADS: GPU 调度 REEF"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://siriusneo.github.io/2023/05/10/osdi22-han/&is_video=false&description=[Paper Reading] IPADS: GPU 调度 REEF"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="mailto:?subject=[Paper Reading] IPADS: GPU 调度 REEF&body=Check out this article: https://siriusneo.github.io/2023/05/10/osdi22-han/"><i class="fa-solid fa-envelope fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://siriusneo.github.io/2023/05/10/osdi22-han/&title=[Paper Reading] IPADS: GPU 调度 REEF"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://siriusneo.github.io/2023/05/10/osdi22-han/&title=[Paper Reading] IPADS: GPU 调度 REEF"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://siriusneo.github.io/2023/05/10/osdi22-han/&title=[Paper Reading] IPADS: GPU 调度 REEF"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://siriusneo.github.io/2023/05/10/osdi22-han/&title=[Paper Reading] IPADS: GPU 调度 REEF"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://siriusneo.github.io/2023/05/10/osdi22-han/&name=[Paper Reading] IPADS: GPU 调度 REEF&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://siriusneo.github.io/2023/05/10/osdi22-han/&t=[Paper Reading] IPADS: GPU 调度 REEF"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://siriusneo.github.io/2023/05/10/osdi22-han/&text=[Paper Reading] 细粒度 GPU 任务调度系统 REEF"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://siriusneo.github.io/2023/05/10/osdi22-han/&title=[Paper Reading] 细粒度 GPU 任务调度系统 REEF"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://siriusneo.github.io/2023/05/10/osdi22-han/&is_video=false&description=[Paper Reading] 细粒度 GPU 任务调度系统 REEF"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=[Paper Reading] 细粒度 GPU 任务调度系统 REEF&body=Check out this article: https://siriusneo.github.io/2023/05/10/osdi22-han/"><i class="fa-solid fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://siriusneo.github.io/2023/05/10/osdi22-han/&title=[Paper Reading] 细粒度 GPU 任务调度系统 REEF"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://siriusneo.github.io/2023/05/10/osdi22-han/&title=[Paper Reading] 细粒度 GPU 任务调度系统 REEF"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://siriusneo.github.io/2023/05/10/osdi22-han/&title=[Paper Reading] 细粒度 GPU 任务调度系统 REEF"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://siriusneo.github.io/2023/05/10/osdi22-han/&title=[Paper Reading] 细粒度 GPU 任务调度系统 REEF"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://siriusneo.github.io/2023/05/10/osdi22-han/&name=[Paper Reading] 细粒度 GPU 任务调度系统 REEF&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://siriusneo.github.io/2023/05/10/osdi22-han/&t=[Paper Reading] 细粒度 GPU 任务调度系统 REEF"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
 </ul>
 
     </div>
