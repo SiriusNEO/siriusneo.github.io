@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang=en>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+    <meta name="description" content="转眼间，我在 Microsoft Research Asia 的系统组实习也快半年了，这半年来感觉周围的同事们、Mentor 都还是很 nice 的。我们这个组最近的研究方向都是机器学习系统，以及大语言模型相关方向。在 Pub 方面，近几年的成绩也都是很好看的。因最近刚投完一篇工作，正处于空档期，恰好借此机会来读一读这个组之前在系统会议上的一些工作。 本文是该系列的第一篇，选择的文章是：SparT">
+<meta property="og:type" content="article">
+<meta property="og:title" content="[Paper Reading] 深度学习稀疏模型框架 SparTA">
+<meta property="og:url" content="https://siriusneo.github.io/2023/12/11/sparta-osdi-22/index.html">
+<meta property="og:site_name" content="Metric Space">
+<meta property="og:description" content="转眼间，我在 Microsoft Research Asia 的系统组实习也快半年了，这半年来感觉周围的同事们、Mentor 都还是很 nice 的。我们这个组最近的研究方向都是机器学习系统，以及大语言模型相关方向。在 Pub 方面，近几年的成绩也都是很好看的。因最近刚投完一篇工作，正处于空档期，恰好借此机会来读一读这个组之前在系统会议上的一些工作。 本文是该系列的第一篇，选择的文章是：SparT">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://siriusneo.github.io/2023/12/11/sparta-osdi-22/fig2.png">
+<meta property="og:image" content="https://siriusneo.github.io/2023/12/11/sparta-osdi-22/fig3.png">
+<meta property="og:image" content="https://siriusneo.github.io/2023/12/11/sparta-osdi-22/algo1.png">
+<meta property="og:image" content="https://siriusneo.github.io/2023/12/11/sparta-osdi-22/table3.png">
+<meta property="article:published_time" content="2023-12-10T17:07:07.000Z">
+<meta property="article:modified_time" content="2023-12-13T18:28:55.561Z">
+<meta property="article:author" content="Chaofan">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://siriusneo.github.io/2023/12/11/sparta-osdi-22/fig2.png">
+    
+    
+      
+        
+          <link rel="shortcut icon" href="/images/favicon.ico">
+        
+      
+      
+        
+          <link rel="icon" type="image/png" href="/images/android-chrome-192x192.png" sizes="192x192">
+        
+      
+      
+        
+          <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+        
+      
+    
+    <!-- title -->
+    <title>[Paper Reading] 深度学习稀疏模型框架 SparTA</title>
+    <!-- async scripts -->
+    <!-- Google Analytics -->
+
+
+    <!-- Umami Analytics -->
+
+
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+    <!-- rss -->
+    
+    
+	<!-- mathjax -->
+	
+		<script type="text/x-mathjax-config">
+		  MathJax.Hub.Config({
+			tex2jax: {
+			  skipTags: ['script', 'noscript', 'style', 'textarea', 'pre'],
+			  inlineMath: [['$','$']]
+			}
+		  });
+		</script>
+		<script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-MML-AM_CHTML' async></script>
+	
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#" aria-label="Menu"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#" aria-label="Menu"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" aria-label="Top" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fa-solid fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/about/">About</a></li><!--
+     --><!--
+       --><li><a href="/archives/">Articles</a></li><!--
+     --><!--
+       --><li><a href="/links/">Links</a></li><!--
+     --><!--
+       --><li><a target="_blank" rel="noopener" href="https://siriusneo.top">Personal Page</a></li><!--
+     -->
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        
+        <li><a class="icon" aria-label="Next post" href="/2023/11/26/beautify-blog/"><i class="fa-solid fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" aria-label="Back to top" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" aria-label="Share post" href="#"><i class="fa-solid fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://siriusneo.github.io/2023/12/11/sparta-osdi-22/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://siriusneo.github.io/2023/12/11/sparta-osdi-22/&text=[Paper Reading] 深度学习稀疏模型框架 SparTA"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://siriusneo.github.io/2023/12/11/sparta-osdi-22/&title=[Paper Reading] 深度学习稀疏模型框架 SparTA"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://siriusneo.github.io/2023/12/11/sparta-osdi-22/&is_video=false&description=[Paper Reading] 深度学习稀疏模型框架 SparTA"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=[Paper Reading] 深度学习稀疏模型框架 SparTA&body=Check out this article: https://siriusneo.github.io/2023/12/11/sparta-osdi-22/"><i class="fa-solid fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://siriusneo.github.io/2023/12/11/sparta-osdi-22/&title=[Paper Reading] 深度学习稀疏模型框架 SparTA"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://siriusneo.github.io/2023/12/11/sparta-osdi-22/&title=[Paper Reading] 深度学习稀疏模型框架 SparTA"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://siriusneo.github.io/2023/12/11/sparta-osdi-22/&title=[Paper Reading] 深度学习稀疏模型框架 SparTA"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://siriusneo.github.io/2023/12/11/sparta-osdi-22/&title=[Paper Reading] 深度学习稀疏模型框架 SparTA"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://siriusneo.github.io/2023/12/11/sparta-osdi-22/&name=[Paper Reading] 深度学习稀疏模型框架 SparTA&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://siriusneo.github.io/2023/12/11/sparta-osdi-22/&t=[Paper Reading] 深度学习稀疏模型框架 SparTA"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    
+    
+      <div id="toc">
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Intro-amp-Background-amp-Motivation"><span class="toc-number">1.</span> <span class="toc-text">Intro &amp; Background &amp; Motivation</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#SparTA-Design"><span class="toc-number">2.</span> <span class="toc-text">SparTA Design</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#The-TeSA-Abstraction"><span class="toc-number">2.1.</span> <span class="toc-text">The TeSA Abstraction</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Sparsity-Attribute-Propagation"><span class="toc-number">2.2.</span> <span class="toc-text">Sparsity Attribute Propagation</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Code-Generation-with-TeSA"><span class="toc-number">2.3.</span> <span class="toc-text">Code Generation with TeSA</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Evaluation"><span class="toc-number">3.</span> <span class="toc-text">Evaluation</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Other"><span class="toc-number">4.</span> <span class="toc-text">Other</span></a></li></ol>
+      </div>
+    
+  </span>
+</div>
+
+    
+    <div class="content index py4 ">
+        
+        <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+<article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle p-name" itemprop="name headline">
+        [Paper Reading] 深度学习稀疏模型框架 SparTA
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author p-author h-card" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span class="p-name" itemprop="name">Chaofan</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2023-12-10T17:07:07.000Z" class="dt-published" itemprop="datePublished">2023-12-11</time>
+        
+      
+    </div>
+
+
+       
+    <div class="article-category">
+        <i class="fa-solid fa-archive"></i>
+        <a class="category-link" href="/categories/paper-reading/">「战栗的寒冷之星」</a>
+    </div>
+
+
+       
+
+      | <i class="fa fa-eye fa-fw post-meta-icon"></i><span style="color: #8c8c8c; font-size: 13.6px;"> Views: </span><span id="busuanzi_value_page_pv"></span>
+      | <i class="far fa-file-word fa-fw post-meta-icon"></i><span style="color: #8c8c8c; font-size: 13.6px;"> Total Words: 5.7k</span>
+      | <i class="far fa-clock fa-fw post-meta-icon"></i><span style="color: #8c8c8c; font-size: 13.6px;"> Reading Time: 5 mins.</span>
+    </div>
+  </header>
+  
+
+  <div class="content e-content" itemprop="articleBody">
+    <p>转眼间，我在 Microsoft Research Asia 的系统组实习也快半年了，这半年来感觉周围的同事们、Mentor 都还是很 nice 的。我们这个组最近的研究方向都是机器学习系统，以及大语言模型相关方向。在 Pub 方面，近几年的成绩也都是很好看的。因最近刚投完一篇工作，正处于空档期，恰好借此机会来读一读这个组之前在系统会议上的一些工作。</p>
+<p>本文是该系列的第一篇，选择的文章是：<a target="_blank" rel="noopener" href="https://www.usenix.org/conference/osdi22/presentation/zheng-ningxin">SparTA: Deep-Learning Model Sparsity via Tensor-with-Sparsity-Attribute</a>，发表于 OSDI’22。第一作者 Ningxin Zheng，是我实习时的 mentor。</p>
+<h2 id="Intro-amp-Background-amp-Motivation"><a href="#Intro-amp-Background-amp-Motivation" class="headerlink" title="Intro &amp; Background &amp; Motivation"></a>Intro &amp; Background &amp; Motivation</h2><p>当 DNN 变得越来越大、越来越复杂时，稀疏性也不可避免地随之出现。通常来说，模型稀疏性有以下例子：</p>
+<ul>
+<li>Quantization。比如把 fp16 压到 int8 或者更低精度。在 LLM topic 很热门的今天，LLM quantization 也非常火爆，我的很多同学都在做这个方向。</li>
+<li>Pruning。即把一些 tensors 的部分值设成 0（block-sparsity，即把一些 sub-block 设成 0；fine-grained sparsity，比如 channel-granularity sparsity，把某些 channel 全部设成 0）。</li>
+<li>Pruning 和 Quantization 相结合。</li>
+</ul>
+<p>这两种技术都能把模型（在可接受的掉点范围下）压缩到一个可观的大小，并且再结合对于特定 sparsity pattern 的算子，inference 的延迟也会很低。然而问题是，现在的 DLSys 在稀疏性上还不够有效。现有的困难主要体现在以下方面：</p>
+<ul>
+<li>一些算子还不够优。研究表明，cuSPARSE 的稀疏矩阵乘法即使在稀疏性 98% 时也不如 cuBLAS 的 dense 乘法优。究其原因，很大一个原因是现在的 generic 的稀疏 kernels 倾向于使用一些默认的 sparse pattern（比如 CSR），然而实际的 sparsity pattern 是多种多样的，比如 structured sparsity。这启发我们用一个足够通用的 DSL/抽象 去表达各种稀疏格式。</li>
+<li>DNN 计算通常分为不同阶段，而可能在不同阶段里的 sparsity pattern 是不一样的。比如两个稀疏格式不同的矩阵，相乘之后会出来更复杂的稀疏格式。这启发我们稀疏格式需要在计算图中 “传播”。</li>
+<li>任何 sparsity-aware 的优化都可能需要改动整个栈，从前端（framework）到编译器、再到 kernels。因此 SparTA 是 end-to-end 的。</li>
+</ul>
+<h2 id="SparTA-Design"><a href="#SparTA-Design" class="headerlink" title="SparTA Design"></a>SparTA Design</h2><p><img src="fig2.png" alt=""></p>
+<p>SparTA 的结构如上图所示。其中的核心是 TeSA（Tensor-with-Sparsity-Attribute）抽象，它给现有的张量抽象加上了稀疏 attribute。</p>
+<ul>
+<li>算法设计者可以给一个 DL 模型中某些指定的张量设置 “初始 TeSA”。</li>
+<li>然后这些 TeSA 会自然在其中根据传播规则被传播（attribute propagation），直到模型中每个张量都有对应的 TeSA。</li>
+<li>在传播结束后，SparTA 会执行一个编译过程，运用多种优化 passes 来生成高效的端到端的代码。相比传统的编译器，SparTA 额外多跑了两个 pass 来利用稀疏性：第一个 pass 将原来的 DNN execution plan 变成一个新的、能够利用给定 sparsity pattern 的 plan；第二个 pass 即生成代码（perform sparsity-aware code specialization）。</li>
+</ul>
+<h3 id="The-TeSA-Abstraction"><a href="#The-TeSA-Abstraction" class="headerlink" title="The TeSA Abstraction"></a>The TeSA Abstraction</h3><p><img src="fig3.png" alt=""></p>
+<p>如图所示，TeSA 其实就是给每个张量提供了一个 shape 和原张量一样的信息张量，对应位置表示该位置的稀疏属性（int4/pruned）。</p>
+<h3 id="Sparsity-Attribute-Propagation"><a href="#Sparsity-Attribute-Propagation" class="headerlink" title="Sparsity Attribute Propagation"></a>Sparsity Attribute Propagation</h3><p><img src="algo1.png" alt=""></p>
+<p>其实就是按 DFG 来传播 TeSA，算法如图所示。一些要点：</p>
+<ul>
+<li>这个过程可以从任何一个 node 开始。</li>
+<li>对于每个节点，该算法会传播其所有 inputs、outputs 节点，具体行为在 <code>PropOneNode</code> 函数中。这个函数会按照设定好的 propagation rule 来传播，并且这个 rule 是双向的。</li>
+<li>当一个点的 inputs/outputs 更新完之后，会将其所有 neighbors 都放入队中（neighbors 包括 inputs/outputs）。所以这个算法其实是会不断重复执行的，每个 TeSA 也会被更新多次，直到收敛。对于 pruning 来讲，多次传播会导致所有该被 pruning 的部分都被 pruning（i.e.，并集）；对于 quantization，多次传播会导致 attribute 收敛到最小的 quant bits（甚至是 0-bit，即 pruned）。注意这个算法对于稀疏性来说是单调递增的，因此必然会收敛（算法可以终止）。</li>
+</ul>
+<blockquote>
+<p>注意，这里有个很精妙的地方就是传播是双向的。从 input 传播到 output 我们很好理解，但设想如果 $W_1 \times W_2$ 时 $W_2$ 有些位置是稀疏的，那么其实 $W_1$ 有些地方也能被优化成稀疏的（先通过 $W_2$ 传播到 $W_1 \times W_2$，然后再反向传播回 $W_1$）。即存在 input-to-output，output-to-input 和 input-to-input 这些情况。</p>
+</blockquote>
+<p><strong>Intra-operator propagation.</strong> 不同 operator 的传播规则是不同的，这和它的本身计算关系有关。比如 element-wise 和 matmul 就是不同的两种。（其实就是像 AD 那样子干）</p>
+<p><strong>Pruning rule.</strong> 对于 element wise 的，如果是 unary，那么保持 pruned；如果是 binary，那么 “加性” 的算子只有两个都是 pruned，结果才是 pruned；”乘性”的算子有一个是稀疏的结果就是 pruned。</p>
+<p><strong>Quantization rule.</strong> 对于 quantization 来说，情况要更复杂一点，因为不能保证任意时刻降精度都是对的。因此这里文章借用了一种 “distill（知识蒸馏）” 的方法。首先使用 dataset 在没有 quant 的情况跑出标准数据，然后对于每个 operator，选择其中一个 tensor 不断降精度，直到模型准确率降低超过一个 threshold（这个是降低所有位置的还是只有一个位置？如果每个位置分别枚举，岂不是搜索量太大了？）</p>
+<h3 id="Code-Generation-with-TeSA"><a href="#Code-Generation-with-TeSA" class="headerlink" title="Code Generation with TeSA"></a>Code Generation with TeSA</h3><p><strong>Execution-plan transformation.</strong> 这个 Pass 会把一个带有复杂 sparsity pattern 的 tensor 变换为若干个简单（或者叫 regular） pattern tensor 的组合。在 SparTA 中，简单/regular pattern 被定义为只有一种 quantization bits，并且只有一种 block size 的 pruning。</p>
+<p>为了帮助代码生成，变换后的 TeSA 会带有 bit width 和 block size 的信息（被称为 specialization hints）。</p>
+<p><strong>TeSA code specialization.</strong> 第二个 pass 给每个 operator 指定了 kernel code。比如，前面的 bit width 信息可以帮助我们确定是否使用一个特定的硬件指令（e.g. DP4A - dot4add_u8packed），以及代码的 loop tiling 也要和信息中的 block size 相对应。</p>
+<p>这里要提到一个技术，就是因为我们是高效稀疏计算，所以必然需要高效的 DCE（Dead Code Elimination），即把 pruned 部分的计算代码看作是死代码消除掉。在实现上，他们首先用传统 DNN 编译器将算子当成 dense 的生成了一个多重循环，然后使用一个新的 scheduler primitive <code>dismantle</code> 来优化这个过程：它会 unroll 所有 loop，然后使用给定的 sparsity attribute 来消除死代码。</p>
+<p>对于 quantization 来说也比较类似。SparTA 从最内层开始，先根据 bit-width 使用合适的硬件指令，比如 DP4A/wmma for 8bit，wmma for 4bit。这里的 tiling 还要和选定的指令对齐。</p>
+<h2 id="Evaluation"><a href="#Evaluation" class="headerlink" title="Evaluation"></a>Evaluation</h2><p>SparTA 在 “三个 popular 的 DNN 模型（BERT for NLP，MobileNet for CV，HuBERT for Speech）” 乘以 “四个不同的 sparsity patterns（Structured，Unstructured，Structured+8bit，以及 BERT 独占的 Mixed Sparsity）” 上做了测试，硬件涵盖了 CUDA（NVIDIA GeForce RTX 2080 Ti）、ROCm GPU（AMD Radeon VII）以及 Intel CPU（Intel Xeon Silver 4210 CPU）。</p>
+<p><img src="table3.png" alt=""></p>
+<p>实验说明 SparTA 对比 baseline（PyTorch、TensorRT、TVM、Rammer，以及为后两者特别打造的 sparse 版本：TVM-S、Rammer-S），在 inference latency 和 memory usage 上都有很大的优化。</p>
+<h2 id="Other"><a href="#Other" class="headerlink" title="Other"></a>Other</h2><p>SparTA 的代码已经在 GitHub 上开源：<a target="_blank" rel="noopener" href="https://github.com/microsoft/SparTA">https://github.com/microsoft/SparTA</a></p>
+
+  </div>
+</article>
+
+
+
+    <div class="blog-post-comments">
+        <div class="vcomment"></div>
+    </div>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+        
+          <li><a href="/">Home</a></li>
+        
+          <li><a href="/about/">About</a></li>
+        
+          <li><a href="/archives/">Articles</a></li>
+        
+          <li><a href="/links/">Links</a></li>
+        
+          <li><a target="_blank" rel="noopener" href="https://siriusneo.top">Personal Page</a></li>
+        
+      </ul>
+    </div>
+
+    
+    
+      <div id="toc-footer" style="display: none">
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Intro-amp-Background-amp-Motivation"><span class="toc-number">1.</span> <span class="toc-text">Intro &amp; Background &amp; Motivation</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#SparTA-Design"><span class="toc-number">2.</span> <span class="toc-text">SparTA Design</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#The-TeSA-Abstraction"><span class="toc-number">2.1.</span> <span class="toc-text">The TeSA Abstraction</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Sparsity-Attribute-Propagation"><span class="toc-number">2.2.</span> <span class="toc-text">Sparsity Attribute Propagation</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Code-Generation-with-TeSA"><span class="toc-number">2.3.</span> <span class="toc-text">Code Generation with TeSA</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Evaluation"><span class="toc-number">3.</span> <span class="toc-text">Evaluation</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Other"><span class="toc-number">4.</span> <span class="toc-text">Other</span></a></li></ol>
+      </div>
+    
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://siriusneo.github.io/2023/12/11/sparta-osdi-22/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://siriusneo.github.io/2023/12/11/sparta-osdi-22/&text=[Paper Reading] 深度学习稀疏模型框架 SparTA"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://siriusneo.github.io/2023/12/11/sparta-osdi-22/&title=[Paper Reading] 深度学习稀疏模型框架 SparTA"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://siriusneo.github.io/2023/12/11/sparta-osdi-22/&is_video=false&description=[Paper Reading] 深度学习稀疏模型框架 SparTA"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=[Paper Reading] 深度学习稀疏模型框架 SparTA&body=Check out this article: https://siriusneo.github.io/2023/12/11/sparta-osdi-22/"><i class="fa-solid fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://siriusneo.github.io/2023/12/11/sparta-osdi-22/&title=[Paper Reading] 深度学习稀疏模型框架 SparTA"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://siriusneo.github.io/2023/12/11/sparta-osdi-22/&title=[Paper Reading] 深度学习稀疏模型框架 SparTA"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://siriusneo.github.io/2023/12/11/sparta-osdi-22/&title=[Paper Reading] 深度学习稀疏模型框架 SparTA"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://siriusneo.github.io/2023/12/11/sparta-osdi-22/&title=[Paper Reading] 深度学习稀疏模型框架 SparTA"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://siriusneo.github.io/2023/12/11/sparta-osdi-22/&name=[Paper Reading] 深度学习稀疏模型框架 SparTA&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://siriusneo.github.io/2023/12/11/sparta-osdi-22/&t=[Paper Reading] 深度学习稀疏模型框架 SparTA"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fa-solid fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        
+          <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fa-solid fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fa-solid fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy;
+    
+    
+    2020-2023
+    Chaofan.
+    Powered by <a target="_blank" rel="noopener" href="https://github.com/probberechts/hexo-theme-cactus">Cactus</a>. <a target="_blank" rel="noopener" href="https://github.com/SiriusNEO/hexo-theme-cactus-customized">Customized</a> by me :).
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/about/">About</a></li><!--
+     --><!--
+       --><li><a href="/archives/">Articles</a></li><!--
+     --><!--
+       --><li><a href="/links/">Links</a></li><!--
+     --><!--
+       --><li><a target="_blank" rel="noopener" href="https://siriusneo.top">Personal Page</a></li><!--
+     -->
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+
+
+  <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" crossorigin="anonymous" onload="this.onload=null;this.rel='stylesheet'"/>
+
+
+    <!-- jquery -->
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" crossorigin="anonymous"></script>
+
+
+
+
+<!-- clipboard -->
+
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.7/clipboard.min.js" crossorigin="anonymous"></script>
+  
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"Copy to clipboard!\">";
+    btn += '<i class="fa-regular fa-clone"></i>';
+    btn += '</span>';
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "Copied!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Baidu Analytics -->
+
+<!-- Cloudflare Analytics -->
+
+<!-- Disqus Comments -->
+
+<!-- utterances Comments -->
+
+<!-- Valine Comments -->
+
+    <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+    <script src="//unpkg.com/valine@latest/dist/Valine.min.js"></script>
+    <script type="text/javascript">
+        var notify = 'false' == true ? true : false;
+        var verify = 'false' == true ? true : false;
+        var GUEST_INFO = ['nick','mail','link'];
+        var guest_info = 'nick,mail,link'.split(',').filter(function(item){
+          return GUEST_INFO.indexOf(item) > -1
+        });
+        guest_info = guest_info.length == 0 ? GUEST_INFO :guest_info;
+        new Valine({
+            el: '.vcomment',
+            notify: notify,
+            verify: verify,
+            appId: "AyDHJHMfyHGtgF5Lc8CG4dpA-gzGzoHsz",
+            appKey: "JZWLrweBHY4Txn5nZuLwFzim",
+            avatar:"identicon",
+            placeholder: "Send a comment for this post!",
+            guest_info:guest_info,
+            pageSize:"10"
+        })
+</script>
+
+
+</body>
+</html>
