@@ -1,0 +1,475 @@
+<!DOCTYPE html>
+<html lang=en>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+    <meta name="description" content="Nintendo 3DS（ニンテンドー 3DS）是任天堂公司于 2011 年推出的掌机系列，也是博主最喜欢的掌机系列之一。它是 Nintendo DS（NDS）的后续机型，继承了 “Dual Screen” 的外形设计，有着裸眼 3D 功能（虽然没啥大用）、无缝兼容 NDS 卡带、相比 NDS 更强的处理器以及更大的屏幕等等。 博主作为任天堂系列的粉丝，自己就持有两台 3DS 系列掌机，分别是一台">
+<meta property="og:type" content="article">
+<meta property="og:title" content="[科普向] 一文带你了解折腾 Nintendo 3DS &#x2F; 任天堂3DS">
+<meta property="og:url" content="https://siriusneo.github.io/2024/03/08/nintendo-3ds/index.html">
+<meta property="og:site_name" content="Metric Space">
+<meta property="og:description" content="Nintendo 3DS（ニンテンドー 3DS）是任天堂公司于 2011 年推出的掌机系列，也是博主最喜欢的掌机系列之一。它是 Nintendo DS（NDS）的后续机型，继承了 “Dual Screen” 的外形设计，有着裸眼 3D 功能（虽然没啥大用）、无缝兼容 NDS 卡带、相比 NDS 更强的处理器以及更大的屏幕等等。 博主作为任天堂系列的粉丝，自己就持有两台 3DS 系列掌机，分别是一台">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2024-03-08T03:53:00.000Z">
+<meta property="article:modified_time" content="2024-03-08T03:31:00.954Z">
+<meta property="article:author" content="Chaofan">
+<meta name="twitter:card" content="summary">
+    
+    
+      
+        
+          <link rel="shortcut icon" href="/images/favicon.ico">
+        
+      
+      
+        
+          <link rel="icon" type="image/png" href="/images/android-chrome-192x192.png" sizes="192x192">
+        
+      
+      
+        
+          <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+        
+      
+    
+    <!-- title -->
+    <title>[科普向] 一文带你了解折腾 Nintendo 3DS / 任天堂3DS</title>
+    <!-- async scripts -->
+    <!-- Google Analytics -->
+
+
+    <!-- Umami Analytics -->
+
+
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+    <!-- rss -->
+    
+    
+	<!-- mathjax -->
+	
+		<script type="text/x-mathjax-config">
+		  MathJax.Hub.Config({
+			tex2jax: {
+			  skipTags: ['script', 'noscript', 'style', 'textarea', 'pre'],
+			  inlineMath: [['$','$']]
+			}
+		  });
+		</script>
+		<script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-MML-AM_CHTML' async></script>
+	
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#" aria-label="Menu"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#" aria-label="Menu"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" aria-label="Top" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fa-solid fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/about/">About</a></li><!--
+     --><!--
+       --><li><a href="/archives/">Articles</a></li><!--
+     --><!--
+       --><li><a href="/links/">Links</a></li><!--
+     --><!--
+       --><li><a target="_blank" rel="noopener" href="https://siriusneo.top">Personal Page</a></li><!--
+     -->
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        
+        <li><a class="icon" aria-label="Next post" href="/2024/02/22/config-env-in-new-server/"><i class="fa-solid fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" aria-label="Back to top" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" aria-label="Share post" href="#"><i class="fa-solid fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://siriusneo.github.io/2024/03/08/nintendo-3ds/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://siriusneo.github.io/2024/03/08/nintendo-3ds/&text=[科普向] 一文带你了解折腾 Nintendo 3DS / 任天堂3DS"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://siriusneo.github.io/2024/03/08/nintendo-3ds/&title=[科普向] 一文带你了解折腾 Nintendo 3DS / 任天堂3DS"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://siriusneo.github.io/2024/03/08/nintendo-3ds/&is_video=false&description=[科普向] 一文带你了解折腾 Nintendo 3DS / 任天堂3DS"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=[科普向] 一文带你了解折腾 Nintendo 3DS / 任天堂3DS&body=Check out this article: https://siriusneo.github.io/2024/03/08/nintendo-3ds/"><i class="fa-solid fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://siriusneo.github.io/2024/03/08/nintendo-3ds/&title=[科普向] 一文带你了解折腾 Nintendo 3DS / 任天堂3DS"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://siriusneo.github.io/2024/03/08/nintendo-3ds/&title=[科普向] 一文带你了解折腾 Nintendo 3DS / 任天堂3DS"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://siriusneo.github.io/2024/03/08/nintendo-3ds/&title=[科普向] 一文带你了解折腾 Nintendo 3DS / 任天堂3DS"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://siriusneo.github.io/2024/03/08/nintendo-3ds/&title=[科普向] 一文带你了解折腾 Nintendo 3DS / 任天堂3DS"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://siriusneo.github.io/2024/03/08/nintendo-3ds/&name=[科普向] 一文带你了解折腾 Nintendo 3DS / 任天堂3DS&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://siriusneo.github.io/2024/03/08/nintendo-3ds/&t=[科普向] 一文带你了解折腾 Nintendo 3DS / 任天堂3DS"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    
+    
+      <div id="toc">
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9F%BA%E7%A1%80%E7%A1%AC%E4%BB%B6%E7%9F%A5%E8%AF%86"><span class="toc-number">1.</span> <span class="toc-text">基础硬件知识</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9E%8B%E5%8F%B7%E7%BA%B5%E8%A7%88"><span class="toc-number">1.1.</span> <span class="toc-text">型号纵览</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%A1%AC%E4%BB%B6%E7%BB%84%E6%88%90"><span class="toc-number">1.2.</span> <span class="toc-text">硬件组成</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%82%A8%E5%AD%98"><span class="toc-number">1.3.</span> <span class="toc-text">储存</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%B1%8F%E5%B9%95"><span class="toc-number">1.4.</span> <span class="toc-text">屏幕</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%BA%8F%E5%88%97%E5%8F%B7"><span class="toc-number">1.5.</span> <span class="toc-text">序列号</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F"><span class="toc-number">2.</span> <span class="toc-text">操作系统</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%B3%BB%E7%BB%9F%E4%B8%8E%E5%9B%BA%E4%BB%B6"><span class="toc-number">2.1.</span> <span class="toc-text">系统与固件</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%B3%BB%E7%BB%9F%E7%89%88%E6%9C%AC%E4%B8%8E%E5%9C%B0%E5%8C%BA"><span class="toc-number">2.2.</span> <span class="toc-text">系统版本与地区</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%A0%87%E8%AF%86%E4%B8%8E%E5%8A%A0%E5%AF%86"><span class="toc-number">2.3.</span> <span class="toc-text">标识与加密</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%A0%B4%E8%A7%A3"><span class="toc-number">2.4.</span> <span class="toc-text">破解</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F"><span class="toc-number">2.5.</span> <span class="toc-text">文件系统</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%99%9A%E6%8B%9F%E7%B3%BB%E7%BB%9F"><span class="toc-number">2.6.</span> <span class="toc-text">虚拟系统</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%AF%B4%E4%BA%86%E8%BF%99%E4%B9%88%E5%A4%9A%EF%BC%8C%E8%AF%A5%E6%80%8E%E4%B9%88%E6%8A%98%E8%85%BE"><span class="toc-number">3.</span> <span class="toc-text">说了这么多，该怎么折腾</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%BC%95%E7%94%A8"><span class="toc-number">4.</span> <span class="toc-text">引用</span></a></li></ol>
+      </div>
+    
+  </span>
+</div>
+
+    
+    <div class="content index py4 ">
+        
+        <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+<article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle p-name" itemprop="name headline">
+        [科普向] 一文带你了解折腾 Nintendo 3DS / 任天堂3DS
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author p-author h-card" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span class="p-name" itemprop="name">Chaofan</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2024-03-08T03:53:00.000Z" class="dt-published" itemprop="datePublished">2024-03-08</time>
+        
+      
+    </div>
+
+
+       
+    <div class="article-category">
+        <i class="fa-solid fa-archive"></i>
+        <a class="category-link" href="/categories/misc/">「地上秽的纯化」</a>
+    </div>
+
+
+       
+
+      | <i class="fa fa-eye fa-fw post-meta-icon"></i><span style="color: #8c8c8c; font-size: 13.6px;"> Views: </span><span id="busuanzi_value_page_pv"></span>
+      | <i class="far fa-file-word fa-fw post-meta-icon"></i><span style="color: #8c8c8c; font-size: 13.6px;"> Total Words: 14k</span>
+      | <i class="far fa-clock fa-fw post-meta-icon"></i><span style="color: #8c8c8c; font-size: 13.6px;"> Reading Time: 12 mins.</span>
+    </div>
+  </header>
+  
+
+  <div class="content e-content" itemprop="articleBody">
+    <p><strong>Nintendo 3DS（ニンテンドー 3DS）</strong>是任天堂公司于 2011 年推出的掌机系列，也是博主最喜欢的掌机系列之一。它是 Nintendo DS（NDS）的后续机型，继承了 “Dual Screen” 的外形设计，有着裸眼 3D 功能（虽然没啥大用）、无缝兼容 NDS 卡带、相比 NDS 更强的处理器以及更大的屏幕等等。</p>
+<p>博主作为任天堂系列的粉丝，自己就持有两台 3DS 系列掌机，分别是一台高中买的用到现在的老小三，和一台今年年初刚入的二手新大二（下面会细说这些型号）。作为一款十多年前的机器，破解技术和模拟器技术早已十分成熟，现在想要体验 3DS 游戏的很多人也会去选择破解。本篇博客的 “折腾” 值得主要就是破解、刷机等方面的内容。当然先套个盾，我并不鼓励破解，我自己也入了很多正版。不过对于像 3DS 这种已经停止服务的老机器而言，为了怀旧等等原因，很多时候也不得不破解，比如像汉化、备份存档等需求，还有随着应用商店关闭已经下不到的游戏等等。</p>
+<p>在买老小三的时候，我并不是完全明白这方面的内容，所以直接买的那种厂家破解好的、刷好中文系统装满游戏的那种机器就开始玩了。在入手这台新大二的时候，我从头走了一遍从拿到机器，到折腾到一个能玩的状态，需要干什么活，因此就以此为蓝本写点经验总结。</p>
+<h2 id="基础硬件知识"><a href="#基础硬件知识" class="headerlink" title="基础硬件知识"></a>基础硬件知识</h2><h3 id="型号纵览"><a href="#型号纵览" class="headerlink" title="型号纵览"></a>型号纵览</h3><p>3DS 全系列共有 $2 \times 2 \times 2 - 2 = 6$ 种型号，即将 “老与新”、”小与大”、”三与二” 排列组合后，再扣去不存在的老大二、新小二；以及还有一个 “神游版” iQue 3DS XL，通常神游版不在我们折腾的讨论范围里。这里面除了老小二是一种特殊的“直板机”以外，其他均为翻盖式。并且不同型号的翻盖设计也有点不同。带 LL/XL 的即为 “大”（日本地区 / 非日本地区两种叫法）。</p>
+<ul>
+<li>Nintendo 3DS（老小三）</li>
+<li>3DS LL/XL（老大三）</li>
+<li>New 3DS（新小三）</li>
+<li>New 3DS LL/XL（新大三）</li>
+<li>2DS（老小二）</li>
+<li>New 2DS LL/XL（新大二）</li>
+<li>iQue 3DS XL（神游版，暂未发现有非 XL 的）</li>
+</ul>
+<p>（附几张图）</p>
+<p>这三个维度的区别主要是：</p>
+<ul>
+<li><strong>新老：</strong>算是世代小升级，有很多区别，不过大部分游戏和操作系统没有区别。</li>
+<li><strong>大小：</strong>大屏并不提高分辨率，所以有 “大果粒” 的吐槽。不过除了屏幕变大外，续航方面也变强了不少。</li>
+<li><strong>二三：</strong>2DS 是 3DS 去掉裸眼 3D 功能的特供版，同时注意老小二是直板机。</li>
+</ul>
+<p>这里主要展开讲讲新老的区别。</p>
+<ul>
+<li>硬件上，屏幕进一步放大（而机身没有变大，相当于屏占比增加）；裸眼 3D 加上了眼球追踪，不用再特地对好角度；增加了 NFC 功能（主要是给 Amiibo 用）；增加 ZL，ZR，C摇杆；SD 卡槽改 micro-SD；CPU 和 RAM 均有提高等。还有一些细节会在后面讲。</li>
+<li>软件上，New 3DS 具有 22 款独占游戏（老三上无法玩），包括《异度之刃 3D》、《以撒的结合》和《我的世界》等等。不过这些游戏大多是第三方，在 3DS 上体验也不是很好。</li>
+</ul>
+<p>价格上，通常是老小三 &lt; 老大三 ~= 老小二 &lt; 新大二 &lt; 新小三 ~= 新大三，现在二手市场价大概老小三是 350R 左右，新大二是 700R 左右，新小 / 新大三再贵个 100R。一个很重要的消息是，3DS 在前两年莫名被炒起来了，导致价格有一个小突增（类似 CCD 卡片机那种情况），所以现在溢价还是比较高的，推荐谨慎购买。同时这里的价格不考虑箱说全、限定机等情况，并且受成色浮动影响很大，读者选择性参考即可。</p>
+<h3 id="硬件组成"><a href="#硬件组成" class="headerlink" title="硬件组成"></a>硬件组成</h3><p>由于题主没有拆过机，所以主要按我自己看到的文章视频、<del>在华强北旁观得到的经验</del> 为准。 </p>
+<ul>
+<li>除了老小二是直板机（也是两个屏幕，但是放在一块平面上），其它均为翻盖机。</li>
+<li>3DS 上下各有一个屏幕，左边是十字键和摇杆，右边是 X Y A B 键。New 系列在右边还会有个 C 摇杆（摇起来很硬，基本不会动）。下屏下方是 Select、Start、Home 三键，以及电源键（新大二在侧面）。除了老小二是导电胶，其它系列按钮均为锅仔片。</li>
+<li>侧面有一个 3.5mm耳机接口，一个卡带插槽（与 NDS 卡带通用），一个 SD 卡槽。L，R 两肩键以及 New 系列的 ZL ZR 位于下平板的上侧，刚好让手握持着下平板。还有触控笔与其收纳槽，以及红外传感器模块。</li>
+<li>充电接口需要特制的充电线，功率最好是 5V 1A 的。注意日本的用电规范与我国不同，如果用头充的话主要注意一下功率。充电口与 NDSi 是通用的，与 NDSL 不通用。</li>
+<li>所有系列都有前置摄像头，一般位于上屏上方或者转轴处（新大二）。后置摄像头只有三有，并且是两颗（为了拍 3D 视频），二没有。</li>
+</ul>
+<p>拆开后盖，可以看到 3DS 就是一块主板，大大的卡槽占在上方，然后分别有对应各个按键的部分（换摇杆按键时有用！），以及 CPU、内存、电池等。3DS 是双处理器架构，包括一颗双核 ARM11 MPCore CPU 作为主处理器，和一个 ARM9 CPU 作为辅助处理器；GPU 为一个日本公司 DMP 设计的 PICA200，不是很懂。详细参数可以看<a target="_blank" rel="noopener" href="https://www.3dbrew.org/wiki/Hardware">3dsbrew</a>。总之内存大概是100～200MB，显存是几MB。</p>
+<h3 id="储存"><a href="#储存" class="headerlink" title="储存"></a>储存</h3><p>3DS 本体上有一部分空间，此外则主要靠 SD/TF 卡提供外部空间。这点可以从设置里看到。任天堂为了方便小朋友理解，采用 “格子数” 作为内存单位，而其等价于 MBit（注：我们平常说的 MB 是 MByte），也就是你把它除以 8192 就得到多少 GB 了。</p>
+<p><strong>SD 卡（Secure Digital card）</strong>也叫做大卡，面积大概是邮票这么大；<strong>TF 卡（Trans-Flash card）</strong>后面正式更名为 <strong>micro-SD</strong> 卡，通常只有食指指甲盖大。老三系列支持的是 SD 插槽，新三系列改为 micro-SD 槽。不过现在通常我们也是用 SD adapter 来在老三上用 micro-SD（大卡套小卡）。用大卡还有个可能的优势是，很多游戏本是有 SD 槽的，这样就不需要读卡器了。</p>
+<p>值得一提的是，新三的 SD 卡槽需要打开背板，对于频繁操作的情况可能有点麻烦；其它系列基本都在侧边。新大二还别出心裁地把卡带槽和 SD 卡槽都收纳在一起，统一用盖子盖上防尘，赞。</p>
+<p>这里要区分一下卡带的插槽和 SD 卡槽。卡带一直是传统的掌机玩游戏的方法，在游戏机没有操作系统的时代，游戏完全等同于卡带，因此也没有外置储存卡的说法。而在有了操作系统以及 eshop 后，游戏就氛围了卡带版和电子版，其中电子版需要安装在机器上（也即 SD 卡上）。对于一般的掌机来说，你可以同时下载很多电子版（只要你的 SD 卡空间够），但是同时只能插入一个卡带。3DS 的桌面会留一个空图标，当插入卡带时会在这里显示卡带的游戏。3DS 的卡带插槽是完全兼容 NDS 卡带的，直接插就可以玩。（除非 DS 固件部分坏了？）</p>
+<p>另外，我们通常也会使用一种叫<strong>烧录卡</strong>的东西。它在接口上和 DS、GBA 等卡带是一样的，但是可以读写，通常也是像 SD adapter 那样大卡里插着一个 micro-SD。通常我们会在烧录卡中刷入内核以及许多 ROM，实现一卡爽玩的效果。也有的产家会特制一些只能玩一种游戏的烧录卡，比如一堆国产宝可梦卡（绿宝石 386，”漆黑的魅影” 实体卡带….），本质就是把 ROM 刷进去的烧录卡。对于 3DS 而言，一个很经典的方式是买一张 R4 烧录卡来玩 NDS 游戏，然后将 3DS 游戏以电子版形式下在机子中，这样烧录卡管 NDS，SD 卡管 3DS，互不影响。</p>
+<p>购买建议上，TF 卡买 sandisk 的就可以了。R4 烧录卡由于内部商业纠纷而分裂成了很多型号，比较好的有 dsone，dstwo，hk 等，存世量大的则是 com 和 wood 两种。其中 dsone 的风评较好，现在也不贵；com 和 wood 算是最便宜的，我多年使用起来其实也感觉没啥毛病。至于金卡银卡啥的，都是坑人的，不要信（我高中时候就傻傻加钱买了所谓的金卡）。</p>
+<p>还有个比较坑的地方。com 版插进去是一个炸弹人游戏的图标，意思是 “<strong>时间炸弹</strong>“ —— 当你的系统时间超过某个值时，打开烧录卡就会看到黑底红字的提醒。这是早年为了让玩家刷新版固件的手段，是写在内核里的逻辑。</p>
+<h3 id="屏幕"><a href="#屏幕" class="headerlink" title="屏幕"></a>屏幕</h3><p>3DS 上下屏均为<strong>液晶显示屏（LCD）</strong>，与之相对应的是最新一代的 Switch OLED 采用的 OLED（有机发光二极管）屏幕。这里简单介绍一下这两个的区别：</p>
+<ul>
+<li>LCD 是玻璃中间夹液晶材料，然后统一打一个背光，液晶材料在通电时会决定光透不透过来产生图像。因此 3DS 屏幕存在漏光的问题。</li>
+<li>OLED 每个像素都是有机化合物，在通电时会自发光。需要显示黑色时，关闭该像素即可；这也是为什么说 OLED 屏用黑壁纸省电，而 LCD 用白壁纸省电（背光是白）。</li>
+<li>一般认为 OLED 显示效果好一点，但是存在烧屏的问题，并且也有 LCD 对眼睛更好的说法。</li>
+</ul>
+<p>其中上屏不可触控，下屏可触控，为电阻式触控屏（需要给一定压力，比如用笔触）。</p>
+<p>LCD屏也有几种不同的制作技术，在 3DS 这里出现了两种：<strong>IPS（In-Plane Switching）屏</strong>和 <strong>TN（Twisted Nematic）</strong>屏。老 3DS 都是 TN 屏，而新 3DS 在生产的过程中遇到了 TN 屏产能不够的问题，因此混入了一部分 IPS 屏（随机组合，可能买到上屏 IPS 下屏 TN 的）。我自己不太介意这个，但是有的人比较在意，也有不怀好意之人用这个来炒价格。简单来说，IPS 和 TN 屏的区别主要有：</p>
+<ul>
+<li>TN 比 IPS 便宜，因此有的二手卖家会把上下双 IPS 的机器卖得比较贵。</li>
+<li>IPS 色彩好，视角广，可以认为显示效果好一些。</li>
+<li>TN 刷新率高，响应快，可以认为在游戏、视频方面等需要快速更新图像的应用场景下好一些。</li>
+</ul>
+<h3 id="序列号"><a href="#序列号" class="headerlink" title="序列号"></a>序列号</h3><p>序列号相当于一台 3DS 的身份证号，它通常被我们用来判断一台机器是否正版、原装（一般不太可能是盗版，所以主要是看是不是原装）。最箱说全的情况下，正版机器可以做到 “四码合一”：包装盒码，说明书码，机身码，系统内部的码。机身码根据型号的不同位置也略有不同。系统内部的码则可以通过 eShop 购买记录的机器番号（正版）或者 3DSident（破解）查看。</p>
+<h2 id="操作系统"><a href="#操作系统" class="headerlink" title="操作系统"></a>操作系统</h2><p>在 NDS Lite 之后，任天堂的掌机逐渐也有了操作系统的概念。3DS 的各个型号使用同一套操作系统，包括桌面逻辑、一些系统内置应用、可更换的主题（到 Switch 怎么又没了，差评！）。由于有系统，不可避免地就会有漏洞的存在，从而达到破解系统的效果。</p>
+<h3 id="系统与固件"><a href="#系统与固件" class="headerlink" title="系统与固件"></a>系统与固件</h3><p>当我们在谈论 3DS 系统时，我们在谈论什么？前文说过，虽然大部分软件安装在 SD 卡，但是 3DS 本身也有自己的存储空间。同时，按照我们的常识，操作系统中与硬件关系最密切、最底层的部分往往不可能放在 SD 卡这样的外界媒质中，而是放在 ROM（Read-Only Memory）里。这部分就是所谓的<strong>固件（Firmware）</strong>，它们负责系统启动的引导（Bootloader）和基础运行。举个例子，计算机的 BIOS 也是一种固件。不过相比于计算机，3DS 更加简单；实际上，3DS 大部分的系统都被放在了 ROM 里（包括 kernel），作为固件的一部分，所以也可以说 <strong>3DS 的系统约等于 3DS 固件</strong>。一个例子就是，3DS 是可以<a target="_blank" rel="noopener" href="https://stray-soul.com/3dsnosdboot.html">无 SD 卡开机</a>的。</p>
+<p>特别地，3DS 使用 <strong>NAND（一种闪存，属于一种非易失性存储设备）</strong>作为上文中的 ROM，据说大约有 1G，然后把系统大部分文件都放在 NAND 文件系统中。因此我们常常会看到有备份 3DS 的 NAND 的说法，这就是为了在不小心变砖后仍有办法起死回生，备份 NAND 有时也直接说备份系统。</p>
+<p>3DS 的 bootload 是一个把系统固件从 NAND memory 加载出来的过程。</p>
+<p>我们通常用 <strong>GodMode9（GM9）</strong>来访问 NAND 文件系统。不难想到，这个文件浏览器具有极高的权限——事实也确实是这样，稍微操作不当就能把机子直接变砖。GM9 通常在刷系统一开始和 luma 一起就放入 SD 卡中。可以通过开机时长按 Start 进入。</p>
+<h3 id="系统版本与地区"><a href="#系统版本与地区" class="headerlink" title="系统版本与地区"></a>系统版本与地区</h3><p>笔者用的 3DS 系统在写作时版本是 11.17（最新版本）。更准确来讲，是 11.17.0-50J，其中 J 代表着日版。3DS 是<strong>严格锁区</strong>的，除了像宝可梦这样的多语言游戏外，大部分都是遵循锁区规则：日版机器只能运行日版卡带，并且也只能使用日版系统。当然这种锁区应该是软件层面的，即日版系统决定了它只能运行日版卡带。因此，可以说系统的地区就是这个机器的地区，当你把机器从日版系统刷成美版系统时，它和原生的美版机器就我观察似乎是没有差别的。想要看一个机器的原始地区到底是哪，可以通过序列号来推断，像<a target="_blank" rel="noopener" href="https://www.bilibili.com/read/cv26489616/">这位B站老哥</a>说的那样。</p>
+<p>不过破解的机器大多使用 Luma3DS（待会儿会讲这是啥），天生支持区域模拟，因此现在的破解机几乎不受锁区的困扰。那么地区在这个语境下，影响最大的可能也就是系统默认语言和自己的心理感受了。不过仍然不是很推荐刷中文系统。</p>
+<h3 id="标识与加密"><a href="#标识与加密" class="headerlink" title="标识与加密"></a>标识与加密</h3><p>3DS 有许多写在 NAND 里的内容，用于各种不同的标识。除了设备序列号外，还有一个叫 friend code 的12 位数字，它在每台 3DS 创建用户时便会生成，与该 3DS 的设备 ID 绑定。我们平时可以使用 friend code 加好友（3DS 里那个黄色方形笑脸）。</p>
+<p>随之而来的，是一个叫做 <strong>movable.sed</strong> 的文件，它的目的是创造一个每个 3DS 唯一的密钥。它用了一些复杂的算法，将 local friend seed 和一些其它部分换算成了一个独一无二的 key。这个 key 会用于 <code>Nintendo/&lt;ID0&gt;/&lt;ID1&gt;/</code> 下所有数据的加密，这是主要的软件安装与存档位置。这样的设计可能是出于反编译等安全考虑，也让存档分享迁移变得困难。不过也有一些工具（例如 <a target="_blank" rel="noopener" href="https://github.com/wwylele/3ds-save-tool">3ds-save-tool</a>）在知道必要信息之后可以对相关文件进行解密/再加密。需要注意的是，由于 movable 的某些 bit 在用户从设置上进行系统重置（Reformatting）或者系统迁移等行为时，会发生变化，因此之前的文件直接复制粘贴到新的地方也会失效。</p>
+<p>说到这个 <code>&lt;ID0&gt;</code>，它也是一个 3DS 的独特标识，并且它是直接由 movable.sed 用 SHA256 哈希取前 0x10 位得到的。通常你可以直接在 SD 卡的 <code>Nintendo 3DS</code> 文件夹下立刻看到这个 ID0。而 ID1 则是通过 SD 卡的 CID 换算得到。</p>
+<p>说了这么多，其实就是老任在安全方面下了大功夫（可惜还是没防住破解），但这也给我们普通用户带来了很大麻烦。一个我亲身体验的例子就是，<code>Nintendo 3DS</code> 下找到的存档文件 <code>0000001.sav</code> 是经过 movable.sed 加密的，因此你直接把存档粘贴过去很容易失效。一个 workaround 是，你在把存档贴过去的时候用像 SaveDataFilter 这种软件把里面的 Secure Value 删掉（亲测，实现了在同一台机器上的存档转换。但是不知道为啥不同机器还是失败，可能到处都是加密…）。</p>
+<p>还有一个值得提到的东西是 <strong>NNID（Nintendo Network ID）</strong>，这个东西是任天堂账户的前身，作为 3DS 时代上你在 eshop 的凭证。某种意义上它也是一种标识。当你刚将 3DS 拿到手后，你就有权在这个 3DS 上用你的邮箱注册一个 NNID。不过 NNID 并不锁死在一个机器上，它可以换绑。同时 WiiU 也采用这套 NNID 机制。不过破解玩家基本不需要关心这个，除了部分洁癖用户希望洗掉前任机主的 NNID 以外（这部分自然是写在 NAND 里的，所以 GM9 请）。</p>
+<h3 id="破解"><a href="#破解" class="headerlink" title="破解"></a>破解</h3><p>破解机器通常指的是允许我们在机器上安装未经授权的软件，以及进行其它不被允许的行为（其实主要是前者，试想如果啥软件都能安装，那一切都将成为可能）。一般可以从硬件或者软件两种思路来破解。硬件上，可以暴力改线改主板，但是一是麻烦，二是没有保障，说不定哪天就变砖了；还有烧录卡的方案，不过问题也不少。相比之下，软件的方案更加稳定一些。软件方案主要就是通过漏洞，想办法介入系统启动过程，实现植入自制的固件（Custom Firmware，CFW），相当于用全力先安装上 “第一个未授权的软件”，再让它撕开一道口子，所以它必须是固件这种系统层级的位置。</p>
+<p>3DS 历史上稳定的软破方案主要有两种，分别是 <strong>Arm9LoaderHax（A9LH）</strong>和 <strong>Boot9Strap（B9S）</strong>。前文说过，3DS 的副处理器是一颗 Arm9，它在 bootloading 过程中参与的还是比较多的。这俩利用的都是 Arm9 在启动时的漏洞，将 CFW 直接写到系统里。我们不用详细了解太多，只要知道它们都是破解方式（即把 CFW 写到系统里的方式即可）。</p>
+<p>而 <strong>Luma3DS</strong> 则是一种 CFW，即 “我们用 B9S 来把 Luma 写到我们的系统里”。成功刷进 Luma 后，3DS 的防线就被彻底打开了，也就真正意义上被我们破解了。Luma 作为固件本身也有版本号，开机时长按 Select 可以进到 Luma 页面，博主是 v13.0.2。</p>
+<p>如何确定自己的机器是否是破解机？鉴于市面上绝大部分是刷 Luma，只要试一下能不能开机进 Luma 即可。</p>
+<h3 id="文件系统"><a href="#文件系统" class="headerlink" title="文件系统"></a>文件系统</h3><p>文件系统分为 NAND 里的 Flash 文件系统，以及 SD 卡里的文件系统。我们只需要知道 NAND 里存放着很多重要的文件（比如你可以直接从 NAND 里拿到 movable.sed），以及很多都是明文存放的即可。</p>
+<p>SD 卡的文件系统在折腾多了之后接触得就比较多了。这里从 3dbrew 拿一张图来讲讲：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">sdmc</span><br><span class="line">├── DCIM</span><br><span class="line">├── Nintendo 3DS</span><br><span class="line">│   ├── &lt;ID0&gt;</span><br><span class="line">│   │   └── &lt;ID1&gt;</span><br><span class="line">│   │       ├── backups</span><br><span class="line">│   │       ├── dbs</span><br><span class="line">│   │       ├── extdata</span><br><span class="line">│   │       ├── title</span><br><span class="line">│   │       └── Nintendo DSiWare</span><br><span class="line">│   └── Private</span><br></pre></td></tr></table></figure>
+<ul>
+<li>DCIM 是 3DS 相机存放照片和视频的地方。</li>
+<li>Nintendo 3DS 是核心的文件夹，甚至其实你要迁移数据，只迁它也不是不行，软件和存档都在里面。不过注意，<code>&lt;ID0&gt;/&lt;ID1&gt;</code> 下面的内容都经过加密，直接迁有可能会寄！（同一台机子应该是没啥关系的）。在这下面，<code>backups</code> 是你在 3DS 里选择备份数据时，会放的位置；<code>dbs</code> 是安装在 3DS 上的 titles 的索引数据库；<code>extdata</code> 是一些补充数据，不过有些软件（比如怪猎）的存档也有可能放这；<code>title</code> 是软件本体和存档的位置，<code>DSiWare</code> 则是 DSi 软件的位置。</li>
+<li>这里解释一下， <code>title</code> 在 3DS 里的意思就是一个软件。在 <code>title</code> 文件夹下，各个软件会按自己的 title id 排列在下面。Title id 可以在 <a target="_blank" rel="noopener" href="https://www.3dsdb.com">3DS db</a> 里找到。在 NAND 里也有一个明文存储的 title 目录。</li>
+<li>还有一些偏私人的软件信息会不经加密地，按照 title 分文件夹地放在 <code>Private</code> 下。</li>
+</ul>
+<h3 id="虚拟系统"><a href="#虚拟系统" class="headerlink" title="虚拟系统"></a>虚拟系统</h3><p>虚拟系统是一部分 3DS 破解思路的产物（主题破解，414破解，早期 A9 等），大概思路就是让系统启动时绕开真实系统去读虚拟系统。现在一般建议直接用真实系统，换卡也方便。虚拟系统会多出一个叫 EmuNAND 的东西（在 NAND 划一个区给虚拟系统用），以及在各种刷来刷去时有时候会有一些情况要处理。如果要判断自己是哪种，可以去设置 - 看右下角的版本号开头是啥，</p>
+<ul>
+<li>Sys / Ver：真实系统，这俩区别不大，并且可以通过改 Luma 选项来改变。</li>
+<li>Emu：虚拟系统。</li>
+</ul>
+<h2 id="说了这么多，该怎么折腾"><a href="#说了这么多，该怎么折腾" class="headerlink" title="说了这么多，该怎么折腾"></a>说了这么多，该怎么折腾</h2><p>现在假设你是一个在某平台低价收到一台 3DS 的幸运儿（也就是怎么挑怎么还价就先略了），那么首先拿到手你要确定这是否是一个适合用来折腾的机器。一般限定机、成色很好的未破解可以考虑留着收藏，其它情况如果自己需要的话，还是折腾出来当战斗机吧。</p>
+<p>一般情况下二手买来也是破解好的，甚至往往是开箱即玩的。但是仍然会有些问题：</p>
+<ul>
+<li>赛博洁癖，想清理掉原机主留的痕迹；</li>
+<li>系统版本或者 Luma 版本太老了；</li>
+<li>是中文系统，想刷成日文系统；</li>
+<li>本身就是砖，看看能不能救一下…</li>
+<li>本身没破解</li>
+</ul>
+<p>这里推荐跟着<a target="_blank" rel="noopener" href="https://stray-soul.com">一只火狐</a>大佬的教程或者<a target="_blank" rel="noopener" href="https://3ds.hacks.guide">3DS Hacks Guide</a>一步步做，基本啥情况都帮我们考虑好了，非常良心。这里列一些名词和常用的软件，供诸君快速查阅：</p>
+<ul>
+<li><strong>A9 / B9：</strong>两种破解技术（把 CFW 刷进机器的方法），B9（也就是 B9S）更新一点。</li>
+<li><strong>Luma：</strong>一种 CFW，最常用来刷入以破解 3DS 的自制固件。</li>
+<li><strong>CTRTransfer：</strong>CTR 是 3DS 内部的神秘前缀，指代的可能就是 3DS（比如系统的 NAND 在目录里一般叫 CTRNAND）。这一步骤说的就是刷系统，如果知识格式化 SD 卡的话 NAND 那边就没处理干净，刷掉比较好。CTRTransfer 的用处很多，可以刷不同版本、不同地域的系统。</li>
+<li><strong>Homebrew：</strong>自制软件，意思就是非官方的民间的妙妙软件（苹果的 homebrew）。有个 Homebrew Launcher 可以让我们在啥都没有的情况下启动若干基础软件，白手起家。</li>
+</ul>
+<p>下面是一堆常用的 homebrew：</p>
+<ul>
+<li><strong>G9：</strong>GodMode9，NAND 的文件浏览器。</li>
+<li><strong>FBI：</strong>SD 卡文件管理器，也是很常用的 CIA 安装器。3DS 的游戏文件有很多后缀，.cia 是数字版软件常规后缀，.3ds 是卡带导出的形式，还有 .cci 等等。这些之间的转换也有工具可以完成。</li>
+<li><strong>Checkpoint：</strong>很好用的存档管理软件。上面说过直接暴力拿存档会面临动态加密问题，而用这个就没这方面烦恼，只是要记得自己定期去手动存一下。</li>
+<li><strong>3DSident：</strong>一个快速可以看系统软硬件信息（序列号、屏幕）的软件。</li>
+<li><strong>Anemone3DS：</strong>主题管理软件。</li>
+<li><strong>ACG Shared Font：</strong>字库软件，有的游戏汉化需要。</li>
+<li><strong>mGBA、TwiLightMenu++：</strong>模拟器们，前者是 GBA 模拟器，后者比较多平台，偏重 NDS 一些。</li>
+<li><strong>SaveDataFilter：</strong>存档编辑软件。</li>
+<li><strong>BootNTR，NTR CFW：</strong>小火箭，让你能在 3DS 上运行 CFW（相当于一个启动件）；而 NTR CFW 则是一个集合了很多功能的 CFW，能做到例如串流（仅新三）这样的花活。</li>
+</ul>
+<h2 id="引用"><a href="#引用" class="headerlink" title="引用"></a>引用</h2><ul>
+<li><a target="_blank" rel="noopener" href="https://stray-soul.com">一只火狐的杂物间</a></li>
+<li><a target="_blank" rel="noopener" href="https://3ds.hacks.guide">3DS Hacks Guide</a></li>
+<li><a target="_blank" rel="noopener" href="https://sspai.com/post/69395#!">任天堂 3DS 全系详解 &amp; 选购指南</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.3dbrew.org/wiki/">https://www.3dbrew.org/wiki/</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.gamebrew.org/wiki/Boot9strap_3DS">https://www.gamebrew.org/wiki/Boot9strap_3DS</a></li>
+</ul>
+
+  </div>
+</article>
+
+
+
+    <div class="blog-post-comments">
+        <div class="vcomment"></div>
+    </div>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+        
+          <li><a href="/">Home</a></li>
+        
+          <li><a href="/about/">About</a></li>
+        
+          <li><a href="/archives/">Articles</a></li>
+        
+          <li><a href="/links/">Links</a></li>
+        
+          <li><a target="_blank" rel="noopener" href="https://siriusneo.top">Personal Page</a></li>
+        
+      </ul>
+    </div>
+
+    
+    
+      <div id="toc-footer" style="display: none">
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9F%BA%E7%A1%80%E7%A1%AC%E4%BB%B6%E7%9F%A5%E8%AF%86"><span class="toc-number">1.</span> <span class="toc-text">基础硬件知识</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9E%8B%E5%8F%B7%E7%BA%B5%E8%A7%88"><span class="toc-number">1.1.</span> <span class="toc-text">型号纵览</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%A1%AC%E4%BB%B6%E7%BB%84%E6%88%90"><span class="toc-number">1.2.</span> <span class="toc-text">硬件组成</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%82%A8%E5%AD%98"><span class="toc-number">1.3.</span> <span class="toc-text">储存</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%B1%8F%E5%B9%95"><span class="toc-number">1.4.</span> <span class="toc-text">屏幕</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%BA%8F%E5%88%97%E5%8F%B7"><span class="toc-number">1.5.</span> <span class="toc-text">序列号</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F"><span class="toc-number">2.</span> <span class="toc-text">操作系统</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%B3%BB%E7%BB%9F%E4%B8%8E%E5%9B%BA%E4%BB%B6"><span class="toc-number">2.1.</span> <span class="toc-text">系统与固件</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%B3%BB%E7%BB%9F%E7%89%88%E6%9C%AC%E4%B8%8E%E5%9C%B0%E5%8C%BA"><span class="toc-number">2.2.</span> <span class="toc-text">系统版本与地区</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%A0%87%E8%AF%86%E4%B8%8E%E5%8A%A0%E5%AF%86"><span class="toc-number">2.3.</span> <span class="toc-text">标识与加密</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%A0%B4%E8%A7%A3"><span class="toc-number">2.4.</span> <span class="toc-text">破解</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F"><span class="toc-number">2.5.</span> <span class="toc-text">文件系统</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%99%9A%E6%8B%9F%E7%B3%BB%E7%BB%9F"><span class="toc-number">2.6.</span> <span class="toc-text">虚拟系统</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%AF%B4%E4%BA%86%E8%BF%99%E4%B9%88%E5%A4%9A%EF%BC%8C%E8%AF%A5%E6%80%8E%E4%B9%88%E6%8A%98%E8%85%BE"><span class="toc-number">3.</span> <span class="toc-text">说了这么多，该怎么折腾</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%BC%95%E7%94%A8"><span class="toc-number">4.</span> <span class="toc-text">引用</span></a></li></ol>
+      </div>
+    
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://siriusneo.github.io/2024/03/08/nintendo-3ds/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://siriusneo.github.io/2024/03/08/nintendo-3ds/&text=[科普向] 一文带你了解折腾 Nintendo 3DS / 任天堂3DS"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://siriusneo.github.io/2024/03/08/nintendo-3ds/&title=[科普向] 一文带你了解折腾 Nintendo 3DS / 任天堂3DS"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://siriusneo.github.io/2024/03/08/nintendo-3ds/&is_video=false&description=[科普向] 一文带你了解折腾 Nintendo 3DS / 任天堂3DS"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=[科普向] 一文带你了解折腾 Nintendo 3DS / 任天堂3DS&body=Check out this article: https://siriusneo.github.io/2024/03/08/nintendo-3ds/"><i class="fa-solid fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://siriusneo.github.io/2024/03/08/nintendo-3ds/&title=[科普向] 一文带你了解折腾 Nintendo 3DS / 任天堂3DS"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://siriusneo.github.io/2024/03/08/nintendo-3ds/&title=[科普向] 一文带你了解折腾 Nintendo 3DS / 任天堂3DS"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://siriusneo.github.io/2024/03/08/nintendo-3ds/&title=[科普向] 一文带你了解折腾 Nintendo 3DS / 任天堂3DS"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://siriusneo.github.io/2024/03/08/nintendo-3ds/&title=[科普向] 一文带你了解折腾 Nintendo 3DS / 任天堂3DS"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://siriusneo.github.io/2024/03/08/nintendo-3ds/&name=[科普向] 一文带你了解折腾 Nintendo 3DS / 任天堂3DS&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://siriusneo.github.io/2024/03/08/nintendo-3ds/&t=[科普向] 一文带你了解折腾 Nintendo 3DS / 任天堂3DS"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fa-solid fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        
+          <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fa-solid fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fa-solid fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy;
+    
+    
+    2020-2024
+    Chaofan.
+    Powered by <a target="_blank" rel="noopener" href="https://github.com/probberechts/hexo-theme-cactus">Cactus</a>. <a target="_blank" rel="noopener" href="https://github.com/SiriusNEO/hexo-theme-cactus-customized">Customized</a> by me :).
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/about/">About</a></li><!--
+     --><!--
+       --><li><a href="/archives/">Articles</a></li><!--
+     --><!--
+       --><li><a href="/links/">Links</a></li><!--
+     --><!--
+       --><li><a target="_blank" rel="noopener" href="https://siriusneo.top">Personal Page</a></li><!--
+     -->
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+
+
+  <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" crossorigin="anonymous" onload="this.onload=null;this.rel='stylesheet'"/>
+
+
+    <!-- jquery -->
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" crossorigin="anonymous"></script>
+
+
+
+
+<!-- clipboard -->
+
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.7/clipboard.min.js" crossorigin="anonymous"></script>
+  
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"Copy to clipboard!\">";
+    btn += '<i class="fa-regular fa-clone"></i>';
+    btn += '</span>';
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "Copied!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Baidu Analytics -->
+
+<!-- Cloudflare Analytics -->
+
+<!-- Disqus Comments -->
+
+<!-- utterances Comments -->
+
+<!-- Valine Comments -->
+
+    <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+    <script src="//unpkg.com/valine@latest/dist/Valine.min.js"></script>
+    <script type="text/javascript">
+        var notify = 'false' == true ? true : false;
+        var verify = 'false' == true ? true : false;
+        var GUEST_INFO = ['nick','mail','link'];
+        var guest_info = 'nick,mail,link'.split(',').filter(function(item){
+          return GUEST_INFO.indexOf(item) > -1
+        });
+        guest_info = guest_info.length == 0 ? GUEST_INFO :guest_info;
+        new Valine({
+            el: '.vcomment',
+            notify: notify,
+            verify: verify,
+            appId: "AyDHJHMfyHGtgF5Lc8CG4dpA-gzGzoHsz",
+            appKey: "JZWLrweBHY4Txn5nZuLwFzim",
+            avatar:"identicon",
+            placeholder: "Send a comment for this post!",
+            guest_info:guest_info,
+            pageSize:"10"
+        })
+</script>
+
+
+</body>
+</html>
