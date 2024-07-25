@@ -285,7 +285,9 @@
 <p>大体来讲，这个 kernel 目前的实现并不算复杂，核心思想其实就是把普通注意力机制中的 sequence length 这一维在内存空间上打散。在实现上，代码中借鉴了 NVIDIA FasterTransformer，但是实测性能并没有 FT 这么好，可能是其他地方还存在一些 overhead，或者这个注意力 kernel 设计的还不够高效。但是不管怎么说，把 KV Cache 打散的操作很大程度上方便了 LLM 运行的内存管理，同时也融合了一些 sparsity 的思想在其中，还是非常好的。</p>
 
   </div>
-  <style>
+  <!-- Style from: https://blog.lyc8503.net/post/hexo-config-plugin/  -->
+
+<style>
 .admonition {
 margin: .75em 0;
 padding: .6rem;
@@ -323,6 +325,9 @@ box-shadow: 0 0.1rem 0.4rem rgba(0,0,0,.05), 0 0 0.05rem rgba(0,0,0,.1);
 <div class="admonition info">
     <p>
         Author: <a target="_blank" rel="noopener" href="https://github.com/siriusneo">SiriusNEO</a>
+    </p>
+    <p>
+        Published on: <a target="_blank" rel="noopener" href="https://me.tric.space/">Metric Space</a>
     </p>
     <p>
         All posts on this blog are licensed under the <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en">CC BY-NC-SA 4.0</a> license unless otherwise noted.
