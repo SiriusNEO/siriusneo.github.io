@@ -14,7 +14,7 @@
 <meta property="og:description" content="作为一个 CS 或者相关专业的研究者，在新的机器上配环境是一个非常经常遇到的情况，并且往往这些步骤都是重复而不好记的（总不能背那些 bash 命令吧！）。尤其是当笔者在微软实习的过程中，由于 Azure 租的机器都有时限，在机器过期时我就要把工作环境迁到新的机器上，一些东西就要重新开始。虽然大部分时间我都是快速网上查一下就知道怎么干了，但是我感觉把一些东西记下来好像也方便一些。因此这是一个 Che">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2024-02-22T08:53:00.000Z">
-<meta property="article:modified_time" content="2024-08-31T13:18:13.035Z">
+<meta property="article:modified_time" content="2024-09-02T22:00:40.596Z">
 <meta property="article:author" content="Chaofan">
 <meta name="twitter:card" content="summary">
     
@@ -126,7 +126,7 @@
     
     
       <div id="toc">
-        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%85%8D%E7%BD%AE-SSH"><span class="toc-number">1.</span> <span class="toc-text">配置 SSH</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%85%8D%E7%BD%AE-Github-SSH"><span class="toc-number">2.</span> <span class="toc-text">配置 Github SSH</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%85%8D%E7%BD%AE%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E7%8E%AF%E5%A2%83"><span class="toc-number">3.</span> <span class="toc-text">配置深度学习环境</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%85%8D%E7%BD%AE-Python-%E7%8E%AF%E5%A2%83"><span class="toc-number">3.0.1.</span> <span class="toc-text">配置 Python 环境</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%85%8D%E7%BD%AE%E6%98%BE%E5%8D%A1%E9%A9%B1%E5%8A%A8%E5%92%8C-CUDA-%E7%8E%AF%E5%A2%83"><span class="toc-number">3.0.2.</span> <span class="toc-text">配置显卡驱动和 CUDA 环境</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%85%8D%E7%BD%AE-PyTorch"><span class="toc-number">3.0.3.</span> <span class="toc-text">配置 PyTorch</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%85%8D%E7%BD%AE-X11-Forwarding"><span class="toc-number">4.</span> <span class="toc-text">配置 X11 Forwarding</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Update-2024-8-27"><span class="toc-number">5.</span> <span class="toc-text">Update 2024 8 27</span></a></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%85%8D%E7%BD%AE-SSH"><span class="toc-number">1.</span> <span class="toc-text">配置 SSH</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%85%8D%E7%BD%AE-Github-SSH"><span class="toc-number">2.</span> <span class="toc-text">配置 Github SSH</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%85%8D%E7%BD%AE%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E7%8E%AF%E5%A2%83"><span class="toc-number">3.</span> <span class="toc-text">配置深度学习环境</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%85%8D%E7%BD%AE-Python-%E7%8E%AF%E5%A2%83"><span class="toc-number">3.0.1.</span> <span class="toc-text">配置 Python 环境</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%85%8D%E7%BD%AE%E6%98%BE%E5%8D%A1%E9%A9%B1%E5%8A%A8%E5%92%8C-CUDA-%E7%8E%AF%E5%A2%83"><span class="toc-number">3.0.2.</span> <span class="toc-text">配置显卡驱动和 CUDA 环境</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%85%8D%E7%BD%AE-PyTorch"><span class="toc-number">3.0.3.</span> <span class="toc-text">配置 PyTorch</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%85%8D%E7%BD%AE-X11-Forwarding"><span class="toc-number">4.</span> <span class="toc-text">配置 X11 Forwarding</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%85%8D%E7%BD%AE-Vim"><span class="toc-number">5.</span> <span class="toc-text">配置 Vim</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%85%8D%E7%BD%AE%E4%B8%8E%E7%BE%8E%E5%8C%96-Shell"><span class="toc-number">6.</span> <span class="toc-text">配置与美化 Shell</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Update-2024-8-27"><span class="toc-number">7.</span> <span class="toc-text">Update 2024 8 27</span></a></li></ol>
       </div>
     
   </span>
@@ -169,8 +169,8 @@
        
 
       | <i class="fa fa-eye fa-fw post-meta-icon"></i><span style="color: #8c8c8c; font-size: 13.6px;"> Views: </span><span id="busuanzi_value_page_pv"></span>
-      | <i class="far fa-file-word fa-fw post-meta-icon"></i><span style="color: #8c8c8c; font-size: 13.6px;"> Total Words: 15k</span>
-      | <i class="far fa-clock fa-fw post-meta-icon"></i><span style="color: #8c8c8c; font-size: 13.6px;"> Reading Time: 14 mins.</span>
+      | <i class="far fa-file-word fa-fw post-meta-icon"></i><span style="color: #8c8c8c; font-size: 13.6px;"> Total Words: 18k</span>
+      | <i class="far fa-clock fa-fw post-meta-icon"></i><span style="color: #8c8c8c; font-size: 13.6px;"> Reading Time: 17 mins.</span>
     </div>
   </header>
   
@@ -190,28 +190,27 @@
 <li><p>第二步，把公钥提交到对应处，一般直接告诉管理员让他帮你粘贴到 authorized_keys 里就好了。</p>
 </li>
 <li><p>第三步，尝试登录</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ssh &lt;user-name&gt;@&lt;host&gt; -p &lt;port&gt; -i &lt;path to your public key&gt;</span><br></pre></td></tr></table></figure>
-<p>如果发现神秘错误需要调试，可以使用 <code>-vvv</code> 参数来输出 Log</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ssh -vvv ...</span><br></pre></td></tr></table></figure>
+  <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ssh &lt;user-name&gt;@&lt;host&gt; -p &lt;port&gt; -i &lt;path to your public key&gt;</span><br></pre></td></tr></table></figure>
+<p>  如果发现神秘错误需要调试，可以使用 <code>-vvv</code> 参数来输出 Log</p>
+  <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ssh -vvv ...</span><br></pre></td></tr></table></figure>
 </li>
 </ul>
 <h2 id="配置-Github-SSH"><a href="#配置-Github-SSH" class="headerlink" title="配置 Github SSH"></a>配置 Github SSH</h2><p>首先需要机器上安装了 <code>git</code> 和 <code>ssh</code>。</p>
 <ul>
-<li>第一步，配置用户名和邮箱：</li>
+<li><p>第一步，配置用户名和邮箱：</p>
+  <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git config --global user.name <span class="string">&quot;&lt;your github username&gt;&quot;</span></span><br><span class="line">git config --global user.email <span class="string">&quot;&lt;your email address&gt;&quot;</span></span><br></pre></td></tr></table></figure>
+<p>  或者写在 <code>.gitconfig</code> 里。注意这里的邮箱会作为你 commit 里的信息，如果不是和你 Github 账号绑定的邮箱，应该不会算进你这个 Github 账号的 commit 数，同时头像会显示成白色的匿名头像。</p>
+</li>
+<li><p>第二步，生成 <code>ssh</code> 公私钥匙。</p>
+  <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ssh-keygen -t ed25519 -C <span class="string">&quot;&lt;your email address&gt;&quot;</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>第三步，把公钥提交到 Github 上。</p>
+  <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cat</span> ~/.ssh/id_ed25519.pub</span><br></pre></td></tr></table></figure>
+<p>  然后在 Github 网页端的 Setting - SSH / GPG Keys 里新建一个，把公钥贴过去就好。</p>
+<p>  搞完之后可以测试一下：</p>
+  <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ssh -T git@github.com</span><br></pre></td></tr></table></figure>
+</li>
 </ul>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git config --global user.name <span class="string">&quot;&lt;your github username&gt;&quot;</span></span><br><span class="line">git config --global user.email <span class="string">&quot;&lt;your email address&gt;&quot;</span></span><br></pre></td></tr></table></figure>
-<p>或者写在 <code>.gitconfig</code> 里。注意这里的邮箱会作为你 commit 里的信息，如果不是和你 Github 账号绑定的邮箱，应该不会算进你这个 Github 账号的 commit 数，同时头像会显示成白色的匿名头像。</p>
-<ul>
-<li>第二步，生成 <code>ssh</code> 公私钥匙。</li>
-</ul>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ssh-keygen -t ed25519 -C <span class="string">&quot;&lt;your email address&gt;&quot;</span></span><br></pre></td></tr></table></figure>
-<ul>
-<li>第三步，把公钥提交到 Github 上。</li>
-</ul>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cat</span> ~/.ssh/id_ed25519.pub</span><br></pre></td></tr></table></figure>
-<p>然后在 Github 网页端的 Setting - SSH / GPG Keys 里新建一个，把公钥贴过去就好。</p>
-<p>搞完之后可以测试一下：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ssh -T git@github.com</span><br></pre></td></tr></table></figure>
 <h2 id="配置深度学习环境"><a href="#配置深度学习环境" class="headerlink" title="配置深度学习环境"></a>配置深度学习环境</h2><p>这里主要针对 N 卡用户。常用的深度学习环境的配置一般是 CUDA + PyTorch（Tensorflow 真不熟好吧）。不过为了让服务器好用一点，还需要配置一些比较边边角角的事情。</p>
 <h4 id="配置-Python-环境"><a href="#配置-Python-环境" class="headerlink" title="配置 Python 环境"></a>配置 Python 环境</h4><p>一般来讲，我们会用 conda 包管理器（当然，还有很多别的，比如 pip、pdm、poetry 等等，但是 conda 的逻辑更适合科研人员一点），conda 的多环境可以方便地让我们在不同的 Python 版本以及对应的依赖之间切换。安装可以选择 Anaconda 或者 Miniconda，这边我推荐后者（更轻量化一点）：</p>
 <ul>
@@ -244,20 +243,50 @@
 <h2 id="配置-X11-Forwarding"><a href="#配置-X11-Forwarding" class="headerlink" title="配置 X11 Forwarding"></a>配置 X11 Forwarding</h2><p>通常我们使用一个 client 设备通过 SSH 来访问远程的 Linux 服务器，而 SSH 协议正如其名只实现了 Shell 的传输。有时候我们可能希望在远程服务器运行的图形界面能显示到我们的客户端上，这就要用到 X11 协议的 Forwarding。</p>
 <p>X11 协议是最常用的 Linux 图形界面协议，它实现了 Linux 上的图形显示。先查看服务器上是否安装了 X11：</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">dpkg -l | grep xserver-xorg-core</span><br></pre></td></tr></table></figure>
-<p>安装 X11（Ubuntu/Debian），这里暂时不考虑用 Wayland</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 安装 X.Org 服务器</span></span><br><span class="line">sudo apt install xorg</span><br><span class="line"></span><br><span class="line"><span class="comment"># 安装 xauth 授权管理工具</span></span><br><span class="line">sudo apt install xauth</span><br></pre></td></tr></table></figure>
-<p>X11 的使用中最重要的是有一个 DISPLAY 环境命令，它指定了图形界面显示在哪一个显示设备上。在 Forwarding 的场景中，我们会把客户端的显示器映射到服务器上的某个虚拟显示设备中。</p>
-<p>接下来是客户端的配置。对于 macOS 用户，可以使用 xQuartz 软件完成 X11 Forwarding：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo brew install xquartz</span><br></pre></td></tr></table></figure>
-<p>安装后重启，在命令行里输入 <code>xterm</code> 如果找得到说明安装成功。然后在客户端查看 DISPLAY 环境命令，应该可以看到一个复杂的路径（<code>/private/tmp/...</code>）</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">echo</span> <span class="variable">$DISPLAY</span></span><br></pre></td></tr></table></figure>
-<p>然后修改一下 SSH 的配置文件。打开 <code>~/.ssh/config</code>（或者其他路径的 ssh config 文件），在对应服务器的 SSH 配置添加以下三行（就是有 <code>HostName</code> 那一堆的一列）：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">ForwardAgent yes</span><br><span class="line">ForwardX11 yes</span><br><span class="line">ForwardX11Trusted yes</span><br></pre></td></tr></table></figure>
-<p>配置完成后使用 ssh 登录服务端，如果是 VSCode 的话直接连接就行。如果是命令行登录的话，添加一下 <code>-X</code> 或者 <code>-Y</code> 参数（<code>-Y</code> 参数更安全一点）。</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ssh -X &lt;user-name&gt;@&lt;host&gt;</span><br></pre></td></tr></table></figure>
-<p>如果成功的话可以在服务端看到环境变量 <code>DISPLAY</code> 的值。</p>
-<p>然后接下来在服务端可以用 Python 的 matplotlib 随便画一个图，然后 <code>plt.show()</code>，如果成功会在 Mac 打开一个 xQuarts 窗口显示图像；或者安装 x11-apps 然后使用 xclock 测试</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo apt install x11-apps</span><br><span class="line">xclock</span><br></pre></td></tr></table></figure>
+<ul>
+<li><p>第一步，如果没安装，安装 X11（Ubuntu/Debian），这里暂时不考虑用 Wayland</p>
+  <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 安装 X.Org 服务器</span></span><br><span class="line">sudo apt install xorg</span><br><span class="line"></span><br><span class="line"><span class="comment"># 安装 xauth 授权管理工具</span></span><br><span class="line">sudo apt install xauth</span><br></pre></td></tr></table></figure>
+<p>  X11 的使用中最重要的是有一个 DISPLAY 环境命令，它指定了图形界面显示在哪一个显示设备上。在 Forwarding 的场景中，我们会把客户端的显示器映射到服务器上的某个虚拟显示设备中。</p>
+</li>
+<li><p>第二步，接下来是客户端的配置。对于 macOS 用户，可以使用 xQuartz 软件完成 X11 Forwarding：</p>
+  <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo brew install xquartz</span><br></pre></td></tr></table></figure>
+<p>  安装后重启，在命令行里输入 <code>xterm</code> 如果找得到说明安装成功。然后在客户端查看 DISPLAY 环境命令，应该可以看到一个复杂的路径（<code>/private/tmp/...</code>）</p>
+  <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">echo</span> <span class="variable">$DISPLAY</span></span><br></pre></td></tr></table></figure>
+<p>  然后修改一下 SSH 的配置文件。打开 <code>~/.ssh/config</code>（或者其他路径的 ssh config 文件），在对应服务器的 SSH 配置添加以下三行（就是有 <code>HostName</code> 那一堆的一列）：</p>
+  <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">ForwardAgent <span class="built_in">yes</span></span><br><span class="line">ForwardX11 <span class="built_in">yes</span></span><br><span class="line">ForwardX11Trusted <span class="built_in">yes</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>第三步，配置完成后使用 ssh 登录服务端，如果是 VSCode 的话直接连接就行。如果是命令行登录的话，添加一下 <code>-X</code> 或者 <code>-Y</code> 参数（<code>-Y</code> 参数更安全一点）。</p>
+  <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ssh -X &lt;user-name&gt;@&lt;host&gt;</span><br></pre></td></tr></table></figure>
+<p>  如果成功的话可以在服务端看到环境变量 <code>DISPLAY</code> 的值。注意，如果该环境变量没有值说明是失败了。一个比较典型的例子是 <code>X11 forwarding request failed on channel 0</code>，一种可能的解决办法是：把 <code>/etc/ssh/sshd_config</code> 中的 <code>X11UseLocalhost</code> 改成 <code>no</code>，并重启 sshd：</p>
+  <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo /etc/init.d/ssh restart</span><br></pre></td></tr></table></figure>
+<p>  这个解决办法是为了禁止 X11 Forwarding 服务器绑定到 loopback 地址（也就是 localhost），在有些情况会导致 X11 连接失败。</p>
+</li>
+<li><p>第四步，测试。</p>
+<p>  在上一步成功后，接下来在服务端可以用 Python 的 matplotlib 随便画一个图，然后 <code>plt.show()</code>，如果成功会在 Mac 打开一个 xQuarts 窗口显示图像；或者安装 x11-apps 然后使用 xclock 测试</p>
+  <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo apt install x11-apps</span><br><span class="line">xclock</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h2 id="配置-Vim"><a href="#配置-Vim" class="headerlink" title="配置 Vim"></a>配置 Vim</h2><p>这个要讲起来可以单开一个文章了。不过在现在 VSCode 如此生猛的情况下，我用 Vim 的频率也不算很高了。我在 Github 上有维护一个自己的 <a target="_blank" rel="noopener" href="https://github.com/SiriusNEO/dotfiles/tree/main/zsh">dotfiles</a>，里面大概是有一个看起来还可以的 Vim 配置。</p>
+<p>Vim 主要就是折腾插件，先选择一个插件管理器（pathogen 或者 Vundle 等），然后就是下各种插件。如果只是简单更改，可以直接编辑 <code>.vimrc</code> 。</p>
+<p>以及有兴趣的朋友可以了解一下 NeoVim，是个 vim 的 fork 版本，最突出的一点是用更现代的语言 lua 替换了 vim script 的语法，对插件开发人员以及用户阅读配置文件都十分友好。</p>
+<h2 id="配置与美化-Shell"><a href="#配置与美化-Shell" class="headerlink" title="配置与美化 Shell"></a>配置与美化 Shell</h2><p>Shell 作为大部分时间我们与服务器交互的方式，做一些简单的美化还是很有用的，而且不少有用的插件确实能提高我们的效率。</p>
+<p>首先我推荐 zsh 作为 bash 的代替。查看当前的 Shell 是什么：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">echo</span> <span class="variable">$SHELL</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li><p>第一步，如果还是 bash 的话，首先安装一下 zsh（以 Ubuntu 为例）。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt install zsh</span><br></pre></td></tr></table></figure>
+<p>安装完后使用如下命令将默认 Shell 改成 zsh：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">chsh -s /bin/zsh</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>第二步，安装 oh-my-zsh。这是一个 zsh 美化与扩展框架，也可以理解为一种插件管理器，它能方便地让你更改 zsh 的主题、添加许多有用的插件等等。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sh -c <span class="string">&quot;<span class="subst">$(wget https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh -O -)</span>&quot;</span></span><br></pre></td></tr></table></figure>
+<p>如果在国内翻不了墙的话，官方也提供了一个镜像</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sh -c <span class="string">&quot;<span class="subst">$(wget -O- https://install.ohmyz.sh/)</span>&quot;</span></span><br></pre></td></tr></table></figure>
+<p>这里用 wget 作为例子，curl 和 fetch 也都是可以的。安装完成后会看到一个很炫酷的终端画面。</p>
+</li>
+<li><p>第三步，自由扩展你的 zsh。这里扩展有两方面：换主题（theme）和加插件（plugin）。如果你比较懒，可以学习我的 <a target="_blank" rel="noopener" href="https://github.com/SiriusNEO/dotfiles/tree/main/zsh">dotfiles</a> 里的配置。</p>
+</li>
+</ul>
 <h2 id="Update-2024-8-27"><a href="#Update-2024-8-27" class="headerlink" title="Update 2024 8 27"></a>Update 2024 8 27</h2><p>看了别人用 Dendron 建的 knowledge base 之后，有点想专门弄个站来记录这种 Cheat Sheets 了，因此这篇 Blog 就暂时封笔。如果搞的差不多了之后会把链接放这里。</p>
 
   </div>
@@ -343,7 +372,7 @@ box-shadow: 0 0.1rem 0.4rem rgba(0,0,0,.05), 0 0 0.05rem rgba(0,0,0,.1);
     
     
       <div id="toc-footer" style="display: none">
-        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%85%8D%E7%BD%AE-SSH"><span class="toc-number">1.</span> <span class="toc-text">配置 SSH</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%85%8D%E7%BD%AE-Github-SSH"><span class="toc-number">2.</span> <span class="toc-text">配置 Github SSH</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%85%8D%E7%BD%AE%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E7%8E%AF%E5%A2%83"><span class="toc-number">3.</span> <span class="toc-text">配置深度学习环境</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%85%8D%E7%BD%AE-Python-%E7%8E%AF%E5%A2%83"><span class="toc-number">3.0.1.</span> <span class="toc-text">配置 Python 环境</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%85%8D%E7%BD%AE%E6%98%BE%E5%8D%A1%E9%A9%B1%E5%8A%A8%E5%92%8C-CUDA-%E7%8E%AF%E5%A2%83"><span class="toc-number">3.0.2.</span> <span class="toc-text">配置显卡驱动和 CUDA 环境</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%85%8D%E7%BD%AE-PyTorch"><span class="toc-number">3.0.3.</span> <span class="toc-text">配置 PyTorch</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%85%8D%E7%BD%AE-X11-Forwarding"><span class="toc-number">4.</span> <span class="toc-text">配置 X11 Forwarding</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Update-2024-8-27"><span class="toc-number">5.</span> <span class="toc-text">Update 2024 8 27</span></a></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%85%8D%E7%BD%AE-SSH"><span class="toc-number">1.</span> <span class="toc-text">配置 SSH</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%85%8D%E7%BD%AE-Github-SSH"><span class="toc-number">2.</span> <span class="toc-text">配置 Github SSH</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%85%8D%E7%BD%AE%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E7%8E%AF%E5%A2%83"><span class="toc-number">3.</span> <span class="toc-text">配置深度学习环境</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%85%8D%E7%BD%AE-Python-%E7%8E%AF%E5%A2%83"><span class="toc-number">3.0.1.</span> <span class="toc-text">配置 Python 环境</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%85%8D%E7%BD%AE%E6%98%BE%E5%8D%A1%E9%A9%B1%E5%8A%A8%E5%92%8C-CUDA-%E7%8E%AF%E5%A2%83"><span class="toc-number">3.0.2.</span> <span class="toc-text">配置显卡驱动和 CUDA 环境</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%85%8D%E7%BD%AE-PyTorch"><span class="toc-number">3.0.3.</span> <span class="toc-text">配置 PyTorch</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%85%8D%E7%BD%AE-X11-Forwarding"><span class="toc-number">4.</span> <span class="toc-text">配置 X11 Forwarding</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%85%8D%E7%BD%AE-Vim"><span class="toc-number">5.</span> <span class="toc-text">配置 Vim</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%85%8D%E7%BD%AE%E4%B8%8E%E7%BE%8E%E5%8C%96-Shell"><span class="toc-number">6.</span> <span class="toc-text">配置与美化 Shell</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Update-2024-8-27"><span class="toc-number">7.</span> <span class="toc-text">Update 2024 8 27</span></a></li></ol>
       </div>
     
 
