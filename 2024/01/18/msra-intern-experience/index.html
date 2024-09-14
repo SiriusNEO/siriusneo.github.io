@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html lang=en>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+    <meta name="description" content="前言这篇文章改自我的本科阶段暑研实习报告，作为我在 MSRA 上海系统组这半年（实际算上远程，接近一年）实习体验分享。 面试随着新年的钟声响起，我在微软亚洲研究院的半年多实习也接近了尾声。回想这段实习经历，精彩而又伴随着劳累。我总共给微软贡献了约有15000行代码，并且有一篇在投论文，这次实习我在学术和视野方面都收获多多。 在刚进入微软的时候，每个人都可以领到一个 “明日之星（Star of To">
+<meta property="og:type" content="article">
+<meta property="og:title" content="西岸逐星：微软亚洲研究院半年实习感悟">
+<meta property="og:url" content="https://siriusneo.github.io/2024/01/18/msra-intern-experience/index.html">
+<meta property="og:site_name" content="Metric Space">
+<meta property="og:description" content="前言这篇文章改自我的本科阶段暑研实习报告，作为我在 MSRA 上海系统组这半年（实际算上远程，接近一年）实习体验分享。 面试随着新年的钟声响起，我在微软亚洲研究院的半年多实习也接近了尾声。回想这段实习经历，精彩而又伴随着劳累。我总共给微软贡献了约有15000行代码，并且有一篇在投论文，这次实习我在学术和视野方面都收获多多。 在刚进入微软的时候，每个人都可以领到一个 “明日之星（Star of To">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://img.siriusneo.top/msra-intern-experience/1.png">
+<meta property="og:image" content="http://img.siriusneo.top/msra-intern-experience/2.png">
+<meta property="og:image" content="http://img.siriusneo.top/msra-intern-experience/3.png">
+<meta property="og:image" content="http://img.siriusneo.top/msra-intern-experience/4.JPG">
+<meta property="article:published_time" content="2024-01-17T16:00:00.000Z">
+<meta property="article:modified_time" content="2024-09-14T10:20:39.473Z">
+<meta property="article:author" content="Chaofan">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://img.siriusneo.top/msra-intern-experience/1.png">
+    
+    
+      
+        
+          <link rel="shortcut icon" href="/images/favicon.ico">
+        
+      
+      
+        
+          <link rel="icon" type="image/png" href="/images/android-chrome-192x192.png" sizes="192x192">
+        
+      
+      
+        
+          <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+        
+      
+    
+    <!-- title -->
+    <title>西岸逐星：微软亚洲研究院半年实习感悟</title>
+    <!-- async scripts -->
+    <!-- Google Analytics -->
+
+
+    <!-- Umami Analytics -->
+
+
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+    <!-- rss -->
+    
+    
+	<!-- mathjax -->
+	
+		<script type="text/x-mathjax-config">
+		  MathJax.Hub.Config({
+			tex2jax: {
+			  skipTags: ['script', 'noscript', 'style', 'textarea', 'pre'],
+			  inlineMath: [['$','$']]
+			}
+		  });
+		</script>
+		<script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-MML-AM_CHTML' async></script>
+	
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#" aria-label="Menu"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#" aria-label="Menu"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" aria-label="Top" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fa-solid fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/about/">About</a></li><!--
+     --><!--
+       --><li><a href="/archives/">Articles</a></li><!--
+     --><!--
+       --><li><a href="/links/">Links</a></li><!--
+     --><!--
+       --><li><a target="_blank" rel="noopener" href="https://chaofanlin.com">Personal Page</a></li><!--
+     -->
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" aria-label="Previous post" href="/2024/02/11/vocaloid-20/"><i class="fa-solid fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" aria-label="Next post" href="/2024/01/16/siyuan-street/"><i class="fa-solid fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" aria-label="Back to top" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" aria-label="Share post" href="#"><i class="fa-solid fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://siriusneo.github.io/2024/01/18/msra-intern-experience/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://siriusneo.github.io/2024/01/18/msra-intern-experience/&text=西岸逐星：微软亚洲研究院半年实习感悟"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://siriusneo.github.io/2024/01/18/msra-intern-experience/&title=西岸逐星：微软亚洲研究院半年实习感悟"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://siriusneo.github.io/2024/01/18/msra-intern-experience/&is_video=false&description=西岸逐星：微软亚洲研究院半年实习感悟"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=西岸逐星：微软亚洲研究院半年实习感悟&body=Check out this article: https://siriusneo.github.io/2024/01/18/msra-intern-experience/"><i class="fa-solid fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://siriusneo.github.io/2024/01/18/msra-intern-experience/&title=西岸逐星：微软亚洲研究院半年实习感悟"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://siriusneo.github.io/2024/01/18/msra-intern-experience/&title=西岸逐星：微软亚洲研究院半年实习感悟"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://siriusneo.github.io/2024/01/18/msra-intern-experience/&title=西岸逐星：微软亚洲研究院半年实习感悟"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://siriusneo.github.io/2024/01/18/msra-intern-experience/&title=西岸逐星：微软亚洲研究院半年实习感悟"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://siriusneo.github.io/2024/01/18/msra-intern-experience/&name=西岸逐星：微软亚洲研究院半年实习感悟&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://siriusneo.github.io/2024/01/18/msra-intern-experience/&t=西岸逐星：微软亚洲研究院半年实习感悟"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    
+    
+      <div id="toc">
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%89%8D%E8%A8%80"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%9D%A2%E8%AF%95"><span class="toc-number">2.</span> <span class="toc-text">面试</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%80%9A%E5%8B%A4%E4%B8%8E%E5%85%A5%E8%81%8C"><span class="toc-number">3.</span> <span class="toc-text">通勤与入职</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%A0%94%E7%A9%B6%E7%BB%8F%E5%8E%86"><span class="toc-number">4.</span> <span class="toc-text">研究经历</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%80%BB%E7%BB%93"><span class="toc-number">5.</span> <span class="toc-text">总结</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%99%84%E5%9B%BE%EF%BC%9ALife-MSRA"><span class="toc-number">6.</span> <span class="toc-text">附图：Life @ MSRA</span></a></li></ol>
+      </div>
+    
+  </span>
+</div>
+
+    
+    <div class="content index py4 ">
+        
+        <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+<article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle p-name" itemprop="name headline">
+        西岸逐星：微软亚洲研究院半年实习感悟
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author p-author h-card" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span class="p-name" itemprop="name">Chaofan</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2024-01-17T16:00:00.000Z" class="dt-published" itemprop="datePublished">2024-01-18</time>
+        
+      
+    </div>
+
+
+       
+    <div class="article-category">
+        <i class="fa-solid fa-archive"></i>
+        <a class="category-link" href="/categories/life/">「杀意的百合」</a>
+    </div>
+
+
+       
+
+      | <i class="fa fa-eye fa-fw post-meta-icon"></i><span style="color: #8c8c8c; font-size: 13.6px;"> Views: </span><span id="busuanzi_value_page_pv"></span>
+      | <i class="far fa-file-word fa-fw post-meta-icon"></i><span style="color: #8c8c8c; font-size: 13.6px;"> Total Words: 4.8k</span>
+      | <i class="far fa-clock fa-fw post-meta-icon"></i><span style="color: #8c8c8c; font-size: 13.6px;"> Reading Time: 4 mins.</span>
+    </div>
+  </header>
+  
+
+  <div class="content e-content" itemprop="articleBody">
+    <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>这篇文章改自我的本科阶段暑研实习报告，作为我在 MSRA 上海系统组这半年（实际算上远程，接近一年）实习体验分享。</p>
+<h2 id="面试"><a href="#面试" class="headerlink" title="面试"></a>面试</h2><p>随着新年的钟声响起，我在微软亚洲研究院的半年多实习也接近了尾声。回想这段实习经历，精彩而又伴随着劳累。我总共给微软贡献了约有15000行代码，并且有一篇在投论文，这次实习我在学术和视野方面都收获多多。</p>
+<p>在刚进入微软的时候，每个人都可以领到一个 “明日之星（Star of Tomorrow）” 的衣服，这是微软对实习项目的一个代号。再结合亚研院的位置，便有了这篇感悟的题目“西岸逐星”。这半年里，在我的mentor韩震华、杨玉庆的引导下，我逐渐从一个只有着代码经验的“打手”变成一个逐渐可以自己提出想法，研究问题要点的“研究者”。不过要逐到“星“，想必还有很长的路要走。</p>
+<p>与亚研院的初识在他们来致远学院给的一个Talk之上。我印象很深刻，他们那时候分享的工作是他们在OSDI’22（系统领域旗舰会议）中稿的工作 SparTA，这篇工作用巧妙地将稀疏信息在张量的计算图上传播，使得稀疏深度学习推理得到了很大的加速。当时我刚好也在做相关的工作（计算图优化），听到这个工作顿生一种拍手叫绝之感，于是便萌生了暑研前往微软系统组实习的想法。于是在Talk结束后我主动上前和玉庆聊天，并且分享了我自己关于 SparTA 一些想法、改进点，之后也是成功地加到了他的联系方式。</p>
+<p>不久以后，他们组告诉我说有一个Hiring Counter，于是我便参加了面试。面试并不考察技术性的问题，而是让我分享实验室实践做过的工作，我便把在APEX实验室和天奇学长合作时关于在Relax上做自动求导的工作介绍了一下。面试我的宁馨就是那篇 SparTA 的一作。最终我也是通过了面试，踏上了我的“逐星之旅“。</p>
+<h2 id="通勤与入职"><a href="#通勤与入职" class="headerlink" title="通勤与入职"></a>通勤与入职</h2><p>不过首先，这个“旅途”从物理意义上就不算近——交大距离西岸有一小时半的地铁车程。因此我每次上班时都需要早早起来，到公司打卡的时候往往已经是上午九点多十点。后来我给这往返约3小时的挤地铁时光安排了一个活动：刷Paper。当然，地铁上不适合精读，因此我一般用手机刷一些学术Blog或者Arxiv的摘要，看到有趣的想法记下来，等回学校的时候再细读。一来二去，这成了我现在也一直保持的习惯，在外面乘车的时候也会抽空看看最新的学术消息。有一件很有趣的事就是我的通勤线路和迪士尼有一部分是重合的，因此我经常抬头能看见戴着米奇耳朵的游客。</p>
+<p>进入微软的第一天就让我感受到浓浓的“大厂风“，实习生需要自己办理一系列手续（包括文书工作、微软内部账号注册、资源申请等等），这些微软都有一套很完整的软硬件支持，也有HR小姐姐给我们新人答疑解惑，但是有时候也让人感觉过于繁琐（比如很多公司的内部资源需要连内网或者通过VPN才能访问）。这都是大厂的特质，“庞大、厚重”，从正面看是“资源丰富、完整、成体系”，但是从另一面看也可以是“包袱重、手续繁琐”。微软这边的办公环境可以说是非常不错，不仅有一周五天各不相同的饮品，印着微软LOGO的马克杯，睡眠舱，升降桌和工学椅，更重要的就是他灵活的考勤制度。作为外企，它是一个注重Work Life Balance的地方，这样松弛的环境带来的反而是效率的极大提高。以及作为外企，它有着浓厚的西方文化气息，但又不失本土化。</p>
+<h2 id="研究经历"><a href="#研究经历" class="headerlink" title="研究经历"></a>研究经历</h2><p>说完了大致情况，接下来就该讲讲这半年的实习历程了。刚进来时我还没确定现在的研究课题，而是帮他们之前的一个项目做一些性能优化，比如优化一个矩阵乘法的算子。究这样过了两三周，震华在会上说，他准备做一个大语言模型相关的项目，想法是将KV Cache在不同机器上高效地Migration。我们内部把这个项目命名为LLMOS（意思是LLM的操作系统），这个代号也沿用到了最后。为了做好这个Migration，我们首先需要大量的运行数据，包括OPT模型和Llama模型的每个token的延时。这个任务自然落到了我的肩上，于是我开始密集地测量，并且不断整理大量的数据。可惜的是，在一个月多的努力后，最后我们逐渐放弃了这个想法，因为数据表明我们能做的并不多。我在微软的第一段科研历程也就这样没有了后续。</p>
+<p>不过我和震华一直试图在之前的主题（也就是LLMOS）上谋求新的点。我们逐渐将问题从General的LLM加速转向Agent的加速。在有一次我洗澡的时候，我突然想到，在Langchain的示例中有一些DAG形状的LLM任务，这种任务不同LLM请求之间实际上是存在“通信”的，也就是一个请求的输出会作为另一个请求的输入。因此我在组里面说出了我的想法：能不能在上一个请求不断生成token的时候，下一个请求同时进行填充，来达到优化通信的效果。</p>
+<p>虽然这个想法后面测试出来的加速比不大，但是这给我们的研究方向打开了一个新的空间。我们逐渐将研究重心转向了“DAG形状的LLM任务“，并且尝试性地提出了一些新概念，比如”自然语言编程“、”LLM编译器“等。最后在大概九月中旬的时候，我们确定了论文的雏形：以一个Placeholder为核心，建立DAG，然后做优化。这时离会议的DDL还有不到三个月，于是我们紧锣密鼓地开始了工作的推进。初步的分工是我来完成整个代码的实现，然后震华来把Paper的基本框架先搭起来。这段时间大概是我最”充实“的一段时间了，因为工作内容完全就是在生产代码、和同事讨论接口，非常地具有成就感。</p>
+<p>在十月多的时候，因为一些设计上的缺陷，我又对整个代码仓库进行了一次重构，几乎是把整个项目重写了一遍。同时，我还测量了一些关键数据，发现在common prefix很长的情况下，现有的方法L2 Cache的命中率特别低，I/O量特别大，因此我们这里可以实现一个kernel来进一步推进优化效果。不过很遗憾，我并不是写CUDA的专家；但是组里有一个同事很擅长写这个，于是我们找到他开始了合作。</p>
+<p>在重构完之后，时间也基本来到了11月，这时我们意识到：Paper的实验需要开始做了。在有点赶的时间里，我开始了主动加班。为了节省时间，我申请了直接在学校工作，节省了3小时的车程，然后就是每天在包图从早上待到晚上。最后在会议的截止日期前，我和震华通宵到最后一刻，终于把所有实验补齐，并交上了我们的答卷。在Submitted出现的那一刻，我长舒一口气，此时窗外清晨的太阳早已倾泻进来。我和震华道了别，去学校的麦当劳吃了顿早餐，然后直接瘫在床上，开始补觉。这可以说是我实习最累的一刻，也是最放松的一刻了。</p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>之后就是围绕着这个项目的小修小补。总体来讲，我这次实习的故事线还是比较清晰，经历了一个完整项目的开发周期，并且也成功产出了论文，体验了一次完整的学术生产（从读别人Paper，到自己孵化Idea，再到不断修改最后成型）的过程。遗憾的是由于我忙于写代码，在Paper撰写方面得到的锻炼还不够多。以及还有几点从他们身上学到的东西、感想：</p>
+<ul>
+<li>多读论文，多想，不要怕想法失败；</li>
+<li>多和别人讨论，有时别人会看到你看不到的一些“盲点“；</li>
+<li>多做实验，用数据说话，“Get hands dirty“。</li>
+<li>Dogfooding。用自己的工作形成一个生态（可以是Follow-up，也可以是联动），扩大影响力。</li>
+</ul>
+<p>以上就是我在微软的半年实习报告。微软亚研院系统组给我留下了非常好的印象，同事都十分有想法并且有行动力，这也是他们这几年Paper大丰收的原因吧。此外，微软的一些企业文化，内部召开的一些读书会、聚餐、来自海外名校教授的Talk也丰富了我的实习生活，让我感受到了微软的视野所在。<br>在这次大模型的风潮中，微软可谓是大赢家，不仅和OpenAI深入合作，还把自己的Copilot和Bing搞得风风火火。我能在这个时间点来到这里实习，也要感谢ACM班的良好声誉和丰富资源给到我这个机会，让我体验了和别人不一样的一个学期。最后再感谢一下微软特供的冬日养生茶，支持我最后阶段赶完这篇Paper。</p>
+<h2 id="附图：Life-MSRA"><a href="#附图：Life-MSRA" class="headerlink" title="附图：Life @ MSRA"></a>附图：Life @ MSRA</h2><p><strong>温馨提示：为加速显示，博主使用了黑科技对图片进行有损压缩，可能会带来一定画质上的损失。</strong></p>
+<p><img src="http://img.siriusneo.top/msra-intern-experience/1.png" alt="养生茶与免费小饼干"><span style="text-align: center; display:block; color: grey;" class="image-caption">养生茶与免费小饼干</span></p>
+<p><img src="http://img.siriusneo.top/msra-intern-experience/2.png" alt="西岸大楼，在傍晚下班时候有概率遇到非常好看的天空。"><span style="text-align: center; display:block; color: grey;" class="image-caption">西岸大楼，在傍晚下班时候有概率遇到非常好看的天空。</span></p>
+<p><img src="http://img.siriusneo.top/msra-intern-experience/3.png" alt="作为外企，MSRA的西方节日氛围还是很浓的。圣诞节还有用塑料垃圾做的圣诞树。"><span style="text-align: center; display:block; color: grey;" class="image-caption">作为外企，MSRA的西方节日氛围还是很浓的。圣诞节还有用塑料垃圾做的圣诞树。</span></p>
+<p><img src="http://img.siriusneo.top/msra-intern-experience/4.JPG" alt="和 Mentor 与同学的合照"><span style="text-align: center; display:block; color: grey;" class="image-caption">和 Mentor 与同学的合照</span></p>
+
+  </div>
+  <!-- Style from: https://blog.lyc8503.net/post/hexo-config-plugin/  -->
+
+<style>
+.admonition {
+margin: .75em 0;
+padding: .6rem;
+overflow: hidden;
+font-size: 12px;
+page-break-inside: avoid;
+border-left: .3rem solid #42b983;
+border-radius: .3rem;
+box-shadow: 0 0.1rem 0.4rem rgba(0,0,0,.05), 0 0 0.05rem rgba(0,0,0,.1);
+}
+
+.admonition > p {
+    margin: 0px 0px !important;
+}
+
+.admonition.info, .admonition.todo {
+  border-color: #00b8d4;
+  background-color: rgba(14, 107, 122, .25);
+}
+
+.admonition.warning, .admonition.attention, .admonition.caution {
+  border-color: #ff9100;
+  background-color: rgba(255, 145, 0, .15);
+}
+
+.admonition.failure, .admonition.missing, .admonition.fail, .admonition.error {
+  border-color: #ff5252;
+}
+
+.admonition>:last-child {
+  margin-bottom: 0 !important;
+}
+</style>
+
+<div class="admonition info">
+    <p>
+        Author: <a target="_blank" rel="noopener" href="https://github.com/siriusneo">SiriusNEO</a>
+    </p>
+    <p>
+        Published on: <a target="_blank" rel="noopener" href="https://me.tric.space/">Metric Space</a>
+    </p>
+    <p>
+        All posts on this blog are licensed under the <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en">CC BY-NC-SA 4.0</a> license unless otherwise noted.
+    </p>
+</div>
+
+</article>
+
+
+
+    <div class="blog-post-comments">
+        <div class="vcomment"></div>
+    </div>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+        
+          <li><a href="/">Home</a></li>
+        
+          <li><a href="/about/">About</a></li>
+        
+          <li><a href="/archives/">Articles</a></li>
+        
+          <li><a href="/links/">Links</a></li>
+        
+          <li><a target="_blank" rel="noopener" href="https://chaofanlin.com">Personal Page</a></li>
+        
+      </ul>
+    </div>
+
+    
+    
+      <div id="toc-footer" style="display: none">
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%89%8D%E8%A8%80"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%9D%A2%E8%AF%95"><span class="toc-number">2.</span> <span class="toc-text">面试</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%80%9A%E5%8B%A4%E4%B8%8E%E5%85%A5%E8%81%8C"><span class="toc-number">3.</span> <span class="toc-text">通勤与入职</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%A0%94%E7%A9%B6%E7%BB%8F%E5%8E%86"><span class="toc-number">4.</span> <span class="toc-text">研究经历</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%80%BB%E7%BB%93"><span class="toc-number">5.</span> <span class="toc-text">总结</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%99%84%E5%9B%BE%EF%BC%9ALife-MSRA"><span class="toc-number">6.</span> <span class="toc-text">附图：Life @ MSRA</span></a></li></ol>
+      </div>
+    
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://siriusneo.github.io/2024/01/18/msra-intern-experience/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://siriusneo.github.io/2024/01/18/msra-intern-experience/&text=西岸逐星：微软亚洲研究院半年实习感悟"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://siriusneo.github.io/2024/01/18/msra-intern-experience/&title=西岸逐星：微软亚洲研究院半年实习感悟"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://siriusneo.github.io/2024/01/18/msra-intern-experience/&is_video=false&description=西岸逐星：微软亚洲研究院半年实习感悟"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=西岸逐星：微软亚洲研究院半年实习感悟&body=Check out this article: https://siriusneo.github.io/2024/01/18/msra-intern-experience/"><i class="fa-solid fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://siriusneo.github.io/2024/01/18/msra-intern-experience/&title=西岸逐星：微软亚洲研究院半年实习感悟"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://siriusneo.github.io/2024/01/18/msra-intern-experience/&title=西岸逐星：微软亚洲研究院半年实习感悟"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://siriusneo.github.io/2024/01/18/msra-intern-experience/&title=西岸逐星：微软亚洲研究院半年实习感悟"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://siriusneo.github.io/2024/01/18/msra-intern-experience/&title=西岸逐星：微软亚洲研究院半年实习感悟"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://siriusneo.github.io/2024/01/18/msra-intern-experience/&name=西岸逐星：微软亚洲研究院半年实习感悟&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://siriusneo.github.io/2024/01/18/msra-intern-experience/&t=西岸逐星：微软亚洲研究院半年实习感悟"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fa-solid fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        
+          <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fa-solid fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fa-solid fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy;
+    
+    
+    2020-2024
+    Chaofan.
+    Powered by <a target="_blank" rel="noopener" href="https://github.com/probberechts/hexo-theme-cactus">Cactus</a>. <a target="_blank" rel="noopener" href="https://github.com/SiriusNEO/hexo-theme-cactus-customized">Customized</a> by me :).
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/about/">About</a></li><!--
+     --><!--
+       --><li><a href="/archives/">Articles</a></li><!--
+     --><!--
+       --><li><a href="/links/">Links</a></li><!--
+     --><!--
+       --><li><a target="_blank" rel="noopener" href="https://chaofanlin.com">Personal Page</a></li><!--
+     -->
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+
+
+  <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" crossorigin="anonymous" onload="this.onload=null;this.rel='stylesheet'"/>
+
+
+    <!-- jquery -->
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" crossorigin="anonymous"></script>
+
+
+
+
+<!-- clipboard -->
+
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.7/clipboard.min.js" crossorigin="anonymous"></script>
+  
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"Copy to clipboard!\">";
+    btn += '<i class="fa-regular fa-clone"></i>';
+    btn += '</span>';
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "Copied!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Baidu Analytics -->
+
+<!-- Cloudflare Analytics -->
+
+<!-- Disqus Comments -->
+
+<!-- utterances Comments -->
+
+<!-- Valine Comments -->
+
+    <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+    <script src="//unpkg.com/valine@latest/dist/Valine.min.js"></script>
+    <script type="text/javascript">
+        var notify = 'false' == true ? true : false;
+        var verify = 'false' == true ? true : false;
+        var GUEST_INFO = ['nick','mail','link'];
+        var guest_info = 'nick,mail,link'.split(',').filter(function(item){
+          return GUEST_INFO.indexOf(item) > -1
+        });
+        guest_info = guest_info.length == 0 ? GUEST_INFO :guest_info;
+        new Valine({
+            el: '.vcomment',
+            notify: notify,
+            verify: verify,
+            appId: "AyDHJHMfyHGtgF5Lc8CG4dpA-gzGzoHsz",
+            appKey: "JZWLrweBHY4Txn5nZuLwFzim",
+            avatar:"identicon",
+            placeholder: "Send a comment for this post!",
+            guest_info:guest_info,
+            pageSize:"10"
+        })
+</script>
+
+
+</body>
+</html>
